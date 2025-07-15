@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
               <img 
                 src="/logo.png" 
                 alt="Globalead Portugal" 
-                className="h-14 w-auto"
+                className="h-18 w-auto"
               />
             </div>
             <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>

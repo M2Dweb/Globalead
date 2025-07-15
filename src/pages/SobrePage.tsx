@@ -185,13 +185,6 @@ const SobrePage: React.FC = () => {
       {/* Contact Form */}
       <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center mb-8">
-            <img 
-              src="/template-dos-inta-2.png" 
-              alt="Instagram Template" 
-              className="w-64 h-auto rounded-lg shadow-lg"
-            />
-          </div>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Tem dúvidas?
@@ -201,63 +194,21 @@ const SobrePage: React.FC = () => {
             </p>
           </div>
 
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input
-              type="text"
-              placeholder="Nome:"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <input
-              type="text"
-              placeholder="Apelido:"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <input
-              type="tel"
-              placeholder="Telemóvel:"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <input
-              type="email"
-              placeholder="Email:"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <input
-              type="text"
-              placeholder="Assunto:"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <select className="px-4 py-3 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300">
-              <option>Meio de Contacto:</option>
-              <option>Email</option>
-              <option>Telefone</option>
-              <option>WhatsApp</option>
-            </select>
-            <input
-              type="text"
-              placeholder="Horário:"
-              className="md:col-span-2 px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            
-            <div className="md:col-span-2">
-              <label className="flex items-start text-sm text-blue-100">
-                <input type="checkbox" className="mt-1 mr-2" />
-                Sim, aceito os termos e condições indicados pela Globalead Portugal.
-              </label>
-              <p className="text-xs text-blue-200 mt-2">
-                Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
-              </p>
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            {/* Instagram Template - Lado Esquerdo */}
+            <div className="lg:w-1/3 flex justify-center">
+              <img 
+                src="/template-dos-inta-2.png" 
+                alt="Instagram Template" 
+                className="w-64 h-auto rounded-lg shadow-lg"
+              />
             </div>
 
-            <div className="md:col-span-2">
-              <button
-                type="submit"
-                className="w-full bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300"
-              >
-                Enviar Mensagem
-              </button>
+            {/* Formulário - Lado Direito */}
+            <div className="lg:w-2/3">
+              <ContactForm page="sobre" />
             </div>
-          </form>
+          </div>
         </div>
       </section>
     </div>
