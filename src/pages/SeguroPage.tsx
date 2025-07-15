@@ -1,5 +1,8 @@
 import React from 'react';
 import { Car, Heart, Home, Shield, Users, Briefcase, Scale, Building, Phone, Mail } from 'lucide-react';
+import InsuranceComparator from '../components/InsuranceComparator';
+import FAQ from '../components/FAQ';
+import AnimatedSection from '../components/AnimatedSection';
 
 const SeguroPage: React.FC = () => {
   const insuranceTypes = [
@@ -92,79 +95,103 @@ const SeguroPage: React.FC = () => {
       </section>
 
       {/* Insurance Types */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Qual o seguro que realmente necessita?
-            </h2>
-          </div>
+      <AnimatedSection>
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Qual o seguro que realmente necessita?
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {insuranceTypes.map((insurance, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="flex items-start">
-                  <div className="mr-6 flex-shrink-0">
-                    {insurance.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      {insurance.title}
-                    </h3>
-                    <p className="text-gray-600">
-                      {insurance.description}
-                    </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+              {insuranceTypes.map((insurance, index) => (
+                <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-start">
+                    <div className="mr-6 flex-shrink-0">
+                      {insurance.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                        {insurance.title}
+                      </h3>
+                      <p className="text-gray-600">
+                        {insurance.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
+
+      {/* Insurance Comparator */}
+      <AnimatedSection>
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <InsuranceComparator />
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* Insurance Companies */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Comparamos as várias instituições em Portugal
-            </h2>
-          </div>
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Comparamos as várias instituições em Portugal
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-8">
-            {insuranceCompanies.map((logo, index) => (
-              <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <img
-                  src={logo}
-                  alt={`Seguradora ${index + 1}`}
-                  className="w-full h-16 object-contain"
-                />
-              </div>
-            ))}
+            <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-8">
+              {insuranceCompanies.map((logo, index) => (
+                <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <img
+                    src={logo}
+                    alt={`Seguradora ${index + 1}`}
+                    className="w-full h-16 object-contain"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
+
+      {/* FAQ Section */}
+      <AnimatedSection>
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FAQ category="seguros" />
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* Benefits */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="text-center">
-                <div className="flex justify-center mb-6">
-                  {benefit.icon}
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {benefits.map((benefit, index) => (
+                <div key={index} className="text-center">
+                  <div className="flex justify-center mb-6">
+                    {benefit.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {benefit.title}
+                  </h3>
+                  <p className="text-gray-600">
+                    {benefit.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {benefit.title}
-                </h3>
-                <p className="text-gray-600">
-                  {benefit.description}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
       {/* CTA Section */}
       <section className="py-20 bg-blue-600 text-white">

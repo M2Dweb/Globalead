@@ -1,5 +1,7 @@
 import React from 'react';
 import { Shield, Eye, Clock, Users, Lock, Camera, Smartphone, Key, Phone, Mail } from 'lucide-react';
+import FAQ from '../components/FAQ';
+import AnimatedSection from '../components/AnimatedSection';
 
 const AlarmesPage: React.FC = () => {
   const securityCompanies = [
@@ -110,7 +112,8 @@ const AlarmesPage: React.FC = () => {
       </section>
 
       {/* Security Companies */}
-      <section className="py-20">
+      <AnimatedSection>
+        <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -138,10 +141,23 @@ const AlarmesPage: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+      </AnimatedSection>
+
+      {/* FAQ Section */}
+      <AnimatedSection>
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FAQ category="alarmes" />
+          </div>
+        </section>
+      </AnimatedSection>
+      </AnimatedSection>
+      </AnimatedSection>
 
       {/* How It Works */}
-      <section className="py-20 bg-gray-50">
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -174,7 +190,8 @@ const AlarmesPage: React.FC = () => {
       </section>
 
       {/* Features */}
-      <section className="py-20 bg-white">
+      <AnimatedSection>
+        <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

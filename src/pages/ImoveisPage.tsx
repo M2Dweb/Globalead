@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Bed, Bath, Square, MapPin, ArrowRight, Shield, CreditCard, Zap, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
+import CreditCalculator from '../components/CreditCalculator';
+import InteractiveMap from '../components/InteractiveMap';
+import FAQ from '../components/FAQ';
+import AnimatedSection from '../components/AnimatedSection';
 
 const ImoveisPage: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<{[key: number]: number}>({});
@@ -121,144 +125,177 @@ const ImoveisPage: React.FC = () => {
       </section>
 
       {/* Properties Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-12">
-            {properties.map((property) => (
-              <div key={property.id} className="bg-white rounded-xl shadow-lg overflow-hidden">
-                <div className="md:flex">
-                  {/* Image Slideshow */}
-                  <div className="md:w-1/2">
-                    <div className="relative h-64 md:h-full group">
-                      <img
-                        src={property.images[currentImageIndex[property.id] || 0]}
-                        alt={property.title}
-                        className="w-full h-full object-cover"
-                      />
-                      
-                      {/* Navigation Buttons */}
-                      <button
-                        onClick={() => prevImage(property.id, property.images.length)}
-                        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      >
-                        <ChevronLeft className="h-4 w-4" />
+      <AnimatedSection>
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-1 gap-12">
+              {properties.map((property) => (
+                <div key={property.id} className="bg-white rounded-xl shadow-lg overflow-hidden">
+                  <div className="md:flex">
+                    {/* Image Slideshow */}
+                    <div className="md:w-1/2">
+                      <div className="relative h-64 md:h-full group">
+                        <img
+                          src={property.images[currentImageIndex[property.id] || 0]}
+                          alt={property.title}
+                          className="w-full h-full object-cover"
+                        />
+                        
+                        {/* Navigation Buttons */}
+                        <button
+                          onClick={() => prevImage(property.id, property.images.length)}
+                          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => nextImage(property.id, property.images.length)}
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                        
+                        <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+                          {(currentImageIndex[property.id] || 0) + 1} / {property.images.length}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Property Details */}
+                    <div className="md:w-1/2 p-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                        {property.title}
+                      </h3>
+                      <p className="text-gray-600 mb-6">
+                        {property.description}
+                      </p>
+
+                      {/* Property Features */}
+                      <div className="flex items-center space-x-6 mb-6">
+                        <div className="flex items-center text-gray-700">
+                          <Bed className="h-5 w-5 mr-2" />
+                          <span>{property.bedrooms} quartos</span>
+                        </div>
+                        <div className="flex items-center text-gray-700">
+                          <Bath className="h-5 w-5 mr-2" />
+                          <span>{property.bathrooms} casas de banho</span>
+                        </div>
+                        <div className="flex items-center text-gray-700">
+                          <Square className="h-5 w-5 mr-2" />
+                          <span>{property.area} m²</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center text-gray-700 mb-6">
+                        <MapPin className="h-5 w-5 mr-2" />
+                        <span>{property.location}</span>
+                      </div>
+
+                      <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-flex items-center">
+                        Ver Imóvel
+                        <ArrowRight className="ml-2 h-5 w-5" />
                       </button>
-                      <button
-                        onClick={() => nextImage(property.id, property.images.length)}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                      
-                      <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-                        {(currentImageIndex[property.id] || 0) + 1} / {property.images.length}
-                      </div>
                     </div>
-                  </div>
-
-                  {/* Property Details */}
-                  <div className="md:w-1/2 p-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      {property.title}
-                    </h3>
-                    <p className="text-gray-600 mb-6">
-                      {property.description}
-                    </p>
-
-                    {/* Property Features */}
-                    <div className="flex items-center space-x-6 mb-6">
-                      <div className="flex items-center text-gray-700">
-                        <Bed className="h-5 w-5 mr-2" />
-                        <span>{property.bedrooms} quartos</span>
-                      </div>
-                      <div className="flex items-center text-gray-700">
-                        <Bath className="h-5 w-5 mr-2" />
-                        <span>{property.bathrooms} casas de banho</span>
-                      </div>
-                      <div className="flex items-center text-gray-700">
-                        <Square className="h-5 w-5 mr-2" />
-                        <span>{property.area} m²</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center text-gray-700 mb-6">
-                      <MapPin className="h-5 w-5 mr-2" />
-                      <span>{property.location}</span>
-                    </div>
-
-                    <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-flex items-center">
-                      Ver Imóvel
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
+
+      {/* Credit Calculator */}
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <CreditCalculator />
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Interactive Map */}
+      <AnimatedSection>
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <InteractiveMap />
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* Services Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Simplificamos a venda do seu imóvel
-            </h2>
-          </div>
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Simplificamos a venda do seu imóvel
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="flex items-start">
-                  <div className="mr-6 flex-shrink-0">
-                    {service.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      {service.description}
-                    </p>
-                    <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
-                      Saber mais →
-                    </button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {services.map((service, index) => (
+                <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-start">
+                    <div className="mr-6 flex-shrink-0">
+                      {service.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4">
+                        {service.description}
+                      </p>
+                      <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                        Saber mais →
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
+
+      {/* FAQ Section */}
+      <AnimatedSection>
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FAQ category="imoveis" />
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* Marketing Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              O melhor negócio para o seu imóvel começa aqui!
-            </h2>
-          </div>
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                O melhor negócio para o seu imóvel começa aqui!
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {marketingFeatures.map((feature, index) => (
-              <div key={index} className="flex items-start">
-                <div className="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-1">
-                  ✓
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {marketingFeatures.map((feature, index) => (
+                <div key={index} className="flex items-start">
+                  <div className="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-1">
+                    ✓
+                  </div>
+                  <p className="text-gray-700">{feature}</p>
                 </div>
-                <p className="text-gray-700">{feature}</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div className="bg-blue-50 p-8 rounded-xl">
-            <p className="text-gray-700 text-center">
-              <strong>Especialistas em decoração de interiores</strong> transformam o imóvel, destacando o seu potencial e alinhando-o às tendências e expectativas dos compradores.
-            </p>
+            <div className="bg-blue-50 p-8 rounded-xl">
+              <p className="text-gray-700 text-center">
+                <strong>Especialistas em decoração de interiores</strong> transformam o imóvel, destacando o seu potencial e alinhando-o às tendências e expectativas dos compradores.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
       {/* CTA Section */}
       <section className="py-20 bg-blue-600 text-white">
