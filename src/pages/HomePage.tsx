@@ -1,5 +1,10 @@
 import React from 'react';
 import { ArrowRight, Shield, Home, Zap, Phone, Car, Building, DollarSign, CheckCircle, Clock } from 'lucide-react';
+import AnimatedSection from '../components/AnimatedSection';
+import CompanyStats from '../components/CompanyStats';
+import VideoTestimonials from '../components/VideoTestimonials';
+import PartnersCarousel from '../components/PartnersCarousel';
+import BlogWithFilters from '../components/BlogWithFilters';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -48,7 +53,8 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
+      <AnimatedSection>
+        <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -67,10 +73,15 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </button>
           </div>
         </div>
-      </section>
+        </section>
+      </AnimatedSection>
+      </AnimatedSection>
+      </AnimatedSection>
+      </AnimatedSection>
 
       {/* Services Section */}
-      <section className="py-20 bg-gray-50">
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -108,8 +119,15 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* Company Stats */}
+      <CompanyStats />
+
+      {/* Partners Carousel */}
+      <PartnersCarousel />
+
       {/* Why Choose Us Section */}
-      <section className="py-20 bg-white">
+      <AnimatedSection>
+        <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -151,8 +169,15 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* Video Testimonials */}
+      <VideoTestimonials />
+
+      {/* Blog Section */}
+      <BlogWithFilters />
+
       {/* CTA Section */}
-      <section className="py-20 bg-blue-600 text-white">
+      <AnimatedSection>
+        <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Pronto para começar?
