@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Users, Award, CheckCircle } from 'lucide-react';
+import { Star, Users, Award, CheckCircle, DollarSign, Clock } from 'lucide-react';
 
 const SobrePage: React.FC = () => {
   const testimonials = [
@@ -118,8 +118,8 @@ const SobrePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-green-600">1</span>
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <DollarSign className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">POUPA DINHEIRO</h3>
               <p className="text-gray-600">
@@ -128,8 +128,8 @@ const SobrePage: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600">2</span>
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">POUPA A CABEÇA</h3>
               <p className="text-gray-600">
@@ -138,8 +138,8 @@ const SobrePage: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-purple-600">3</span>
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">POUPA TEMPO</h3>
               <p className="text-gray-600">
@@ -185,6 +185,13 @@ const SobrePage: React.FC = () => {
       {/* Contact Form */}
       <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/template-dos-inta-2.png" 
+              alt="Instagram Template" 
+              className="w-64 h-auto rounded-lg shadow-lg"
+            />
+          </div>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Tem dúvidas?

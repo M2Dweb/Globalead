@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Shield, Home, Zap, Phone, Car, Building } from 'lucide-react';
+import { ArrowRight, Shield, Home, Zap, Phone, Car, Building, DollarSign, CheckCircle, Clock } from 'lucide-react';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -119,8 +119,8 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-green-600">1</span>
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <DollarSign className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">POUPA DINHEIRO</h3>
               <p className="text-gray-600">
@@ -129,8 +129,8 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600">2</span>
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">POUPA A CABEÇA</h3>
               <p className="text-gray-600">
@@ -139,8 +139,8 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="text-center">
-              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-purple-600">3</span>
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">POUPA TEMPO</h3>
               <p className="text-gray-600">

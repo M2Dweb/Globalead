@@ -71,6 +71,7 @@ const EnergiaPage: React.FC = () => {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-green-900 to-green-700 text-white py-20">
+      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -209,7 +210,7 @@ const EnergiaPage: React.FC = () => {
               <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="text-center">
                   <div className="mb-6">
-                    {service.icon}
+                    {React.cloneElement(service.icon, { className: "h-12 w-12 text-blue-600 mx-auto" })}
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
                     {service.title}
@@ -275,6 +276,13 @@ const EnergiaPage: React.FC = () => {
       {/* Contact Section */}
       <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/template-dos-inta-2.png" 
+              alt="Instagram Template" 
+              className="w-64 h-auto rounded-lg shadow-lg"
+            />
+          </div>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Acompanhamento Personalizado

@@ -8,6 +8,13 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Contact Info */}
           <div>
+            <div className="mb-4">
+              <img 
+                src="/logo.png" 
+                alt="Globalead Portugal" 
+                className="h-10 w-auto"
+              />
+            </div>
             <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>
             <div className="space-y-3">
               <div className="flex items-center">

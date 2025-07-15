@@ -1,7 +1,23 @@
-import React from 'react';
-import { Bed, Bath, Square, MapPin, ArrowRight, Shield, CreditCard, Zap, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bed, Bath, Square, MapPin, ArrowRight, Shield, CreditCard, Zap, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ImoveisPage: React.FC = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState<{[key: number]: number}>({});
+
+  const nextImage = (propertyId: number, totalImages: number) => {
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [propertyId]: ((prev[propertyId] || 0) + 1) % totalImages
+    }));
+  };
+
+  const prevImage = (propertyId: number, totalImages: number) => {
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [propertyId]: ((prev[propertyId] || 0) - 1 + totalImages) % totalImages
+    }));
+  };
+
   const properties = [
     {
       id: 1,
@@ -112,14 +128,29 @@ const ImoveisPage: React.FC = () => {
                 <div className="md:flex">
                   {/* Image Slideshow */}
                   <div className="md:w-1/2">
-                    <div className="relative h-64 md:h-full">
+                    <div className="relative h-64 md:h-full group">
                       <img
-                        src={property.images[0]}
+                        src={property.images[currentImageIndex[property.id] || 0]}
                         alt={property.title}
                         className="w-full h-full object-cover"
                       />
+                      
+                      {/* Navigation Buttons */}
+                      <button
+                        onClick={() => prevImage(property.id, property.images.length)}
+                        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => nextImage(property.id, property.images.length)}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                      
                       <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-                        1 / {property.images.length}
+                        {(currentImageIndex[property.id] || 0) + 1} / {property.images.length}
                       </div>
                     </div>
                   </div>
@@ -231,6 +262,13 @@ const ImoveisPage: React.FC = () => {
       {/* CTA Section */}
       <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/template-dos-inta-2.png" 
+              alt="Instagram Template" 
+              className="w-64 h-auto rounded-lg shadow-lg"
+            />
+          </div>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Venda o seu imóvel de forma rápida, segura e sem complicações!

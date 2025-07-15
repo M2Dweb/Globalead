@@ -9,37 +9,37 @@ const SeguroPage: React.FC = () => {
       description: "A Globalead oferece um seguro automóvel que proporciona proteção abrangente, incluindo responsabilidade civil obrigatória, danos próprios, assistência em viagem e proteção contra roubo ou acidentes."
     },
     {
-      icon: <Heart className="h-12 w-12 text-red-600" />,
+      icon: <Heart className="h-12 w-12 text-blue-600" />,
       title: "Seguro de Saúde",
       description: "Cobertura para despesas médicas, incluindo consultas, exames, tratamentos, hospitalizações e acesso a redes de saúde privadas. A Globalead pode oferecer pacotes flexíveis, adaptados às necessidades familiares ou empresariais."
     },
     {
-      icon: <Shield className="h-12 w-12 text-green-600" />,
+      icon: <Shield className="h-12 w-12 text-blue-600" />,
       title: "Seguro de Vida",
       description: "Proteção financeira para os beneficiários em caso de falecimento ou invalidez do segurado, garantindo segurança para famílias e herdeiros. A Globalead pode incluir coberturas complementares, como doenças graves."
     },
     {
-      icon: <Home className="h-12 w-12 text-purple-600" />,
+      icon: <Home className="h-12 w-12 text-blue-600" />,
       title: "Seguro Multirriscos Habitação",
       description: "Cobre danos no imóvel e bens pessoais devido a eventos como incêndios, inundações, roubos e fenómenos naturais. A Globalead pode destacar soluções adaptadas a habitações primárias e secundárias."
     },
     {
-      icon: <Users className="h-12 w-12 text-orange-600" />,
+      icon: <Users className="h-12 w-12 text-blue-600" />,
       title: "Seguro de Acidentes Pessoais",
       description: "Proteção em caso de acidentes que resultem em despesas médicas, invalidez ou morte. A Globalead pode adaptar as coberturas para indivíduos, famílias e grupos profissionais."
     },
     {
-      icon: <Briefcase className="h-12 w-12 text-indigo-600" />,
+      icon: <Briefcase className="h-12 w-12 text-blue-600" />,
       title: "Seguro de Acidentes de Trabalho",
       description: "Obrigatório por lei, cobre custos associados a acidentes laborais de colaboradores. A Globalead pode oferecer soluções personalizadas para pequenas, médias e grandes empresas."
     },
     {
-      icon: <Scale className="h-12 w-12 text-teal-600" />,
+      icon: <Scale className="h-12 w-12 text-blue-600" />,
       title: "Seguro de Proteção Jurídica",
       description: "Cobre custos com ações judiciais, consultas legais e processos relacionados ao segurado. A Globalead pode oferecer serviços jurídicos acessíveis para clientes particulares e empresariais."
     },
     {
-      icon: <Building className="h-12 w-12 text-gray-600" />,
+      icon: <Building className="h-12 w-12 text-blue-600" />,
       title: "Seguro Multirriscos Comercial",
       description: "Protege estabelecimentos comerciais contra danos no imóvel, equipamentos e interrupções das operações. A Globalead pode criar planos específicos para negócios de diferentes setores."
     }
@@ -59,7 +59,7 @@ const SeguroPage: React.FC = () => {
 
   const benefits = [
     {
-      icon: <Shield className="h-12 w-12 text-green-600" />,
+      icon: <Shield className="h-12 w-12 text-blue-600" />,
       title: "Poupança imediata",
       description: "Beneficie das vantagens que temos ao seu dispor!"
     },
@@ -69,7 +69,7 @@ const SeguroPage: React.FC = () => {
       description: "Acompanhamento constante do cliente com experiência e confiança."
     },
     {
-      icon: <Shield className="h-12 w-12 text-purple-600" />,
+      icon: <Shield className="h-12 w-12 text-blue-600" />,
       title: "Rapidez na simulação",
       description: "Ampla oferta de soluções à medida das empresas, e dos particulares."
     }
@@ -169,6 +169,13 @@ const SeguroPage: React.FC = () => {
       {/* CTA Section */}
       <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/template-dos-inta-2.png" 
+              alt="Instagram Template" 
+              className="w-64 h-auto rounded-lg shadow-lg"
+            />
+          </div>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Faça uma simulação sem compromisso!

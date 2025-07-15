@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Home } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: string;
@@ -29,8 +29,11 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             className="flex items-center cursor-pointer"
             onClick={() => onNavigate('home')}
           >
-            <Home className="h-8 w-8 text-blue-600 mr-2" />
-            <span className="text-2xl font-bold text-gray-900">Globalead</span>
+            <img 
+              src="/logo.png" 
+              alt="Globalead Portugal" 
+              className="h-12 w-auto"
+            />
           </div>
 
           {/* Desktop Navigation */}

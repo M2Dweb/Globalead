@@ -57,7 +57,7 @@ const ContactosPage: React.FC = () => {
           {/* Contact Methods */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Phone className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Telefone</h3>
@@ -65,24 +65,24 @@ const ContactosPage: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="h-8 w-8 text-green-600" />
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
               <p className="text-gray-600">geral@globalead.pt</p>
             </div>
 
             <div className="text-center">
-              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageCircle className="h-8 w-8 text-purple-600" />
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <MessageCircle className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">WhatsApp</h3>
               <p className="text-gray-600">Mensagem direta</p>
             </div>
 
             <div className="text-center">
-              <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-8 w-8 text-orange-600" />
+              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Horário</h3>
               <p className="text-gray-600">10h00 - 21h00</p>
@@ -94,6 +94,13 @@ const ContactosPage: React.FC = () => {
       {/* Contact Form */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/template-dos-inta-2.png" 
+              alt="Instagram Template" 
+              className="w-64 h-auto rounded-lg shadow-lg"
+            />
+          </div>
           <div className="bg-white p-8 rounded-xl shadow-lg">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -169,7 +176,7 @@ const ContactosPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <Phone className="h-12 w-12 mx-auto mb-4 text-blue-200" />
+              <Phone className="h-12 w-12 mx-auto mb-4 text-blue-600" />
               <h3 className="text-xl font-semibold mb-2">Atendimento Telefónico</h3>
               <p className="text-blue-100">
                 Disponível 24/7 para emergências e suporte técnico
@@ -177,7 +184,7 @@ const ContactosPage: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <Mail className="h-12 w-12 mx-auto mb-4 text-blue-200" />
+              <Mail className="h-12 w-12 mx-auto mb-4 text-blue-600" />
               <h3 className="text-xl font-semibold mb-2">Suporte por Email</h3>
               <p className="text-blue-100">
                 Resposta garantida em menos de 24 horas
@@ -185,7 +192,7 @@ const ContactosPage: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <MessageCircle className="h-12 w-12 mx-auto mb-4 text-blue-200" />
+              <MessageCircle className="h-12 w-12 mx-auto mb-4 text-blue-600" />
               <h3 className="text-xl font-semibold mb-2">Chat Online</h3>
               <p className="text-blue-100">
                 WhatsApp, Telegram e Messenger disponíveis

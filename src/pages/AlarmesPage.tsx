@@ -47,7 +47,7 @@ const AlarmesPage: React.FC = () => {
       number: "20",
       title: "Resposta em menos de 20 segundos",
       description: "Somos líderes na resposta a eventos de alarme. Temos uma equipa de profissionais atentos e garantimos uma resposta em menos de 20 segundos.",
-      icon: <Clock className="h-12 w-12 text-red-600" />
+      icon: <Clock className="h-12 w-12 text-blue-600" />
     },
     {
       number: "21",
@@ -59,44 +59,44 @@ const AlarmesPage: React.FC = () => {
       number: "22",
       title: "A proteção anti-intrusão mais eficaz",
       description: "Em caso de intrusão confirmada, notificamos a polícia e ativamos o ZeroVision, que impede a visão do intruso para o expulsarem segundos.",
-      icon: <Shield className="h-12 w-12 text-green-600" />
+      icon: <Shield className="h-12 w-12 text-blue-600" />
     },
     {
       number: "23",
       title: "Equipa de vigilantes própria",
       description: "Em caso de evento real, ativamos uma dupla resposta. Enviamos um vigilante próprio e avisamos a polícia. Temos uma equipa de profissionais sempre pronta a atuar em caso de evento de alarme.",
-      icon: <Users className="h-12 w-12 text-purple-600" />
+      icon: <Users className="h-12 w-12 text-blue-600" />
     },
     {
       number: "24",
       title: "A proteção da sua casa começa na Porta",
       description: "Com a nossa fechadura inteligente com cilindro antirroubo de máxima segurança, protegemos a sua casa de forma eficiente. Sincronizada com o seu alarme, permite abrir e fechar a porta sem chaves.",
-      icon: <Lock className="h-12 w-12 text-orange-600" />
+      icon: <Lock className="h-12 w-12 text-blue-600" />
     },
     {
       number: "25",
       title: "A inovação premiada pelos consumidores",
       description: "Reforce a proteção em áreas exteriores e interiores e vigie o que ocorre a partir de qualquer lugar graças às câmaras de segurança Arlo.",
-      icon: <Camera className="h-12 w-12 text-indigo-600" />
+      icon: <Camera className="h-12 w-12 text-blue-600" />
     },
     {
       number: "26",
       title: "Controlo remoto do alarme",
       description: "Os alarmes podem ser controlados de forma remota e a partir do smartphone. Com a App, uma aplicação de fácil navegação, que lhe permite ter o controlo absoluto do seu sistema de alarme, esteja onde estiver.",
-      icon: <Smartphone className="h-12 w-12 text-teal-600" />
+      icon: <Smartphone className="h-12 w-12 text-blue-600" />
     },
     {
       number: "28",
       title: "Fechadura Inteligente",
       description: "A nossa fechadura inteligente alerta em caso de manipulação para atuarmos de imediato. Além disso, criamos um escudo protetor à volta da sua casa com detetores de acesso Shock Sensor nas portas e janelas e, ainda, câmaras de segurança.",
-      icon: <Key className="h-12 w-12 text-pink-600" />
+      icon: <Key className="h-12 w-12 text-blue-600" />
     }
   ];
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 to-gray-700 text-white py-20">
+      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -155,7 +155,7 @@ const AlarmesPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {howItWorks.map((step, index) => (
               <div key={index} className="text-center">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   {step.icon}
                 </div>
                 <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
@@ -207,6 +207,13 @@ const AlarmesPage: React.FC = () => {
       {/* CTA Section */}
       <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/template-dos-inta-2.png" 
+              alt="Instagram Template" 
+              className="w-64 h-auto rounded-lg shadow-lg"
+            />
+          </div>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Faça uma simulação sem compromisso!
