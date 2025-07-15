@@ -333,7 +333,7 @@ const EnergiaPage: React.FC = () => {
           </form>
         </div>
       </section>
-    </div>
+    
   );
 };
 
