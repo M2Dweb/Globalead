@@ -152,8 +152,6 @@ const AlarmesPage: React.FC = () => {
           </div>
         </section>
       </AnimatedSection>
-      </AnimatedSection>
-      </AnimatedSection>
 
       {/* How It Works */}
       <AnimatedSection>

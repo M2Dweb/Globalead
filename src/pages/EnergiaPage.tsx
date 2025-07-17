@@ -204,8 +204,6 @@ const EnergiaPage: React.FC = () => {
           </div>
         </section>
       </AnimatedSection>
-      </AnimatedSection>
-      </AnimatedSection>
 
       {/* Services Section */}
       <AnimatedSection>
