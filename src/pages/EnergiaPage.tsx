@@ -163,38 +163,37 @@ const EnergiaPage: React.FC = () => {
       {/* Energy Providers */}
       <AnimatedSection>
         <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Principais Fornecedores de Energia
-            </h2>
-          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Principais Fornecedores de Energia
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {energyProviders.map((provider, index) => (
-              <div key={index} className="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center mb-6">
-                  <img
-                    src={provider.logo}
-                    alt={provider.name}
-                    className="w-16 h-16 object-cover rounded-lg mr-4"
-                  />
-                  <h3 className="text-2xl font-bold text-gray-900">
-                    {provider.name}
-                  </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {energyProviders.map((provider, index) => (
+                <div key={index} className="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                  <div className="flex items-center mb-6">
+                    <img
+                      src={provider.logo}
+                      alt={provider.name}
+                      className="w-16 h-16 object-cover rounded-lg mr-4"
+                    />
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      {provider.name}
+                    </h3>
+                  </div>
+                  <p className="text-gray-600 mb-6">
+                    {provider.description}
+                  </p>
+                  <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                    Saber mais →
+                  </button>
                 </div>
-                <p className="text-gray-600 mb-6">
-                  {provider.description}
-                </p>
-                <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
-                  Saber mais →
-                </button>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
         </section>
-      </AnimatedSection>
       </AnimatedSection>
 
       {/* FAQ Section */}
@@ -209,84 +208,86 @@ const EnergiaPage: React.FC = () => {
       {/* Services Section */}
       <AnimatedSection>
         <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              3 razões para escolher a Globalead
-            </h2>
-            <p className="text-xl text-gray-600">
-              Porque é importante que sinta que está acompanhado, e que estamos consigo sempre.
-            </p>
-          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                3 razões para escolher a Globalead
+              </h2>
+              <p className="text-xl text-gray-600">
+                Porque é importante que sinta que está acompanhado, e que estamos consigo sempre.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="text-center">
-                  <div className="mb-6">
-                    {React.cloneElement(service.icon, { className: "h-12 w-12 text-blue-600 mx-auto" })}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {services.map((service, index) => (
+                <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="text-center">
+                    <div className="mb-6">
+                      {React.cloneElement(service.icon, { className: "h-12 w-12 text-blue-600 mx-auto" })}
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 mb-6">
+                      {service.description}
+                    </p>
+                    <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                      Saber mais →
+                    </button>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 mb-6">
-                    {service.description}
-                  </p>
-                  <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
-                    Saber mais →
-                  </button>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
       {/* News Section */}
       <AnimatedSection>
         <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Novidades em tempo real
-            </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Subscreva a Newsletter e fique a par de todas as novidades, descontos e promoções disponíveis para si
-            </p>
-          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Novidades em tempo real
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Subscreva a Newsletter e fique a par de todas as novidades, descontos e promoções disponíveis para si
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {newsArticles.map((article, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <div className="flex items-center text-sm text-gray-500 mb-2">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {article.date}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              {newsArticles.map((article, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-6">
+                    <div className="flex items-center text-sm text-gray-500 mb-2">
+                      <Calendar className="h-4 w-4 mr-1" />
+                      {article.date}
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                      {article.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      {article.excerpt}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    {article.excerpt}
-                  </p>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div className="text-center">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-flex items-center">
-              Ver mais
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
+            <div className="text-center">
+              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-flex items-center">
+                Ver mais
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
       {/* Contact Section */}
       <section className="py-20 bg-blue-600 text-white">
@@ -348,7 +349,7 @@ const EnergiaPage: React.FC = () => {
           </form>
         </div>
       </section>
-      </div>
+    </div>
   );
 };
 
