@@ -1,5 +1,27 @@
 import React, { useState } from 'react';
 import { MapPin, Home, Euro, Bed, Bath, Square } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Fix for default markers in react-leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
+// Create custom icon for properties
+const propertyIcon = new L.Icon({
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 const InteractiveMap: React.FC = () => {
   const [selectedProperty, setSelectedProperty] = useState<number | null>(null);
@@ -13,7 +35,7 @@ const InteractiveMap: React.FC = () => {
       bathrooms: 1,
       area: 85,
       location: "Cedofeita, Porto",
-      coordinates: { x: 45, y: 35 },
+      coordinates: { lat: 41.1579, lng: -8.6291 }, // Cedofeita, Porto
       image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=300"
     },
     {
@@ -24,7 +46,7 @@ const InteractiveMap: React.FC = () => {
       bathrooms: 2,
       area: 150,
       location: "Matosinhos, Porto",
-      coordinates: { x: 25, y: 20 },
+      coordinates: { lat: 41.1820, lng: -8.6868 }, // Matosinhos
       image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=300"
     },
     {
@@ -35,7 +57,7 @@ const InteractiveMap: React.FC = () => {
       bathrooms: 1,
       area: 55,
       location: "Campanhã, Porto",
-      coordinates: { x: 65, y: 45 },
+      coordinates: { lat: 41.1496, lng: -8.5830 }, // Campanhã, Porto
       image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=300"
     },
     {
@@ -46,7 +68,7 @@ const InteractiveMap: React.FC = () => {
       bathrooms: 3,
       area: 200,
       location: "Vila Nova de Gaia",
-      coordinates: { x: 55, y: 70 },
+      coordinates: { lat: 41.1239, lng: -8.6118 }, // Vila Nova de Gaia
       image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=300"
     }
   ];
@@ -59,6 +81,9 @@ const InteractiveMap: React.FC = () => {
     }).format(price);
   };
 
+  // Center map on Porto, Portugal
+  const mapCenter: [number, number] = [41.1579, -8.6291];
+
   return (
     <div className="bg-white p-8 rounded-xl shadow-lg">
       <div className="flex items-center mb-6">
@@ -69,60 +94,71 @@ const InteractiveMap: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Map */}
         <div className="relative">
-          <div className="bg-gradient-to-br from-blue-100 to-green-100 rounded-lg h-96 relative overflow-hidden">
-            {/* Simplified map background */}
-            <div className="absolute inset-0 opacity-20">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <path d="M10,20 Q30,10 50,20 T90,25" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
-                <path d="M15,40 Q35,30 55,40 T85,45" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
-                <path d="M20,60 Q40,50 60,60 T80,65" stroke="#3B82F6" strokeWidth="0.5" fill="none" />
-              </svg>
-            </div>
+          <div className="h-96 rounded-lg overflow-hidden">
+            <MapContainer
+              center={mapCenter}
+              zoom={12}
+              style={{ height: '100%', width: '100%' }}
+              className="rounded-lg"
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              
+              {properties.map((property) => (
+                <Marker
+                  key={property.id}
+                  position={[property.coordinates.lat, property.coordinates.lng]}
+                  icon={propertyIcon}
+                  eventHandlers={{
+                    click: () => setSelectedProperty(property.id)
+                  }}
+                >
+                  <Popup>
+                    <div className="p-2">
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        {property.title}
+                      </h4>
+                      <div className="text-lg font-bold text-blue-600 mb-2">
+                        {formatPrice(property.price)}
+                      </div>
+                      <div className="flex items-center space-x-3 text-sm text-gray-600 mb-2">
+                        <div className="flex items-center">
+                          <Bed className="h-3 w-3 mr-1" />
+                          <span>{property.bedrooms}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Bath className="h-3 w-3 mr-1" />
+                          <span>{property.bathrooms}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Square className="h-3 w-3 mr-1" />
+                          <span>{property.area}m²</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <MapPin className="h-3 w-3 mr-1" />
+                        <span>{property.location}</span>
+                      </div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+          </div>
 
-            {/* Property markers */}
-            {properties.map((property) => (
-              <button
-                key={property.id}
-                onClick={() => setSelectedProperty(property.id)}
-                className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
-                  selectedProperty === property.id
-                    ? 'scale-125 z-10'
-                    : 'hover:scale-110'
-                }`}
-                style={{
-                  left: `${property.coordinates.x}%`,
-                  top: `${property.coordinates.y}%`
-                }}
-              >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-lg ${
-                  selectedProperty === property.id
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-blue-600 border-2 border-blue-600'
-                }`}>
-                  <Home className="h-4 w-4" />
-                </div>
-                
-                {/* Price tooltip */}
-                <div className={`absolute top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-2 py-1 rounded text-xs whitespace-nowrap transition-opacity ${
-                  selectedProperty === property.id ? 'opacity-100' : 'opacity-0'
-                }`}>
-                  {formatPrice(property.price)}
-                </div>
-              </button>
-            ))}
-
-            {/* Map legend */}
-            <div className="absolute bottom-4 left-4 bg-white p-3 rounded-lg shadow-lg">
-              <div className="text-xs font-medium text-gray-700 mb-2">Legenda</div>
-              <div className="flex items-center space-x-4 text-xs">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-blue-600 rounded-full mr-1"></div>
-                  <span>Disponível</span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-gray-400 rounded-full mr-1"></div>
-                  <span>Vendido</span>
-                </div>
+          {/* Map legend */}
+          <div className="absolute bottom-4 left-4 bg-white p-3 rounded-lg shadow-lg">
+            <div className="text-xs font-medium text-gray-700 mb-2">Legenda</div>
+            <div className="flex items-center space-x-4 text-xs">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-blue-600 rounded-full mr-1"></div>
+                <span>Disponível</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-gray-400 rounded-full mr-1"></div>
+                <span>Vendido</span>
               </div>
             </div>
           </div>
@@ -180,7 +216,7 @@ const InteractiveMap: React.FC = () => {
             <div className="flex items-center justify-center h-96 text-gray-500">
               <div className="text-center">
                 <MapPin className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                <p>Selecione uma propriedade no mapa para ver os detalhes</p>
+                <p>Clique numa propriedade no mapa para ver os detalhes</p>
               </div>
             </div>
           )}
