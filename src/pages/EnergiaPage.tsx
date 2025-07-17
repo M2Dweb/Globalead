@@ -195,6 +195,7 @@ const EnergiaPage: React.FC = () => {
         </div>
         </section>
       </AnimatedSection>
+      </AnimatedSection>
 
       {/* FAQ Section */}
       <AnimatedSection>
