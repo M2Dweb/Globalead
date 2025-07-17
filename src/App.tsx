@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import StickyCtaButton from './components/StickyCtaButton';
 import Breadcrumbs from './components/Breadcrumbs';
+import SEOHead from './components/SEOHead';
 import HomePage from './pages/HomePage';
 import SobrePage from './pages/SobrePage';
 import ImoveisPage from './pages/ImoveisPage';
@@ -58,6 +59,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead />
       <Header currentPage={currentPage} onNavigate={setCurrentPage} />
       {currentPage !== 'home' && (
         <Breadcrumbs items={getBreadcrumbs()} onNavigate={setCurrentPage} />
