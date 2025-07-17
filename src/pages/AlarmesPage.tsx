@@ -114,33 +114,33 @@ const AlarmesPage: React.FC = () => {
       {/* Security Companies */}
       <AnimatedSection>
         <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Quais são as melhores opções de alarmes?
-            </h2>
-          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Quais são as melhores opções de alarmes?
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {securityCompanies.map((company, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="flex items-center mb-6">
-                  <img
-                    src={company.logo}
-                    alt={company.name}
-                    className="w-16 h-16 object-cover rounded-lg mr-4"
-                  />
-                  <h3 className="text-2xl font-bold text-gray-900">
-                    {company.name}
-                  </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {securityCompanies.map((company, index) => (
+                <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center mb-6">
+                    <img
+                      src={company.logo}
+                      alt={company.name}
+                      className="w-16 h-16 object-cover rounded-lg mr-4"
+                    />
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      {company.name}
+                    </h3>
+                  </div>
+                  <p className="text-gray-600">
+                    {company.description}
+                  </p>
                 </div>
-                <p className="text-gray-600">
-                  {company.description}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
         </section>
       </AnimatedSection>
 
@@ -156,68 +156,70 @@ const AlarmesPage: React.FC = () => {
       {/* How It Works */}
       <AnimatedSection>
         <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Como funciona um alarme completo?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-              O alarme combina sensores, câmaras e monitorização 24/7. Em caso de disparo, a central verifica o evento e pode alertar autoridades. Pode ser controlado via app, funciona mesmo sem eletricidade ou internet, e oferece proteção contínua.
-            </p>
-          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Como funciona um alarme completo?
+              </h2>
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+                O alarme combina sensores, câmaras e monitorização 24/7. Em caso de disparo, a central verifica o evento e pode alertar autoridades. Pode ser controlado via app, funciona mesmo sem eletricidade ou internet, e oferece proteção contínua.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {howItWorks.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {step.icon}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {howItWorks.map((step, index) => (
+                <div key={index} className="text-center">
+                  <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    {step.icon}
+                  </div>
+                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    {step.step}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600">
+                    {step.description}
+                  </p>
                 </div>
-                <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
-                  {step.step}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600">
-                  {step.description}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
       {/* Features */}
       <AnimatedSection>
         <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Quais são as principais características?
-            </h2>
-          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Quais são as principais características?
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-start">
-                  <div className="mr-6 flex-shrink-0">
-                    {feature.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-600">
-                      {feature.description}
-                    </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {features.map((feature, index) => (
+                <div key={index} className="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                  <div className="flex items-start">
+                    <div className="mr-6 flex-shrink-0">
+                      {feature.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600">
+                        {feature.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
       {/* CTA Section */}
       <section className="py-20 bg-blue-600 text-white">
