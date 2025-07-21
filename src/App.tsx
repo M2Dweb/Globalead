@@ -37,7 +37,7 @@ function App() {
       case 'home':
         return <HomePage onNavigate={setCurrentPage} />;
       case 'sobre':
-        return <SobrePage />;
+        return <HomePage />;
       case 'imoveis':
         return <ImoveisPage />;
       case 'tv-net-voz':
