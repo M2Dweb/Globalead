@@ -1,22 +1,51 @@
 import React from 'react';
-import { Facebook, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Mail, Phone, Share2 } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Contact Info */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Instagram Profile Simulation */}
           <div>
-            <div className="mb-4">
-              <img 
-                src="/logo.png" 
-                alt="Globalead Portugal" 
-                className="h-18 w-auto"
-              />
+            <div className="bg-gray-800 p-6 rounded-lg mb-6">
+              <div className="flex items-center mb-4">
+                <img 
+                  src="/logo.png" 
+                  alt="Globalead Portugal" 
+                  className="h-12 w-12 rounded-full mr-3"
+                />
+                <div>
+                  <h3 className="font-bold text-white">Globalead Portugal</h3>
+                  <p className="text-sm text-gray-400">1.385 seguidores</p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-300 mb-4">
+                Conheça tudo sobre a Globalead Portugal!
+              </p>
+              <div className="flex space-x-2">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition-colors">
+                  Seguir Página
+                </button>
+                <button className="bg-gray-700 text-white px-4 py-2 rounded text-sm hover:bg-gray-600 transition-colors flex items-center">
+                  <Share2 className="h-4 w-4 mr-1" />
+                  Compartilhar
+                </button>
+              </div>
             </div>
+            
+            {/* Social Media */}
+            <div className="flex space-x-4">
+              <Facebook className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
+              <Instagram className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
+              <Linkedin className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
+            </div>
+          </div>
+
+          {/* Contact Info and Latest News */}
+          <div>
             <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>
-            <div className="space-y-3">
+            <div className="space-y-3 mb-8">
               <div className="flex items-center">
                 <Phone className="h-5 w-5 mr-2 text-blue-400" />
                 <span>+351 915482365</span>
@@ -27,16 +56,6 @@ const Footer: React.FC = () => {
               </div>
             </div>
             
-            {/* Social Media */}
-            <div className="flex space-x-4 mt-6">
-              <Facebook className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
-              <Instagram className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
-              <Linkedin className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
-            </div>
-          </div>
-
-          {/* Latest News */}
-          <div className="lg:col-span-2">
             <h3 className="text-xl font-bold mb-4">Últimas Notícias</h3>
             <div className="space-y-3">
               <div>

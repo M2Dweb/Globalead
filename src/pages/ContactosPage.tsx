@@ -21,7 +21,7 @@ const ContactosPage: React.FC = () => {
       {/* Contact Info */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="mb-16">
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
               Caso tenha dúvidas sobre os nossos serviços, precise de assistência técnica, pretenda informações adicionais ou procure uma solução totalmente personalizada, a nossa equipa está preparada para encontrar a resposta certa para si.
             </p>
@@ -92,7 +92,7 @@ const ContactosPage: React.FC = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20 bg-blue-50">
+      <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center mb-8">
             <img 
@@ -102,11 +102,11 @@ const ContactosPage: React.FC = () => {
             />
           </div>
           <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">
                 Formulário de Contacto
               </h2>
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-center">
                 Preencha o formulário abaixo e entraremos em contacto consigo
               </p>
             </div>

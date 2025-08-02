@@ -1,28 +1,11 @@
 import React, { useState } from 'react';
-import { Bed, Bath, Square, MapPin, ArrowRight, Shield, CreditCard, Zap, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Bed, Bath, Square, MapPin, ArrowRight, Shield, CreditCard, Zap, FileText } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
 import CreditCalculator from '../components/CreditCalculator';
-import InteractiveMap from '../components/InteractiveMap';
 import FAQ from '../components/FAQ';
 import AnimatedSection from '../components/AnimatedSection';
 
 const ImoveisPage: React.FC = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState<{[key: number]: number}>({});
-
-  const nextImage = (propertyId: number, totalImages: number) => {
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [propertyId]: ((prev[propertyId] || 0) + 1) % totalImages
-    }));
-  };
-
-  const prevImage = (propertyId: number, totalImages: number) => {
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [propertyId]: ((prev[propertyId] || 0) - 1 + totalImages) % totalImages
-    }));
-  };
-
   const properties = [
     {
       id: 1,
@@ -32,11 +15,7 @@ const ImoveisPage: React.FC = () => {
       bathrooms: 3,
       area: 238,
       location: "Aldoar, Porto",
-      images: [
-        "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
+      image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       id: 2,
@@ -46,11 +25,7 @@ const ImoveisPage: React.FC = () => {
       bathrooms: 2,
       area: 145,
       location: "Vila Nova de Gaia",
-      images: [
-        "https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
+      image: "https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       id: 3,
@@ -60,11 +35,7 @@ const ImoveisPage: React.FC = () => {
       bathrooms: 2,
       area: 139,
       location: "Paranhos, Porto",
-      images: [
-        "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1643384/pexels-photo-1643384.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
+      image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"
     }
   ];
 
@@ -128,74 +99,42 @@ const ImoveisPage: React.FC = () => {
       <AnimatedSection>
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-1 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {properties.map((property) => (
                 <div key={property.id} className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
-                  <div className="md:flex">
-                    {/* Image Slideshow */}
-                    <div className="md:w-1/2">
-                      <div className="relative h-64 md:h-full group">
-                        <img
-                          src={property.images[currentImageIndex[property.id] || 0]}
-                          alt={property.title}
-                          className="w-full h-full object-cover"
-                        />
-                        
-                        {/* Navigation Buttons */}
-                        <button
-                          onClick={() => prevImage(property.id, property.images.length)}
-                          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        >
-                          <ChevronLeft className="h-4 w-4" />
-                        </button>
-                        <button
-                          onClick={() => nextImage(property.id, property.images.length)}
-                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        >
-                          <ChevronRight className="h-4 w-4" />
-                        </button>
-                        
-                        <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-                          {(currentImageIndex[property.id] || 0) + 1} / {property.images.length}
-                        </div>
+                  <img
+                    src={property.image}
+                    alt={property.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {property.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 text-sm">
+                      {property.description}
+                    </p>
+                    <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600">
+                      <div className="flex items-center">
+                        <Bed className="h-4 w-4 mr-1" />
+                        <span>{property.bedrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Bath className="h-4 w-4 mr-1" />
+                        <span>{property.bathrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Square className="h-4 w-4 mr-1" />
+                        <span>{property.area} m²</span>
                       </div>
                     </div>
-
-                    {/* Property Details */}
-                    <div className="md:w-1/2 p-8">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                        {property.title}
-                      </h3>
-                      <p className="text-gray-600 mb-6">
-                        {property.description}
-                      </p>
-
-                      {/* Property Features */}
-                      <div className="flex items-center space-x-6 mb-6">
-                        <div className="flex items-center text-gray-700">
-                          <Bed className="h-5 w-5 mr-2" />
-                          <span>{property.bedrooms} quartos</span>
-                        </div>
-                        <div className="flex items-center text-gray-700">
-                          <Bath className="h-5 w-5 mr-2" />
-                          <span>{property.bathrooms} casas de banho</span>
-                        </div>
-                        <div className="flex items-center text-gray-700">
-                          <Square className="h-5 w-5 mr-2" />
-                          <span>{property.area} m²</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center text-gray-700 mb-6">
-                        <MapPin className="h-5 w-5 mr-2" />
-                        <span>{property.location}</span>
-                      </div>
-
-                      <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-flex items-center">
-                        Ver Imóvel
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </button>
+                    <div className="flex items-center text-sm text-gray-600 mb-4">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      <span>{property.location}</span>
                     </div>
+                    <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                      VER IMÓVEL
+                    </button>
                   </div>
                 </div>
               ))}
@@ -213,14 +152,6 @@ const ImoveisPage: React.FC = () => {
         </section>
       </AnimatedSection>
 
-      {/* Interactive Map */}
-      <AnimatedSection>
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <InteractiveMap />
-          </div>
-        </section>
-      </AnimatedSection>
 
       {/* Services Section */}
       <AnimatedSection>
@@ -258,14 +189,6 @@ const ImoveisPage: React.FC = () => {
         </section>
       </AnimatedSection>
 
-      {/* FAQ Section */}
-      <AnimatedSection>
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FAQ category="imoveis" />
-          </div>
-        </section>
-      </AnimatedSection>
 
       {/* Marketing Section */}
       <AnimatedSection>
@@ -298,7 +221,7 @@ const ImoveisPage: React.FC = () => {
       </AnimatedSection>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+      <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -378,6 +301,15 @@ const ImoveisPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FAQ category="imoveis" />
+          </div>
+        </section>
+      </AnimatedSection>
     </div>
   );
 };

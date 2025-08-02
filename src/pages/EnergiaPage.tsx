@@ -197,13 +197,6 @@ const EnergiaPage: React.FC = () => {
       </AnimatedSection>
 
       {/* FAQ Section */}
-      <AnimatedSection>
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FAQ category="energia" />
-          </div>
-        </section>
-      </AnimatedSection>
 
       {/* Services Section */}
       <AnimatedSection>
@@ -290,7 +283,7 @@ const EnergiaPage: React.FC = () => {
       </AnimatedSection>
 
       {/* Contact Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+      <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center mb-8">
             <img 
@@ -349,6 +342,15 @@ const EnergiaPage: React.FC = () => {
           </form>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <AnimatedSection>
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FAQ category="energia" />
+          </div>
+        </section>
+      </AnimatedSection>
     </div>
   );
 };
