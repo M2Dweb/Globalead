@@ -84,6 +84,7 @@ const FAQ: React.FC<FAQProps> = ({ category }) => {
 
   return (
     <div className="bg-white p-8 rounded-xl shadow-lg">
+    <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
         <HelpCircle className="h-8 w-8 text-blue-600 mr-3" />
         <h3 className="text-2xl font-bold text-gray-900">Perguntas Frequentes</h3>
@@ -91,10 +92,10 @@ const FAQ: React.FC<FAQProps> = ({ category }) => {
 
       <div className="space-y-4">
         {currentFAQ.map((item, index) => (
-          <div key={index} className="border border-gray-200 rounded-lg">
+          <div key={index} className="border border-gray-200 rounded-xl bg-gray-50">
             <button
               onClick={() => toggleItem(index)}
-              className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+              className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-blue-50 transition-colors rounded-xl"
             >
               <span className="font-medium text-gray-900">{item.question}</span>
               {openItems.includes(index) ? (

@@ -52,7 +52,7 @@ const CreditCalculator: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-lg">
+    <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
         <Calculator className="h-8 w-8 text-blue-600 mr-3" />
         <h3 className="text-2xl font-bold text-gray-900">Calculadora de Crédito Habitação</h3>
@@ -144,7 +144,7 @@ const CreditCalculator: React.FC = () => {
 
         {/* Results */}
         <div className="space-y-4">
-          <div className="bg-blue-50 p-4 rounded-lg">
+          <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
             <div className="flex items-center mb-2">
               <Home className="h-5 w-5 text-blue-600 mr-2" />
               <span className="text-sm font-medium text-gray-700">Montante do Empréstimo</span>
@@ -154,7 +154,7 @@ const CreditCalculator: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-green-50 p-4 rounded-lg">
+          <div className="bg-green-50 p-4 rounded-xl border border-green-100">
             <div className="flex items-center mb-2">
               <DollarSign className="h-5 w-5 text-green-600 mr-2" />
               <span className="text-sm font-medium text-gray-700">Prestação Mensal</span>
@@ -164,7 +164,7 @@ const CreditCalculator: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-orange-50 p-4 rounded-lg">
+          <div className="bg-orange-50 p-4 rounded-xl border border-orange-100">
             <div className="flex items-center mb-2">
               <TrendingUp className="h-5 w-5 text-orange-600 mr-2" />
               <span className="text-sm font-medium text-gray-700">Total de Juros</span>
@@ -174,7 +174,7 @@ const CreditCalculator: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
             <div className="flex items-center mb-2">
               <Calculator className="h-5 w-5 text-gray-600 mr-2" />
               <span className="text-sm font-medium text-gray-700">Total a Pagar</span>

@@ -58,7 +58,7 @@ const CompanyStats: React.FC = () => {
   };
 
   return (
-    <section ref={ref} className="py-20 bg-blue-600 text-white">
+    <section ref={ref} className="py-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -78,7 +78,7 @@ const CompanyStats: React.FC = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="text-center"
             >
-              <div className="bg-white bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-white bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 {stat.icon}
               </div>
               <div className="text-4xl font-bold mb-2">
