@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Shield, Zap, Phone } from 'lucide-react';
+import { Home, Shield, Zap, Phone, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 import CompanyStats from '../components/CompanyStats';
@@ -356,11 +356,17 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           </div>
         </div>
       </section>
-    </div>
-  );
-};
 
-export default HomePage;
+      {/* Final CTA Section */}
+      <section className="py-20 bg-blue-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Pronto para começar?
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
               Entre em contacto connosco hoje mesmo e descubra como podemos ajudá-lo a alcançar os seus objetivos.
