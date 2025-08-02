@@ -301,7 +301,6 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           </div>
         </section>
       </AnimatedSection>
-      </section>
 
 
       {/* Company Stats */}
