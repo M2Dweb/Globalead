@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, isHeroVisible 
             <img 
               src="/logo.png" 
               alt="Globalead Portugal" 
-              className="h-20 w-auto"
+              className="h-14 w-auto"
             />
           </div>
 
