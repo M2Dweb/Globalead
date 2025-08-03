@@ -86,7 +86,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
               Confiança.<br />
               Eficiência.
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-6 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-xl md:text-2xl text-blue-100 mb-8 leading-relaxed max-w-4xl ">
               A Globalead Portugal é uma empresa inovadora que atua como intermediária, oferecendo soluções personalizadas em diversos setores. Com foco na comodidade, segurança e eficiência, simplificamos processos e proporcionamos um atendimento centralizado e gratuito, garantindo um serviço adaptado às reais necessidades e exigências de cada cliente.
             </p>
           </motion.div>
