@@ -1,6 +1,7 @@
 import React from 'react';
 import { Home, Shield, Zap, Phone, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import AnimatedSection from '../components/AnimatedSection';
 import CompanyStats from '../components/CompanyStats';
 import VideoTestimonials from '../components/VideoTestimonials';
@@ -13,9 +14,20 @@ import { trackEvent } from '../components/Analytics';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
+  onHeroVisibilityChange?: (isVisible: boolean) => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
+const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange }) => {
+  const { ref: heroRef, inView: heroInView } = useInView({
+    threshold: 0.1,
+  });
+
+  React.useEffect(() => {
+    if (onHeroVisibilityChange) {
+      onHeroVisibilityChange(heroInView);
+    }
+  }, [heroInView, onHeroVisibilityChange]);
+
   const services = [
     {
       icon: <Home className="h-12 w-12 text-blue-600" />,
@@ -55,15 +67,15 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-900 to-blue-700 text-white overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-white overflow-hidden flex items-center">
         <div className="absolute inset-0 bg-black opacity-30"></div>
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{
-            backgroundImage: 'url("https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=1200")'
+            backgroundImage: 'url("/homepage-image")'
           }}
         ></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}

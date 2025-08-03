@@ -16,6 +16,7 @@ import ContactosPage from './pages/ContactosPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
 
   const getBreadcrumbs = () => {
     const breadcrumbMap: { [key: string]: Array<{ label: string; href?: string; current?: boolean }> } = {
@@ -35,7 +36,7 @@ function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return <HomePage onNavigate={setCurrentPage} />;
+        return <HomePage onNavigate={setCurrentPage} onHeroVisibilityChange={setIsHeroVisible} />;
       case 'sobre':
         return <HomePage />;
       case 'imoveis':
@@ -53,14 +54,14 @@ function App() {
       case 'contactos':
         return <ContactosPage />;
       default:
-        return <HomePage onNavigate={setCurrentPage} />;
+        return <HomePage onNavigate={setCurrentPage} onHeroVisibilityChange={setIsHeroVisible} />;
     }
   };
 
   return (
     <div className="min-h-screen bg-white">
       <SEOHead />
-      <Header currentPage={currentPage} onNavigate={setCurrentPage} />
+      <Header currentPage={currentPage} onNavigate={setCurrentPage} isHeroVisible={currentPage === 'home' ? isHeroVisible : false} />
       {currentPage !== 'home' && (
         <Breadcrumbs items={getBreadcrumbs()} onNavigate={setCurrentPage} />
       )}
