@@ -75,7 +75,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
             backgroundImage: 'url("/homepage-image")'
           }}
         ></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left w-full">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
