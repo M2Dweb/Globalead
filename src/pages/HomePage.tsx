@@ -104,20 +104,20 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 flex flex-col h-full">
                 <img
                   src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Empreendimento Vila Nova"
                   className="w-full h-48 object-cover"
                 />
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-bold text-gray-900 mb-3">
                     Empreendimento Vila Nova
                   </h3>
-                  <p className="text-gray-600 mb-4 text-sm">
+                  <p className="text-gray-600 mb-4 text-sm flex-grow">
                     Empreendimento completamente murado, em pedra. O exterior das moradias terá uma grande presença de betão aparente...
                   </p>
-                  <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600">
+                  <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600 min-h-[20px]">
                     <div className="flex items-center">
                       <span className="mr-1">🛏️</span>
                       <span>3</span>
@@ -130,31 +130,31 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
                       <span className="mr-1">📐</span>
                       <span>238 m²</span>
                     </div>
-                    <div className="flex items-center">
-                      <span className="mr-1">📍</span>
-                      <span>Aldoar, Porto</span>
-                    </div>
                   </div>
-                  <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                  <div className="flex items-center text-sm text-gray-600 mb-4 min-h-[20px]">
+                    <span className="mr-1">📍</span>
+                    <span>Aldoar, Porto</span>
+                  </div>
+                  <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors mt-auto">
                     VER IMÓVEL
                   </button>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 flex flex-col h-full">
                 <img
                   src="https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Empreendimento Noval Park"
                   className="w-full h-48 object-cover"
                 />
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-bold text-gray-900 mb-3">
                     Empreendimento Noval Park
                   </h3>
-                  <p className="text-gray-600 mb-4 text-sm">
+                  <p className="text-gray-600 mb-4 text-sm flex-grow">
                     Cidade de paisagens ofegantes, miragens autênticas de recantos e encantos irrefutáveis...
                   </p>
-                  <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600">
+                  <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600 min-h-[20px]">
                     <div className="flex items-center">
                       <span className="mr-1">🛏️</span>
                       <span>2</span>
@@ -167,31 +167,31 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
                       <span className="mr-1">📐</span>
                       <span>145 m²</span>
                     </div>
-                    <div className="flex items-center">
-                      <span className="mr-1">📍</span>
-                      <span>Vila Nova de Gaia</span>
-                    </div>
                   </div>
-                  <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                  <div className="flex items-center text-sm text-gray-600 mb-4 min-h-[20px]">
+                    <span className="mr-1">📍</span>
+                    <span>Vila Nova de Gaia</span>
+                  </div>
+                  <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors mt-auto">
                     VER IMÓVEL
                   </button>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 flex flex-col h-full">
                 <img
                   src="https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Empreendimento Boss Gardens"
                   className="w-full h-48 object-cover"
                 />
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-bold text-gray-900 mb-3">
                     Empreendimento Boss Gardens
                   </h3>
-                  <p className="text-gray-600 mb-4 text-sm">
+                  <p className="text-gray-600 mb-4 text-sm flex-grow">
                     Boss Gardens está localizado na zona de Paranhos, uma das melhores zonas residenciais do Porto...
                   </p>
-                  <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600">
+                  <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600 min-h-[20px]">
                     <div className="flex items-center">
                       <span className="mr-1">🛏️</span>
                       <span>3</span>
@@ -204,12 +204,12 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
                       <span className="mr-1">📐</span>
                       <span>139 m²</span>
                     </div>
-                    <div className="flex items-center">
-                      <span className="mr-1">📍</span>
-                      <span>Paranhos, Porto</span>
-                    </div>
                   </div>
-                  <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                  <div className="flex items-center text-sm text-gray-600 mb-4 min-h-[20px]">
+                    <span className="mr-1">📍</span>
+                    <span>Paranhos, Porto</span>
+                  </div>
+                  <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors mt-auto">
                     VER IMÓVEL
                   </button>
                 </div>
@@ -231,19 +231,19 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="text-center">
-                <div className="mb-6">
+                <div className="mb-6 flex flex-col h-full">
                   <div className="bg-blue-600 w-20 h-20 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <Home className="h-10 w-10 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-blue-600 mb-3">
                     Alarmes
                   </h3>
-                  <p className="text-gray-600 text-sm mb-6">
+                  <p className="text-gray-600 text-sm mb-6 flex-grow">
                     Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar.
                   </p>
-                  <button 
+                  <button
                     onClick={() => handleServiceClick('alarmes')}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors mt-auto"
                   >
                     SABER MAIS
                   </button>
@@ -251,19 +251,19 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
               </div>
 
               <div className="text-center">
-                <div className="mb-6">
+                <div className="mb-6 flex flex-col h-full">
                   <div className="bg-blue-600 w-20 h-20 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <Zap className="h-10 w-10 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-blue-600 mb-3">
                     Energia
                   </h3>
-                  <p className="text-gray-600 text-sm mb-6">
+                  <p className="text-gray-600 text-sm mb-6 flex-grow">
                     A eletricidade e o gás natural desempenham papéis essenciais na vida moderna, indispensáveis para diversas atividades realizadas diariamente. É crucial atender a todos os clientes com a melhor oferta energética de forma a facilitar a sua decisão
                   </p>
-                  <button 
+                  <button
                     onClick={() => handleServiceClick('energia')}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors mt-auto"
                   >
                     SABER MAIS
                   </button>
@@ -271,19 +271,19 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
               </div>
 
               <div className="text-center">
-                <div className="mb-6">
+                <div className="mb-6 flex flex-col h-full">
                   <div className="bg-blue-600 w-20 h-20 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <Shield className="h-10 w-10 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-blue-600 mb-3">
                     Seguros
                   </h3>
-                  <p className="text-gray-600 text-sm mb-6">
+                  <p className="text-gray-600 text-sm mb-6 flex-grow">
                     Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme definido nas condições da apólice.
                   </p>
-                  <button 
+                  <button
                     onClick={() => handleServiceClick('seguros')}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors mt-auto"
                   >
                     SABER MAIS
                   </button>
@@ -291,19 +291,19 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
               </div>
 
               <div className="text-center">
-                <div className="mb-6">
+                <div className="mb-6 flex flex-col h-full">
                   <div className="bg-blue-600 w-20 h-20 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <Phone className="h-10 w-10 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-blue-600 mb-3">
                     TV, Net, Voz
                   </h3>
-                  <p className="text-gray-600 text-sm mb-6">
+                  <p className="text-gray-600 text-sm mb-6 flex-grow">
                     As telecomunicações são essenciais para a conectividade e desempenham um papel crucial na propagação de informações em muitas áreas da sociedade. A Globaleal apresenta várias soluções e pretende atender às reais necessidades de cada cliente
                   </p>
-                  <button 
+                  <button
                     onClick={() => handleServiceClick('tv-net-voz')}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors mt-auto"
                   >
                     SABER MAIS
                   </button>

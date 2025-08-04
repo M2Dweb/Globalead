@@ -86,7 +86,7 @@ const GoogleReviews: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {reviews.map((review, index) => (
+          {reviews.slice(0, 3).map((review, index) => (
             <motion.div
               key={review.id}
               initial={{ opacity: 0, y: 50 }}

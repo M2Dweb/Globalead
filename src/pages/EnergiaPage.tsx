@@ -285,61 +285,68 @@ const EnergiaPage: React.FC = () => {
       {/* Contact Section */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center mb-8">
-            <img 
-              src="/template-dos-inta-2.png" 
-              alt="Instagram Template" 
-              className="w-64 h-auto rounded-lg shadow-lg"
-            />
-          </div>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Acompanhamento Personalizado
-            </h2>
-            <p className="text-xl text-blue-100 mb-8">
-              Já tem uma ideia de aquilo que deseja mas não tem a certeza de como concretizar?
-            </p>
-            <p className="text-lg text-blue-100">
-              A nossa equipa de profissionais vai ajudar-lhe no processo de escolha do imóvel e todos os serviços associados a um imóvel.
-            </p>
-          </div>
-
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input
-              type="text"
-              placeholder="Nome*"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <input
-              type="email"
-              placeholder="Email*"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <input
-              type="tel"
-              placeholder="Contacto*"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <input
-              type="text"
-              placeholder="Localidade*"
-              className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <input
-              type="text"
-              placeholder="Código Postal*"
-              className="md:col-span-2 px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-
-            <div className="md:col-span-2">
-              <button
-                type="submit"
-                className="w-full bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300"
-              >
-                Enviar Pedido
-              </button>
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            {/* Instagram Template - Lado Esquerdo */}
+            <div className="lg:w-1/3 flex justify-center">
+              <img 
+                src="/template-dos-inta-2.png" 
+                alt="Instagram Template" 
+                className="w-64 h-auto rounded-lg shadow-lg"
+              />
             </div>
-          </form>
+
+            {/* Formulário - Lado Direito */}
+            <div className="lg:w-2/3">
+              <div className="text-center lg:text-left mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Acompanhamento Personalizado
+                </h2>
+                <p className="text-xl text-blue-100 mb-8">
+                  Já tem uma ideia de aquilo que deseja mas não tem a certeza de como concretizar?
+                </p>
+                <p className="text-lg text-blue-100">
+                  A nossa equipa de profissionais vai ajudar-lhe no processo de escolha do imóvel e todos os serviços associados a um imóvel.
+                </p>
+              </div>
+
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  type="text"
+                  placeholder="Nome*"
+                  className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+                <input
+                  type="email"
+                  placeholder="Email*"
+                  className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+                <input
+                  type="tel"
+                  placeholder="Contacto*"
+                  className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+                <input
+                  type="text"
+                  placeholder="Localidade*"
+                  className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+                <input
+                  type="text"
+                  placeholder="Código Postal*"
+                  className="md:col-span-2 px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+
+                <div className="md:col-span-2">
+                  <button
+                    type="submit"
+                    className="w-full bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                  >
+                    Enviar Pedido
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
 

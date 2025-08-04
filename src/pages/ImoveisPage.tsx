@@ -223,12 +223,6 @@ const ImoveisPage: React.FC = () => {
       {/* CTA Section */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Venda o seu imóvel de forma rápida, segura e sem complicações!
-            </h2>
-          </div>
-
           <div className="flex flex-col lg:flex-row gap-8 items-start">
             {/* Instagram Template - Lado Esquerdo */}
             <div className="lg:w-1/3 flex justify-center">
@@ -241,6 +235,11 @@ const ImoveisPage: React.FC = () => {
 
             {/* Formulário - Lado Direito */}
             <div className="lg:w-2/3">
+              <div className="text-center lg:text-left mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Venda o seu imóvel de forma rápida, segura e sem complicações!
+                </h2>
+              </div>
               <ContactForm 
                 page="imoveis" 
                 showExtraFields={true}
