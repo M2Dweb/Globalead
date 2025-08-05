@@ -177,18 +177,7 @@ const ContactosPage: React.FC = () => {
           </div>
         </div>
       </section>
-                </p>
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                >
-                  Enviar Mensagem
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
+                
 
       {/* Additional Info */}
       <section className="py-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
