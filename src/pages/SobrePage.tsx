@@ -26,28 +26,28 @@ const SobrePage: React.FC = () => {
     title: "Soluções avançadas",
     description:
       "Garanta acesso a soluções avançadas, fiáveis e eficazes, personalizadas para as suas reais necessidades.",
-    icon: <Cpu className="w-7 h-7" />,
+    icon: <Cpu className="w-7 h-7" />
   },
   {
     number: "2",
     title: "Estudamos o mercado",
     description:
       "Analisamos as suas necessidades e recomendamos a solução ideal, sempre com a qualidade e garantia das marcas que representamos.",
-    icon: <Search className="w-7 h-7" />,
+    icon: <Search className="w-7 h-7" />
   },
   {
     number: "3",
     title: "Soluções de excelência",
     description:
       "Escolher a Globalead significa optar por uma experiência personalizada com acesso às melhores soluções do mercado.",
-    icon: <Star className="w-7 h-7" />,
+    icon: <Star className="w-7 h-7" />
   },
   {
     number: "4",
     title: "Selo de confiança",
     description:
       "Representamos a qualidade, a inovação e a confiança que as empresas oferecem para garantir que recebe o melhor suporte.",
-    icon: <ShieldCheck className="w-7 h-7" />,
+    icon: <ShieldCheck className="w-7 h-7" />
   },
 ];
 
