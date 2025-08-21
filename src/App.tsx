@@ -38,7 +38,7 @@ function App() {
       case 'home':
         return <HomePage onNavigate={setCurrentPage} onHeroVisibilityChange={setIsHeroVisible} />;
       case 'sobre':
-        return <HomePage />;
+        return <SobrePage />;
       case 'imoveis':
         return <ImoveisPage />;
       case 'tv-net-voz':
