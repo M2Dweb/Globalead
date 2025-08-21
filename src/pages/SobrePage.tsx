@@ -21,27 +21,35 @@ const SobrePage: React.FC = () => {
   ];
 
   const reasons = [
-    {
-      number: "1",
-      title: "Soluções avançadas",
-      description: "Garanta acesso a soluções avançadas, fiáveis e eficazes, personalizadas para as suas reais necessidades."
-    },
-    {
-      number: "2",
-      title: "Estudamos o mercado",
-      description: "Analisamos as suas necessidades e recomendamos a solução ideal, sempre com a qualidade e garantia das marcas que representamos."
-    },
-    {
-      number: "3",
-      title: "Soluções de excelência",
-      description: "Escolher a Globalead significa optar por uma experiência personalizada com acesso às melhores soluções do mercado."
-    },
-    {
-      number: "4",
-      title: "Selo de confiança",
-      description: "Representamos a qualidade, a inovação e a confiança que as empresas oferecem para garantir que recebe o melhor suporte."
-    }
-  ];
+  {
+    number: "1",
+    title: "Soluções avançadas",
+    description:
+      "Garanta acesso a soluções avançadas, fiáveis e eficazes, personalizadas para as suas reais necessidades.",
+    icon: <Cpu className="w-7 h-7" />,
+  },
+  {
+    number: "2",
+    title: "Estudamos o mercado",
+    description:
+      "Analisamos as suas necessidades e recomendamos a solução ideal, sempre com a qualidade e garantia das marcas que representamos.",
+    icon: <Search className="w-7 h-7" />,
+  },
+  {
+    number: "3",
+    title: "Soluções de excelência",
+    description:
+      "Escolher a Globalead significa optar por uma experiência personalizada com acesso às melhores soluções do mercado.",
+    icon: <Star className="w-7 h-7" />,
+  },
+  {
+    number: "4",
+    title: "Selo de confiança",
+    description:
+      "Representamos a qualidade, a inovação e a confiança que as empresas oferecem para garantir que recebe o melhor suporte.",
+    icon: <ShieldCheck className="w-7 h-7" />,
+  },
+];
 
   const objectives = [
     {
@@ -70,7 +78,7 @@ const SobrePage: React.FC = () => {
     }
   ];
 
-  return (
+return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
@@ -91,19 +99,37 @@ const SobrePage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-700 leading-relaxed mb-6">
-              A Globalead destaca-se pela sua abordagem integrada e inovadora, atuando como intermediária para oferecer soluções personalizadas que garantem conforto, segurança e eficiência em todos os processos. Fundada para preencher uma lacuna no mercado, a empresa é pioneira na gestão e acompanhamento de clientes em múltiplas áreas, colocando as necessidades de cada um no centro das suas operações.
+              A Globalead destaca-se pela sua abordagem integrada e inovadora,
+              atuando como intermediária para oferecer soluções personalizadas
+              que garantem conforto, segurança e eficiência em todos os
+              processos. Fundada para preencher uma lacuna no mercado, a empresa
+              é pioneira na gestão e acompanhamento de clientes em múltiplas
+              áreas, colocando as necessidades de cada um no centro das suas
+              operações.
             </p>
-            
             <p className="text-gray-700 leading-relaxed mb-6">
-              Com um portfólio abrangente, a Globalead especializa-se no mercado imobiliário, complementado por serviços em seguros, créditos, alarmes, telecomunicações e energia. A empresa combina uma abordagem moderna com experiência consolidada, posicionando-se como referência no setor.
+              Com um portfólio abrangente, a Globalead especializa-se no mercado
+              imobiliário, complementado por serviços em seguros, créditos,
+              alarmes, telecomunicações e energia. A empresa combina uma
+              abordagem moderna com experiência consolidada, posicionando-se
+              como referência no setor.
             </p>
-            
             <p className="text-gray-700 leading-relaxed mb-6">
-              A equipa é composta por profissionais altamente qualificados e comprometidos, que oferecem um atendimento personalizado, baseado em inovação, criatividade e antecipação de necessidades. A Globalead simplifica a experiência do cliente, proporcionando um acompanhamento gratuito e centralizado desde o primeiro contacto até à conclusão dos processos.
+              A equipa é composta por profissionais altamente qualificados e
+              comprometidos, que oferecem um atendimento personalizado, baseado
+              em inovação, criatividade e antecipação de necessidades. A
+              Globalead simplifica a experiência do cliente, proporcionando um
+              acompanhamento gratuito e centralizado desde o primeiro contacto
+              até à conclusão dos processos.
             </p>
-            
             <p className="text-gray-700 leading-relaxed mb-8">
-              O compromisso da empresa é criar relações de confiança duradouras, fidelizando clientes através de um serviço próximo e individualizado que excede expectativas. Presente em todas as etapas da jornada do cliente, a Globalead eleva a experiência a um novo patamar de conveniência e satisfação, inspirando recomendações e fortalecendo a sua reputação como uma rede de intermediação e gestão de excelência.
+              O compromisso da empresa é criar relações de confiança duradouras,
+              fidelizando clientes através de um serviço próximo e individualizado
+              que excede expectativas. Presente em todas as etapas da jornada do
+              cliente, a Globalead eleva a experiência a um novo patamar de
+              conveniência e satisfação, inspirando recomendações e
+              fortalecendo a sua reputação como uma rede de intermediação e
+              gestão de excelência.
             </p>
           </div>
         </div>
@@ -118,22 +144,20 @@ const SobrePage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* 4 pontos lado a lado */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             {reasons.map((reason, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
-                <div className="flex items-start">
-                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
-                    {reason.number}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      {reason.title}
-                    </h3>
-                    <p className="text-gray-600">
-                      {reason.description}
-                    </p>
-                  </div>
+              <div
+                key={index}
+                className="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center"
+              >
+                <div className="bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                  {reason.icon}
                 </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  {reason.title}
+                </h3>
+                <p className="text-gray-600">{reason.description}</p>
               </div>
             ))}
           </div>
@@ -149,17 +173,19 @@ const SobrePage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="space-y-6">
+          {/* 2 colunas x 3 linhas */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {objectives.map((objective, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-xl">
-                <div className="flex items-start">
-                  <div className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
-                    {objective.number}
-                  </div>
-                  <p className="text-gray-700 leading-relaxed">
-                    {objective.description}
-                  </p>
+              <div
+                key={index}
+                className="bg-gray-50 p-6 rounded-xl flex items-start"
+              >
+                <div className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
+                  {objective.number}
                 </div>
+                <p className="text-gray-700 leading-relaxed">
+                  {objective.description}
+                </p>
               </div>
             ))}
           </div>
@@ -189,8 +215,12 @@ const SobrePage: React.FC = () => {
                   "{testimonial.review}"
                 </p>
                 <div className="border-t pt-4">
-                  <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">Review: {testimonial.platform}</p>
+                  <p className="font-semibold text-gray-900">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Review: {testimonial.platform}
+                  </p>
                 </div>
               </div>
             ))}
