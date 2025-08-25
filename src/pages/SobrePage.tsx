@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Users, Award, CheckCircle, DollarSign, Clock } from 'lucide-react';
+import { Star, Users, Award, CheckCircle, DollarSign, Clock, Cpu, Search, ShieldCheck } from 'lucide-react';
 
 const SobrePage: React.FC = () => {
   const testimonials = [
@@ -145,11 +145,11 @@ return (
           </div>
 
           {/* 4 pontos lado a lado */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {reasons.map((reason, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center"
+                className="bg-white p-8 rounded-xl shadow-lg text-center"
               >
                 <div className="bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
                   {reason.icon}
