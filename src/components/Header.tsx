@@ -13,8 +13,6 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, isHeroVisible 
   const menuItems = [
     { name: 'Sobre', page: 'sobre' },
     { name: 'Imóveis', page: 'imoveis' },
-    { name: 'TV NET VOZ', page: 'tv-net-voz' },
-    { name: 'Energia', page: 'energia' },
     { name: 'Seguros', page: 'seguros' },
     { name: 'Alarmes', page: 'alarmes' },
     { name: 'Blog', page: 'blog' },
