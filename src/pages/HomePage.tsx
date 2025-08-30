@@ -69,7 +69,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-white overflow-hidden flex items-center">
         <video
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
+          className="absolute inset-0 w-full h-full object-cover opacity-50"
           autoPlay
           loop
           muted
