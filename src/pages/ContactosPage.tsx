@@ -194,7 +194,7 @@ const ContactosPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <Phone className="h-12 w-12 mx-auto mb-4 text-blue-600" />
+              <Phone className="h-12 w-12 mx-auto mb-4 text-white" />
               <h3 className="text-xl font-semibold mb-2">Atendimento Telefónico</h3>
               <p className="text-blue-100">
                 Disponível 24/7 para emergências e suporte técnico
@@ -202,7 +202,7 @@ const ContactosPage: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <Mail className="h-12 w-12 mx-auto mb-4 text-blue-600" />
+              <Mail className="h-12 w-12 mx-auto mb-4 text-white" />
               <h3 className="text-xl font-semibold mb-2">Suporte por Email</h3>
               <p className="text-blue-100">
                 Resposta garantida em menos de 24 horas
@@ -210,7 +210,7 @@ const ContactosPage: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <MessageCircle className="h-12 w-12 mx-auto mb-4 text-blue-600" />
+              <MessageCircle className="h-12 w-12 mx-auto mb-4 text-white" />
               <h3 className="text-xl font-semibold mb-2">Chat Online</h3>
               <p className="text-blue-100">
                 WhatsApp, Telegram e Messenger disponíveis
