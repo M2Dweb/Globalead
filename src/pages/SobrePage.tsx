@@ -88,6 +88,7 @@ return (
           muted
           loop
           className="absolute inset-0 w-full h-full object-cover opacity-30"
+          poster="/fotos/SobrePage-foto.png"
         >
           <source src="/videos/SobrePage-video(1).mp4" type="video/mp4" />
         </video>

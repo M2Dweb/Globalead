@@ -78,6 +78,7 @@ const BlogPage: React.FC = () => {
           muted
           loop
           className="absolute inset-0 w-full h-full object-cover opacity-30"
+          poster="/fotos/BlogPage-foto.png"
         >
           <source src="/videos/BlogPage-video(1).mp4" type="video/mp4" />
         </video>

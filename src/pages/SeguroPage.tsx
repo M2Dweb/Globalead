@@ -88,6 +88,7 @@ const SeguroPage: React.FC = () => {
           muted
           loop
           className="absolute inset-0 w-full h-full object-cover opacity-30"
+          poster="/fotos/SeguroPage-foto.png"
         >
           <source src="/videos/SeguroPage-video(1).mp4" type="video/mp4" />
         </video>

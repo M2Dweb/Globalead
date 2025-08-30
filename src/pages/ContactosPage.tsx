@@ -12,6 +12,7 @@ const ContactosPage: React.FC = () => {
           muted
           loop
           className="absolute inset-0 w-full h-full object-cover opacity-30"
+          poster="/fotos/ContactosPage-foto.png"
         >
           <source src="/videos/ContactosPage-video(1).mp4" type="video/mp4" />
         </video>

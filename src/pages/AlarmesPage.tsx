@@ -105,6 +105,7 @@ const AlarmesPage: React.FC = () => {
           muted
           loop
           className="absolute inset-0 w-full h-full object-cover opacity-30"
+          poster="/fotos/AlarmesPage-foto.png"
         >
           <source src="/videos/AlarmesPage-video(1).mp4" type="video/mp4" />
         </video>

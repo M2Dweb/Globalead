@@ -68,13 +68,20 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-white overflow-hidden flex items-center">
+        <video
+          className="absolute inset-0 w-full h-full object-cover opacity-30"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/fotos/HomePage-foto.png"
+        >
+          <source src="https://res.cloudinary.com/donlcr1lg/video/upload/v1756563860/Cidade_do_Porto_-_www.globalead.pt_1_kzfzqg.mp4" type="video/mp4" />
+         
+        </video>
+
         <div className="absolute inset-0 bg-black opacity-10"></div>
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{
-            backgroundImage: 'url("/homepage-image")'
-          }}
-        ></div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left w-full">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -87,11 +94,12 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate, onHeroVisibilityChange 
               Eficiência.
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 mb-8 leading-relaxed max-w-4xl ">
-              A Globalead Portugal é uma empresa inovadora que atua como intermediária, oferecendo soluções personalizadas em diversos setores. Com foco na comodidade, segurança e eficiência, simplificamos processos e proporcionamos um atendimento centralizado e gratuito, garantindo um serviço adaptado às reais necessidades e exigências de cada cliente.
+              A Globalead Portugal é uma empresa inovadora que atua como intermediária, oferecendo soluções personalizadas em diversos setores...
             </p>
           </motion.div>
         </div>
       </section>
+
 
       {/* Properties Section - Visite o seu próximo lar de sonho */}
       <AnimatedSection>
