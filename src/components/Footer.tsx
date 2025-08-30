@@ -43,21 +43,21 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Facebook className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
+                <Facebook className="h-6 w-6 text-white hover:text-blue-300 cursor-pointer transition-colors" />
               </a>
               <a
                 href="https://www.instagram.com/globalead.pt/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Instagram className="h-6 w-6 text-pink-400 hover:text-pink-300 cursor-pointer transition-colors" />
+                <Instagram className="h-6 w-6 text-white hover:text-pink-300 cursor-pointer transition-colors" />
               </a>
               <a
                 href="https://www.linkedin.com/company/globalead/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Linkedin className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
+                <Linkedin className="h-6 w-6 text-white hover:text-blue-300 cursor-pointer transition-colors" />
               </a>
               <a
                 href="https://www.tiktok.com/@globalead.pt"
@@ -71,21 +71,21 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FaYoutube className="h-6 w-6 text-red-500 hover:text-red-400 cursor-pointer transition-colors" />
+                <FaYoutube className="h-6 w-6 text-white hover:text-red-400 cursor-pointer transition-colors" />
               </a>
               <a
                 href="https://t.me/globaleadportugal"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FaTelegramPlane className="h-6 w-6 text-blue-500 hover:text-blue-400 cursor-pointer transition-colors" />
+                <FaTelegramPlane className="h-6 w-6 text-white hover:text-blue-400 cursor-pointer transition-colors" />
               </a>
               <a
                 href="https://api.whatsapp.com/send?phone=351915482365"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FaWhatsapp className="h-6 w-6 text-green-500 hover:text-green-400 cursor-pointer transition-colors" />
+                <FaWhatsapp className="h-6 w-6 text-text-white hover:text-green-400 cursor-pointer transition-colors" />
               </a>
             </div>
           </div>
