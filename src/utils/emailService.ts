@@ -35,7 +35,7 @@ export const sendEmail = async (formData: FormData): Promise<boolean> => {
   try {
     const templateParams = {
       ...formData,
-      to_email: 'geral@globalead.pt', // Email de destino
+      to_email: 'geral@globalead.pt', 
       timestamp: new Date().toLocaleString('pt-PT'),
     };
 
