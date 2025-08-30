@@ -55,7 +55,7 @@ const GoogleReviews: React.FC = () => {
   ];
 
   const averageRating = 5.0;
-  const totalReviews = 247;
+  const totalReviews = 6;
 
   return (
     <section className="py-20 bg-gray-50">
