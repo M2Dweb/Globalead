@@ -247,7 +247,7 @@ return (
               <img 
                 src="/template-dos-inta-2.png" 
                 alt="Instagram Template" 
-                className="w-96 h-auto rounded-lg shadow-lg"
+                className="w-128 h-auto rounded-lg shadow-lg"
               />
             </div>
 
