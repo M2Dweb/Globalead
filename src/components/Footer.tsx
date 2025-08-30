@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
 
           {/* Facebook Page Plugin */}
           <div>
-            <div className="bg-gray-800 rounded-lg overflow-hidden" style={{ height: '140px' }}>
+            <div className="bg-gray-900 rounded-lg overflow-hidden" style={{ height: '130px' }}>
               <iframe
                 className="focus:outline-none"
                 title="Globalead Facebook Page"
@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Redes Sociais com React Icons */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mt-4">
               <a
                 href="https://www.facebook.com/globalead.pt"
                 target="_blank"
