@@ -1,48 +1,95 @@
 import React from 'react';
-import { Facebook, Instagram, Linkedin, Mail, Phone, Share2 } from 'lucide-react';
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  Phone,
+} from 'lucide-react';
+
+import {
+  FaTiktok,
+  FaYoutube,
+  FaTelegramPlane,
+  FaWhatsapp,
+} from 'react-icons/fa';
 
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Instagram Profile Simulation */}
+
+          {/* Facebook Page Plugin */}
           <div>
-            <div className="bg-gray-800 p-6 rounded-lg mb-6">
-              <div className="flex items-center mb-4">
-                <img 
-                  src="/logo.png" 
-                  alt="Globalead Portugal" 
-                  className="h-12 w-12 rounded-full mr-3"
-                />
-                <div>
-                  <h3 className="font-bold text-white">Globalead Portugal</h3>
-                  <p className="text-sm text-gray-400">1.385 seguidores</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-300 mb-4">
-                Conheça tudo sobre a Globalead Portugal!
-              </p>
-              <div className="flex space-x-2">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition-colors">
-                  Seguir Página
-                </button>
-                <button className="bg-gray-700 text-white px-4 py-2 rounded text-sm hover:bg-gray-600 transition-colors flex items-center">
-                  <Share2 className="h-4 w-4 mr-1" />
-                  Compartilhar
-                </button>
-              </div>
+            <div className="bg-gray-800 p-4 rounded-lg mb-6">
+              <iframe
+                title="Globalead Facebook Page"
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fglobalead.pt&tabs=timeline&width=340&height=150&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                width="100%"
+                height="150"
+                style={{ border: 'none', overflow: 'hidden' }}
+                scrolling="no"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              ></iframe>
             </div>
-            
-            {/* Social Media */}
+
+            {/* Redes Sociais com React Icons */}
             <div className="flex space-x-4">
-              <Facebook className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
-              <Instagram className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
-              <Linkedin className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
+              <a
+                href="https://www.facebook.com/globalead.pt"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Facebook className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
+              </a>
+              <a
+                href="https://www.instagram.com/globalead.pt/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram className="h-6 w-6 text-pink-400 hover:text-pink-300 cursor-pointer transition-colors" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/globalead/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Linkedin className="h-6 w-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@globalead.pt"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTiktok className="h-6 w-6 text-white hover:text-gray-300 cursor-pointer transition-colors" />
+              </a>
+              <a
+                href="https://www.youtube.com/channel/UCL2Dk6vnNF6HngFlc4enKDQ"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaYoutube className="h-6 w-6 text-red-500 hover:text-red-400 cursor-pointer transition-colors" />
+              </a>
+              <a
+                href="https://t.me/globaleadportugal"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTelegramPlane className="h-6 w-6 text-blue-500 hover:text-blue-400 cursor-pointer transition-colors" />
+              </a>
+              <a
+                href="https://api.whatsapp.com/send?phone=351915482365"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaWhatsapp className="h-6 w-6 text-green-500 hover:text-green-400 cursor-pointer transition-colors" />
+              </a>
             </div>
           </div>
 
-          {/* Contact Info and Latest News */}
+          {/* Contact Info and News */}
           <div>
             <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>
             <div className="space-y-3 mb-8">
@@ -55,24 +102,18 @@ const Footer: React.FC = () => {
                 <span>geral@globalead.pt</span>
               </div>
             </div>
-            
+
             <h3 className="text-xl font-bold mb-4">Últimas Notícias</h3>
             <div className="space-y-3">
-              <div>
-                <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
-                  Garantia pública sobe risco de incumprimento (e tende a elevar juros)
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
-                  Como organizar a casa no inverno: dicas para ter tudo à mão
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
-                  Preço da eletricidade aumenta 2,1% no mercado regulado em 2025
-                </p>
-              </div>
+              <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
+                Garantia pública sobe risco de incumprimento (e tende a elevar juros)
+              </p>
+              <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
+                Como organizar a casa no inverno: dicas para ter tudo à mão
+              </p>
+              <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
+                Preço da eletricidade aumenta 2,1% no mercado regulado em 2025
+              </p>
             </div>
           </div>
 
