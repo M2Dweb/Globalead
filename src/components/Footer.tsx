@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
 
           {/* Facebook Page Plugin */}
           <div>
-            <div className="bg-gray-800 rounded-lg overflow-hidden" style={{ height: '130px' }}>
+            <div className="bg-gray-800 rounded-lg overflow-hidden" style={{ height: '140px' }}>
               <iframe
                 className="focus:outline-none"
                 title="Globalead Facebook Page"
