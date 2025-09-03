@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Star, Quote, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const GoogleReviews: React.FC = () => {
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const reviews = [
     {
       id: 1,
       name: "Maria João Silva",
