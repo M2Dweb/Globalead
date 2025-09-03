@@ -98,19 +98,9 @@ const AlarmesPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-600 to-blue-500 text-white py-20 flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <video
-          autoPlay
-          muted
-          loop
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
-          poster="/fotos/AlarmesPage-foto.png"
-        >
-          <source src="/videos/AlarmesPage-video(1).mp4" type="video/mp4" />
-        </video>
+      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center relative z-10">
+          <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Sinta-se seguro e protegido!
             </h1>
@@ -133,7 +123,7 @@ const AlarmesPage: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {securityCompanies.map((company, index) => (
-                <div key={index} className="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <div className="flex items-center mb-6">
                     <img
                       src={company.logo}
@@ -155,6 +145,13 @@ const AlarmesPage: React.FC = () => {
       </AnimatedSection>
 
       {/* FAQ Section */}
+      <AnimatedSection>
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FAQ category="alarmes" />
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* How It Works */}
       <AnimatedSection>
@@ -225,108 +222,85 @@ const AlarmesPage: React.FC = () => {
       </AnimatedSection>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gray-900 text-white">
+      <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
-            {/* Instagram Template - Lado Esquerdo */}
-            <div className="lg:w-1/3 flex justify-center">
-              <img 
-                src="/template-dos-inta-2.png" 
-                alt="Instagram Template" 
-                className="w-128 h-auto rounded-lg shadow-lg"
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Faça uma simulação sem compromisso!
+            </h2>
+            <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-8">
+              <div className="flex items-center">
+                <Phone className="h-6 w-6 mr-2" />
+                <span className="text-lg">915 482 365 (chamada rede fixa nacional)</span>
+              </div>
+              <button className="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 font-semibold">
+                Ver ofertas
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-white p-8 rounded-xl">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              Tem dúvidas? Entre em contacto
+            </h3>
+            
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <input
+                type="text"
+                placeholder="Nome:"
+                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-            </div>
-
-            {/* Formulário - Lado Direito */}
-            <div className="lg:w-2/3">
-              <div className="text-center lg:text-left mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Faça uma simulação sem compromisso!
-                </h2>
-                <div className="flex flex-col md:flex-row justify-center lg:justify-start items-center space-y-4 md:space-y-0 md:space-x-8 mb-8">
-                  <div className="flex items-center">
-                    <Phone className="h-6 w-6 mr-2" />
-                    <span className="text-lg">915 482 365 (chamada rede fixa nacional)</span>
-                  </div>
-                  <button className="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 font-semibold">
-                    Ver ofertas
-                  </button>
-                </div>
+              <input
+                type="text"
+                placeholder="Apelido:"
+                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="tel"
+                placeholder="Telemóvel:"
+                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="email"
+                placeholder="Email:"
+                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option>Meio de Contacto:</option>
+                <option>Email</option>
+                <option>Telefone</option>
+                <option>WhatsApp</option>
+              </select>
+              <input
+                type="text"
+                placeholder="Assunto:"
+                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="text"
+                placeholder="Horário:"
+                className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              
+              <div className="md:col-span-2">
+                <label className="flex items-start text-sm text-gray-700 mb-4">
+                  <input type="checkbox" className="mt-1 mr-2" />
+                  Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                </label>
+                <p className="text-xs text-gray-600 mb-4">
+                  Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                </p>
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                >
+                  Enviar Mensagem
+                </button>
               </div>
-
-              <div className="bg-white p-8 rounded-xl">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                  Tem dúvidas? Entre em contacto
-                </h3>
-                
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input
-                    type="text"
-                    placeholder="Nome:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Apelido:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Telemóvel:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option>Meio de Contacto:</option>
-                    <option>Email</option>
-                    <option>Telefone</option>
-                    <option>WhatsApp</option>
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Assunto:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Horário:"
-                    className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  
-                  <div className="md:col-span-2">
-                    <label className="flex items-start text-sm text-gray-700 mb-4">
-                      <input type="checkbox" className="mt-1 mr-2" />
-                      Sim, aceito os termos e condições indicados pela Globalead Portugal.
-                    </label>
-                    <p className="text-xs text-gray-600 mb-4">
-                      Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
-                    </p>
-                    <button
-                      type="submit"
-                      className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                    >
-                      Enviar Pedido
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </section>
-
-      {/* FAQ Section */}
-      <AnimatedSection>
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FAQ category="alarmes" />
-          </div>
-        </section>
-      </AnimatedSection>
     </div>
   );
 };

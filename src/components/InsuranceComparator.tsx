@@ -83,7 +83,7 @@ const InsuranceComparator: React.FC = () => {
   const currentInsurance = insuranceTypes[selectedInsurance as keyof typeof insuranceTypes];
 
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+    <div className="bg-white p-8 rounded-xl shadow-lg">
       <div className="flex items-center mb-6">
         <Shield className="h-8 w-8 text-blue-600 mr-3" />
         <h3 className="text-2xl font-bold text-gray-900">Comparador de Seguros</h3>
