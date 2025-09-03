@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Star, Quote, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const GoogleReviews: React.FC = () => {
-  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const reviews = [
     {
       id: 1,
@@ -58,13 +57,6 @@ const GoogleReviews: React.FC = () => {
   const averageRating = 5.0;
   const totalReviews = 6;
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentReviewIndex(prev => (prev + 1) % reviews.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [reviews.length]);
-
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,59 +85,40 @@ const GoogleReviews: React.FC = () => {
           </p>
         </div>
 
-        <div className="relative mb-12">
-          <div className="overflow-hidden">
-            <div 
-              className="flex transition-transform duration-1000 ease-in-out"
-              style={{ transform: `translateX(-${currentReviewIndex * (100 / 3)}%)` }}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {reviews.slice(0, 3).map((review, index) => (
+            <motion.div
+              key={review.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
             >
-              {reviews.map((review, index) => (
-                <div
-                  key={review.id}
-                  className="flex-shrink-0 w-1/3 px-4"
-                >
-                  <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <div className="flex items-center mb-4">
-                      <img
-                        src={review.avatar}
-                        alt={review.name}
-                        className="w-12 h-12 rounded-full object-cover mr-4"
-                      />
-                      <div className="flex-1">
-                        <div className="font-semibold text-gray-900">{review.name}</div>
-                        <div className="text-sm text-gray-500">{review.date}</div>
-                      </div>
-                      <div className="flex text-yellow-400">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 fill-current" />
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <Quote className="h-6 w-6 text-blue-600 opacity-50 absolute -top-2 -left-1" />
-                      <p className="text-gray-700 pl-6 leading-relaxed">
-                        {review.text}
-                      </p>
-                    </div>
-                  </div>
+              <div className="flex items-center mb-4">
+                <img
+                  src={review.avatar}
+                  alt={review.name}
+                  className="w-12 h-12 rounded-full object-cover mr-4"
+                />
+                <div className="flex-1">
+                  <div className="font-semibold text-gray-900">{review.name}</div>
+                  <div className="text-sm text-gray-500">{review.date}</div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Dots Indicator */}
-          <div className="flex justify-center mt-8 space-x-2">
-            {reviews.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentReviewIndex(index)}
-                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  index === currentReviewIndex ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              />
-            ))}
-          </div>
+                <div className="flex text-yellow-400">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+              </div>
+              
+              <div className="relative">
+                <Quote className="h-6 w-6 text-blue-600 opacity-50 absolute -top-2 -left-1" />
+                <p className="text-gray-700 pl-6 leading-relaxed">
+                  {review.text}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
         <div className="text-center">

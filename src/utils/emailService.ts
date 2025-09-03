@@ -1,9 +1,9 @@
 import emailjs from '@emailjs/browser';
 
 // Configuração do EmailJS
-const EMAILJS_SERVICE_ID = 'service_globalead'; // Substitua pelo seu Service ID
-const EMAILJS_TEMPLATE_ID = 'template_globalead'; // Substitua pelo seu Template ID
-const EMAILJS_PUBLIC_KEY = 'globalead_public_key'; // Substitua pelo seu Public Key
+const EMAILJS_SERVICE_ID = 'your_service_id'; // Substitua pelo seu Service ID
+const EMAILJS_TEMPLATE_ID = 'your_template_id'; // Substitua pelo seu Template ID
+const EMAILJS_PUBLIC_KEY = 'your_public_key'; // Substitua pelo seu Public Key
 
 // Inicializar EmailJS
 emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -35,7 +35,7 @@ export const sendEmail = async (formData: FormData): Promise<boolean> => {
   try {
     const templateParams = {
       ...formData,
-      to_email: 'globaleadgroup@gmail.com', // Email de destino
+      to_email: 'geral@globalead.pt', 
       timestamp: new Date().toLocaleString('pt-PT'),
     };
 

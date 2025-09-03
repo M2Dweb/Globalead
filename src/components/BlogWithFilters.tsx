@@ -7,10 +7,10 @@ const BlogWithFilters: React.FC = () => {
 
   const categories = [
     { id: 'all', name: 'Todos', count: 12 },
-    { id: 'imoveis', name: 'Imobiliário', count: 5 },
-    { id: 'credito', name: 'Crédito Habitação', count: 2 },
-    { id: 'certificacao', name: 'Certificado Energético', count: 1 },
+    { id: 'imoveis', name: 'Imóveis', count: 5 },
+    { id: 'energia', name: 'Energia', count: 3 },
     { id: 'seguros', name: 'Seguros', count: 2 },
+    { id: 'alarmes', name: 'Alarmes', count: 2 }
   ];
 
   const blogPosts = [
@@ -135,14 +135,14 @@ const BlogWithFilters: React.FC = () => {
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPosts.map(post => (
-            <article key={post.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+            <article key={post.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group border border-gray-100">
               <div className="relative">
                 <img
                   src={post.image}
                   alt={post.title}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                   {categories.find(cat => cat.id === post.category)?.name}
                 </div>
                 <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">

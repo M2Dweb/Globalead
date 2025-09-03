@@ -85,7 +85,7 @@ const InteractiveMap: React.FC = () => {
   const mapCenter: [number, number] = [41.1579, -8.6291];
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-lg">
+    <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
         <MapPin className="h-8 w-8 text-blue-600 mr-3" />
         <h3 className="text-2xl font-bold text-gray-900">Propriedades no Mapa</h3>
@@ -149,7 +149,7 @@ const InteractiveMap: React.FC = () => {
           </div>
 
           {/* Map legend */}
-          <div className="absolute bottom-4 left-4 bg-white p-3 rounded-lg shadow-lg">
+          <div className="absolute bottom-4 left-4 bg-white p-3 rounded-xl shadow-md border border-gray-100">
             <div className="text-xs font-medium text-gray-700 mb-2">Legenda</div>
             <div className="flex items-center space-x-4 text-xs">
               <div className="flex items-center">
@@ -171,7 +171,7 @@ const InteractiveMap: React.FC = () => {
               {properties
                 .filter(p => p.id === selectedProperty)
                 .map(property => (
-                  <div key={property.id} className="border rounded-lg overflow-hidden">
+                  <div key={property.id} className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
                     <img
                       src={property.image}
                       alt={property.title}
