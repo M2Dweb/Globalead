@@ -1,170 +1,102 @@
-import React from 'react';
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Mail,
-  Phone,
-} from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
-import {
-  FaTiktok,
-  FaYoutube,
-  FaTelegramPlane,
-  FaWhatsapp,
-} from 'react-icons/fa';
+interface HeaderProps {
+  currentPage: string;
+  onNavigate: (page: string) => void;
+  isScrolled: boolean;
+  isHeroVisible?: boolean;
+}
 
-const Footer: React.FC = () => {
+export function Header({ currentPage, onNavigate, isScrolled }: HeaderProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const menuItems = [
+    { name: 'Sobre', page: 'sobre' },
+    { name: 'Imóveis', page: 'imoveis' },
+    { name: 'Seguros', page: 'seguros' },
+    { name: 'Alarmes', page: 'alarmes' },
+    { name: 'Blog', page: 'blog' },
+    { name: 'Contactos', page: 'contactos' }
+  ];
+
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-          {/* Facebook Page Plugin */}
-          <div>
-            <div className="bg-gray-900 rounded-lg overflow-hidden" style={{ height: '130px' }}>
-              <iframe
-                className="focus:outline-none"
-                title="Globalead Facebook Page"
-                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fglobalead.pt&tabs=timeline&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-                width="100%"
-                height="130"
-                style={{ border: 'none', overflow: 'hidden' }}
-                scrolling="no"
-                frameBorder="0"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-                </iframe>
-            </div>
-
-            {/* Redes Sociais com React Icons */}
-            <div className="flex space-x-4 mt-4">
-              <a
-                href="https://www.facebook.com/globalead.pt"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Facebook className="h-6 w-6 text-white hover:text-blue-300 cursor-pointer transition-colors" />
-              </a>
-              <a
-                href="https://www.instagram.com/globalead.pt/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Instagram className="h-6 w-6 text-white hover:text-pink-300 cursor-pointer transition-colors" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/globalead/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Linkedin className="h-6 w-6 text-white hover:text-blue-300 cursor-pointer transition-colors" />
-              </a>
-              <a
-                href="https://www.tiktok.com/@globalead.pt"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaTiktok className="h-6 w-6 text-white hover:text-gray-300 cursor-pointer transition-colors" />
-              </a>
-              <a
-                href="https://www.youtube.com/channel/UCL2Dk6vnNF6HngFlc4enKDQ"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaYoutube className="h-6 w-6 text-white hover:text-red-400 cursor-pointer transition-colors" />
-              </a>
-              <a
-                href="https://t.me/globaleadportugal"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaTelegramPlane className="h-6 w-6 text-white hover:text-blue-400 cursor-pointer transition-colors" />
-              </a>
-              <a
-                href="https://api.whatsapp.com/send?phone=351915482365"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaWhatsapp className="h-6 w-6 text-text-white hover:text-green-400 cursor-pointer transition-colors" />
-              </a>
-            </div>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isHeroVisible ? 'bg-transparent shadow-none' : 'bg-white shadow-lg'
+      <div className={`text-white py-2 px-4 transition-all duration-300 ${
+        isScrolled ? 'bg-blue-900' : 'bg-blue-900/80'
+      }`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-2">
+          {/* Logo */}
+          <div 
+            className="flex items-center cursor-pointer"
+            onClick={() => onNavigate('home')}
+          >
+            <img 
+              src="/logo.png" 
+              alt="Globalead Portugal" 
+              className="h-14 w-auto"
+            />
           </div>
 
-          {/* Contact Info and News */}
-          <div>
-            <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>
-            <div className="space-y-3 mb-8">
-              <div className="flex items-center">
-                <Phone className="h-5 w-5 mr-2 text-blue-400" />
-                <span>+351 915482365</span>
-              </div>
-              <div className="flex items-center">
-                <Mail className="h-5 w-5 mr-2 text-blue-400" />
-                <span>geral@globalead.pt</span>
-              </div>
-            </div>
-
-            <h3 className="text-xl font-bold mb-4">Últimas Notícias</h3>
-            <div className="space-y-3">
-              <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
-                Garantia pública sobe risco de incumprimento (e tende a elevar juros)
-              </p>
-              <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
-                Como organizar a casa no inverno: dicas para ter tudo à mão
-              </p>
-              <p className="text-sm text-gray-300 hover:text-white cursor-pointer transition-colors">
-                Preço da eletricidade aumenta 2,1% no mercado regulado em 2025
-              </p>
-            </div>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-xl font-bold mb-4">Receba as últimas novidades!</h3>
-            <form className="space-y-3">
-              <input
-                type="text"
-                placeholder="Nome:"
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="text"
-                placeholder="Apelido:"
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="email"
-                placeholder="Email:"
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  id="newsletter-consent"
-                  className="mt-1 mr-2"
-                />
-                <label htmlFor="newsletter-consent" className="text-xs text-gray-400">
-                  Sim, autorizo receber informações e novidades da Globalead Portugal.
-                </label>
-              </div>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex space-x-8">
+            {menuItems.map((item) => (
               <button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                key={item.page}
+                onClick={() => onNavigate(item.page)}
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  currentPage === item.page
+                    ? `${isHeroVisible ? 'text-white border-b-2 border-white' : 'text-blue-600 border-b-2 border-blue-600'}`
+                    : `${isHeroVisible ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600'}`
+                }`}
               >
-                Subscrever
+                {item.name}
               </button>
-            </form>
+            ))}
+          </nav>
+
+          {/* Mobile menu button */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={isHeroVisible ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600'}
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400 text-sm">
-            © 2025 Globalead Portugal. Todos os direitos reservados.
-          </p>
-        </div>
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="lg:hidden">
+            <div className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 ${isHeroVisible ? 'bg-black bg-opacity-90' : 'bg-gray-50'}`}>
+            <div className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 transition-all duration-300 ${isHeroVisible ? 'bg-black bg-opacity-90' : 'bg-gray-50'}`}>
+                <button
+                  key={item.page}
+                  onClick={() => {
+                    onNavigate(item.page);
+                    setIsMenuOpen(false);
+                  }}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                  className={`block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-300 ${
+                      ? `${isHeroVisible ? 'text-white bg-white bg-opacity-20' : 'text-blue-600 bg-blue-50'}`
+                      : `${isHeroVisible ? 'text-white hover:text-blue-200 hover:bg-white hover:bg-opacity-10' : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'}`
+                  }`}
+                >
+                      ? isScrolled 
+              className={`transition-colors duration-300 ${isHeroVisible ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600'}`}
+                isScrolled ? 'text-gray-800' : 'text-white'
+              }`}>Globalead</span>
+            </div>
+          </div>
+        )}
       </div>
-    </footer>
+    </header>
   );
-};
+      <header className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+      }`}>
 
-export default Footer;
+export default Header;

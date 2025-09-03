@@ -1,77 +1,95 @@
 import React, { useState } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import StickyCtaButton from './components/StickyCtaButton';
-import Breadcrumbs from './components/Breadcrumbs';
-import SEOHead from './components/SEOHead';
-import HomePage from './pages/HomePage';
-import SobrePage from './pages/SobrePage';
-import ImoveisPage from './pages/ImoveisPage';
-import TvNetVozPage from './pages/TvNetVozPage';
-import EnergiaPage from './pages/EnergiaPage';
-import SeguroPage from './pages/SeguroPage';
-import AlarmesPage from './pages/AlarmesPage';
-import BlogPage from './pages/BlogPage';
-import ContactosPage from './pages/ContactosPage';
+import { Menu, X } from 'lucide-react';
 
-function App() {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [isHeroVisible, setIsHeroVisible] = useState(true);
-
-  const getBreadcrumbs = () => {
-    const breadcrumbMap: { [key: string]: Array<{ label: string; href?: string; current?: boolean }> } = {
-      sobre: [{ label: 'Sobre', current: true }],
-      imoveis: [{ label: 'Imóveis', current: true }],
-      'tv-net-voz': [{ label: 'TV NET VOZ', current: true }],
-      energia: [{ label: 'Energia', current: true }],
-      seguros: [{ label: 'Seguros', current: true }],
-      alarmes: [{ label: 'Alarmes', current: true }],
-      blog: [{ label: 'Blog', current: true }],
-      contactos: [{ label: 'Contactos', current: true }]
-    };
-    
-    return breadcrumbMap[currentPage] || [];
-  };
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <HomePage onNavigate={setCurrentPage} onHeroVisibilityChange={setIsHeroVisible} />;
-      case 'sobre':
-        return <SobrePage />;
-      case 'imoveis':
-        return <ImoveisPage />;
-      case 'tv-net-voz':
-        return <TvNetVozPage />;
-      case 'energia':
-        return <EnergiaPage />;
-      case 'seguros':
-        return <SeguroPage />;
-      case 'alarmes':
-        return <AlarmesPage />;
-      case 'blog':
-        return <BlogPage />;
-      case 'contactos':
-        return <ContactosPage />;
-      default:
-        return <HomePage onNavigate={setCurrentPage} onHeroVisibilityChange={setIsHeroVisible} />;
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-white">
-      <SEOHead />
-      <Header currentPage={currentPage} onNavigate={setCurrentPage} isHeroVisible={currentPage === 'home' ? isHeroVisible : false} />
-      {currentPage !== 'home' && (
-        <Breadcrumbs items={getBreadcrumbs()} onNavigate={setCurrentPage} />
-      )}
-      <main>
-        {renderPage()}
-      </main>
-      <Footer />
-      <StickyCtaButton onNavigate={setCurrentPage} />
-    </div>
-  );
+interface HeaderProps {
+  currentPage: string;
+  onNavigate: (page: string) => void;
+  isHeroVisible?: boolean;
 }
 
-export default App;
+const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, isHeroVisible = false }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const menuItems = [
+    { name: 'Sobre', page: 'sobre' },
+    { name: 'Imóveis', page: 'imoveis' },
+    { name: 'Seguros', page: 'seguros' },
+    { name: 'Blog', page: 'blog' },
+    { name: 'Contactos', page: 'contactos' }
+  ];
+
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isHeroVisible ? 'bg-transparent shadow-none' : 'bg-white shadow-lg'
+    }`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-2">
+          {/* Logo */}
+          <div 
+            className="flex items-center cursor-pointer"
+            onClick={() => onNavigate('home')}
+          >
+            <img 
+              src="/logo.png" 
+              alt="Globalead Portugal" 
+              className="h-14 w-auto"
+            />
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex space-x-8">
+            {menuItems.map((item) => (
+              <button
+                key={item.page}
+                onClick={() => onNavigate(item.page)}
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  currentPage === item.page
+                    ? `${isHeroVisible ? 'text-white border-b-2 border-white' : 'text-blue-600 border-b-2 border-blue-600'}`
+                    : `${isHeroVisible ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600'}`
+                }`}
+              >
+                {item.name}
+              </button>
+            ))}
+          </nav>
+
+          {/* Mobile menu button */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={isHeroVisible ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600'}
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="lg:hidden">
+            <div className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 ${isHeroVisible ? 'bg-black bg-opacity-90' : 'bg-gray-50'}`}>
+              {menuItems.map((item) => (
+                <button
+                  key={item.page}
+                  onClick={() => {
+                    onNavigate(item.page);
+                    setIsMenuOpen(false);
+                  }}
+                  className={`block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ${
+                    currentPage === item.page
+                      ? `${isHeroVisible ? 'text-white bg-white bg-opacity-20' : 'text-blue-600 bg-blue-50'}`
+                      : `${isHeroVisible ? 'text-white hover:text-blue-200 hover:bg-white hover:bg-opacity-10' : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'}`
+                  }`}
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;
