@@ -1,80 +1,34 @@
 import React, { useState } from 'react';
 import { Calendar, ArrowRight, Search, Filter } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 const BlogWithFilters: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const categories = [
-    { id: 'all', name: 'Todos', count: 12 },
-    { id: 'imoveis', name: 'Imóveis', count: 5 },
-    { id: 'energia', name: 'Energia', count: 3 },
-    { id: 'seguros', name: 'Seguros', count: 2 },
-    { id: 'alarmes', name: 'Alarmes', count: 2 }
+    { id: 'all', name: 'Todos', count: 0 },
+    { id: 'imoveis', name: 'Imobiliário', count: 0 },
+    { id: 'credito', name: 'Crédito Habitação', count: 0 },
+    { id: 'certificacao', name: 'Certificado Energético', count: 0 },
+    { id: 'seguros', name: 'Seguros', count: 0 }
   ];
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Garantia pública sobe risco de incumprimento (e tende a elevar juros)",
-      excerpt: "A garantia pública para crédito à habitação de jovens, que permite financiamento a 100%, já está em vigor...",
-      category: "imoveis",
-      date: "Janeiro 6, 2025",
-      author: "globalead",
-      image: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=400",
-      readTime: "5 min"
-    },
-    {
-      id: 2,
-      title: "Como organizar a casa no inverno: dicas para ter tudo à mão",
-      excerpt: "Manter a casa organizada no inverno pode ser simples e rápido, proporcionando mais conforto...",
-      category: "imoveis",
-      date: "Janeiro 6, 2025",
-      author: "globalead",
-      image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400",
-      readTime: "3 min"
-    },
-    {
-      id: 3,
-      title: "Preço da eletricidade aumenta 2,1% no mercado regulado em 2025",
-      excerpt: "O regulador propõe um aumento de 2,1% no preço da eletricidade para os clientes do mercado regulado...",
-      category: "energia",
-      date: "Janeiro 6, 2025",
-      author: "globalead",
-      image: "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=400",
-      readTime: "4 min"
-    },
-    {
-      id: 4,
-      title: "Aumentos previstos no preço das telecomunicações em 2025",
-      excerpt: "Em novembro de 2024, os preços das telecomunicações em Portugal aumentaram 7,3%...",
-      category: "energia",
-      date: "Janeiro 5, 2025",
-      author: "globalead",
-      image: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=400",
-      readTime: "6 min"
-    },
-    {
-      id: 5,
-      title: "Mercado de casas de luxo em Lisboa vai aumentar 4,5%",
-      excerpt: "Lisboa reforça a sua posição como destino de destaque no mercado imobiliário de luxo...",
-      category: "imoveis",
-      date: "Janeiro 5, 2025",
-      author: "globalead",
-      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400",
-      readTime: "7 min"
-    },
-    {
-      id: 6,
-      title: "Novos sistemas de alarme inteligentes chegam ao mercado",
-      excerpt: "A tecnologia de segurança residencial evolui com sistemas cada vez mais inteligentes...",
-      category: "alarmes",
-      date: "Janeiro 4, 2025",
-      author: "globalead",
-      image: "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=400",
-      readTime: "5 min"
-    }
-  ];
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      const { data } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('date', { ascending: false });
+      
+      setBlogPosts(data || []);
+      setLoading(false);
+    };
+
+    fetchBlogPosts();
+  }, []);
 
   const filteredPosts = blogPosts.filter(post => {
     const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
@@ -82,6 +36,14 @@ const BlogWithFilters: React.FC = () => {
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">A carregar artigos...</div>
+      </div>
+    );
+  }
 
   return (
     <section className="py-20 bg-gray-50">
@@ -146,14 +108,14 @@ const BlogWithFilters: React.FC = () => {
                   {categories.find(cat => cat.id === post.category)?.name}
                 </div>
                 <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
-                  {post.readTime}
+                  {post.read_time}
                 </div>
               </div>
               
               <div className="p-6">
                 <div className="flex items-center text-sm text-gray-500 mb-3">
                   <Calendar className="h-4 w-4 mr-1" />
-                  <span>{post.date}</span>
+                  <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
                   <span className="mx-2">•</span>
                   <span>Por {post.author}</span>
                 </div>

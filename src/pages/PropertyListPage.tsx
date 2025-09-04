@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Filter, Bed, Bath, Square, MapPin, Euro, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface PropertyListPageProps {
   onNavigate: (page: string) => void;
@@ -11,102 +12,40 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
   const [selectedType, setSelectedType] = useState('all');
   const [priceRange, setPriceRange] = useState([0, 1000000]);
   const [bedrooms, setBedrooms] = useState('all');
+  const [properties, setProperties] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const properties = [
-    {
-      id: 1,
-      title: "Empreendimento Vila Nova",
-      description: "Empreendimento completamente murado, em pedra. O exterior das moradias terá uma grande presença de betão aparente, o que lhe configurará uma imagem de modernidade e simultaneamente...",
-      price: 450000,
-      bedrooms: 3,
-      bathrooms: 3,
-      area: 238,
-      location: "Aldoar, Porto",
-      type: "moradia",
-      images: [
-        "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
-    },
-    {
-      id: 2,
-      title: "Empreendimento Noval Park",
-      description: "Cidade de paisagens ofegantes, miragens autênticas de recantos e encantos irrefutáveis. Revela-se nobre na simbiose perfeita entre a opulência do seu património cultural e histórico...",
-      price: 320000,
-      bedrooms: 2,
-      bathrooms: 2,
-      area: 145,
-      location: "Vila Nova de Gaia",
-      type: "apartamento",
-      images: [
-        "https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
-    },
-    {
-      id: 3,
-      title: "Empreendimento Boss Gardens",
-      description: "Boss Gardens está localizado na zona de Paranhos, uma das melhores zonas residenciais do Porto. Um projeto original que integra arquitetura vanguardista e designs de interiores surpreendentes...",
-      price: 380000,
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 139,
-      location: "Paranhos, Porto",
-      type: "apartamento",
-      images: [
-        "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1643384/pexels-photo-1643384.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
-    },
-    {
-      id: 4,
-      title: "Apartamento T2 Moderno",
-      description: "Apartamento completamente renovado com acabamentos de luxo, localizado numa zona premium da cidade...",
-      price: 280000,
-      bedrooms: 2,
-      bathrooms: 1,
-      area: 85,
-      location: "Cedofeita, Porto",
-      type: "apartamento",
-      images: [
-        "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
-    },
-    {
-      id: 5,
-      title: "Moradia T4 com Jardim",
-      description: "Moradia espaçosa com jardim privativo, garagem para 2 carros e excelente exposição solar...",
-      price: 520000,
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 200,
-      location: "Matosinhos, Porto",
-      type: "moradia",
-      images: [
-        "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
-    },
-    {
-      id: 6,
-      title: "Apartamento T1 Centro",
-      description: "Apartamento compacto e funcional no centro da cidade, ideal para jovens profissionais...",
-      price: 180000,
-      bedrooms: 1,
-      bathrooms: 1,
-      area: 55,
-      location: "Campanhã, Porto",
-      type: "apartamento",
-      images: [
-        "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=800"
-      ]
-    }
-  ];
+  useEffect(() => {
+    const fetchProperties = async () => {
+      const { data } = await supabase
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (data) {
+        setProperties(data);
+      } else {
+        // Fallback data
+        setProperties([
+          {
+            id: 1,
+            title: "Empreendimento Vila Nova",
+            description: "Empreendimento completamente murado, em pedra...",
+            price: 450000,
+            bedrooms: 3,
+            bathrooms: 3,
+            area: 238,
+            location: "Aldoar, Porto",
+            type: "moradia",
+            images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
+          }
+        ]);
+      }
+      setLoading(false);
+    };
 
+    fetchProperties();
+  }, []);
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          property.location.toLowerCase().includes(searchTerm.toLowerCase());
@@ -129,6 +68,14 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
     onPropertySelect(propertyId);
     onNavigate('property-detail');
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">A carregar imóveis...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">

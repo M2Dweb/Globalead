@@ -1,53 +1,66 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Calendar, Eye, Heart, Share2, Phone, Mail } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
+import { supabase } from '../lib/supabase';
 
 interface PropertyDetailPageProps {
-  propertyId: number | null;
+  propertyId: string | null;
   onNavigate: (page: string) => void;
 }
 
 const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onNavigate }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [property, setProperty] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Mock property data - in real app this would come from database
-  const property = {
-    id: propertyId || 1,
-    title: "Empreendimento Vila Nova",
-    description: "Empreendimento completamente murado, em pedra. O exterior das moradias terá uma grande presença de betão aparente, o que lhe configurará uma imagem de modernidade e simultaneamente de robustez. As moradias dispõem de 3 quartos, sendo um deles suite, 3 casas de banho, sala e cozinha em open space, garagem e logradouro.",
-    price: 450000,
-    bedrooms: 3,
-    bathrooms: 3,
-    area: 238,
-    location: "Aldoar, Porto",
-    type: "moradia",
-    energyClass: "B",
-    yearBuilt: 2024,
-    features: [
-      "Garagem para 2 carros",
-      "Jardim privativo",
-      "Cozinha equipada",
-      "Ar condicionado",
-      "Aquecimento central",
-      "Painéis solares",
-      "Alarme",
-      "Portão automático"
-    ],
-    images: [
-      "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1200"
-    ]
-  };
+  useEffect(() => {
+    const fetchProperty = async () => {
+      if (!propertyId) {
+        setLoading(false);
+        return;
+      }
 
+      const { data } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('id', propertyId)
+        .single();
+      
+      if (data) {
+        setProperty(data);
+      } else {
+        // Fallback data
+        setProperty({
+          id: propertyId,
+          title: "Empreendimento Vila Nova",
+          description: "Empreendimento completamente murado, em pedra...",
+          price: 450000,
+          bedrooms: 3,
+          bathrooms: 3,
+          area: 238,
+          location: "Aldoar, Porto",
+          type: "moradia",
+          energy_class: "B",
+          year_built: 2024,
+          features: ["Garagem para 2 carros", "Jardim privativo", "Cozinha equipada"],
+          images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200"]
+        });
+      }
+      setLoading(false);
+    };
+
+    fetchProperty();
+  }, [propertyId]);
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
+    if (property) {
+      setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
+    }
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
+    if (property) {
+      setCurrentImageIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
+    }
   };
 
   const formatPrice = (price: number) => {
@@ -57,6 +70,22 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
       maximumFractionDigits: 0
     }).format(price);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">A carregar detalhes do imóvel...</div>
+      </div>
+    );
+  }
+
+  if (!property) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-red-600">Imóvel não encontrado</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -216,12 +245,12 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
                   <div className="flex justify-between">
                     <span className="text-gray-600">Classe energética:</span>
                     <span className="font-medium bg-green-100 text-green-800 px-2 py-1 rounded text-sm">
-                      {property.energyClass}
+                      {property.energy_class}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Ano de construção:</span>
-                    <span className="font-medium">{property.yearBuilt}</span>
+                    <span className="font-medium">{property.year_built}</span>
                   </div>
                 </div>
 

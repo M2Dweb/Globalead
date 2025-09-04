@@ -5,9 +5,17 @@ interface ContactFormProps {
   page: string;
   showExtraFields?: boolean;
   extraFields?: React.ReactNode;
+  title?: string;
+  buttonText?: string;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false, extraFields }) => {
+const ContactForm: React.FC<ContactFormProps> = ({ 
+  page, 
+  showExtraFields = false, 
+  extraFields,
+  title = "Tem dúvidas? Entre em contacto",
+  buttonText = "Enviar Mensagem"
+}) => {
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
     apelido: '',
@@ -61,7 +69,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      {title && (
+        <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          {title}
+        </h3>
+      )}
+      
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <input
         type="text"
         name="nome"
@@ -69,7 +84,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false
         onChange={handleInputChange}
         placeholder="Nome:"
         required
-        className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="text"
@@ -77,7 +92,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false
         value={formData.apelido}
         onChange={handleInputChange}
         placeholder="Apelido:"
-        className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="tel"
@@ -85,7 +100,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false
         value={formData.telemovel}
         onChange={handleInputChange}
         placeholder="Telemóvel:"
-        className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="email"
@@ -94,7 +109,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false
         onChange={handleInputChange}
         placeholder="Email:"
         required
-        className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="text"
@@ -102,13 +117,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false
         value={formData.assunto}
         onChange={handleInputChange}
         placeholder="Assunto:"
-        className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <select 
         name="meio_contacto"
         value={formData.meio_contacto}
         onChange={handleInputChange}
-        className="px-4 py-3 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <option value="">Meio de Contacto:</option>
         <option value="Email">Email</option>
@@ -123,17 +138,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false
         value={formData.horario}
         onChange={handleInputChange}
         placeholder="Horário:"
-        className="md:col-span-2 px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       {showExtraFields && extraFields}
       
       <div className="md:col-span-2">
-        <label className="flex items-start text-sm text-blue-100 mb-4">
+        <label className="flex items-start text-sm text-gray-700 mb-4">
           <input type="checkbox" className="mt-1 mr-2" required />
           Sim, aceito os termos e condições indicados pela Globalead Portugal.
         </label>
-        <p className="text-xs text-blue-200 mb-6">
+        <p className="text-xs text-gray-600 mb-6">
           Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
         </p>
         
@@ -152,12 +167,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ page, showExtraFields = false
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
+          {isSubmitting ? 'Enviando...' : buttonText}
         </button>
       </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

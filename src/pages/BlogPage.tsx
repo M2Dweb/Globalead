@@ -1,72 +1,29 @@
 import React from 'react';
 import { Calendar, ArrowRight } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 const BlogPage: React.FC = () => {
-  const blogPosts = [
-    {
-      title: "Garantia pública sobe risco de incumprimento (e tende a elevar juros)",
-      date: "Janeiro 6, 2025",
-      excerpt: "A garantia pública para crédito à habitação de jovens, que permite financiamento a 100%, já está em vigor, mas só deverá estar operacional no final do ano. O Banco de Portugal alerta para a necessidade de cautela na adesão, destacando o aumento do risco de incumprimento por parte dos jovens e o possível impacto nas...",
-      image: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    },
-    {
-      title: "Como organizar a casa no inverno: dicas para ter tudo à mão",
-      date: "Janeiro 6, 2025",
-      excerpt: "Manter a casa organizada no inverno pode ser simples e rápido, proporcionando mais conforto e momentos de relaxamento. Apesar da rotina agitada, envolver toda a família nas tarefas domésticas, especialmente aproveitando o espírito natalício, torna a organização mais fácil e agradável. Uma casa limpa, arrumada e aconchegante cria o ambiente perfeito para desfrutar do inverno...",
-      image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    },
-    {
-      title: "Preço da eletricidade aumenta 2,1% no mercado regulado em 2025",
-      date: "Janeiro 6, 2025",
-      excerpt: "O regulador propõe um aumento de 2,1% no preço da eletricidade para os clientes do mercado regulado em 2025. Mas a ERSE prevê uma descida na fatura média mensal até 88 cêntimos com descida do IVA. A Entidade Reguladora dos Serviços Energéticos (ERSE) propôs uma subida do preço da eletricidade no mercado regulado de 2,1%...",
-      image: "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    },
-    {
-      title: "Aumentos previstos no preço das telecomunicações em 2025",
-      date: "Janeiro 5, 2025",
-      excerpt: "Em novembro de 2024, os preços das telecomunicações em Portugal aumentaram 7,3% em comparação com o mesmo mês de 2023, segundo dados da ANACOM. Esta foi a maior subida desde 1994, sem se sentir o efeito da entrada da Digi no mercado. A variação média dos últimos 12 meses foi de 6,9%, ficando 6,9 pontos...",
-      image: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    },
-    {
-      title: "Mercado de casas de luxo em Lisboa vai aumentar 4,5%",
-      date: "Janeiro 5, 2025",
-      excerpt: "Lisboa reforça a sua posição como destino de destaque no mercado imobiliário de luxo, ocupando o 4º lugar no ranking das cidades europeias com maior potencial de valorização em 2025. De acordo com o relatório '2025 European Prime Price Forecast', da consultora imobiliária Knight Frank, os preços das casas de luxo na capital portuguesa deverão crescer...",
-      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    },
-    {
-      title: "Especialistas antecipam agravamento da crise na habitação em 2025",
-      date: "Janeiro 5, 2025",
-      excerpt: "Em 2025, Portugal enfrentará uma intensificação da crise habitacional, com poucos sinais de abrandamento nos preços das casas e um mercado de arrendamento instável. Especialistas preveem uma estabilização dos preços, mas a um nível elevado, resultado da pressão constante da procura, que continua a ultrapassar a oferta. Apesar da expectativa de um aumento na produção...",
-      image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    },
-    {
-      title: "Regiões de maior crescimento em 2025: onde investir em Portugal?",
-      date: "Janeiro 5, 2025",
-      excerpt: "Portugal 2025: Destino de Excelência para Investimento Imobiliário Em 2025, Portugal continua a ser um destino atraente para investidores imobiliários, com Lisboa e Porto mantendo-se como os principais polos do mercado. No entanto, regiões como Santarém e Caminha destacam-se por oferecerem uma excelente relação qualidade/preço e grande potencial de valorização, impulsionado por investimentos em infraestruturas...",
-      image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    },
-    {
-      title: "Tendências para o setor imobiliário em 2025",
-      date: "Fevereiro 13, 2024",
-      excerpt: "O setor imobiliário em Portugal está em plena transformação, impulsionado por avanços tecnológicos, mudanças nas preferências dos consumidores e novos desafios socioeconómicos. À medida que nos aproximamos de 2025, algumas tendências já se consolidam como pontos-chave para o sucesso de consultores e imobiliárias.Esteja preparado para um mercado mais dinâmico, exigente e competitivo. Acompanhe as principais...",
-      image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    },
-    {
-      title: "Preços das casas em 2025? Novas subidas à vista com apoios à compra",
-      date: "Fevereiro 13, 2024",
-      excerpt: "Em Portugal, o acesso à habitação continua a ser um problema crescente. Os preços das casas aumentaram muito mais do que os salários médios nos últimos anos, enquanto a oferta habitacional ainda não cresceu o suficiente para responder à demanda. As novas medidas do Governo, focadas em incentivar a procura, como a isenção de IMT...",
-      image: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=400",
-      author: "Globalead Portugal"
-    }
-  ];
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      const { data } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('date', { ascending: false });
+      
+      setBlogPosts(data || []);
+      setLoading(false);
+    };
+
+    fetchBlogPosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">A carregar artigos...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -149,9 +106,9 @@ const BlogPage: React.FC = () => {
                     {post.excerpt}
                   </p>
                   <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center">
-                    Ler mais
+                  <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
                     <ArrowRight className="ml-1 h-4 w-4" />
-                  </button>
+                  {post.read_time}
                 </div>
               </article>
             ))}

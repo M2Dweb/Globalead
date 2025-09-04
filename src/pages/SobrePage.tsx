@@ -1,7 +1,16 @@
 import React from 'react';
-import { Star, Users, Award, CheckCircle, DollarSign, Clock, Cpu, Search, ShieldCheck } from 'lucide-react';
+import { Star, Users, Award, CheckCircle, DollarSign, Clock, Cpu, Search, ShieldCheck, Play } from 'lucide-react';
 
 const SobrePage: React.FC = () => {
+  const [currentReview, setCurrentReview] = useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentReview(prev => (prev + 1) % testimonials.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   const testimonials = [
     {
       name: "Daniel Gomes",

@@ -1,65 +1,16 @@
 import React, { useState } from 'react';
 import { Plus, Edit, Trash2, Save, X, Upload, Eye } from 'lucide-react';
-
-interface Property {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  location: string;
-  type: string;
-  images: string[];
-}
-
-interface BlogPost {
-  id: number;
-  title: string;
-  content: string;
-  excerpt: string;
-  category: string;
-  date: string;
-  author: string;
-  image: string;
-}
+import { supabase } from '../lib/supabase';
 
 const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('properties');
   const [isEditing, setIsEditing] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock data - in real app this would come from database
-  const [properties, setProperties] = useState<Property[]>([
-    {
-      id: 1,
-      title: "Empreendimento Vila Nova",
-      description: "Empreendimento completamente murado, em pedra...",
-      price: 450000,
-      bedrooms: 3,
-      bathrooms: 3,
-      area: 238,
-      location: "Aldoar, Porto",
-      type: "moradia",
-      images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"]
-    }
-  ]);
-
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([
-    {
-      id: 1,
-      title: "Garantia pública sobe risco de incumprimento",
-      content: "Conteúdo completo do artigo...",
-      excerpt: "A garantia pública para crédito à habitação de jovens...",
-      category: "imoveis",
-      date: "2025-01-06",
-      author: "globalead",
-      image: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg"
-    }
-  ]);
-
-  const [newProperty, setNewProperty] = useState<Partial<Property>>({
+  const [newProperty, setNewProperty] = useState<any>({
     title: '',
     description: '',
     price: 0,
@@ -68,80 +19,154 @@ const AdminPage: React.FC = () => {
     area: 0,
     location: '',
     type: 'apartamento',
-    images: []
+    images: ['']
   });
 
-  const [newBlogPost, setNewBlogPost] = useState<Partial<BlogPost>>({
+  const [newBlogPost, setNewBlogPost] = useState<any>({
     title: '',
     content: '',
     excerpt: '',
     category: 'imoveis',
-    author: 'globalead',
-    image: ''
+    author: 'Globalead Portugal',
+    image: '',
+    read_time: '5 min'
   });
 
-  const handleAddProperty = () => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    setLoading(true);
+    
+    // Fetch properties
+    const { data: propertiesData } = await supabase
+      .from('properties')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    // Fetch blog posts
+    const { data: blogData } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    setProperties(propertiesData || []);
+    setBlogPosts(blogData || []);
+    setLoading(false);
+  };
+
+  const handleAddProperty = async () => {
     if (newProperty.title && newProperty.price) {
-      const property: Property = {
-        id: Date.now(),
-        title: newProperty.title || '',
-        description: newProperty.description || '',
-        price: newProperty.price || 0,
-        bedrooms: newProperty.bedrooms || 0,
-        bathrooms: newProperty.bathrooms || 0,
-        area: newProperty.area || 0,
-        location: newProperty.location || '',
-        type: newProperty.type || 'apartamento',
-        images: newProperty.images || []
+      const { data, error } = await supabase
+        .from('properties')
+        .insert([{
+          title: newProperty.title,
+          description: newProperty.description,
+          price: newProperty.price,
+          bedrooms: newProperty.bedrooms,
+          bathrooms: newProperty.bathrooms,
+          area: newProperty.area,
+          location: newProperty.location,
+          type: newProperty.type,
+          energy_class: 'B',
+          year_built: new Date().getFullYear(),
+          features: ['Garagem', 'Jardim'],
+          images: newProperty.images.filter((img: string) => img.trim() !== '')
+        }])
+        .select();
+      
+      if (error) {
+        console.error('Erro ao adicionar imóvel:', error);
+        alert('Erro ao adicionar imóvel');
+      } else {
+        await fetchData();
+        setNewProperty({
+          title: '',
+          description: '',
+          price: 0,
+          bedrooms: 0,
+          bathrooms: 0,
+          area: 0,
+          location: '',
+          type: 'apartamento',
+          images: ['']
+        });
+        setIsEditing(false);
       };
-      setProperties([...properties, property]);
-      setNewProperty({
-        title: '',
-        description: '',
-        price: 0,
-        bedrooms: 0,
-        bathrooms: 0,
-        area: 0,
-        location: '',
-        type: 'apartamento',
-        images: []
-      });
-      setIsEditing(false);
     }
   };
 
-  const handleDeleteProperty = (id: number) => {
-    setProperties(properties.filter(p => p.id !== id));
+  const handleDeleteProperty = async (id: string) => {
+    const { error } = await supabase
+      .from('properties')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Erro ao eliminar imóvel:', error);
+      alert('Erro ao eliminar imóvel');
+    } else {
+      await fetchData();
+    }
   };
 
-  const handleAddBlogPost = () => {
+  const handleAddBlogPost = async () => {
     if (newBlogPost.title && newBlogPost.content) {
-      const post: BlogPost = {
-        id: Date.now(),
-        title: newBlogPost.title || '',
-        content: newBlogPost.content || '',
-        excerpt: newBlogPost.excerpt || '',
-        category: newBlogPost.category || 'imoveis',
-        date: new Date().toISOString().split('T')[0],
-        author: newBlogPost.author || 'globalead',
-        image: newBlogPost.image || ''
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .insert([{
+          title: newBlogPost.title,
+          content: newBlogPost.content,
+          excerpt: newBlogPost.excerpt,
+          category: newBlogPost.category,
+          date: new Date().toISOString().split('T')[0],
+          author: newBlogPost.author,
+          image: newBlogPost.image,
+          read_time: newBlogPost.read_time
+        }])
+        .select();
+      
+      if (error) {
+        console.error('Erro ao adicionar artigo:', error);
+        alert('Erro ao adicionar artigo');
+      } else {
+        await fetchData();
+        setNewBlogPost({
+          title: '',
+          content: '',
+          excerpt: '',
+          category: 'imoveis',
+          author: 'Globalead Portugal',
+          image: '',
+          read_time: '5 min'
+        });
+        setIsEditing(false);
       };
-      setBlogPosts([...blogPosts, post]);
-      setNewBlogPost({
-        title: '',
-        content: '',
-        excerpt: '',
-        category: 'imoveis',
-        author: 'globalead',
-        image: ''
-      });
-      setIsEditing(false);
     }
   };
 
-  const handleDeleteBlogPost = (id: number) => {
-    setBlogPosts(blogPosts.filter(p => p.id !== id));
+  const handleDeleteBlogPost = async (id: string) => {
+    const { error } = await supabase
+      .from('blog_posts')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Erro ao eliminar artigo:', error);
+      alert('Erro ao eliminar artigo');
+    } else {
+      await fetchData();
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">A carregar dados...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -279,6 +304,13 @@ const AdminPage: React.FC = () => {
                     onChange={(e) => setNewProperty({...newProperty, area: Number(e.target.value)})}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <input
+                    type="url"
+                    placeholder="URL da imagem"
+                    value={newProperty.images[0] || ''}
+                    onChange={(e) => setNewProperty({...newProperty, images: [e.target.value]})}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
 
                 <textarea
@@ -341,7 +373,7 @@ const AdminPage: React.FC = () => {
                           <div className="text-sm text-gray-500">{property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          €{property.price.toLocaleString()}
+                          €{property.price?.toLocaleString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {property.location}

@@ -8,11 +8,14 @@ interface BreadcrumbsProps {
     current?: boolean;
   }>;
   onNavigate: (page: string) => void;
+  isVisible: boolean;
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, onNavigate }) => {
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, onNavigate, isVisible }) => {
+  if (!isVisible) return null;
+
   return (
-    <nav className="bg-gray-50 py-3 mt-16">
+    <nav className="bg-gray-50 py-3 fixed top-16 left-0 right-0 z-40 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ol className="flex items-center space-x-2 text-sm">
           <li>
