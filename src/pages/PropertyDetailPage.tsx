@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Calendar, Eye, Heart, Share2, Phone, Mail } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
 import { supabase } from '../lib/supabase';
