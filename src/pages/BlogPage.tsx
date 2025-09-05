@@ -1,8 +1,12 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const BlogPage: React.FC = () => {
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchBlogPosts = async () => {
       const { data } = await supabase
@@ -108,7 +112,8 @@ const BlogPage: React.FC = () => {
                   <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center">
                   <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
                     <ArrowRight className="ml-1 h-4 w-4" />
-                  {post.read_time}
+                    <span className="mx-2">•</span>
+                    <span>{post.read_time}</span>
                 </div>
               </article>
             ))}
