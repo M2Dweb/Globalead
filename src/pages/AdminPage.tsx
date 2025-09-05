@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Plus, Edit, Trash2, Save, X, Upload, Eye } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
@@ -19,7 +20,9 @@ const AdminPage: React.FC = () => {
     area: 0,
     location: '',
     type: 'apartamento',
-    images: ['']
+    images: [''],
+    floor_plans: [],
+    property_types: []
   });
 
   const [newBlogPost, setNewBlogPost] = useState<any>({
@@ -72,7 +75,9 @@ const AdminPage: React.FC = () => {
           energy_class: 'B',
           year_built: new Date().getFullYear(),
           features: ['Garagem', 'Jardim'],
-          images: newProperty.images.filter((img: string) => img.trim() !== '')
+          images: newProperty.images.filter((img: string) => img.trim() !== ''),
+          floor_plans: newProperty.floor_plans || [],
+          property_types: newProperty.property_types || []
         }])
         .select();
       
@@ -90,10 +95,12 @@ const AdminPage: React.FC = () => {
           area: 0,
           location: '',
           type: 'apartamento',
-          images: ['']
+          images: [''],
+          floor_plans: [],
+          property_types: []
         });
         setIsEditing(false);
-      };
+      }
     }
   };
 
