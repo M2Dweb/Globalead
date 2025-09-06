@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Plus, Edit, Trash2, Save, X, Upload, Eye } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { td } from 'framer-motion/client';
+import ImageUploader from '../components/ImageUploader';
 
 const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('properties');
@@ -468,13 +469,13 @@ const handleSaveProperty = async () => {
                     onChange={(e) => setNewProperty({...newProperty, area: Number(e.target.value)})}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  <input
-                    type="url"
-                    placeholder="URL da imagem"
-                    value={newProperty.images[0] || ''}
-                    onChange={(e) => setNewProperty({...newProperty, images: [e.target.value]})}
-                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                  <div className="col-span-1 md:col-span-2">
+                    <label className="block mb-2">Imagem principal:</label>
+                    <ImageUploader
+                      value={newProperty.images[0]}
+                      onUploadComplete={(url) => setNewProperty({ ...newProperty, images: [url] })}
+                    />
+                  </div>
                 </div>
 
                 <textarea
@@ -630,13 +631,14 @@ const handleSaveProperty = async () => {
                   </select>
                 </div>
 
-                <input
-                  type="url"
-                  placeholder="URL da imagem"
-                  value={newBlogPost.image}
-                  onChange={(e) => setNewBlogPost({...newBlogPost, image: e.target.value})}
-                  className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <div className="mb-4">
+                  <label className="block mb-2">Imagem do artigo:</label>
+                  <ImageUploader
+                    value={newBlogPost.image}
+                    onUploadComplete={(url) => setNewBlogPost({ ...newBlogPost, image: url })}
+                  />
+                </div>
+
 
                 <textarea
                   placeholder="Resumo do artigo"
