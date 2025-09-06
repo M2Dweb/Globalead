@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Calendar, ArrowRight, Search, Filter } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 

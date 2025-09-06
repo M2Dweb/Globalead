@@ -42,20 +42,33 @@ const AdminPage: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     
-    // Fetch properties
-    const { data: propertiesData } = await supabase
-      .from('properties')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    // Fetch blog posts
-    const { data: blogData } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    setProperties(propertiesData || []);
-    setBlogPosts(blogData || []);
+    try {
+      // Fetch properties
+      const { data: propertiesData, error: propertiesError } = await supabase
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      // Fetch blog posts
+      const { data: blogData, error: blogError } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (propertiesError) {
+        console.error('Erro ao carregar propriedades:', propertiesError);
+      }
+      if (blogError) {
+        console.error('Erro ao carregar posts:', blogError);
+      }
+      
+      setProperties(propertiesData || []);
+      setBlogPosts(blogData || []);
+    } catch (error) {
+      console.error('Erro ao carregar dados:', error);
+      setProperties([]);
+      setBlogPosts([]);
+    }
     setLoading(false);
   };
 

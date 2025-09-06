@@ -23,121 +23,136 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
         return;
       }
 
-      const { data } = await supabase
-        .from('properties')
-        .select('*')
-        .eq('id', propertyId)
-        .single();
-      
-      if (data) {
-        setProperty(data);
-        if (data.property_types && data.property_types.length > 0) {
-          setSelectedPropertyType(data.property_types[0]);
+      try {
+        const { data, error } = await supabase
+          .from('properties')
+          .select('*')
+          .eq('id', propertyId)
+          .single();
+        
+        if (error) {
+          console.error('Erro ao carregar propriedade:', error);
+          // Fallback data
+          setProperty({
+            id: propertyId,
+            title: "Empreendimento Noval Park",
+            description: "O empreendimento Novel Park nasce em Vila Nova de Gaia, junto ao Monte da Virgem, numa das zonas mais elevadas e tranquilas da cidade. Implantado nos terrenos da Quinta do Cravel, o projeto usufrui de uma envolvente natural privilegiada, ao mesmo tempo que garante proximidade ao centro urbano e à ampla rede de serviços e acessos, tornando-se uma opção ideal para quem procura viver com equilíbrio entre natureza e comodidade.",
+            price: 432600,
+            bedrooms: 3,
+            bathrooms: 2,
+            area: 145,
+            location: "Vila Nova de Gaia",
+            type: "empreendimento",
+            energy_class: "NA",
+            year_built: 2025,
+            parking: 3,
+            reference: "T3NPVNG",
+            state: "Novo",
+            features: ["Garagem para 3 carros", "Jardim privativo", "Cozinha equipada"],
+            images: [
+              "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200",
+              "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1200",
+              "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200"
+            ],
+            property_types: [
+              {
+                name: "T1",
+                area: 70,
+                price: 218000,
+                garage: "C/Garagem",
+                floor_plan: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400"
+              },
+              {
+                name: "T2A",
+                area: 100,
+                price: 298700,
+                garage: "C/Garagem p/ 2 lugares",
+                floor_plan: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400"
+              },
+              {
+                name: "T2B",
+                area: 118,
+                price: 350200,
+                garage: "C/Garagem p/ 2 lugares",
+                floor_plan: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400"
+              },
+              {
+                name: "T3",
+                area: 145,
+                price: 432600,
+                garage: "C/Garagem p/ 3 lugares",
+                floor_plan: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"
+              }
+            ]
+          });
+          setSelectedPropertyType({
+            name: "T3",
+            area: 145,
+            price: 432600,
+            garage: "C/Garagem p/ 3 lugares",
+            floor_plan: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"
+          });
+        } else {
+          setProperty(data);
+          if (data.property_types && data.property_types.length > 0) {
+            setSelectedPropertyType(data.property_types[0]);
+          }
         }
-      } else {
-        // Fallback data
-        setProperty({
-          id: propertyId,
-          title: "Empreendimento Noval Park",
-          description: "O empreendimento Novel Park nasce em Vila Nova de Gaia, junto ao Monte da Virgem, numa das zonas mais elevadas e tranquilas da cidade. Implantado nos terrenos da Quinta do Cravel, o projeto usufrui de uma envolvente natural privilegiada, ao mesmo tempo que garante proximidade ao centro urbano e à ampla rede de serviços e acessos, tornando-se uma opção ideal para quem procura viver com equilíbrio entre natureza e comodidade.",
-          price: 432600,
-          bedrooms: 3,
-          bathrooms: 2,
-          area: 145,
-          location: "Vila Nova de Gaia",
-          type: "empreendimento",
-          energy_class: "NA",
-          year_built: 2025,
-          parking: 3,
-          reference: "T3NPVNG",
-          state: "Novo",
-          features: ["Garagem para 3 carros", "Jardim privativo", "Cozinha equipada"],
-          images: [
-            "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200",
-            "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1200",
-            "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200"
-          ],
-          property_types: [
-            {
-              name: "T1",
-              area: 70,
-              price: 218000,
-              garage: "C/Garagem",
-              floor_plan: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400"
-            },
-            {
-              name: "T2A",
-              area: 100,
-              price: 298700,
-              garage: "C/Garagem p/ 2 lugares",
-              floor_plan: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400"
-            },
-            {
-              name: "T2B",
-              area: 118,
-              price: 350200,
-              garage: "C/Garagem p/ 2 lugares",
-              floor_plan: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400"
-            },
-            {
-              name: "T3",
-              area: 145,
-              price: 432600,
-              garage: "C/Garagem p/ 3 lugares",
-              floor_plan: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"
-            }
-          ]
-        });
-        setSelectedPropertyType({
-          name: "T3",
-          area: 145,
-          price: 432600,
-          garage: "C/Garagem p/ 3 lugares",
-          floor_plan: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"
-        });
+      } catch (error) {
+        console.error('Erro ao carregar propriedade:', error);
+        setProperty(null);
       }
       setLoading(false);
     };
 
     const fetchSimilarProperties = async () => {
-      const { data } = await supabase
-        .from('properties')
-        .select('*')
-        .neq('id', propertyId)
-        .limit(3);
-      
-      setSimilarProperties(data || [
-        {
-          id: 2,
-          title: "Apartamento T2 Moderno",
-          price: 280000,
-          bedrooms: 2,
-          bathrooms: 1,
-          area: 85,
-          location: "Cedofeita, Porto",
-          images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400"]
-        },
-        {
-          id: 3,
-          title: "Moradia T4 com Jardim",
-          price: 520000,
-          bedrooms: 4,
-          bathrooms: 3,
-          area: 200,
-          location: "Matosinhos, Porto",
-          images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"]
-        },
-        {
-          id: 4,
-          title: "Apartamento T1 Centro",
-          price: 180000,
-          bedrooms: 1,
-          bathrooms: 1,
-          area: 55,
-          location: "Campanhã, Porto",
-          images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=400"]
+      try {
+        const { data, error } = await supabase
+          .from('properties')
+          .select('*')
+          .neq('id', propertyId)
+          .limit(3);
+        
+        if (error) {
+          console.error('Erro ao carregar propriedades similares:', error);
         }
-      ]);
+        
+        setSimilarProperties(data || [
+          {
+            id: 2,
+            title: "Apartamento T2 Moderno",
+            price: 280000,
+            bedrooms: 2,
+            bathrooms: 1,
+            area: 85,
+            location: "Cedofeita, Porto",
+            images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400"]
+          },
+          {
+            id: 3,
+            title: "Moradia T4 com Jardim",
+            price: 520000,
+            bedrooms: 4,
+            bathrooms: 3,
+            area: 200,
+            location: "Matosinhos, Porto",
+            images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"]
+          },
+          {
+            id: 4,
+            title: "Apartamento T1 Centro",
+            price: 180000,
+            bedrooms: 1,
+            bathrooms: 1,
+            area: 55,
+            location: "Campanhã, Porto",
+            images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=400"]
+          }
+        ]);
+      } catch (error) {
+        console.error('Erro ao carregar propriedades similares:', error);
+        setSimilarProperties([]);
+      }
     };
 
     fetchProperty();

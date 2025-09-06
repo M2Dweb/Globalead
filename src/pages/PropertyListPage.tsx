@@ -18,29 +18,47 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
 
   useEffect(() => {
     const fetchProperties = async () => {
-      const { data } = await supabase
-        .from('properties')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (data) {
-        setProperties(data);
-      } else {
-        // Fallback data
-        setProperties([
-          {
-            id: 1,
-            title: "Empreendimento Vila Nova",
-            description: "Empreendimento completamente murado, em pedra...",
-            price: 450000,
-            bedrooms: 3,
-            bathrooms: 3,
-            area: 238,
-            location: "Aldoar, Porto",
-            type: "moradia",
-            images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
-          }
-        ]);
+      try {
+        const { data, error } = await supabase
+          .from('properties')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) {
+          console.error('Erro ao carregar propriedades:', error);
+          // Fallback data
+          setProperties([
+            {
+              id: 1,
+              title: "Empreendimento Noval Park",
+              description: "Empreendimento completamente murado, em pedra...",
+              price: 432600,
+              bedrooms: 3,
+              bathrooms: 2,
+              area: 145,
+              location: "Vila Nova de Gaia",
+              type: "empreendimento",
+              images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            },
+            {
+              id: 2,
+              title: "Apartamento T2 Moderno",
+              description: "Apartamento moderno no centro da cidade",
+              price: 280000,
+              bedrooms: 2,
+              bathrooms: 1,
+              area: 85,
+              location: "Cedofeita, Porto",
+              type: "apartamento",
+              images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            }
+          ]);
+        } else {
+          setProperties(data || []);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar propriedades:', error);
+        setProperties([]);
       }
       setLoading(false);
     };

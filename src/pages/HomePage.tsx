@@ -15,47 +15,53 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   useEffect(() => {
     const fetchProperties = async () => {
-      const { data } = await supabase
-        .from('properties')
-        .select('*')
-        .limit(6);
-      
-      if (data) {
-        setProperties(data);
-      } else {
-        // Fallback data if Supabase not configured
-        setProperties([
-          {
-            id: 1,
-            title: "Empreendimento Vila Nova",
-            price: 450000,
-            bedrooms: 3,
-            bathrooms: 3,
-            area: 238,
-            location: "Aldoar, Porto",
-            images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
-          },
-          {
-            id: 2,
-            title: "Apartamento T2 Moderno",
-            price: 280000,
-            bedrooms: 2,
-            bathrooms: 1,
-            area: 85,
-            location: "Cedofeita, Porto",
-            images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"]
-          },
-          {
-            id: 3,
-            title: "Moradia T4 com Jardim",
-            price: 520000,
-            bedrooms: 4,
-            bathrooms: 3,
-            area: 200,
-            location: "Matosinhos, Porto",
-            images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800"]
-          }
-        ]);
+      try {
+        const { data, error } = await supabase
+          .from('properties')
+          .select('*')
+          .limit(6);
+        
+        if (error) {
+          console.error('Erro ao carregar propriedades:', error);
+          // Fallback data if Supabase not configured
+          setProperties([
+            {
+              id: 1,
+              title: "Empreendimento Noval Park",
+              price: 432600,
+              bedrooms: 3,
+              bathrooms: 2,
+              area: 145,
+              location: "Vila Nova de Gaia",
+              images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            },
+            {
+              id: 2,
+              title: "Apartamento T2 Moderno",
+              price: 280000,
+              bedrooms: 2,
+              bathrooms: 1,
+              area: 85,
+              location: "Cedofeita, Porto",
+              images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            },
+            {
+              id: 3,
+              title: "Moradia T4 com Jardim",
+              price: 520000,
+              bedrooms: 4,
+              bathrooms: 3,
+              area: 200,
+              location: "Matosinhos, Porto",
+              images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            }
+          ]);
+        } else {
+          setProperties(data || []);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar propriedades:', error);
+        setProperties([]);
       }
     };
 
