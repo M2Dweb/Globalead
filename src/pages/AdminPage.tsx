@@ -4,6 +4,7 @@ import { Plus, Edit, Trash2, Save, X, Upload, Eye } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { td } from 'framer-motion/client';
 import ImageUploader from '../components/ImageUploader';
+import { MultiFileUploader } from '../components/MultiFileUploader';
 
 const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('properties');
@@ -22,7 +23,8 @@ const AdminPage: React.FC = () => {
     area: 0,
     location: '',
     type: 'apartamento',
-    images: [''],
+    images: [],
+    videos: [],
     floor_plans: [],
     property_types: []
   });
@@ -91,6 +93,7 @@ const AdminPage: React.FC = () => {
           year_built: new Date().getFullYear(),
           features: ['Garagem', 'Jardim'],
           images: newProperty.images.filter((img: string) => img.trim() !== ''),
+          videos: newProperty.videos.filter((vid: string) => vid.trim() !== ''),
           floor_plans: newProperty.floor_plans || [],
           property_types: newProperty.property_types || []
         }])
@@ -185,6 +188,7 @@ const handleSaveProperty = async () => {
         location: newProperty.location,
         type: newProperty.type,
         images: newProperty.images.filter((img: string) => img.trim() !== ''),
+        videos: newProperty.videos.filter((vid: string) => vid.trim() !== ''),
         floor_plans: newProperty.floor_plans || [],
         property_types: newProperty.property_types || []
       })
@@ -471,11 +475,20 @@ const handleSaveProperty = async () => {
                   />
                   <div className="col-span-1 md:col-span-2">
                     <label className="block mb-2">Imagem principal:</label>
-                    <ImageUploader
-                      folder="properties"
-                      value={newProperty.images[0]}
-                      onUpload={(url) => setNewProperty({...newProperty, images: [url]})}
+                    <MultiFileUploader
+                      folder="imagens"
+                      files={newProperty.images}
+                      accept="image/*"
+                      onUpload={(urls) => setNewProperty({...newProperty, images: [...newProperty.images, ...urls]})}
                     />
+
+                    <MultiFileUploader
+                      folder="imagens"
+                      files={newProperty.videos}
+                      accept="video/*"
+                      onUpload={(urls) => setNewProperty({...newProperty, videos: [...newProperty.videos, ...urls]})}
+                    />
+
                   </div>
                 </div>
 
