@@ -472,8 +472,9 @@ const handleSaveProperty = async () => {
                   <div className="col-span-1 md:col-span-2">
                     <label className="block mb-2">Imagem principal:</label>
                     <ImageUploader
+                      folder="properties"
                       value={newProperty.images[0]}
-                      onUploadComplete={(url) => setNewProperty({ ...newProperty, images: [url] })}
+                      onUpload={(url) => setNewProperty({...newProperty, images: [url]})}
                     />
                   </div>
                 </div>
@@ -634,8 +635,9 @@ const handleSaveProperty = async () => {
                 <div className="mb-4">
                   <label className="block mb-2">Imagem do artigo:</label>
                   <ImageUploader
+                    folder="blog"
                     value={newBlogPost.image}
-                    onUploadComplete={(url) => setNewBlogPost({ ...newBlogPost, image: url })}
+                    onUpload={(url) => setNewBlogPost({...newBlogPost, image: url})}
                   />
                 </div>
 
