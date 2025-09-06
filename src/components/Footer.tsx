@@ -1,151 +1,129 @@
 import React from 'react';
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  Phone,
+} from 'lucide-react';
 
-interface FooterProps {
-  onNavigate: (page: string) => void;
-}
+import {
+  FaTiktok,
+  FaYoutube,
+  FaTelegramPlane,
+  FaWhatsapp,
+} from 'react-icons/fa';
 
-const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
-  const currentYear = new Date().getFullYear();
-
+const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="md:col-span-1">
-            <img 
-              src="/logo.png" 
-              alt="Globalead Portugal" 
-              className="h-12 w-auto mb-4"
-            />
-            <p className="text-gray-300 mb-6">
-              Especialistas em mediação imobiliária, seguros e certificação energética em Portugal.
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Facebook className="h-6 w-6" />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Instagram className="h-6 w-6" />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Linkedin className="h-6 w-6" />
-              </a>
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Centralizar os blocos, mas manter texto alinhado à esquerda */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 justify-center">
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Links Rápidos</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={() => onNavigate('sobre')}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Sobre Nós
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('imoveis')}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Imóveis
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('seguros')}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Seguros
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('blog')}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Blog
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Serviços</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={() => onNavigate('credito')}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Crédito Habitação
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('certificacao')}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Certificação Energética
-                </button>
-              </li>
-              <li>
-                <span className="text-gray-300">Mediação Imobiliária</span>
-              </li>
-              <li>
-                <span className="text-gray-300">Consultoria</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Entre em contacto</h3>
-            <div className="space-y-3">
-              <div className="flex items-center">
-                <Phone className="h-5 w-5 mr-3 text-blue-400" />
-                <span className="text-gray-300">915 482 365</span>
+          {/* Facebook Page Plugin + Contact Info */}
+          <div className="flex flex-col items-center">
+            <div className="w-full max-w-xs">
+              <div
+                className="bg-gray-900 rounded-lg overflow-hidden"
+                style={{ height: '130px' }}
+              >
+                <iframe
+                  className="focus:outline-none"
+                  title="Globalead Facebook Page"
+                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fglobalead.pt&tabs=timeline&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                  width="100%"
+                  height="130"
+                  style={{ border: 'none', overflow: 'hidden' }}
+                  scrolling="no"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
               </div>
-              <div className="flex items-center">
-                <Mail className="h-5 w-5 mr-3 text-blue-400" />
-                <span className="text-gray-300">geral@globalead.pt</span>
-              </div>
-              <div className="flex items-start">
-                <MapPin className="h-5 w-5 mr-3 text-blue-400 mt-1" />
-                <span className="text-gray-300">Portugal</span>
+
+              {/* Contact Info */}
+              <div className="mt-6 text-left">
+                <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <Phone className="h-5 w-5 mr-2 text-blue-400" />
+                    <span>+351 915482365</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Mail className="h-5 w-5 mr-2 text-blue-400" />
+                    <span>geral@globalead.pt</span>
+                  </div>
+                </div>
+
+                {/* Redes Sociais */}
+                <div className="flex space-x-4 mt-4">
+                  <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noopener noreferrer">
+                    <Facebook className="h-6 w-6 text-white hover:text-blue-300 transition-colors" />
+                  </a>
+                  <a href="https://www.instagram.com/globalead.pt/" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-6 w-6 text-white hover:text-pink-300 transition-colors" />
+                  </a>
+                  <a href="https://www.linkedin.com/company/globalead/" target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="h-6 w-6 text-white hover:text-blue-300 transition-colors" />
+                  </a>
+                  <a href="https://www.tiktok.com/@globalead.pt" target="_blank" rel="noopener noreferrer">
+                    <FaTiktok className="h-6 w-6 text-white hover:text-gray-300 transition-colors" />
+                  </a>
+                  <a href="https://www.youtube.com/channel/UCL2Dk6vnNF6HngFlc4enKDQ" target="_blank" rel="noopener noreferrer">
+                    <FaYoutube className="h-6 w-6 text-white hover:text-red-400 transition-colors" />
+                  </a>
+                  <a href="https://t.me/globaleadportugal" target="_blank" rel="noopener noreferrer">
+                    <FaTelegramPlane className="h-6 w-6 text-white hover:text-blue-400 transition-colors" />
+                  </a>
+                  <a href="https://api.whatsapp.com/send?phone=351915482365" target="_blank" rel="noopener noreferrer">
+                    <FaWhatsapp className="h-6 w-6 text-white hover:text-green-400 transition-colors" />
+                  </a>
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Facebook Page Plugin Placeholder */}
-            <div className="mt-6 bg-gray-800 p-4 rounded-lg">
-              <h4 className="text-sm font-medium mb-2">Siga-nos no Facebook</h4>
-              <div className="bg-blue-600 text-white p-3 rounded text-center text-sm">
-                Facebook Page Plugin
-              </div>
+          {/* Newsletter */}
+          <div className="flex flex-col items-center">
+            <div className="w-full max-w-md text-left">
+              <h3 className="text-xl font-bold mb-4">Receba as últimas novidades!</h3>
+              <form className="space-y-3">
+                <input
+                  type="text"
+                  placeholder="Nome:"
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="Apelido:"
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="email"
+                  placeholder="Email:"
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div className="flex items-start">
+                  <input type="checkbox" id="newsletter-consent" className="mt-1 mr-2" />
+                  <label htmlFor="newsletter-consent" className="text-xs text-gray-400">
+                    Sim, autorizo receber informações e novidades da Globalead Portugal.
+                  </label>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                >
+                  Subscrever
+                </button>
+              </form>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              © {currentYear} Globalead Portugal. Todos os direitos reservados.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Política de Privacidade
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Termos de Uso
-              </a>
-            </div>
-          </div>
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+          <p className="text-gray-400 text-sm">
+            © 2025 Globalead Portugal. Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </footer>

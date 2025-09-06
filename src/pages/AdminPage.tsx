@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Plus, Edit, Trash2, Save, X, Upload, Eye } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { td } from 'framer-motion/client';
 
 const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('properties');
@@ -117,6 +118,7 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  
   const handleDeleteProperty = async (id: string) => {
     const { error } = await supabase
       .from('properties')
@@ -130,6 +132,92 @@ const AdminPage: React.FC = () => {
       await fetchData();
     }
   };
+
+  // Editar imóvel
+const handleEditProperty = (property: any) => {
+  setEditingId(property.id);
+  setNewProperty({
+    title: property.title,
+    description: property.description,
+    price: property.price,
+    bedrooms: property.bedrooms,
+    bathrooms: property.bathrooms,
+    area: property.area,
+    location: property.location,
+    type: property.type,
+    images: property.images || [''],
+    floor_plans: property.floor_plans || [],
+    property_types: property.property_types || []
+  });
+  setIsEditing(true);
+};
+
+// Ver detalhes do imóvel
+const handleViewProperty = (property: any) => {
+    alert(`
+  Título: ${property.title}
+  Preço: €${property.price?.toLocaleString()}
+  Localização: ${property.location}
+  Quartos: ${property.bedrooms}
+  Casas de banho: ${property.bathrooms}
+  Área: ${property.area}m²
+  Tipo: ${property.type}
+  Descrição: ${property.description}
+    `);
+};
+
+// Guardar alterações ao editar
+const handleSaveProperty = async () => {
+  if (!newProperty.title || !newProperty.price) return;
+
+  if (editingId) {
+    // Update
+    const { error } = await supabase
+      .from('properties')
+      .update({
+        title: newProperty.title,
+        description: newProperty.description,
+        price: newProperty.price,
+        bedrooms: newProperty.bedrooms,
+        bathrooms: newProperty.bathrooms,
+        area: newProperty.area,
+        location: newProperty.location,
+        type: newProperty.type,
+        images: newProperty.images.filter((img: string) => img.trim() !== ''),
+        floor_plans: newProperty.floor_plans || [],
+        property_types: newProperty.property_types || []
+      })
+      .eq('id', editingId);
+
+    if (error) {
+      console.error('Erro ao atualizar imóvel:', error);
+      alert('Erro ao atualizar imóvel');
+      return;
+    }
+  } else {
+    await handleAddProperty();
+    return;
+  }
+
+  setIsEditing(false);
+  setEditingId(null);
+  setNewProperty({
+    title: '',
+    description: '',
+    price: 0,
+    bedrooms: 0,
+    bathrooms: 0,
+    area: 0,
+    location: '',
+    type: 'apartamento',
+    images: [''],
+    floor_plans: [],
+    property_types: []
+  });
+
+  fetchData();
+};
+
 
   const handleAddBlogPost = async () => {
     if (newBlogPost.title && newBlogPost.content) {
@@ -180,6 +268,71 @@ const AdminPage: React.FC = () => {
     }
   };
 
+
+  const handleEditBlogPost = (post: any) => {
+    setEditingId(post.id);
+    setNewBlogPost({
+      title: post.title,
+      content: post.content,
+      excerpt: post.excerpt,
+      category: post.category,
+      author: post.author,
+      image: post.image,
+      read_time: post.read_time
+    });
+    setIsEditing(true);
+  };
+
+
+  const handleViewBlogPost = (post: any) => {
+      alert(`
+        Título: ${post.title}
+        Categoria: ${post.category}
+        Autor: ${post.author}
+        Data: ${post.date}
+        Resumo: ${post.excerpt}
+        Conteúdo: ${post.content}
+      `);
+  };
+
+  const handleUpdateBlogPost = async () => {
+    if (!editingId) return;
+
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .update({
+        title: newBlogPost.title,
+        content: newBlogPost.content,
+        excerpt: newBlogPost.excerpt,
+        category: newBlogPost.category,
+        author: newBlogPost.author,
+        image: newBlogPost.image,
+        read_time: newBlogPost.read_time
+      })
+      .eq('id', editingId)
+      .select();
+
+    if (error) {
+      console.error('Erro ao atualizar artigo:', error);
+      alert('Erro ao atualizar artigo');
+    } else {
+      await fetchData();
+      setNewBlogPost({
+        title: '',
+        content: '',
+        excerpt: '',
+        category: 'imoveis',
+        author: 'Globalead Portugal',
+        image: '',
+        read_time: '5 min'
+      });
+      setIsEditing(false);
+      setEditingId(null);
+    }
+  };
+
+
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -224,16 +377,7 @@ const AdminPage: React.FC = () => {
             >
               Blog & Notícias
             </button>
-            <button
-              onClick={() => setActiveTab('content')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'content'
-                  ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              Editar Textos
-            </button>
+            
           </nav>
         </div>
       </div>
@@ -352,7 +496,7 @@ const AdminPage: React.FC = () => {
                     Cancelar
                   </button>
                   <button
-                    onClick={handleAddProperty}
+                    onClick={handleSaveProperty}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
                   >
                     <Save className="mr-2 h-4 w-4" />
@@ -405,10 +549,16 @@ const AdminPage: React.FC = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
-                            <button className="text-blue-600 hover:text-blue-900">
+                            <button
+                              className="text-blue-600 hover:text-blue-900"
+                              onClick={() => handleViewProperty(property)}
+                            >
                               <Eye className="h-4 w-4" />
                             </button>
-                            <button className="text-indigo-600 hover:text-indigo-900">
+                            <button
+                              className="text-indigo-600 hover:text-indigo-900"
+                              onClick={() => handleEditProperty(property)}
+                            >
                               <Edit className="h-4 w-4" />
                             </button>
                             <button
@@ -515,7 +665,7 @@ const AdminPage: React.FC = () => {
                     Cancelar
                   </button>
                   <button
-                    onClick={handleAddBlogPost}
+                     onClick={editingId ? handleUpdateBlogPost : handleAddBlogPost}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
                   >
                     <Save className="mr-2 h-4 w-4" />
@@ -562,10 +712,16 @@ const AdminPage: React.FC = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
-                            <button className="text-blue-600 hover:text-blue-900">
+                            <button
+                              className="text-blue-600 hover:text-blue-900"
+                              onClick={() => handleViewBlogPost(post)}
+                            >
                               <Eye className="h-4 w-4" />
                             </button>
-                            <button className="text-indigo-600 hover:text-indigo-900">
+                            <button
+                              className="text-indigo-600 hover:text-indigo-900"
+                              onClick={() => handleEditBlogPost(post)}
+                            >
                               <Edit className="h-4 w-4" />
                             </button>
                             <button
@@ -580,65 +736,6 @@ const AdminPage: React.FC = () => {
                     ))}
                   </tbody>
                 </table>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Content Tab */}
-        {activeTab === 'content' && (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Editar Textos do Website</h2>
-            
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Título da Homepage
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue="Caminhamos consigo lado a lado"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Descrição da Homepage
-                  </label>
-                  <textarea
-                    rows={4}
-                    defaultValue="A Globalead Portugal é uma empresa inovadora que atua como intermediária, oferecendo soluções personalizadas em diversos setores..."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Telefone de Contacto
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue="+351 915 482 365"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email de Contacto
-                  </label>
-                  <input
-                    type="email"
-                    defaultValue="geral@globalead.pt"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-                  Guardar Alterações
-                </button>
               </div>
             </div>
           </div>

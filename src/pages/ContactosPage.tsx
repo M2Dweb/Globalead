@@ -104,117 +104,73 @@ const ContactosPage: React.FC = () => {
       {/* Contact Form */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
-            {/* Instagram Template - Lado Esquerdo */}
-            <div className="lg:w-1/3 flex justify-center">
-              <img 
-                src="/template-dos-inta-2.png" 
-                alt="Instagram Template" 
-                className="w-128 h-auto rounded-lg shadow-lg"
-              />
-            </div>
-
-            {/* Formulário - Lado Direito */}
-            <div className="lg:w-2/3">
-              <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
-                <div className="mb-8">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">
-                    Formulário de Contacto
-                  </h2>
-                  <p className="text-gray-600 text-center">
-                    Preencha o formulário abaixo e entraremos em contacto consigo
-                  </p>
-                </div>
-
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input
-                    type="text"
-                    placeholder="Nome:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Apelido:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Telemóvel:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Assunto:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <select className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option>Meio de Contacto:</option>
-                    <option>Email</option>
-                    <option>Telefone</option>
-                    <option>WhatsApp</option>
-                    <option>Telegram</option>
-                    <option>Messenger</option>
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Horário:"
-                    className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  
-                  <div className="md:col-span-2">
-                    <label className="flex items-start text-sm text-gray-700 mb-4">
-                      <input type="checkbox" className="mt-1 mr-2" />
-                      Sim, aceito os termos e condições indicados pela Globalead Portugal.
-                    </label>
-                    <p className="text-xs text-gray-600 mb-6">
-                      Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
-                    </p>
-                    <button
-                      type="submit"
-                      className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                    >
-                      Enviar Mensagem
-                    </button>
-                  </div>
-                </form>
+          <div className="flex flex-col items-center">
+            <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 w-full max-w-2xl">
+              <div className="mb-8 text-center">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  Formulário de Contacto
+                </h2>
+                <p className="text-gray-600">
+                  Preencha o formulário abaixo e entraremos em contacto consigo
+                </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-                
 
-      {/* Additional Info */}
-      <section className="py-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <Phone className="h-12 w-12 mx-auto mb-4 text-white" />
-              <h3 className="text-xl font-semibold mb-2">Atendimento Telefónico</h3>
-              <p className="text-blue-100">
-                Disponível 24/7 para emergências e suporte técnico
-              </p>
-            </div>
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  type="text"
+                  placeholder="Nome:"
+                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="Apelido:"
+                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="tel"
+                  placeholder="Telemóvel:"
+                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="email"
+                  placeholder="Email:"
+                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="Assunto:"
+                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <select className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option>Meio de Contacto:</option>
+                  <option>Email</option>
+                  <option>Telefone</option>
+                  <option>WhatsApp</option>
+                  <option>Telegram</option>
+                  <option>Messenger</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Horário:"
+                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
 
-            <div className="text-center">
-              <Mail className="h-12 w-12 mx-auto mb-4 text-white" />
-              <h3 className="text-xl font-semibold mb-2">Suporte por Email</h3>
-              <p className="text-blue-100">
-                Resposta garantida em menos de 24 horas
-              </p>
-            </div>
-
-            <div className="text-center">
-              <MessageCircle className="h-12 w-12 mx-auto mb-4 text-white" />
-              <h3 className="text-xl font-semibold mb-2">Chat Online</h3>
-              <p className="text-blue-100">
-                WhatsApp, Telegram e Messenger disponíveis
-              </p>
+                <div className="md:col-span-2">
+                  <label className="flex items-start text-sm text-gray-700 mb-4">
+                    <input type="checkbox" className="mt-1 mr-2" />
+                    Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                  </label>
+                  <p className="text-xs text-gray-600 mb-6">
+                    Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
+                  </p>
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Enviar Mensagem
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

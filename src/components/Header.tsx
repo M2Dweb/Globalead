@@ -24,7 +24,8 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
     { name: 'Imóveis', page: 'imoveis' },
     { name: 'Seguros', page: 'seguros' },
     { name: 'Blog', page: 'blog' },
-    { name: 'Contactos', page: 'contactos' }
+    { name: 'Contactos', page: 'contactos' },
+    { name: 'Admin', page: 'admin' }
   ];
 
   const isHeroPage = ['home', 'sobre', 'imoveis', 'seguros', 'blog', 'contactos'].includes(currentPage);

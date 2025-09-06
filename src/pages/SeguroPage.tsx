@@ -199,85 +199,76 @@ const SeguroPage: React.FC = () => {
       {/* CTA Section */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
-            {/* Instagram Template - Lado Esquerdo */}
-            <div className="lg:w-1/3 flex justify-center">
-              <img 
-                src="/template-dos-inta-2.png" 
-                alt="Instagram Template" 
-                className="w-128 h-auto rounded-lg shadow-lg"
-              />
-            </div>
-
-            {/* Formulário - Lado Direito */}
-            <div className="lg:w-2/3">
-              <div className="text-center lg:text-left mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Faça uma simulação sem compromisso!
-                </h2>
-                <div className="flex flex-col md:flex-row justify-center lg:justify-start items-center space-y-4 md:space-y-0 md:space-x-8 mb-8">
-                  <div className="flex items-center">
-                    <Phone className="h-6 w-6 mr-2" />
-                    <span className="text-lg">915 482 365 (chamada rede fixa nacional)</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Mail className="h-6 w-6 mr-2" />
-                    <span className="text-lg">POR EMAIL</span>
-                  </div>
+          <div className="flex flex-col items-center">
+            {/* Texto acima do formulário */}
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Faça uma simulação sem compromisso!
+              </h2>
+              <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-8">
+                <div className="flex items-center">
+                  <Phone className="h-6 w-6 mr-2" />
+                  <span className="text-lg">915 482 365 (chamada rede fixa nacional)</span>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="h-6 w-6 mr-2" />
+                  <span className="text-lg">POR EMAIL</span>
                 </div>
               </div>
+            </div>
 
-              <div className="bg-white p-8 rounded-xl">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                  Tem dúvidas? Entre em contacto
-                </h3>
-                
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input
-                    type="text"
-                    placeholder="Nome*"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email*"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Contacto*"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option>Preferência*</option>
-                    <option>Email</option>
-                    <option>Telefone</option>
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Assunto"
-                    className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <textarea
-                    placeholder="Mensagem"
-                    rows={4}
-                    className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ></textarea>
+            {/* Formulário Centralizado */}
+            <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                Tem dúvidas? Entre em contacto
+              </h3>
 
-                  <div className="md:col-span-2">
-                    <button
-                      type="submit"
-                      className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                    >
-                      Enviar Mensagem
-                    </button>
-                  </div>
-                </form>
-              </div>
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  type="text"
+                  placeholder="Nome*"
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="email"
+                  placeholder="Email*"
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="tel"
+                  placeholder="Contacto*"
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option>Preferência*</option>
+                  <option>Email</option>
+                  <option>Telefone</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Assunto"
+                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <textarea
+                  placeholder="Mensagem"
+                  rows={4}
+                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                ></textarea>
+
+                <div className="md:col-span-2">
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Enviar Mensagem
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Partnership Info */}
       <section className="py-20 bg-gray-50">

@@ -19,6 +19,7 @@ import CertificacaoPage from './pages/CertificacaoPage';
 import AlarmesPage from './pages/AlarmesPage';
 import EnergiaPage from './pages/EnergiaPage';
 import TvNetVozPage from './pages/TvNetVozPage';
+import BlogPage from './pages/BlogPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -131,6 +132,8 @@ function App() {
         return <EnergiaPage />;
       case 'tv-net-voz':
         return <TvNetVozPage />;
+      case 'blog':
+        return <BlogPage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

@@ -12,6 +12,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const [currentReview, setCurrentReview] = useState(0);
   const [currentProperty, setCurrentProperty] = useState(0);
   const [properties, setProperties] = useState<any[]>([]);
+  
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -142,6 +143,16 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
     return () => clearInterval(interval);
   }, [properties.length]);
 
+  useEffect(() => {
+    if (properties.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentProperty(prev => (prev + 1) % properties.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [properties]);
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-PT', {
       style: 'currency',
@@ -220,99 +231,109 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       </section>
 
       {/* Properties Slideshow */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Imóveis em Destaque
-            </h2>
-            <p className="text-xl text-gray-600">
-              Descubra as nossas melhores oportunidades
-            </p>
-          </div>
+<section className="py-20 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Imóveis em Destaque
+      </h2>
+      <p className="text-xl text-gray-600">
+        Descubra as nossas melhores oportunidades
+      </p>
+    </div>
 
-          {properties.length > 0 && (
-            <div className="relative">
-              <div className="overflow-hidden rounded-2xl">
-                <div 
-                  className="flex transition-transform duration-500 ease-in-out"
-                  style={{ transform: `translateX(-${currentProperty * 100}%)` }}
-                >
-                  {properties.map((property, index) => (
-                    <div key={property.id} className="w-full flex-shrink-0">
-                      <div className="bg-white rounded-xl shadow-lg overflow-hidden mx-2">
-                        <div className="grid grid-cols-1 md:grid-cols-2">
-                          <img
-                            src={property.images[0]}
-                            alt={property.title}
-                            className="w-full h-64 md:h-80 object-cover"
-                          />
-                          <div className="p-8 flex flex-col justify-center">
-                            <div className="text-3xl font-bold text-blue-600 mb-4">
-                              {formatPrice(property.price)}
-                            </div>
-                            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                              {property.title}
-                            </h3>
-                            <div className="flex items-center space-x-4 text-gray-600 mb-4">
-                              <div className="flex items-center">
-                                <Bed className="h-5 w-5 mr-1" />
-                                <span>{property.bedrooms}</span>
-                              </div>
-                              <div className="flex items-center">
-                                <Bath className="h-5 w-5 mr-1" />
-                                <span>{property.bathrooms}</span>
-                              </div>
-                              <div className="flex items-center">
-                                <Square className="h-5 w-5 mr-1" />
-                                <span>{property.area}m²</span>
-                              </div>
-                            </div>
-                            <div className="flex items-center text-gray-600 mb-6">
-                              <MapPin className="h-4 w-4 mr-1" />
-                              <span>{property.location}</span>
-                            </div>
-                            <button
-                              onClick={() => onNavigate('property-list')}
-                              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
-                            >
-                              Ver Detalhes
-                              <ArrowRight className="ml-2 h-5 w-5" />
-                            </button>
-                          </div>
+    {properties.length > 0 && (
+      <div className="relative">
+        <div className="overflow-hidden rounded-2xl">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(-${currentProperty * (100 / 3)}%)`,
+            }}
+          >
+            {properties.concat(properties.slice(0, 3)).map((property, index) => (
+              <div key={index} className="w-1/3 flex-shrink-0 px-2">
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
+                  {/* Imagem em cima */}
+                  <img
+                    src={property.images[0]}
+                    alt={property.title}
+                    className="w-full h-64 object-cover"
+                  />
+
+                  {/* Detalhes em baixo */}
+                  <div className="p-6 flex flex-col justify-between">
+                    <div>
+                      <div className="text-2xl font-bold text-blue-600 mb-2">
+                        {formatPrice(property.price)}
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">
+                        {property.title}
+                      </h3>
+                      <div className="flex items-center space-x-4 text-gray-600 mb-2">
+                        <div className="flex items-center">
+                          <Bed className="h-4 w-4 mr-1" />
+                          <span>{property.bedrooms}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Bath className="h-4 w-4 mr-1" />
+                          <span>{property.bathrooms}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Square className="h-4 w-4 mr-1" />
+                          <span>{property.area}m²</span>
+                        </div>
+                        <div className="flex items-center text-gray-600">
+                          <MapPin className="h-4 w-4 mr-1" />
+                          <span>{property.location}</span>
                         </div>
                       </div>
                     </div>
-                  ))}
+
+                    <button
+                      onClick={() => onNavigate('property-list')}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mt-2"
+                    >
+                      Ver Detalhes
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              {/* Navigation Dots */}
-              <div className="flex justify-center mt-8 space-x-2">
-                {properties.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentProperty(index)}
-                    className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                      index === currentProperty ? 'bg-blue-600' : 'bg-gray-300'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="text-center mt-12">
-            <button
-              onClick={() => onNavigate('property-list')}
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
-            >
-              Ver Todos os Imóveis
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
+            ))}
           </div>
         </div>
-      </section>
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center mt-8 space-x-2">
+          {properties.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentProperty(index)}
+              className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                index === currentProperty ? 'bg-blue-600' : 'bg-gray-300'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    )}
+
+    <div className="text-center mt-12">
+      <button
+        onClick={() => onNavigate('property-list')}
+        className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
+      >
+        Ver Todos os Imóveis
+        <ArrowRight className="ml-2 h-5 w-5" />
+      </button>
+    </div>
+  </div>
+</section>
+
+{/* Intervalo automático */}
+
+
+
 
       {/* Reviews Section */}
       <section className="py-20 bg-white">
