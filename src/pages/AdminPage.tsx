@@ -92,8 +92,9 @@ const AdminPage: React.FC = () => {
           energy_class: 'B',
           year_built: new Date().getFullYear(),
           features: ['Garagem', 'Jardim'],
-          images: newProperty.images.filter((img: string) => img.trim() !== ''),
-          videos: newProperty.videos.filter((vid: string) => vid.trim() !== ''),
+          images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
+          videos: (newProperty.videos || []).filter((vid: string) => typeof vid === 'string' && vid.trim() !== ''),
+
           floor_plans: newProperty.floor_plans || [],
           property_types: newProperty.property_types || []
         }])
@@ -187,8 +188,8 @@ const handleSaveProperty = async () => {
         area: newProperty.area,
         location: newProperty.location,
         type: newProperty.type,
-        images: newProperty.images.filter((img: string) => img.trim() !== ''),
-        videos: newProperty.videos.filter((vid: string) => vid.trim() !== ''),
+        images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
+        videos: (newProperty.videos || []).filter((vid: string) => typeof vid === 'string' && vid.trim() !== ''),
         floor_plans: newProperty.floor_plans || [],
         property_types: newProperty.property_types || []
       })
