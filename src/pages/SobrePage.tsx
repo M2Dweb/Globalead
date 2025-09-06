@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, Users, Award, CheckCircle, DollarSign, Clock, Cpu, Search, ShieldCheck, Play } from 'lucide-react';
 
 const SobrePage: React.FC = () => {
   const [currentReview, setCurrentReview] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentReview(prev => (prev + 1) % testimonials.length);
     }, 4000);
