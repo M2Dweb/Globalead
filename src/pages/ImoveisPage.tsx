@@ -330,7 +330,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
             </div>
             <div className="p-8 text-center">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                João Silva - Fundador & CEO
+                Carlos Gonçalves - Fundador & CEO
               </h3>
               <p className="text-gray-600">
                 "Na Globalead, acreditamos que cada cliente merece um acompanhamento personalizado e de excelência. A nossa missão é simplificar processos complexos e garantir que encontra sempre a melhor solução."

@@ -53,6 +53,65 @@ const AdminPage: React.FC = () => {
     founder_video_url: ''
   });
 
+  //----------------------------------------------------------------------------------------------------------------------------
+
+  const handleDeleteUnusedImages = async () => {
+    if (!confirm("Tens a certeza que queres apagar todas as imagens não usadas?")) return;
+
+    try {
+      // 1. Buscar imagens usadas em properties e blog_posts
+      const { data: properties } = await supabase.from("properties").select("images");
+      const { data: blogs } = await supabase.from("blog_posts").select("image");
+
+      // Criar um set com todas as imagens usadas
+      const usedImages = new Set<string>();
+
+      properties?.forEach((p) => {
+        if (Array.isArray(p.images)) {
+          p.images.forEach((img: string) => usedImages.add(img));
+        }
+      });
+
+      blogs?.forEach((b) => {
+        if (b.image) usedImages.add(b.image);
+      });
+
+      // 2. Listar todos os ficheiros do bucket
+      const { data: allFiles, error: listError } = await supabase
+        .storage
+        .from("imagens")
+        .list("", { limit: 1000, recursive: true });
+
+      if (listError) throw listError;
+
+      // 3. Encontrar imagens que não estão usadas
+      const unusedFiles = allFiles?.filter((file) => {
+        const publicUrl = `${supabase.storage.from("imagens").getPublicUrl(file.name).data.publicUrl}`;
+        return !usedImages.has(publicUrl);
+      }) || [];
+
+      if (unusedFiles.length === 0) {
+        alert("Não há imagens para apagar!");
+        return;
+      }
+
+      // 4. Apagar as imagens não usadas
+      const { error: deleteError } = await supabase
+        .storage
+        .from("imagens")
+        .remove(unusedFiles.map((file) => file.name));
+
+      if (deleteError) throw deleteError;
+
+      alert(`✅ ${unusedFiles.length} imagens apagadas com sucesso!`);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao apagar imagens não usadas!");
+    }
+  };
+
+//----------------------------------------------------------------------------------------------------------------------------
+  
   useEffect(() => {
     if (isAuthenticated) {
       fetchData();
@@ -1035,7 +1094,6 @@ Conteúdo: ${post.content}
             </div>
           </div>
         )}
-
         {/* Settings Tab */}
         {activeTab === 'settings' && (
           <div>
@@ -1069,6 +1127,16 @@ Conteúdo: ${post.content}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="https://exemplo.com/video.mp4"
                   />
+                </div>
+
+                {/* 🔥 Botão para limpar imagens não usadas */}
+                <div>
+                  <button
+                    onClick={handleDeleteUnusedImages}
+                    className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors inline-flex items-center"
+                  >
+                    🗑️ Limpar Fotos Não Usadas
+                  </button>
                 </div>
 
                 <div className="flex justify-end">
