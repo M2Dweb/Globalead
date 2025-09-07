@@ -19,7 +19,7 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
-    
+
     setUploading(true);
     const uploadedUrls: string[] = [];
 
@@ -39,7 +39,6 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
           continue;
         }
 
-        // Get public URL
         const { data: urlData } = supabase.storage
           .from('imagens')
           .getPublicUrl(filePath);
@@ -50,7 +49,8 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
       }
 
       if (uploadedUrls.length > 0) {
-        onUpload(uploadedUrls);
+        // **Substituímos o array completo**, evitando duplicações
+        onUpload([...files, ...uploadedUrls]);
       }
     } catch (error) {
       console.error('Erro no upload:', error);
@@ -73,15 +73,15 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
           {files.map((url, index) => (
             <div key={index} className="relative">
               {accept.startsWith('image') ? (
-                <img 
-                  src={url} 
-                  alt={`Upload ${index + 1}`} 
-                  className="w-full h-24 object-cover rounded-lg border border-gray-300" 
+                <img
+                  src={url}
+                  alt={`Upload ${index + 1}`}
+                  className="w-full h-24 object-cover rounded-lg border border-gray-300"
                 />
               ) : (
-                <video 
-                  src={url} 
-                  className="w-full h-24 object-cover rounded-lg border border-gray-300" 
+                <video
+                  src={url}
+                  className="w-full h-24 object-cover rounded-lg border border-gray-300"
                   controls
                 />
               )}
@@ -110,9 +110,9 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
               {accept.startsWith('image') ? 'PNG, JPG ou JPEG' : 'MP4, MOV ou AVI'} (MAX. 50MB cada)
             </p>
           </div>
-          <input 
-            type="file" 
-            className="hidden" 
+          <input
+            type="file"
+            className="hidden"
             accept={accept}
             multiple
             onChange={handleFileChange}
