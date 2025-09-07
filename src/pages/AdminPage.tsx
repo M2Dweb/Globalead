@@ -25,11 +25,18 @@ const AdminPage: React.FC = () => {
     area: 0,
     location: '',
     type: 'apartamento',
+    energy_class: 'B',       // Novo
+    year_built: new Date().getFullYear(), // Novo
+    features: [],             // Novo (_text array)
     images: [],
-    videos: '',
     floor_plans: [],
-    property_types: []
+    property_types: [],       // jsonb
+    state: '',                // Novo
+    parking: 0,               // Novo
+    reference: '',            // Novo
+    videos: ''
   });
+
 
   const [newBlogPost, setNewBlogPost] = useState<any>({
     title: '',
@@ -238,8 +245,13 @@ Descrição: ${property.description}
           bedrooms: newProperty.bedrooms,
           bathrooms: newProperty.bathrooms,
           area: newProperty.area,
+          state: newProperty.state,
+          parking: newProperty.parking,
           location: newProperty.location,
+          year_built: newProperty.year_built,
+          energy_class: newProperty.energy_class,
           type: newProperty.type,
+          features: newProperty.features || [],
           images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
           videos: newProperty.videos || '',
           floor_plans: newProperty.floor_plans || [],
@@ -286,10 +298,12 @@ Descrição: ${property.description}
           content: newBlogPost.content,
           excerpt: newBlogPost.excerpt,
           category: newBlogPost.category,
-          date: new Date().toISOString().split('T')[0],
+          date: newBlogPost.date,
           author: newBlogPost.author,
           image: newBlogPost.image,
           read_time: newBlogPost.read_time
+          
+
         }])
         .select();
       
@@ -554,26 +568,26 @@ Conteúdo: ${post.content}
                     type="text"
                     placeholder="Título do imóvel"
                     value={newProperty.title}
-                    onChange={(e) => setNewProperty({...newProperty, title: e.target.value})}
+                    onChange={(e) => setNewProperty({ ...newProperty, title: e.target.value })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="number"
                     placeholder="Preço"
                     value={newProperty.price}
-                    onChange={(e) => setNewProperty({...newProperty, price: Number(e.target.value)})}
+                    onChange={(e) => setNewProperty({ ...newProperty, price: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="text"
                     placeholder="Localização"
                     value={newProperty.location}
-                    onChange={(e) => setNewProperty({...newProperty, location: e.target.value})}
+                    onChange={(e) => setNewProperty({ ...newProperty, location: e.target.value })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <select
                     value={newProperty.type}
-                    onChange={(e) => setNewProperty({...newProperty, type: e.target.value})}
+                    onChange={(e) => setNewProperty({ ...newProperty, type: e.target.value })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="apartamento">Apartamento</option>
@@ -584,38 +598,106 @@ Conteúdo: ${post.content}
                     type="number"
                     placeholder="Quartos"
                     value={newProperty.bedrooms}
-                    onChange={(e) => setNewProperty({...newProperty, bedrooms: Number(e.target.value)})}
+                    onChange={(e) => setNewProperty({ ...newProperty, bedrooms: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="number"
                     placeholder="Casas de banho"
                     value={newProperty.bathrooms}
-                    onChange={(e) => setNewProperty({...newProperty, bathrooms: Number(e.target.value)})}
+                    onChange={(e) => setNewProperty({ ...newProperty, bathrooms: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="number"
                     placeholder="Área (m²)"
                     value={newProperty.area}
-                    onChange={(e) => setNewProperty({...newProperty, area: Number(e.target.value)})}
+                    onChange={(e) => setNewProperty({ ...newProperty, area: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <input
+                    type="text"
+                    placeholder="Estado"
+                    value={newProperty.state}
+                    onChange={(e) => setNewProperty({ ...newProperty, state: e.target.value })}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <select
+                    value={newProperty.energy_class}
+                    onChange={(e) => setNewProperty({ ...newProperty, energy_class: e.target.value })}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="D">B-</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="D">E</option>
+                    <option value="D">F</option>
+                    
+                  </select>
+                  <input
+                    type="number"
+                    placeholder="Ano de Construção"
+                    value={newProperty.year_built}
+                    onChange={(e) => setNewProperty({ ...newProperty, year_built: Number(e.target.value) })}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Estacionamento"
+                    value={newProperty.parking}
+                    onChange={(e) => setNewProperty({ ...newProperty, parking: Number(e.target.value) })}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Referência"
+                    value={newProperty.reference}
+                    onChange={(e) => setNewProperty({ ...newProperty, reference: e.target.value })}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+
+                  {/* Features */}
+                  <textarea
+                    placeholder="Features (separadas por vírgula)"
+                    value={newProperty.features.join(', ')}
+                    onChange={(e) =>
+                      setNewProperty({ ...newProperty, features: e.target.value.split(',').map(f => f.trim()) })
+                    }
+                    className="col-span-1 md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+
+                  {/* Property Types (JSON) */}
+                  <textarea
+                    placeholder='Tipos de propriedade (JSON array, ex: ["Venda", "Arrendamento"])'
+                    value={JSON.stringify(newProperty.property_types)}
+                    onChange={(e) => {
+                      try {
+                        const parsed = JSON.parse(e.target.value);
+                        if (Array.isArray(parsed)) setNewProperty({ ...newProperty, property_types: parsed });
+                      } catch { /* Ignore invalid JSON */ }
+                    }}
+                    className="col-span-1 md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+
                   <input
                     type="url"
                     placeholder="URL do vídeo"
                     value={newProperty.videos}
-                    onChange={(e) => setNewProperty({...newProperty, videos: e.target.value})}
+                    onChange={(e) => setNewProperty({ ...newProperty, videos: e.target.value })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  
+
+                  {/* Imagens */}
                   <div className="col-span-1 md:col-span-2">
                     <label className="block mb-2">Imagens:</label>
                     <MultiFileUploader
                       folder="imagens"
                       files={newProperty.images}
                       accept="image/*"
-                      onUpload={(urls) => setNewProperty({...newProperty, images: [...newProperty.images, ...urls]})}
+                      onUpload={(urls) => setNewProperty({ ...newProperty, images: [...newProperty.images, ...urls] })}
                     />
                   </div>
                 </div>
@@ -623,7 +705,7 @@ Conteúdo: ${post.content}
                 <textarea
                   placeholder="Descrição do imóvel"
                   value={newProperty.description}
-                  onChange={(e) => setNewProperty({...newProperty, description: e.target.value})}
+                  onChange={(e) => setNewProperty({ ...newProperty, description: e.target.value })}
                   rows={4}
                   className="w-full mt-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -648,6 +730,7 @@ Conteúdo: ${post.content}
                 </div>
               </div>
             )}
+
 
             {/* Properties List */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -761,6 +844,13 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewBlogPost({...newBlogPost, title: e.target.value})}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <input
+                    placeholder="Data do artigo:"
+                    type="date"
+                    value={newBlogPost.date}
+                    onChange={(e) => setNewBlogPost({...newBlogPost, date: e.target.value})}
+                    className="px-4 py-3 border border-gray-300 rounded-lg"
+                  />
                   <select
                     value={newBlogPost.category}
                     onChange={(e) => setNewBlogPost({...newBlogPost, category: e.target.value})}
@@ -771,6 +861,7 @@ Conteúdo: ${post.content}
                     <option value="certificacao">Certificado Energético</option>
                     <option value="seguros">Seguros</option>
                   </select>
+
                 </div>
 
                 <div className="mb-4">
