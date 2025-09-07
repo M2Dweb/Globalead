@@ -199,24 +199,32 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  // Dentro do handleEditProperty
   const handleEditProperty = (property: any) => {
     setEditingId(property.id);
     setNewProperty({
-      title: property.title,
-      description: property.description,
-      price: property.price,
-      bedrooms: property.bedrooms,
-      bathrooms: property.bathrooms,
-      area: property.area,
-      location: property.location,
-      type: property.type,
+      title: property.title || '',
+      description: property.description || '',
+      price: property.price || 0,
+      bedrooms: property.bedrooms || 0,
+      bathrooms: property.bathrooms || 0,
+      area: property.area || 0,
+      location: property.location || '',
+      type: property.type || 'apartamento',
+      energy_class: property.energy_class || 'B',
+      year_built: property.year_built || new Date().getFullYear(),
+      features: property.features || [],         // Garantir array
       images: property.images || [],
       videos: property.videos || '',
       floor_plans: property.floor_plans || [],
-      property_types: property.property_types || []
+      property_types: property.property_types || [],
+      state: property.state || '',
+      parking: property.parking || 0,
+      reference: property.reference || ''
     });
     setIsEditing(true);
   };
+
 
   const handleViewProperty = (property: any) => {
     alert(`
@@ -711,12 +719,13 @@ Conteúdo: ${post.content}
                       <label className="mb-2">Features:</label>
                       <textarea
                         placeholder="Features (separadas por vírgula)"
-                        value={newProperty.features.join(', ')}
+                        value={(newProperty.features || []).join(', ')} // <-- CORRIGIDO
                         onChange={(e) =>
                           setNewProperty({ ...newProperty, features: e.target.value.split(',').map(f => f.trim()) })
                         }
                         className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
+
                     </div>
                     <div className="flex flex-col col-span-1 md:col-span-2">
                       <input
