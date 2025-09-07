@@ -744,7 +744,7 @@ Conteúdo: ${post.content}
                         folder="imagens"
                         files={newProperty.images}
                         accept="image/*"
-                        onUpload={(urls) => setNewProperty({ ...newProperty, images: [...newProperty.images, ...urls] })}
+                        onUpload={(urls) => setNewProperty({ ...newProperty, images: urls })}
                       />
                     </div>
                   </div>

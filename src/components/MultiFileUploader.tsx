@@ -50,7 +50,7 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
 
       if (uploadedUrls.length > 0) {
         // **Substituímos o array completo**, evitando duplicações
-        onUpload([...files, ...uploadedUrls]);
+         onUpload(uploadedUrls);
       }
     } catch (error) {
       console.error('Erro no upload:', error);
