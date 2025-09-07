@@ -159,6 +159,19 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
     fetchSimilarProperties();
   }, [propertyId]);
 
+  
+  useEffect(() => {
+    if (!property || !property.images) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
+    }, 4000); // troca a cada 5 segundos
+
+    return () => clearInterval(interval);
+  }, [property]);
+
+
+
   const nextImage = () => {
     if (property) {
       setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
@@ -224,45 +237,56 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Detalhes do Imóvel
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold mb-6">
-              {property.title}
-            </h2>
-            
-            {/* Property Info */}
-            <div className="flex justify-center items-center space-x-8 text-lg">
-              <div className="flex items-center">
-                <Bed className="h-6 w-6 mr-2" />
-                <span>{property.bedrooms} quartos</span>
-              </div>
-              <div className="flex items-center">
-                <Bath className="h-6 w-6 mr-2" />
-                <span>{property.bathrooms} casas de banho</span>
-              </div>
-              <div className="flex items-center">
-                <Square className="h-6 w-6 mr-2" />
-                <span>{property.area}m²</span>
-              </div>
+      <section
+        className="relative text-white py-12 mt-16"
+        style={{
+          backgroundImage: `url(${property.images[0]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Overlay com blur */}
+        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">Detalhes do Imóvel</h1>
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6">{property.title}</h2>
+          
+          {/* Property Info */}
+          <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
+            <div className="flex items-center">
+              <Bed className="h-6 w-6 mr-2" />
+              <span>{property.bedrooms} quartos</span>
+            </div>
+            <div className="flex items-center">
+              <Bath className="h-6 w-6 mr-2" />
+              <span>{property.bathrooms} casas de banho</span>
+            </div>
+            <div className="flex items-center">
+              <Square className="h-6 w-6 mr-2" />
+              <span>{property.area}m²</span>
             </div>
           </div>
         </div>
       </section>
 
+
       {/* Image Gallery */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative h-96 md:h-[500px] overflow-hidden rounded-xl mb-6">
-            <img
-              src={property.images[currentImageIndex]}
-              alt={property.title}
-              className="w-full h-full object-cover"
-            />
-            
+            {property.images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`${property.title} ${index + 1}`}
+                className={`
+                  w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000
+                  ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
+                `}
+              />
+            ))}
+
             {/* Navigation Arrows */}
             <button
               onClick={prevImage}
@@ -282,6 +306,7 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
               {currentImageIndex + 1} / {property.images.length}
             </div>
           </div>
+
 
           {/* Thumbnail Strip */}
           <div className="flex space-x-2 overflow-x-auto pb-4">
