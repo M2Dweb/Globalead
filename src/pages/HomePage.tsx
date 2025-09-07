@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Home, Shield, Zap, Star, ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin } from 'lucide-react';
+import { ArrowRight, Home, Shield, Zap, Star, ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Tv, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 
@@ -8,11 +8,11 @@ interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [currentReview, setCurrentReview] = useState(0);
   const [currentProperty, setCurrentProperty] = useState(0);
   const [properties, setProperties] = useState<any[]>([]);
-  
+  const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
+  const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -20,7 +20,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         const { data, error } = await supabase
           .from('properties')
           .select('*')
-          .limit(6);
+          .limit(3);
         
         if (error) {
           console.error('Erro ao carregar propriedades:', error);
@@ -66,27 +66,69 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       }
     };
 
+    const fetchPartnerLogos = async () => {
+      try {
+        const { data, error } = await supabase.storage
+          .from('imagens')
+          .list('patrocinios', {
+            limit: 20,
+            offset: 0
+          });
+
+        if (error) {
+          console.error('Erro ao carregar logos dos parceiros:', error);
+          // Fallback logos
+          setPartnerLogos([
+            "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
+          ]);
+        } else if (data) {
+          const logoUrls = data.map(file => {
+            const { data: urlData } = supabase.storage
+              .from('imagens')
+              .getPublicUrl(`patrocinios/${file.name}`);
+            return urlData.publicUrl;
+          });
+          setPartnerLogos(logoUrls);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar logos dos parceiros:', error);
+        setPartnerLogos([]);
+      }
+    };
+
     fetchProperties();
+    fetchPartnerLogos();
   }, []);
 
   const services = [
     {
-      icon: <Home className="h-12 w-12 text-blue-600" />,
-      title: "Mediação Imobiliária",
-      description: "Encontre a casa dos seus sonhos com o nosso acompanhamento especializado",
-      link: "imoveis"
-    },
-    {
-      icon: <Shield className="h-12 w-12 text-green-600" />,
-      title: "Seguros",
-      description: "Proteja o que mais importa com as melhores soluções de seguros",
-      link: "seguros"
+      icon: <Shield className="h-12 w-12 text-red-600" />,
+      title: "Alarmes",
+      description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade etc. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar",
+      link: "alarmes"
     },
     {
       icon: <Zap className="h-12 w-12 text-yellow-600" />,
-      title: "Certificação Energética",
-      description: "Certificados energéticos rápidos e profissionais",
-      link: "certificacao"
+      title: "Energia",
+      description: "A eletricidade e o gás natural desempenham papéis essenciais na vida moderna, indispensáveis para diversas atividades realizadas diariamente. É crucial atender a todos os clientes com a melhor oferta energética de forma a facilitar a sua decisão",
+      link: "energia"
+    },
+    {
+      icon: <Shield className="h-12 w-12 text-blue-600" />,
+      title: "Seguros",
+      description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme definido nas condições da apólice",
+      link: "seguros"
+    },
+    {
+      icon: <Tv className="h-12 w-12 text-purple-600" />,
+      title: "TV, Net, Voz",
+      description: "As telecomunicações são essenciais para a conectividade e desempenham um papel crucial na propagação de informações em muitas áreas da sociedade. A Globaleal apresenta várias soluções e pretende atender às reais necessidades de cada cliente",
+      link: "tv-net-voz"
     }
   ];
 
@@ -131,7 +173,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentReview(prev => (prev + 1) % reviews.length);
+      setCurrentReview(prev => (prev + 2) % reviews.length);
     }, 4000);
     return () => clearInterval(interval);
   }, [reviews.length]);
@@ -144,14 +186,13 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   }, [properties.length]);
 
   useEffect(() => {
-    if (properties.length === 0) return;
-
-    const interval = setInterval(() => {
-      setCurrentProperty(prev => (prev + 1) % properties.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [properties]);
+    if (partnerLogos.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentPartnerIndex(prev => (prev + 1) % (partnerLogos.length - 5));
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [partnerLogos.length]);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-PT', {
@@ -187,19 +228,83 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* Properties Slideshow */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Visite o seu próximo lar de sonho
+            </h2>
+          </div>
+
+          {properties.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {properties.map((property, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <img
+                    src={property.images[0]}
+                    alt={property.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-6">
+                    <div className="text-2xl font-bold text-blue-600 mb-2">
+                      {formatPrice(property.price)}
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      {property.title}
+                    </h3>
+                    <div className="flex items-center space-x-4 text-gray-600 mb-2">
+                      <div className="flex items-center">
+                        <Bed className="h-4 w-4 mr-1" />
+                        <span>{property.bedrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Bath className="h-4 w-4 mr-1" />
+                        <span>{property.bathrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Square className="h-4 w-4 mr-1" />
+                        <span>{property.area}m²</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center text-gray-600 mb-4">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      <span>{property.location}</span>
+                    </div>
+                    <button
+                      onClick={() => onNavigate('property-list')}
+                      className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      Ver Detalhes
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="text-center mt-12">
+            <button
+              onClick={() => onNavigate('property-list')}
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
+            >
+              Ver Todos os Imóveis
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Os Nossos Serviços
+              Compare e adira à melhor oferta
             </h2>
-            <p className="text-xl text-gray-600">
-              Soluções completas para todas as suas necessidades
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
               <motion.div
                 key={index}
@@ -214,7 +319,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-6 text-sm">
                   {service.description}
                 </p>
                 <button
@@ -230,112 +335,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Properties Slideshow */}
-<section className="py-20 bg-gray-50">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-16">
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-        Imóveis em Destaque
-      </h2>
-      <p className="text-xl text-gray-600">
-        Descubra as nossas melhores oportunidades
-      </p>
-    </div>
-
-    {properties.length > 0 && (
-      <div className="relative">
-        <div className="overflow-hidden rounded-2xl">
-          <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentProperty * (100 / 3)}%)`,
-            }}
-          >
-            {properties.concat(properties.slice(0, 3)).map((property, index) => (
-              <div key={index} className="w-1/3 flex-shrink-0 px-2">
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
-                  {/* Imagem em cima */}
-                  <img
-                    src={property.images[0]}
-                    alt={property.title}
-                    className="w-full h-64 object-cover"
-                  />
-
-                  {/* Detalhes em baixo */}
-                  <div className="p-6 flex flex-col justify-between">
-                    <div>
-                      <div className="text-2xl font-bold text-blue-600 mb-2">
-                        {formatPrice(property.price)}
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        {property.title}
-                      </h3>
-                      <div className="flex items-center space-x-4 text-gray-600 mb-2">
-                        <div className="flex items-center">
-                          <Bed className="h-4 w-4 mr-1" />
-                          <span>{property.bedrooms}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Bath className="h-4 w-4 mr-1" />
-                          <span>{property.bathrooms}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Square className="h-4 w-4 mr-1" />
-                          <span>{property.area}m²</span>
-                        </div>
-                        <div className="flex items-center text-gray-600">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          <span>{property.location}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => onNavigate('property-list')}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mt-2"
-                    >
-                      Ver Detalhes
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Navigation Dots */}
-        <div className="flex justify-center mt-8 space-x-2">
-          {properties.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentProperty(index)}
-              className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                index === currentProperty ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
-            />
-          ))}
-        </div>
-      </div>
-    )}
-
-    <div className="text-center mt-12">
-      <button
-        onClick={() => onNavigate('property-list')}
-        className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
-      >
-        Ver Todos os Imóveis
-        <ArrowRight className="ml-2 h-5 w-5" />
-      </button>
-    </div>
-  </div>
-</section>
-
-{/* Intervalo automático */}
-
-
-
-
-      {/* Reviews Section */}
+      {/* Reviews Section - 2 at a time */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -347,15 +347,15 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          <div className="relative max-w-4xl mx-auto">
+          <div className="relative max-w-6xl mx-auto">
             <div className="overflow-hidden">
               <div 
                 className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentReview * 100}%)` }}
+                style={{ transform: `translateX(-${currentReview * 50}%)` }}
               >
                 {reviews.map((review, index) => (
-                  <div key={index} className="w-full flex-shrink-0 px-4">
-                    <div className="bg-gray-50 p-8 rounded-xl text-center">
+                  <div key={index} className="w-1/2 flex-shrink-0 px-4">
+                    <div className="bg-gray-50 p-8 rounded-xl text-center h-full">
                       <div className="flex justify-center mb-4">
                         {[...Array(review.rating)].map((_, i) => (
                           <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
@@ -376,17 +376,52 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
             {/* Navigation Dots */}
             <div className="flex justify-center mt-8 space-x-2">
-              {reviews.map((_, index) => (
+              {Array.from({ length: Math.ceil(reviews.length / 2) }).map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentReview(index)}
+                  onClick={() => setCurrentReview(index * 2)}
                   className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                    index === currentReview ? 'bg-blue-600' : 'bg-gray-300'
+                    Math.floor(currentReview / 2) === index ? 'bg-blue-600' : 'bg-gray-300'
                   }`}
                 />
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Compare as várias instituições em Portugal
+            </h2>
+          </div>
+
+          {partnerLogos.length > 0 && (
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-1000 ease-in-out"
+                style={{ transform: `translateX(-${currentPartnerIndex * 20}%)` }}
+              >
+                {partnerLogos.map((logo, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-1/5 px-4"
+                  >
+                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <img
+                        src={logo}
+                        alt={`Parceiro ${index + 1}`}
+                        className="w-full h-16 object-contain"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

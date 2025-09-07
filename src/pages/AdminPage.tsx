@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { Plus, Edit, Trash2, Save, X, Upload, Eye } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Plus, Edit, Trash2, Save, X, Upload, Eye, Lock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { td } from 'framer-motion/client';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
 
 const AdminPage: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('properties');
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [properties, setProperties] = useState<any[]>([]);
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [siteSettings, setSiteSettings] = useState<any>({});
   const [loading, setLoading] = useState(true);
 
   const [newProperty, setNewProperty] = useState<any>({
@@ -24,7 +26,7 @@ const AdminPage: React.FC = () => {
     location: '',
     type: 'apartamento',
     images: [],
-    videos: [],
+    videos: '',
     floor_plans: [],
     property_types: []
   });
@@ -39,9 +41,44 @@ const AdminPage: React.FC = () => {
     read_time: '5 min'
   });
 
+  const [settingsForm, setSettingsForm] = useState({
+    admin_password: '',
+    founder_video_url: ''
+  });
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isAuthenticated) {
+      fetchData();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError('');
+
+    try {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('admin_password')
+        .single();
+
+      if (error) {
+        console.error('Erro ao verificar senha:', error);
+        setLoginError('Erro ao verificar credenciais');
+        return;
+      }
+
+      if (data && data.admin_password === password) {
+        setIsAuthenticated(true);
+        setPassword('');
+      } else {
+        setLoginError('Senha incorreta');
+      }
+    } catch (error) {
+      console.error('Erro no login:', error);
+      setLoginError('Erro ao fazer login');
+    }
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -58,6 +95,12 @@ const AdminPage: React.FC = () => {
         .from('blog_posts')
         .select('*')
         .order('created_at', { ascending: false });
+
+      // Fetch site settings
+      const { data: settingsData, error: settingsError } = await supabase
+        .from('site_settings')
+        .select('*')
+        .single();
       
       if (propertiesError) {
         console.error('Erro ao carregar propriedades:', propertiesError);
@@ -65,13 +108,25 @@ const AdminPage: React.FC = () => {
       if (blogError) {
         console.error('Erro ao carregar posts:', blogError);
       }
+      if (settingsError) {
+        console.error('Erro ao carregar configurações:', settingsError);
+      }
       
       setProperties(propertiesData || []);
       setBlogPosts(blogData || []);
+      setSiteSettings(settingsData || {});
+      
+      if (settingsData) {
+        setSettingsForm({
+          admin_password: settingsData.admin_password || '',
+          founder_video_url: settingsData.founder_video_url || ''
+        });
+      }
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
       setProperties([]);
       setBlogPosts([]);
+      setSiteSettings({});
     }
     setLoading(false);
   };
@@ -93,8 +148,7 @@ const AdminPage: React.FC = () => {
           year_built: new Date().getFullYear(),
           features: ['Garagem', 'Jardim'],
           images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
-          videos: (newProperty.videos || []).filter((vid: string) => typeof vid === 'string' && vid.trim() !== ''),
-
+          videos: newProperty.videos || '',
           floor_plans: newProperty.floor_plans || [],
           property_types: newProperty.property_types || []
         }])
@@ -114,7 +168,8 @@ const AdminPage: React.FC = () => {
           area: 0,
           location: '',
           type: 'apartamento',
-          images: [''],
+          images: [],
+          videos: '',
           floor_plans: [],
           property_types: []
         });
@@ -123,7 +178,6 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  
   const handleDeleteProperty = async (id: string) => {
     const { error } = await supabase
       .from('properties')
@@ -138,92 +192,90 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  // Editar imóvel
-const handleEditProperty = (property: any) => {
-  setEditingId(property.id);
-  setNewProperty({
-    title: property.title,
-    description: property.description,
-    price: property.price,
-    bedrooms: property.bedrooms,
-    bathrooms: property.bathrooms,
-    area: property.area,
-    location: property.location,
-    type: property.type,
-    images: property.images || [''],
-    floor_plans: property.floor_plans || [],
-    property_types: property.property_types || []
-  });
-  setIsEditing(true);
-};
+  const handleEditProperty = (property: any) => {
+    setEditingId(property.id);
+    setNewProperty({
+      title: property.title,
+      description: property.description,
+      price: property.price,
+      bedrooms: property.bedrooms,
+      bathrooms: property.bathrooms,
+      area: property.area,
+      location: property.location,
+      type: property.type,
+      images: property.images || [],
+      videos: property.videos || '',
+      floor_plans: property.floor_plans || [],
+      property_types: property.property_types || []
+    });
+    setIsEditing(true);
+  };
 
-// Ver detalhes do imóvel
-const handleViewProperty = (property: any) => {
+  const handleViewProperty = (property: any) => {
     alert(`
-  Título: ${property.title}
-  Preço: €${property.price?.toLocaleString()}
-  Localização: ${property.location}
-  Quartos: ${property.bedrooms}
-  Casas de banho: ${property.bathrooms}
-  Área: ${property.area}m²
-  Tipo: ${property.type}
-  Descrição: ${property.description}
+Título: ${property.title}
+Preço: €${property.price?.toLocaleString()}
+Localização: ${property.location}
+Quartos: ${property.bedrooms}
+Casas de banho: ${property.bathrooms}
+Área: ${property.area}m²
+Tipo: ${property.type}
+Descrição: ${property.description}
     `);
-};
+  };
 
-// Guardar alterações ao editar
-const handleSaveProperty = async () => {
-  if (!newProperty.title || !newProperty.price) return;
+  const handleSaveProperty = async () => {
+    if (!newProperty.title || !newProperty.price) return;
 
-  if (editingId) {
-    // Update
-    const { error } = await supabase
-      .from('properties')
-      .update({
-        title: newProperty.title,
-        description: newProperty.description,
-        price: newProperty.price,
-        bedrooms: newProperty.bedrooms,
-        bathrooms: newProperty.bathrooms,
-        area: newProperty.area,
-        location: newProperty.location,
-        type: newProperty.type,
-        images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
-        videos: (newProperty.videos || []).filter((vid: string) => typeof vid === 'string' && vid.trim() !== ''),
-        floor_plans: newProperty.floor_plans || [],
-        property_types: newProperty.property_types || []
-      })
-      .eq('id', editingId);
+    if (editingId) {
+      // Update
+      const { error } = await supabase
+        .from('properties')
+        .update({
+          title: newProperty.title,
+          description: newProperty.description,
+          price: newProperty.price,
+          bedrooms: newProperty.bedrooms,
+          bathrooms: newProperty.bathrooms,
+          area: newProperty.area,
+          location: newProperty.location,
+          type: newProperty.type,
+          images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
+          videos: newProperty.videos || '',
+          floor_plans: newProperty.floor_plans || [],
+          property_types: newProperty.property_types || []
+        })
+        .eq('id', editingId);
 
-    if (error) {
-      console.error('Erro ao atualizar imóvel:', error);
-      alert('Erro ao atualizar imóvel');
+      if (error) {
+        console.error('Erro ao atualizar imóvel:', error);
+        alert('Erro ao atualizar imóvel');
+        return;
+      }
+    } else {
+      await handleAddProperty();
       return;
     }
-  } else {
-    await handleAddProperty();
-    return;
-  }
 
-  setIsEditing(false);
-  setEditingId(null);
-  setNewProperty({
-    title: '',
-    description: '',
-    price: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-    area: 0,
-    location: '',
-    type: 'apartamento',
-    images: [''],
-    floor_plans: [],
-    property_types: []
-  });
+    setIsEditing(false);
+    setEditingId(null);
+    setNewProperty({
+      title: '',
+      description: '',
+      price: 0,
+      bedrooms: 0,
+      bathrooms: 0,
+      area: 0,
+      location: '',
+      type: 'apartamento',
+      images: [],
+      videos: '',
+      floor_plans: [],
+      property_types: []
+    });
 
-  fetchData();
-};
-
+    fetchData();
+  };
 
   const handleAddBlogPost = async () => {
     if (newBlogPost.title && newBlogPost.content) {
@@ -256,7 +308,7 @@ const handleSaveProperty = async () => {
           read_time: '5 min'
         });
         setIsEditing(false);
-      };
+      }
     }
   };
 
@@ -274,7 +326,6 @@ const handleSaveProperty = async () => {
     }
   };
 
-
   const handleEditBlogPost = (post: any) => {
     setEditingId(post.id);
     setNewBlogPost({
@@ -289,16 +340,15 @@ const handleSaveProperty = async () => {
     setIsEditing(true);
   };
 
-
   const handleViewBlogPost = (post: any) => {
-      alert(`
-        Título: ${post.title}
-        Categoria: ${post.category}
-        Autor: ${post.author}
-        Data: ${post.date}
-        Resumo: ${post.excerpt}
-        Conteúdo: ${post.content}
-      `);
+    alert(`
+Título: ${post.title}
+Categoria: ${post.category}
+Autor: ${post.author}
+Data: ${post.date}
+Resumo: ${post.excerpt}
+Conteúdo: ${post.content}
+    `);
   };
 
   const handleUpdateBlogPost = async () => {
@@ -337,7 +387,67 @@ const handleSaveProperty = async () => {
     }
   };
 
+  const handleUpdateSettings = async () => {
+    const { error } = await supabase
+      .from('site_settings')
+      .upsert({
+        id: siteSettings.id || 1,
+        admin_password: settingsForm.admin_password,
+        founder_video_url: settingsForm.founder_video_url
+      });
 
+    if (error) {
+      console.error('Erro ao atualizar configurações:', error);
+      alert('Erro ao atualizar configurações');
+    } else {
+      alert('Configurações atualizadas com sucesso!');
+      await fetchData();
+    }
+  };
+
+  // Login Screen
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
+          <div className="text-center mb-8">
+            <Lock className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-gray-900">Painel de Administração</h1>
+            <p className="text-gray-600">Introduza a senha para aceder</p>
+          </div>
+
+          <form onSubmit={handleLogin}>
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Senha
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Introduza a senha"
+                required
+              />
+            </div>
+
+            {loginError && (
+              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                {loginError}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+            >
+              Entrar
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -352,9 +462,17 @@ const handleSaveProperty = async () => {
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-6">
-            <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
-            <p className="text-gray-600">Gerir conteúdos do website</p>
+          <div className="py-6 flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
+              <p className="text-gray-600">Gerir conteúdos do website</p>
+            </div>
+            <button
+              onClick={() => setIsAuthenticated(false)}
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Sair
+            </button>
           </div>
         </div>
       </div>
@@ -383,7 +501,16 @@ const handleSaveProperty = async () => {
             >
               Blog & Notícias
             </button>
-            
+            <button
+              onClick={() => setActiveTab('settings')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'settings'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Configurações
+            </button>
           </nav>
         </div>
       </div>
@@ -474,22 +601,22 @@ const handleSaveProperty = async () => {
                     onChange={(e) => setNewProperty({...newProperty, area: Number(e.target.value)})}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <input
+                    type="url"
+                    placeholder="URL do vídeo"
+                    value={newProperty.videos}
+                    onChange={(e) => setNewProperty({...newProperty, videos: e.target.value})}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  
                   <div className="col-span-1 md:col-span-2">
-                    <label className="block mb-2">Imagem principal:</label>
+                    <label className="block mb-2">Imagens:</label>
                     <MultiFileUploader
                       folder="imagens"
                       files={newProperty.images}
                       accept="image/*"
                       onUpload={(urls) => setNewProperty({...newProperty, images: [...newProperty.images, ...urls]})}
                     />
-
-                    <MultiFileUploader
-                      folder="imagens"
-                      files={newProperty.videos}
-                      accept="video/*"
-                      onUpload={(urls) => setNewProperty({...newProperty, videos: [...newProperty.videos, ...urls]})}
-                    />
-
                   </div>
                 </div>
 
@@ -655,7 +782,6 @@ const handleSaveProperty = async () => {
                   />
                 </div>
 
-
                 <textarea
                   placeholder="Resumo do artigo"
                   value={newBlogPost.excerpt}
@@ -683,7 +809,7 @@ const handleSaveProperty = async () => {
                     Cancelar
                   </button>
                   <button
-                     onClick={editingId ? handleUpdateBlogPost : handleAddBlogPost}
+                    onClick={editingId ? handleUpdateBlogPost : handleAddBlogPost}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
                   >
                     <Save className="mr-2 h-4 w-4" />
@@ -754,6 +880,55 @@ const handleSaveProperty = async () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Settings Tab */}
+        {activeTab === 'settings' && (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Configurações do Site</h2>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Senha do Admin
+                  </label>
+                  <input
+                    type="password"
+                    value={settingsForm.admin_password}
+                    onChange={(e) => setSettingsForm({...settingsForm, admin_password: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Nova senha do admin"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    URL do Vídeo do Fundador
+                  </label>
+                  <input
+                    type="url"
+                    value={settingsForm.founder_video_url}
+                    onChange={(e) => setSettingsForm({...settingsForm, founder_video_url: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://exemplo.com/video.mp4"
+                  />
+                </div>
+
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleUpdateSettings}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
+                  >
+                    <Save className="mr-2 h-4 w-4" />
+                    Guardar Configurações
+                  </button>
+                </div>
               </div>
             </div>
           </div>
