@@ -564,6 +564,7 @@ Conteúdo: ${post.content}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <label className="block mb-2">Título do imóvel :</label>
                   <input
                     type="text"
                     placeholder="Título do imóvel"
@@ -571,6 +572,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewProperty({ ...newProperty, title: e.target.value })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <label className="block mb-2">Preço :</label>
                   <input
                     type="number"
                     placeholder="Preço"
@@ -578,6 +580,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewProperty({ ...newProperty, price: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <label className="block mb-2">Localização :</label>
                   <input
                     type="text"
                     placeholder="Localização"
@@ -585,6 +588,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewProperty({ ...newProperty, location: e.target.value })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <label className="block mb-2">Tipo :</label>
                   <select
                     value={newProperty.type}
                     onChange={(e) => setNewProperty({ ...newProperty, type: e.target.value })}
@@ -594,6 +598,7 @@ Conteúdo: ${post.content}
                     <option value="moradia">Moradia</option>
                     <option value="terreno">Terreno</option>
                   </select>
+                  <label className="block mb-2">Quartos :</label>
                   <input
                     type="number"
                     placeholder="Quartos"
@@ -601,6 +606,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewProperty({ ...newProperty, bedrooms: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <label className="block mb-2">Casas de banho :</label>
                   <input
                     type="number"
                     placeholder="Casas de banho"
@@ -608,6 +614,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewProperty({ ...newProperty, bathrooms: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <label className="block mb-2">Área (m²) :</label>
                   <input
                     type="number"
                     placeholder="Área (m²)"
@@ -615,6 +622,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewProperty({ ...newProperty, area: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <label className="block mb-2">Estado :</label>
                   <input
                     type="text"
                     placeholder="Estado"
@@ -622,6 +630,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewProperty({ ...newProperty, state: e.target.value })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <label className="block mb-2">Certificado energético :</label>
                   <select
                     value={newProperty.energy_class}
                     onChange={(e) => setNewProperty({ ...newProperty, energy_class: e.target.value })}
@@ -630,13 +639,14 @@ Conteúdo: ${post.content}
                     <option value="A+">A+</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
-                    <option value="D">B-</option>
+                    <option value="B-">B-</option>
                     <option value="C">C</option>
                     <option value="D">D</option>
-                    <option value="D">E</option>
-                    <option value="D">F</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
                     
                   </select>
+                  <label className="block mb-2">Ano de Construção :</label>
                   <input
                     type="number"
                     placeholder="Ano de Construção"
@@ -644,13 +654,16 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewProperty({ ...newProperty, year_built: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  <input
-                    type="number"
-                    placeholder="Estacionamento"
+                  <label className="block mb-2">Estacionamento :</label>
+                  <select
                     value={newProperty.parking}
                     onChange={(e) => setNewProperty({ ...newProperty, parking: Number(e.target.value) })}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                  >
+                    <option value={1}>Sim</option>
+                    <option value={0}>Não</option>
+                  </select>
+                  <label className="block mb-2">Referência :</label>
                   <input
                     type="text"
                     placeholder="Referência"
@@ -660,6 +673,7 @@ Conteúdo: ${post.content}
                   />
 
                   {/* Features */}
+                  <label className="block mb-2">Features :</label>
                   <textarea
                     placeholder="Features (separadas por vírgula)"
                     value={newProperty.features.join(', ')}
@@ -670,6 +684,7 @@ Conteúdo: ${post.content}
                   />
 
                   {/* Property Types (JSON) */}
+                  <label className="block mb-2">Tipos de propriedade</label>
                   <textarea
                     placeholder='Tipos de propriedade (JSON array, ex: ["Venda", "Arrendamento"])'
                     value={JSON.stringify(newProperty.property_types)}
@@ -837,6 +852,7 @@ Conteúdo: ${post.content}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <label className="block mb-2">Título do artigo :</label>
                   <input
                     type="text"
                     placeholder="Título do artigo"
@@ -844,6 +860,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewBlogPost({...newBlogPost, title: e.target.value})}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <label className="block mb-2">Data do artigo:</label>
                   <input
                     placeholder="Data do artigo:"
                     type="date"
@@ -851,6 +868,7 @@ Conteúdo: ${post.content}
                     onChange={(e) => setNewBlogPost({...newBlogPost, date: e.target.value})}
                     className="px-4 py-3 border border-gray-300 rounded-lg"
                   />
+                  <label className="block mb-2">Categoria :</label>
                   <select
                     value={newBlogPost.category}
                     onChange={(e) => setNewBlogPost({...newBlogPost, category: e.target.value})}
@@ -872,7 +890,7 @@ Conteúdo: ${post.content}
                     onUpload={(url) => setNewBlogPost({...newBlogPost, image: url})}
                   />
                 </div>
-
+                <label className="block mb-2">Resumo do artigo :</label>
                 <textarea
                   placeholder="Resumo do artigo"
                   value={newBlogPost.excerpt}
@@ -880,7 +898,7 @@ Conteúdo: ${post.content}
                   rows={3}
                   className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-
+                <label className="block mb-2">Conteúdo completo do artigo :</label>
                 <textarea
                   placeholder="Conteúdo completo do artigo"
                   value={newBlogPost.content}
