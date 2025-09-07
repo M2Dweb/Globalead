@@ -55,62 +55,66 @@ const AdminPage: React.FC = () => {
 
   //----------------------------------------------------------------------------------------------------------------------------
 
-  const handleDeleteUnusedImages = async () => {
-    if (!confirm("Tens a certeza que queres apagar todas as imagens não usadas?")) return;
+  const handleCleanUnusedImages = async () => {
+    if (!confirm("Tens a certeza que queres apagar as imagens não usadas?")) return;
 
     try {
-      // 1. Buscar imagens usadas em properties e blog_posts
-      const { data: properties } = await supabase.from("properties").select("images");
-      const { data: blogs } = await supabase.from("blog_posts").select("image");
+      // 1. Buscar todos os URLs que estão na BD (properties e blog_posts)
+      const { data: properties } = await supabase
+        .from("properties")
+        .select("images, videos");
+      const { data: blogPosts } = await supabase
+        .from("blog_posts")
+        .select("image");
 
-      // Criar um set com todas as imagens usadas
-      const usedImages = new Set<string>();
-
-      properties?.forEach((p) => {
-        if (Array.isArray(p.images)) {
-          p.images.forEach((img: string) => usedImages.add(img));
-        }
+      // Extrair URLs da BD
+      const usedUrls = new Set<string>();
+      properties?.forEach((prop) => {
+        prop.images?.forEach((img) => usedUrls.add(img));
+        if (prop.videos) usedUrls.add(prop.videos);
+      });
+      blogPosts?.forEach((post) => {
+        if (post.image) usedUrls.add(post.image);
       });
 
-      blogs?.forEach((b) => {
-        if (b.image) usedImages.add(b.image);
-      });
+      console.log("✅ URLs usados na BD:", Array.from(usedUrls));
 
-      // 2. Listar todos os ficheiros do bucket
-      const { data: allFiles, error: listError } = await supabase
-        .storage
+      // 2. Listar TODOS os ficheiros no bucket
+      const { data: allFiles, error: listError } = await supabase.storage
         .from("imagens")
-        .list("", { limit: 1000, recursive: true });
+        .list("", { limit: 1000, offset: 0, sortBy: { column: "name", order: "asc" } });
 
       if (listError) throw listError;
+      console.log("📂 Todos os ficheiros do bucket:", allFiles);
 
-      // 3. Encontrar imagens que não estão usadas
-      const unusedFiles = allFiles?.filter((file) => {
-        const publicUrl = `${supabase.storage.from("imagens").getPublicUrl(file.name).data.publicUrl}`;
-        return !usedImages.has(publicUrl);
-      }) || [];
+      // 3. Filtrar os que não são usados
+      const unusedFiles = allFiles.filter((file) => {
+        const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/imagens/${file.name}`;
+        return !usedUrls.has(publicUrl);
+      });
+
+      console.log("🗑️ Ficheiros não usados:", unusedFiles);
 
       if (unusedFiles.length === 0) {
-        alert("Não há imagens para apagar!");
+        alert("⚠️ Não há imagens para apagar!");
         return;
       }
 
-      // 4. Apagar as imagens não usadas
-      const { error: deleteError } = await supabase
-        .storage
+      // 4. Apagar os ficheiros não usados
+      const { error: deleteError } = await supabase.storage
         .from("imagens")
-        .remove(unusedFiles.map((file) => file.name));
+        .remove(unusedFiles.map((f) => f.name));
 
       if (deleteError) throw deleteError;
 
       alert(`✅ ${unusedFiles.length} imagens apagadas com sucesso!`);
-    } catch (err) {
-      console.error(err);
-      alert("Erro ao apagar imagens não usadas!");
+    } catch (error) {
+      console.error("Erro ao limpar imagens:", error);
+      alert("❌ Erro ao limpar imagens. Vê a consola para detalhes.");
     }
   };
 
-//----------------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------------
   
   useEffect(() => {
     if (isAuthenticated) {
@@ -1132,7 +1136,7 @@ Conteúdo: ${post.content}
                 {/* 🔥 Botão para limpar imagens não usadas */}
                 <div>
                   <button
-                    onClick={handleDeleteUnusedImages}
+                    onClick={handleCleanUnusedImages}
                     className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors inline-flex items-center"
                   >
                     🗑️ Limpar Fotos Não Usadas
