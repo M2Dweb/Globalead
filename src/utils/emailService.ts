@@ -20,9 +20,9 @@ export interface FormData {
 
 export const sendEmail = async (formData: FormData): Promise<boolean> => {
   // Configure these with your EmailJS credentials
-  const serviceId = 'service_globalead';
-  const templateId = 'template_globalead';
-  const publicKey = 'your_public_key_here';
+  const serviceId = 'service_t50zwho';
+  const templateId = 'template_wisf0rm';
+  const publicKey = '9RG68jew5HcgT8N6e';
 
   try {
     const templateParams = {
