@@ -262,63 +262,74 @@ return (
               </p>
             </div>
 
-            {/* Formulário centralizado */}
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
-              <input
-                type="text"
-                placeholder="Nome:"
-                className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-              <input
-                type="text"
-                placeholder="Apelido:"
-                className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-              <input
-                type="tel"
-                placeholder="Telemóvel:"
-                className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-              <input
-                type="email"
-                placeholder="Email:"
-                className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-              <input
-                type="text"
-                placeholder="Assunto:"
-                className="px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-              <select className="px-4 py-3 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                <option>Meio de Contacto:</option>
-                <option>Email</option>
-                <option>Telefone</option>
-                <option>WhatsApp</option>
-                <option>Telegram</option>
-                <option>Messenger</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Horário:"
-                className="md:col-span-2 px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-              
-              <div className="md:col-span-2">
-                <label className="flex items-start text-sm text-blue-100 mb-4">
-                  <input type="checkbox" className="mt-1 mr-2" />
-                  Sim, aceito os termos e condições indicados pela Globalead Portugal.
-                </label>
-                <p className="text-xs text-blue-200 mb-6">
-                  Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
-                </p>
-                <button
-                  type="submit"
-                  className="w-full bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300"
-                >
-                  Enviar Mensagem
-                </button>
-              </div>
-            </form>
+            {/* Formulário Centralizado */}
+            <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                    type="text"
+                    placeholder="Nome:"
+                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                    type="text"
+                    placeholder="Apelido:"
+                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                    type="tel"
+                    placeholder="Telemóvel:"
+                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                    type="email"
+                    placeholder="Email:"
+                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option>Meio de Contacto:</option>
+                    <option>Email</option>
+                    <option>Telefone</option>
+                    <option>WhatsApp</option>
+                </select>
+                  
+                  
+                <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option>Assunto:</option>
+                    <option>Esclarecimento de Dúvidas</option>
+                    <option>Pretendo Comprar um Imóvel</option>
+                    <option>Pretendo Vender um Imóvel</option>
+                    <option>Pretendo Arrendar um Imóvel</option>
+                    <option>Pedido de Simulação para Créditos</option>
+                    <option>Pedido de Certificado Energético</option>
+                    <option>Pedido de Simulação Energia</option>
+                    <option>Pedido de Simulação TV NET VOZ</option>
+                    <option>Pedido de Simulação Seguros</option>
+                    <option>Pedido de Simulação Alarmes</option>
+                </select>
+                  
+                <input
+                    type="text"
+                    placeholder="Horário:"
+                    className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                />
+
+                <div className="md:col-span-2">
+                  <label className="flex items-start text-sm text-gray-700 mb-4">
+                    <input type="checkbox" className="mt-1 mr-2" />
+                    Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                  </label>
+                  <p className="text-xs text-gray-600 mb-4">
+                      Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                  </p>
+                  <button
+                      type="submit"
+                      className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                  >
+                      Enviar Pedido
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </section>

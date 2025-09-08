@@ -461,22 +461,93 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-blue-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Pronto para começar?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Entre em contacto connosco hoje mesmo
-          </p>
-          <button
-            onClick={() => onNavigate('contactos')}
-            className="bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 font-semibold inline-flex items-center"
-          >
-            Contactar Agora
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </button>
+{/* CTA Section */}
+      <section className="py-20 bg-gray-900 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center">
+            {/* Texto acima do formulário */}
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Tem dúvidas? Entre em contacto
+              </h2>
+              <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-4">
+                <div className="flex items-center">
+                  <Phone className="h-6 w-6 mr-2" />
+                  <span className="text-lg">915 482 365 (chamada rede fixa nacional)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Formulário Centralizado */}
+            <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
+ 
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <input
+                    type="text"
+                    placeholder="Nome:"
+                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Apelido:"
+                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Telemóvel:"
+                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email:"
+                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option>Meio de Contacto:</option>
+                    <option>Email</option>
+                    <option>Telefone</option>
+                    <option>WhatsApp</option>
+                  </select>
+                  
+                  
+                  <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option>Assunto:</option>
+                    <option>Esclarecimento de Dúvidas</option>
+                    <option>Pretendo Comprar um Imóvel</option>
+                    <option>Pretendo Vender um Imóvel</option>
+                    <option>Pretendo Arrendar um Imóvel</option>
+                    <option>Pedido de Simulação para Créditos</option>
+                    <option>Pedido de Certificado Energético</option>
+                    <option>Pedido de Simulação Energia</option>
+                    <option>Pedido de Simulação TV NET VOZ</option>
+                    <option>Pedido de Simulação Seguros</option>
+                    <option>Pedido de Simulação Alarmes</option>
+                  </select>
+                  
+                  <input
+                    type="text"
+                    placeholder="Horário:"
+                    className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  />
+
+                  <div className="md:col-span-2">
+                    <label className="flex items-start text-sm text-gray-700 mb-4">
+                      <input type="checkbox" className="mt-1 mr-2" />
+                      Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                    </label>
+                    <p className="text-xs text-gray-600 mb-4">
+                      Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                    </p>
+                    <button
+                      type="submit"
+                      className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                    >
+                      Enviar Pedido
+                    </button>
+                  </div>
+                </form>
+              </div>
+          </div>
         </div>
       </section>
     </div>

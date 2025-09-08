@@ -137,11 +137,20 @@ const ContactosPage: React.FC = () => {
                   placeholder="Email:"
                   className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
-                <input
-                  type="text"
-                  placeholder="Assunto:"
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                />
+                <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option>Assunto:</option>
+                  <option>Esclarecimento de Dúvidas</option>
+                  <option>Pretendo Comprar um Imóvel</option>
+                  <option>Pretendo Vender um Imóvel</option>
+                  <option>Pretendo Arrendar um Imóvel</option>
+                  <option>Pedido de Simulação para Créditos</option>
+                  <option>Pedido de Certificado Energético</option>
+                  <option>Pedido de Simulação Energia</option>
+                  <option>Pedido de Simulação TV NET VOZ</option>
+                  <option>Pedido de Simulação Seguros</option>
+                  <option>Pedido de Simulação Alarmes</option>
+                </select>
+                
                 <select className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
                   <option>Meio de Contacto:</option>
                   <option>Email</option>
