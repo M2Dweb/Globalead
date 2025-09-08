@@ -31,12 +31,12 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   }, []);
 
   const [logosPerPage, setLogosPerPage] = useState(
-    window.innerWidth < 640 ? 2 : 5
+    window.innerWidth < 640 ? 3 : 5
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setLogosPerPage(window.innerWidth < 640 ? 2 : 5);
+      setLogosPerPage(window.innerWidth < 640 ? 3 : 5);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -440,13 +440,13 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 {partnerLogos.map((logo, index) => (
                   <div
                     key={index}
-                    className={`flex-shrink-0 w-1/2 sm:w-1/5 px-4`} // 2 por vez no mobile, 5 no desktop
+                    className={`flex-shrink-0 w-1/3 sm:w-1/5 px-4`} // 2 por vez no mobile, 5 no desktop
                   >
                     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                       <img
                         src={logo}
                         alt={`Parceiro ${index + 1}`}
-                        className="w-full h-40 object-contain"
+                        className="w-full h-30 object-contain"
                       />
                     </div>
                   </div>
