@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Hammer, Palette, Building, Users, Compass, Scale, Play, Home, CreditCard, FileText, Shield } from 'lucide-react';
+import { ArrowRight, Hammer, Palette, Building, Users, Compass, Scale, Play, Home, CreditCard, FileText, Shield, Bath, Bed, MapPin, Square } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface ImoveisPageProps {
@@ -178,6 +178,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
           autoPlay
           muted
           loop
+          playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30"
           poster="/fotos/ImoveisPage-foto.png"
         >
@@ -225,16 +226,26 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                     <div className="text-2xl font-bold text-blue-600 mb-2">
                       {formatPrice(property.price)}
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
                       {property.title}
                     </h3>
-                    <div className="flex items-center space-x-4 text-gray-600 mb-3">
-                      <span>{property.bedrooms} quartos</span>
-                      <span>{property.bathrooms} WC</span>
-                      <span>{property.area}m²</span>
-                    </div>
-                    <div className="text-gray-600 mb-4">
-                      {property.location}
+                    <div className="flex items-center space-x-4 text-gray-600 mb-4">
+                      <div className="flex items-center">
+                        <Bed className="h-4 w-4 mr-1" />
+                        <span>{property.bedrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Bath className="h-4 w-4 mr-1" />
+                        <span>{property.bathrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Square className="h-4 w-4 mr-1" />
+                        <span>{property.area}m²</span>
+                      </div>
+                      <div className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        <span>{property.location}</span>
+                      </div>
                     </div>
                     <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
                       Ver Detalhes
@@ -242,6 +253,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                   </div>
                 </div>
               ))}
+
             </div>
           )}
 

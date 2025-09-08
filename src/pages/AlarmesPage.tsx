@@ -104,6 +104,7 @@ const AlarmesPage: React.FC = () => {
           autoPlay
           muted
           loop
+          playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30"
           poster="/fotos/AlarmesPage-foto.png"
         >

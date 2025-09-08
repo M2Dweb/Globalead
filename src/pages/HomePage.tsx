@@ -241,6 +241,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           autoPlay
           muted
           loop
+          playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30"
           poster="/fotos/HomePage-foto.png"
         >
@@ -283,7 +284,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                     <h3 className="text-xl font-bold text-gray-900 mb-2">
                       {property.title}
                     </h3>
-                    <div className="flex items-center space-x-4 text-gray-600 mb-2">
+                    <div className="flex items-center space-x-4 text-gray-600 mb-4">
                       <div className="flex items-center">
                         <Bed className="h-4 w-4 mr-1" />
                         <span>{property.bedrooms}</span>
@@ -296,11 +297,12 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                         <Square className="h-4 w-4 mr-1" />
                         <span>{property.area}m²</span>
                       </div>
+                      <div className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        <span>{property.location}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center text-gray-600 mb-4">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      <span>{property.location}</span>
-                    </div>
+                    
                     <button
                       onClick={() => onNavigate('property-list')}
                       className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
