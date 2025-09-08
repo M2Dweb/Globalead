@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Hammer, Palette, Building, Users, Compass, Scale, Play, Home, CreditCard, FileText, Shield, Bath, Bed, MapPin, Square } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useNavigate } from 'react-router-dom';
 
 interface ImoveisPageProps {
   onNavigate: (page: string) => void;
@@ -10,6 +11,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [founderVideoUrl, setFounderVideoUrl] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -136,25 +138,25 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
       icon: <Shield className="h-12 w-12 text-red-600" />,
       title: "Alarmes",
       description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar.",
-      link: "alarmes"
+      link: "/alarmes"
     },
     {
       icon: <CreditCard className="h-12 w-12 text-green-600" />,
       title: "Crédito Habitação",
       description: "A Globalead é especializada em oferecer soluções de Crédito Habitação personalizadas, graças à sua relação privilegiada e poder negocial com as principais instituições bancárias em Portugal, garantindo as melhores opções para o seu agregado familiar.",
-      link: "credito"
+      link: "/credito"
     },
     {
       icon: <FileText className="h-12 w-12 text-yellow-600" />,
       title: "Certificação Energética",
       description: "O desempenho energético de um imóvel é classificado de A+ a G e deve ser indicado através de um certificado energético, obrigatório na venda. Com a Globalead, tratamos de todo o processo, garantindo todas as condições para a venda do seu imóvel.",
-      link: "certificacao"
+      link: "/certificacao"
     },
     {
       icon: <Shield className="h-12 w-12 text-blue-600" />,
       title: "Seguros",
       description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme condições da apólice.",
-      link: "seguros"
+      link: "/seguros"
     }
   ];
 
@@ -250,7 +252,10 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                     <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                       {property.description}
                     </p>
-                    <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                    <button
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                      onClick={() => onNavigate(`property-detail/${property.id}`)} 
+                    >
                       Ver Detalhes
                     </button>
                   </div>
@@ -262,7 +267,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
 
           <div className="text-center mt-12">
             <button
-              onClick={() => onNavigate('property-list')}
+              onClick={() => onNavigate('property-list')} 
               className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
             >
               Ver Todos os Imóveis
@@ -293,13 +298,15 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                 <p className="text-gray-600 mb-6 text-sm">
                   {service.description}
                 </p>
-                <button
-                  onClick={() => onNavigate(service.link)}
-                  className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center"
-                >
-                  Saber mais
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </button>
+                
+                  <button
+                    onClick={() => onNavigate(`${service.link}`)} // ✅ Vai para a aba correta
+                    className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center"
+                  >
+                    Saber mais
+                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </button>
+
               </div>
             ))}
           </div>
