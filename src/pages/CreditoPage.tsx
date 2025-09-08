@@ -1,33 +1,81 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calculator, TrendingUp, Home, DollarSign, ChevronDown, ChevronUp, CreditCard, Users, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CreditCalculator from '../components/CreditCalculator';
 import ContactForm from '../components/ContactForm';
+import { supabase } from '../lib/supabase';
 
 const CreditoPage: React.FC = () => {
   const [openFAQ, setOpenFAQ] = useState<number[]>([]);
-  const [currentBankIndex, setCurrentBankIndex] = useState(0);
+  const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
+  const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
 
-  const bankLogos = [
-    "https://www.globalead.pt/wp-content/uploads/2025/08/6.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/3.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/7.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/5.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/4.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/11.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/2.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/9.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/1.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/10.png",
-    "https://www.globalead.pt/wp-content/uploads/2025/08/8.png"
-  ];
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBankIndex(prev => (prev + 1) % (bankLogos.length - 4));
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [bankLogos.length]);
+  const [logosPerPage, setLogosPerPage] = useState(
+      window.innerWidth < 640 ? 3 : 5
+    );
+  
+    useEffect(() => {
+      const handleResize = () => {
+        setLogosPerPage(window.innerWidth < 640 ? 3 : 5);
+      };
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+    
+  // 1. Chamar a função fetchPartnerLogos
+  useEffect(() => {
+    fetchPartnerLogos();
+  }, []);
+
+  // 2. Corrigir rotação automática
+  useEffect(() => {
+    if (partnerLogos.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentPartnerIndex(prev => (prev + 1) % (partnerLogos.length - logosPerPage));
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [partnerLogos.length, logosPerPage]);
+
+  const fetchPartnerLogos = async () => {
+      try {
+        const { data, error } = await supabase.storage
+          .from('imagens')
+          .list('patrocinios', {
+            limit: 20,
+            offset: 0
+          });
+
+        if (error) {
+          console.error('Erro ao carregar logos dos parceiros:', error);
+          // Fallback logos
+          setPartnerLogos([
+            "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+            "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
+          ]);
+        } else if (data) {
+          const logoUrls = data.map(file => {
+            const { data: urlData } = supabase.storage
+              .from('imagens')
+              .getPublicUrl(`patrocinios/${file.name}`);
+            return urlData.publicUrl;
+          });
+          setPartnerLogos(logoUrls);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar logos dos parceiros:', error);
+        setPartnerLogos([]);
+      }
+    };
+
+  
+
+
 
   const services = [
     {
@@ -263,36 +311,38 @@ const CreditoPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Banks Carousel */}
+      {/* Partners Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Comparamos as várias instituições em Portugal
+              Compare as várias instituições em Portugal
             </h2>
           </div>
 
-          <div className="overflow-hidden">
-            <div 
-              className="flex transition-transform duration-1000 ease-in-out"
-              style={{ transform: `translateX(-${currentBankIndex * 20}%)` }}
-            >
-              {bankLogos.map((logo, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 w-1/5 px-4"
-                >
-                  <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <img
-                      src={logo}
-                      alt={`Banco ${index + 1}`}
-                      className="w-full h-16 object-contain"
-                    />
+          {partnerLogos.length > 0 && (
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-1000 ease-in-out"
+                style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
+              >
+                {partnerLogos.map((logo, index) => (
+                  <div
+                    key={index}
+                    className={`flex-shrink-0 w-1/3 sm:w-1/5 px-4`} // 2 por vez no mobile, 5 no desktop
+                  >
+                    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <img
+                        src={logo}
+                        alt={`Parceiro ${index + 1}`}
+                        className="w-full h-30 object-contain"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 

@@ -453,12 +453,30 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                 <option>Vender</option>
                 <option>Arrendar</option>
                 <option>Comprar</option>
+                <option>Construir</option>
               </select>
-              <input
-                type="text"
-                placeholder="Localização:"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option>Selecione o distrito</option>
+                <option>Aveiro</option>
+                <option>Beja</option>
+                <option>Braga</option>
+                <option>Bragança</option>
+                <option>Castelo Branco</option>
+                <option>Coimbra</option>
+                <option>Évora</option>
+                <option>Faro</option>
+                <option>Guarda</option>
+                <option>Leiria</option>
+                <option>Lisboa</option>
+                <option>Portalegre</option>
+                <option>Porto</option>
+                <option>Santarém</option>
+                <option>Setúbal</option>
+                <option>Viana do Castelo</option>
+                <option>Vila Real</option>
+                <option>Viseu</option>
+                <option>Ilhas</option>
+              </select>
               <input
                 type="text"
                 placeholder="Código Postal:"
@@ -468,8 +486,14 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                 <option>Tipo de Imóvel:</option>
                 <option>Apartamento</option>
                 <option>Moradia</option>
+                <option>Quinta</option>
                 <option>Terreno</option>
-                <option>Comercial</option>
+                <option>Prédio</option>
+                <option>Loja</option>
+                <option>Armazém</option>
+                <option>Escritório</option>
+                <option>Garagem</option>
+                <option>Outros</option>
               </select>
               <input
                 type="number"
