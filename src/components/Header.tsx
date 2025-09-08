@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
-interface HeaderProps {
-  currentPage: string;
-  onNavigate: (page: string) => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
+const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,15 +17,15 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
   }, []);
 
   const menuItems = [
-    { name: 'Sobre', page: 'sobre' },
-    { name: 'Imóveis', page: 'imoveis' },
-    { name: 'Seguros', page: 'seguros' },
-    { name: 'Blog', page: 'blog' },
-    { name: 'Contactos', page: 'contactos' },
-    { name: 'Admin', page: 'admin' }
+    { name: 'Sobre', path: '/sobre' },
+    { name: 'Imóveis', path: '/imoveis' },
+    { name: 'Seguros', path: '/seguros' },
+    { name: 'Blog', path: '/blog' },
+    { name: 'Contactos', path: '/contactos' },
+    { name: 'Admin', path: '/admin' }
   ];
 
-  const isHeroPage = ['home', 'sobre', 'imoveis', 'seguros', 'blog', 'contactos'].includes(currentPage);
+  const isHeroPage = ['/', '/sobre', '/imoveis', '/seguros', '/blog', '/contactos'].includes(location.pathname);
   const shouldBeTransparent = isHeroPage && !isScrolled;
 
   return (
@@ -38,31 +35,28 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2">
           {/* Logo */}
-          <div 
-            className="flex items-center cursor-pointer"
-            onClick={() => onNavigate('home')}
-          >
+          <Link to="/" className="flex items-center">
             <img 
               src="/logo.png" 
               alt="Globalead Portugal" 
               className="h-14 w-auto"
             />
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-8">
             {menuItems.map((item) => (
-              <button
-                key={item.page}
-                onClick={() => onNavigate(item.page)}
+              <Link
+                key={item.path}
+                to={item.path}
                 className={`text-sm font-medium transition-colors duration-200 ${
-                  currentPage === item.page
+                  location.pathname === item.path
                     ? `${shouldBeTransparent ? 'text-white border-b-2 border-white' : 'text-blue-600 border-b-2 border-blue-600'}`
                     : `${shouldBeTransparent ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600'}`
                 }`}
               >
                 {item.name}
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -82,20 +76,18 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
           <div className="lg:hidden">
             <div className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 ${shouldBeTransparent ? 'bg-black bg-opacity-90' : 'bg-gray-50'}`}>
               {menuItems.map((item) => (
-                <button
-                  key={item.page}
-                  onClick={() => {
-                    onNavigate(item.page);
-                    setIsMenuOpen(false);
-                  }}
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsMenuOpen(false)}
                   className={`block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ${
-                    currentPage === item.page
+                    location.pathname === item.path
                       ? `${shouldBeTransparent ? 'text-white bg-white bg-opacity-20' : 'text-blue-600 bg-blue-50'}`
                       : `${shouldBeTransparent ? 'text-white hover:text-blue-200 hover:bg-white hover:bg-opacity-10' : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'}`
                   }`}
                 >
                   {item.name}
-                </button>
+                </Link>
               ))}
             </div>
           </div>

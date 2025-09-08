@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronRight, Home } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface BreadcrumbsProps {
   items: Array<{
@@ -7,11 +8,10 @@ interface BreadcrumbsProps {
     href?: string;
     current?: boolean;
   }>;
-  onNavigate: (page: string) => void;
   isVisible: boolean;
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, onNavigate, isVisible }) => {
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, isVisible }) => {
   if (!isVisible) return null;
 
   return (
@@ -19,12 +19,12 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, onNavigate, isVisible 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ol className="flex items-center space-x-2 text-sm">
           <li>
-            <button
-              onClick={() => onNavigate('home')}
+            <Link
+              to="/"
               className="text-gray-500 hover:text-blue-600 transition-colors flex items-center"
             >
               <Home className="h-4 w-4" />
-            </button>
+            </Link>
           </li>
           {items.map((item, index) => (
             <li key={index} className="flex items-center">
@@ -32,12 +32,12 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, onNavigate, isVisible 
               {item.current ? (
                 <span className="text-gray-900 font-medium">{item.label}</span>
               ) : (
-                <button
-                  onClick={() => item.href && onNavigate(item.href)}
+                <Link
+                  to={item.href || '/'}
                   className="text-gray-500 hover:text-blue-600 transition-colors"
                 >
                   {item.label}
-                </button>
+                </Link>
               )}
             </li>
           ))}

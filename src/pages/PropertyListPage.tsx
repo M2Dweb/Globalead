@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, Bed, Bath, Square, MapPin, Euro, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
-interface PropertyListPageProps {
-  onNavigate: (page: string) => void;
-  onPropertySelect: (propertyId: number) => void;
-}
-
-const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPropertySelect }) => {
+const PropertyListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [priceRange, setPriceRange] = useState([0, 1000000]);
@@ -26,7 +21,6 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
         
         if (error) {
           console.error('Erro ao carregar propriedades:', error);
-          // Fallback data
           setProperties([
             {
               id: 1,
@@ -65,6 +59,7 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
 
     fetchProperties();
   }, []);
+
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          property.location.toLowerCase().includes(searchTerm.toLowerCase());
@@ -81,11 +76,6 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
       currency: 'EUR',
       maximumFractionDigits: 0
     }).format(price);
-  };
-
-  const handlePropertyClick = (propertyId: number) => {
-    onPropertySelect(propertyId);
-    onNavigate('property-detail');
   };
 
   if (loading) {
@@ -191,10 +181,10 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProperties.map((property) => (
-              <div
+              <Link
                 key={property.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-                onClick={() => handlePropertyClick(property.id)}
+                to={`/imoveis/${property.id}`}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="relative">
                   <img
@@ -232,24 +222,23 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
                       <Square className="h-4 w-4 mr-1" />
                       <span>{property.area}m²</span>
                     </div>
-                    <div className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      <span>{property.location}</span>
-                    </div>
                   </div>
-                
-                  
+
+                  <div className="flex items-center text-gray-600 mb-3">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    <span>{property.location}</span>
+                  </div>
                   
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                     {property.description}
                   </p>
                   
-                  <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center">
+                  <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center">
                     Ver Detalhes
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </button>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

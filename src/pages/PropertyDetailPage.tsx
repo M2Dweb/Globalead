@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Calendar, Eye, Heart, Share2, Phone, Mail, Facebook, MessageCircle, Send, Linkedin, Twitter } from 'lucide-react';
-import ContactForm from '../components/ContactForm';
+import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { sendEmail, FormData } from '../utils/emailService';
 
-interface PropertyDetailPageProps {
-  propertyId: string | null;
-  onNavigate: (page: string) => void;
-}
-
-const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onNavigate }) => {
+const PropertyDetailPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [property, setProperty] = useState<any | null>(null);
   const [similarProperties, setSimilarProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPropertyType, setSelectedPropertyType] = useState<any>(null);
+  const [formData, setFormData] = useState<Partial<FormData>>({
+    nome: '',
+    apelido: '',
+    telemovel: '',
+    email: '',
+    assunto: 'Agendar Visita',
+    meio_contacto: '',
+    horario: '',
+    mensagem: '',
+    page: 'property-detail'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     const fetchProperty = async () => {
-      if (!propertyId) {
+      if (!id) {
         setLoading(false);
         return;
       }
@@ -27,14 +36,13 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
         const { data, error } = await supabase
           .from('properties')
           .select('*')
-          .eq('id', propertyId)
+          .eq('id', id)
           .single();
         
         if (error) {
           console.error('Erro ao carregar propriedade:', error);
-          // Fallback data
           setProperty({
-            id: propertyId,
+            id: id,
             title: "Empreendimento Noval Park",
             description: "O empreendimento Novel Park nasce em Vila Nova de Gaia, junto ao Monte da Virgem, numa das zonas mais elevadas e tranquilas da cidade. Implantado nos terrenos da Quinta do Cravel, o projeto usufrui de uma envolvente natural privilegiada, ao mesmo tempo que garante proximidade ao centro urbano e à ampla rede de serviços e acessos, tornando-se uma opção ideal para quem procura viver com equilíbrio entre natureza e comodidade.",
             price: 432600,
@@ -110,7 +118,7 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
         const { data, error } = await supabase
           .from('properties')
           .select('*')
-          .neq('id', propertyId)
+          .neq('id', id)
           .limit(3);
         
         if (error) {
@@ -157,20 +165,17 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
 
     fetchProperty();
     fetchSimilarProperties();
-  }, [propertyId]);
+  }, [id]);
 
-  
   useEffect(() => {
     if (!property || !property.images) return;
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
-    }, 4000); // troca a cada 5 segundos
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [property]);
-
-
 
   const nextImage = () => {
     if (property) {
@@ -218,6 +223,50 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const emailData = {
+        ...formData,
+        mensagem: `Interesse no imóvel: ${property?.title} (ID: ${id})`
+      };
+      console.log('Dados do formulário PropertyDetail:', emailData);
+      const success = await sendEmail(emailData as FormData);
+      if (success) {
+        setSubmitStatus('success');
+        setFormData({
+          nome: '',
+          apelido: '',
+          telemovel: '',
+          email: '',
+          assunto: 'Agendar Visita',
+          meio_contacto: '',
+          horario: '',
+          mensagem: '',
+          page: 'property-detail'
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -245,14 +294,12 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
           backgroundPosition: 'center',
         }}
       >
-        {/* Overlay com blur */}
         <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">Detalhes do Imóvel</h1>
           <h2 className="text-2xl md:text-3xl font-semibold mb-6">{property.title}</h2>
           
-          {/* Property Info */}
           <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
             <div className="flex items-center">
               <Bed className="h-6 w-6 mr-2" />
@@ -270,7 +317,6 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
         </div>
       </section>
 
-
       {/* Image Gallery */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -287,7 +333,6 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
               />
             ))}
 
-            {/* Navigation Arrows */}
             <button
               onClick={prevImage}
               className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all"
@@ -301,14 +346,11 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
               <ChevronRight className="h-6 w-6" />
             </button>
 
-            {/* Image Counter */}
             <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
               {currentImageIndex + 1} / {property.images.length}
             </div>
           </div>
 
-
-          {/* Thumbnail Strip */}
           <div className="flex space-x-2 overflow-x-auto pb-4">
             {property.images.map((image, index) => (
               <button
@@ -329,7 +371,7 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
         </div>
       </section>
 
-      {/* Property Types (for developments) */}
+      {/* Property Types */}
       {property.property_types && property.property_types.length > 0 && (
         <section className="py-12 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -473,46 +515,63 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
                   Agende a sua visita
                 </h3>
                 
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <input
                     type="text"
+                    name="nome"
+                    value={formData.nome}
+                    onChange={handleInputChange}
                     placeholder="Nome:"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="text"
+                    name="apelido"
+                    value={formData.apelido}
+                    onChange={handleInputChange}
                     placeholder="Apelido:"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="tel"
+                    name="telemovel"
+                    value={formData.telemovel}
+                    onChange={handleInputChange}
                     placeholder="Telemóvel:"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="Email:"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="date"
+                    name="horario"
+                    value={formData.horario}
+                    onChange={handleInputChange}
                     placeholder="Data da Visita:"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option>Meio de Contacto:</option>
-                    <option>Email</option>
-                    <option>Telefone</option>
-                    <option>WhatsApp</option>
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Horário:"
+                  <select 
+                    name="meio_contacto"
+                    value={formData.meio_contacto}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                  >
+                    <option value="">Meio de Contacto:</option>
+                    <option value="Email">Email</option>
+                    <option value="Telefone">Telefone</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                  </select>
                   
                   <label className="flex items-start text-sm text-gray-700">
-                    <input type="checkbox" className="mt-1 mr-2" />
+                    <input type="checkbox" className="mt-1 mr-2" required />
                     Sim, aceito os termos e condições indicados pela Globalead Portugal.
                   </label>
                   
@@ -520,11 +579,24 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
                     Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
                   </p>
                   
+                  {submitStatus === 'success' && (
+                    <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                      Pedido de visita enviado com sucesso! Entraremos em contacto em breve.
+                    </div>
+                  )}
+                  
+                  {submitStatus === 'error' && (
+                    <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                      Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.
+                    </div>
+                  )}
+                  
                   <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Agendar Visita
+                    {isSubmitting ? 'Enviando...' : 'Agendar Visita'}
                   </button>
                 </form>
               </div>
@@ -542,10 +614,10 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {similarProperties.map((similarProperty) => (
-              <div
+              <Link
                 key={similarProperty.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-                onClick={() => onNavigate('property-detail')}
+                to={`/imoveis/${similarProperty.id}`}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <img
                   src={similarProperty.images[0]}
@@ -578,110 +650,8 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ propertyId, onN
                     <span>{similarProperty.location}</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Sell Property Form */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Deseja vender o seu imóvel?
-            </h2>
-            <p className="text-xl text-blue-100">
-              Utilize este formulário para dar a conhecer o seu imóvel e aproveite a certificação energética sem custos!
-            </p>
-          </div>
-
-          <div className="bg-white p-8 rounded-xl">
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input
-                type="text"
-                placeholder="Nome"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="text"
-                placeholder="Apelido"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="tel"
-                placeholder="Telemóvel"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Pretendo</option>
-                <option>Vender</option>
-                <option>Arrendar</option>
-                <option>Comprar</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Localização"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="text"
-                placeholder="Código Postal"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Tipo de Imóvel</option>
-                <option>Apartamento</option>
-                <option>Moradia</option>
-                <option>Terreno</option>
-                <option>Comercial</option>
-              </select>
-              <input
-                type="number"
-                placeholder="Preço Máx (€)"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="number"
-                placeholder="Área Min (m²)"
-                className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Nº de Quartos</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4+</option>
-              </select>
-              <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Nº de Casas de Banho</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4+</option>
-              </select>
-              
-              <div className="md:col-span-2">
-                <label className="flex items-start text-sm text-gray-700 mb-4">
-                  <input type="checkbox" className="mt-1 mr-2" />
-                  Sim, aceito os termos e condições indicados pela Globalead Portugal e confirmo ter compreendido as políticas de proteção de dados que regulam este formulário.
-                </label>
-                <p className="text-xs text-gray-600 mb-6">
-                  Os dados submetidos através deste formulário serão tratados em conformidade com a legislação vigente sobre proteção de dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679, sendo plenamente respeitados pela Globalead Portugal.
-                </p>
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                >
-                  Enviar Pedido
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       </section>

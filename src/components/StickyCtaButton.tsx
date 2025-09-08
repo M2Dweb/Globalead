@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, MessageCircle, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-interface StickyCtaButtonProps {
-  onNavigate: (page: string) => void;
-}
-
-const StickyCtaButton: React.FC<StickyCtaButtonProps> = ({ onNavigate }) => {
+const StickyCtaButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -82,11 +79,9 @@ const StickyCtaButton: React.FC<StickyCtaButtonProps> = ({ onNavigate }) => {
                       </div>
                     </button>
                     
-                    <button
-                      onClick={() => {
-                        onNavigate('contactos');
-                        setIsExpanded(false);
-                      }}
+                    <Link
+                      to="/contactos"
+                      onClick={() => setIsExpanded(false)}
                       className="flex items-center w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors"
                     >
                       <div className="h-5 w-5 bg-blue-600 rounded mr-3"></div>
@@ -94,7 +89,7 @@ const StickyCtaButton: React.FC<StickyCtaButtonProps> = ({ onNavigate }) => {
                         <div className="font-medium text-gray-900">Contactos</div>
                         <div className="text-sm text-gray-500">Formulário</div>
                       </div>
-                    </button>
+                    </Link>
                   </div>
                 </motion.div>
               )}

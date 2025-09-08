@@ -1,34 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Home, Shield, Zap, Star, ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Tv, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { sendEmail, FormData } from '../utils/emailService';
 
-interface HomePageProps {
-  onNavigate: (page: string) => void;
-}
-
-const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
+const HomePage: React.FC = () => {
   const [currentReview, setCurrentReview] = useState(0);
-  const [currentProperty, setCurrentProperty] = useState(0);
   const [properties, setProperties] = useState<any[]>([]);
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
-  
+  const [formData, setFormData] = useState<Partial<FormData>>({
+    nome: '',
+    apelido: '',
+    telemovel: '',
+    email: '',
+    assunto: '',
+    meio_contacto: '',
+    horario: '',
+    page: 'home'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const [reviewsPerPage, setReviewsPerPage] = useState(
     window.innerWidth < 640 ? 1 : 2
   );
-
-  
-
-// Atualiza se a tela mudar de tamanho
-  useEffect(() => {
-    const handleResize = () => {
-      setReviewsPerPage(window.innerWidth < 640 ? 1 : 2);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const [logosPerPage, setLogosPerPage] = useState(
     window.innerWidth < 640 ? 3 : 5
@@ -36,13 +33,12 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   useEffect(() => {
     const handleResize = () => {
+      setReviewsPerPage(window.innerWidth < 640 ? 1 : 2);
       setLogosPerPage(window.innerWidth < 640 ? 3 : 5);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -50,11 +46,11 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         const { data, error } = await supabase
           .from('properties')
           .select('*')
-          .limit(3);
+          .limit(3)
+          .order('created_at', { ascending: false });
         
         if (error) {
           console.error('Erro ao carregar propriedades:', error);
-          // Fallback data if Supabase not configured
           setProperties([
             {
               id: 1,
@@ -107,7 +103,6 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
         if (error) {
           console.error('Erro ao carregar logos dos parceiros:', error);
-          // Fallback logos
           setPartnerLogos([
             "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
             "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
@@ -140,25 +135,25 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       icon: <Shield className="h-12 w-12 text-red-600" />,
       title: "Alarmes",
       description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade etc. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar",
-      link: "alarmes"
+      link: "/alarmes"
     },
     {
       icon: <Zap className="h-12 w-12 text-yellow-600" />,
       title: "Energia",
       description: "A eletricidade e o gás natural desempenham papéis essenciais na vida moderna, indispensáveis para diversas atividades realizadas diariamente. É crucial atender a todos os clientes com a melhor oferta energética de forma a facilitar a sua decisão",
-      link: "energia"
+      link: "/energia"
     },
     {
       icon: <Shield className="h-12 w-12 text-blue-600" />,
       title: "Seguros",
       description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme definido nas condições da apólice",
-      link: "seguros"
+      link: "/seguros"
     },
     {
       icon: <Tv className="h-12 w-12 text-purple-600" />,
       title: "TV, Net, Voz",
-      description: "As telecomunicações são essenciais para a conectividade e desempenham um papel crucial na propagação de informações em muitas áreas da sociedade. A Globaleal apresenta várias soluções e pretende atender às reais necessidades de cada cliente",
-      link: "tv-net-voz"
+      description: "As telecomunicações são essenciais para a conectividade e desempenham um papel crucial na propagação de informações em muitas áreas da sociedade. A Globalead apresenta várias soluções e pretende atender às reais necessidades de cada cliente",
+      link: "/tv-net-voz"
     }
   ];
 
@@ -203,26 +198,19 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentReview(prev => (prev + 2) % reviews.length);
+      setCurrentReview(prev => (prev + reviewsPerPage) % reviews.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, [reviews.length]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentProperty(prev => (prev + 1) % Math.max(1, properties.length));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [properties.length]);
+  }, [reviews.length, reviewsPerPage]);
 
   useEffect(() => {
     if (partnerLogos.length > 0) {
       const interval = setInterval(() => {
-        setCurrentPartnerIndex(prev => (prev + 1) % (partnerLogos.length - 5));
+        setCurrentPartnerIndex(prev => (prev + 1) % Math.max(1, partnerLogos.length - logosPerPage + 1));
       }, 3000);
       return () => clearInterval(interval);
     }
-  }, [partnerLogos.length]);
+  }, [partnerLogos.length, logosPerPage]);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-PT', {
@@ -230,6 +218,45 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       currency: 'EUR',
       maximumFractionDigits: 0
     }).format(price);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      console.log('Dados do formulário HomePage:', formData);
+      const success = await sendEmail(formData as FormData);
+      if (success) {
+        setSubmitStatus('success');
+        setFormData({
+          nome: '',
+          apelido: '',
+          telemovel: '',
+          email: '',
+          assunto: '',
+          meio_contacto: '',
+          horario: '',
+          page: 'home'
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -259,7 +286,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Properties Slideshow */}
+      {/* Properties Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -268,63 +295,62 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </h2>
           </div>
 
-          {properties.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {properties.map((property, index) => (
-                <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                  <img
-                    src={property.images[0]}
-                    alt={property.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <div className="text-2xl font-bold text-blue-600 mb-2">
-                      {formatPrice(property.price)}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {properties.map((property) => (
+              <Link
+                key={property.id}
+                to={`/imoveis/${property.id}`}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              >
+                <img
+                  src={property.images[0]}
+                  alt={property.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="text-2xl font-bold text-blue-600 mb-2">
+                    {formatPrice(property.price)}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {property.title}
+                  </h3>
+                  <div className="flex items-center space-x-4 text-gray-600 mb-4">
+                    <div className="flex items-center">
+                      <Bed className="h-4 w-4 mr-1" />
+                      <span>{property.bedrooms}</span>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {property.title}
-                    </h3>
-                    <div className="flex items-center space-x-4 text-gray-600 mb-4">
-                      <div className="flex items-center">
-                        <Bed className="h-4 w-4 mr-1" />
-                        <span>{property.bedrooms}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Bath className="h-4 w-4 mr-1" />
-                        <span>{property.bathrooms}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Square className="h-4 w-4 mr-1" />
-                        <span>{property.area}m²</span>
-                      </div>
-                      <div className="flex items-center">
-                        <MapPin className="h-4 w-4 mr-1" />
-                        <span>{property.location}</span>
-                      </div>
+                    <div className="flex items-center">
+                      <Bath className="h-4 w-4 mr-1" />
+                      <span>{property.bathrooms}</span>
                     </div>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {property.description}
-                    </p>
-                    <button
-                      onClick={() => onNavigate('property-list')}
-                      className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      Ver Detalhes
-                    </button>
+                    <div className="flex items-center">
+                      <Square className="h-4 w-4 mr-1" />
+                      <span>{property.area}m²</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center text-gray-600 mb-4">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    <span>{property.location}</span>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {property.description}
+                  </p>
+                  <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center">
+                    Ver Detalhes
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              </Link>
+            ))}
+          </div>
 
           <div className="text-center mt-12">
-            <button
-              onClick={() => onNavigate('property-list')}
+            <Link
+              to="/imoveis/lista"
               className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
             >
               Ver Todos os Imóveis
               <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -356,13 +382,13 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 <p className="text-gray-600 mb-6 text-sm">
                   {service.description}
                 </p>
-                <button
-                  onClick={() => onNavigate(service.link)}
+                <Link
+                  to={service.link}
                   className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center"
                 >
                   Saber mais
                   <ArrowRight className="ml-1 h-4 w-4" />
-                </button>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -444,13 +470,13 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 {partnerLogos.map((logo, index) => (
                   <div
                     key={index}
-                    className={`flex-shrink-0 w-1/3 sm:w-1/5 px-4`} // 2 por vez no mobile, 5 no desktop
+                    className={`flex-shrink-0 w-1/3 sm:w-1/5 px-4`}
                   >
                     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                       <img
                         src={logo}
                         alt={`Parceiro ${index + 1}`}
-                        className="w-full h-30 object-contain"
+                        className="w-full h-20 object-contain p-4"
                       />
                     </div>
                   </div>
@@ -461,14 +487,13 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-{/* CTA Section */}
+      {/* CTA Section */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
-            {/* Texto acima do formulário */}
             <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Tem dúvidas? Entre em contacto
+                Pronto para começar?
               </h2>
               <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-4">
                 <div className="flex items-center">
@@ -478,75 +503,113 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               </div>
             </div>
 
-            {/* Formulário Centralizado */}
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
- 
-              <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input
-                    type="text"
-                    placeholder="Nome:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Apelido:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Telemóvel:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email:"
-                    className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option>Meio de Contacto:</option>
-                    <option>Email</option>
-                    <option>Telefone</option>
-                    <option>WhatsApp</option>
-                  </select>
-                  
-                  
-                  <select className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option>Assunto:</option>
-                    <option>Esclarecimento de Dúvidas</option>
-                    <option>Pretendo Comprar um Imóvel</option>
-                    <option>Pretendo Vender um Imóvel</option>
-                    <option>Pretendo Arrendar um Imóvel</option>
-                    <option>Pedido de Simulação para Créditos</option>
-                    <option>Pedido de Certificado Energético</option>
-                    <option>Pedido de Simulação Energia</option>
-                    <option>Pedido de Simulação TV NET VOZ</option>
-                    <option>Pedido de Simulação Seguros</option>
-                    <option>Pedido de Simulação Alarmes</option>
-                  </select>
-                  
-                  <input
-                    type="text"
-                    placeholder="Horário:"
-                    className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                  />
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  type="text"
+                  name="nome"
+                  value={formData.nome}
+                  onChange={handleInputChange}
+                  placeholder="Nome:"
+                  required
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="text"
+                  name="apelido"
+                  value={formData.apelido}
+                  onChange={handleInputChange}
+                  placeholder="Apelido:"
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="tel"
+                  name="telemovel"
+                  value={formData.telemovel}
+                  onChange={handleInputChange}
+                  placeholder="Telemóvel:"
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Email:"
+                  required
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <select 
+                  name="meio_contacto"
+                  value={formData.meio_contacto}
+                  onChange={handleInputChange}
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Meio de Contacto:</option>
+                  <option value="Email">Email</option>
+                  <option value="Telefone">Telefone</option>
+                  <option value="WhatsApp">WhatsApp</option>
+                </select>
+                
+                <select 
+                  name="assunto"
+                  value={formData.assunto}
+                  onChange={handleInputChange}
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Assunto:</option>
+                  <option value="Esclarecimento de Dúvidas">Esclarecimento de Dúvidas</option>
+                  <option value="Pretendo Comprar um Imóvel">Pretendo Comprar um Imóvel</option>
+                  <option value="Pretendo Vender um Imóvel">Pretendo Vender um Imóvel</option>
+                  <option value="Pretendo Arrendar um Imóvel">Pretendo Arrendar um Imóvel</option>
+                  <option value="Pedido de Simulação para Créditos">Pedido de Simulação para Créditos</option>
+                  <option value="Pedido de Certificado Energético">Pedido de Certificado Energético</option>
+                  <option value="Pedido de Simulação Energia">Pedido de Simulação Energia</option>
+                  <option value="Pedido de Simulação TV NET VOZ">Pedido de Simulação TV NET VOZ</option>
+                  <option value="Pedido de Simulação Seguros">Pedido de Simulação Seguros</option>
+                  <option value="Pedido de Simulação Alarmes">Pedido de Simulação Alarmes</option>
+                </select>
+                
+                <input
+                  type="text"
+                  name="horario"
+                  value={formData.horario}
+                  onChange={handleInputChange}
+                  placeholder="Horário:"
+                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
 
-                  <div className="md:col-span-2">
-                    <label className="flex items-start text-sm text-gray-700 mb-4">
-                      <input type="checkbox" className="mt-1 mr-2" />
-                      Sim, aceito os termos e condições indicados pela Globalead Portugal.
-                    </label>
-                    <p className="text-xs text-gray-600 mb-4">
-                      Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
-                    </p>
-                    <button
-                      type="submit"
-                      className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                    >
-                      Enviar Pedido
-                    </button>
-                  </div>
-                </form>
-              </div>
+                <div className="md:col-span-2">
+                  <label className="flex items-start text-sm text-gray-700 mb-4">
+                    <input type="checkbox" className="mt-1 mr-2" required />
+                    Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                  </label>
+                  <p className="text-xs text-gray-600 mb-4">
+                    Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                  </p>
+                  
+                  {submitStatus === 'success' && (
+                    <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                      Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                    </div>
+                  )}
+                  
+                  {submitStatus === 'error' && (
+                    <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                      Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
+                    </div>
+                  )}
+                  
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Enviando...' : 'Enviar Pedido'}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </section>
