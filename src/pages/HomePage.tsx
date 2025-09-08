@@ -302,10 +302,9 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                         <span>{property.location}</span>
                       </div>
                     </div>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                       {property.description}
                     </p>
-                    
                     <button
                       onClick={() => onNavigate('property-list')}
                       className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
