@@ -19,6 +19,8 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
     window.innerWidth < 640 ? 1 : 2
   );
 
+  
+
 // Atualiza se a tela mudar de tamanho
   useEffect(() => {
     const handleResize = () => {
@@ -27,6 +29,19 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const [logosPerPage, setLogosPerPage] = useState(
+    window.innerWidth < 640 ? 2 : 5
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setLogosPerPage(window.innerWidth < 640 ? 2 : 5);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
 
   useEffect(() => {
@@ -418,16 +433,16 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
           {partnerLogos.length > 0 && (
             <div className="overflow-hidden">
-              <div 
+              <div
                 className="flex transition-transform duration-1000 ease-in-out"
-                style={{ transform: `translateX(-${currentPartnerIndex * 20}%)` }}
+                style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
               >
                 {partnerLogos.map((logo, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-1/5 px-4"
+                    className={`flex-shrink-0 w-1/2 sm:w-1/5 px-4`} // 2 por vez no mobile, 5 no desktop
                   >
-                    <div className="bg-white  rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                       <img
                         src={logo}
                         alt={`Parceiro ${index + 1}`}
