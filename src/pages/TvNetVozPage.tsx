@@ -6,22 +6,22 @@ const TvNetVozPage: React.FC = () => {
     {
       name: "MEO",
       description: "Integer quis dapibus mauris, non tristique tortor. Nam porta lobortis urna at lacinia. Praesent at est iaculis, pulvinar sapien in, rhoncus arcu. Mauris fermentum, diam ut rhoncus ultricies, sapien arcu bibendum nisi,",
-      logo: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
+      logo: "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/patrocinios/LOGOS_AZUL_ESCURO-09.png"
     },
     {
       name: "NOS",
       description: "Integer quis dapibus mauris, non tristique tortor. Nam porta lobortis urna at lacinia. Praesent at est iaculis, pulvinar sapien in, rhoncus arcu. Mauris fermentum, diam ut rhoncus ultricies, sapien arcu bibendum nisi,",
-      logo: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
+      logo: "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/patrocinios/LOGOS_AZUL_ESCURO-19.png"
     },
     {
       name: "Vodafone",
       description: "Integer quis dapibus mauris, non tristique tortor. Nam porta lobortis urna at lacinia. Praesent at est iaculis, pulvinar sapien in, rhoncus arcu. Mauris fermentum, diam ut rhoncus ultricies, sapien arcu bibendum nisi,",
-      logo: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
+      logo: "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/patrocinios/LOGOS_AZUL_ESCURO-24.png"
     },
     {
       name: "NOWO",
       description: "Integer quis dapibus mauris, non tristique tortor. Nam porta lobortis urna at lacinia. Praesent at est iaculis, pulvinar sapien in, rhoncus arcu. Mauris fermentum, diam ut rhoncus ultricies, sapien arcu bibendum nisi,",
-      logo: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
+      logo: "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/patrocinios/LOGOS_AZUL_ESCURO-14.png"
     }
   ];
 

@@ -287,9 +287,7 @@ const HomePage: React.FC = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <div className="text-2xl font-bold text-[#79b2e9] mb-2">
-                    {formatPrice(property.price)}
-                  </div>
+                  
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {property.title}
                   </h3>
@@ -317,7 +315,7 @@ const HomePage: React.FC = () => {
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                     {property.description}
                   </p>
-                  <div className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors text-center">
+                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
                     Ver Detalhes
                   </div>
                 </div>
@@ -328,7 +326,7 @@ const HomePage: React.FC = () => {
           <div className="text-center mt-12">
             <Link
               to="/imoveis/lista"
-              className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center"
+              className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-semibold inline-flex items-center"
             >
               Ver Todos os Imóveis
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -366,10 +364,12 @@ const HomePage: React.FC = () => {
                 </p>
                 <Link
                   to={service.link}
-                  className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center"
                 >
-                  Saber mais
-                  <ArrowRight className="ml-1 h-4 w-4" />
+                 
+                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
+                    Saber mais
+                  </div>
+                  
                 </Link>
               </motion.div>
             ))}
@@ -448,7 +448,7 @@ const HomePage: React.FC = () => {
                     alt={post.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-4 left-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-4 left-4 bg-[#0d2233] text-white px-3 py-1 rounded-full text-sm font-medium">
                     {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
                   </div>
                   <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
@@ -472,7 +472,7 @@ const HomePage: React.FC = () => {
                     {post.excerpt}
                   </p>
 
-                  <div className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors text-center">
+                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
                     Ler Mais
                   </div>
                 </div>
@@ -483,7 +483,7 @@ const HomePage: React.FC = () => {
           <div className="text-center mt-12">
             <Link
               to="/blog"
-              className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center"
+              className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-semibold inline-flex items-center"
             >
               Ver Todos os Artigos
               <ArrowRight className="ml-2 h-5 w-5" />
