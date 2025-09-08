@@ -302,6 +302,9 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                         <span>{property.location}</span>
                       </div>
                     </div>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      {property.description}
+                    </p>
                     
                     <button
                       onClick={() => onNavigate('property-list')}

@@ -246,6 +246,9 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                         <MapPin className="h-4 w-4 mr-1" />
                         <span>{property.location}</span>
                       </div>
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                        {property.description}
+                      </p>
                     </div>
                     <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
                       Ver Detalhes

@@ -232,12 +232,13 @@ const PropertyListPage: React.FC<PropertyListPageProps> = ({ onNavigate, onPrope
                       <Square className="h-4 w-4 mr-1" />
                       <span>{property.area}m²</span>
                     </div>
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      <span>{property.location}</span>
+                    </div>
                   </div>
+                
                   
-                  <div className="flex items-center text-gray-600 mb-4">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    <span>{property.location}</span>
-                  </div>
                   
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                     {property.description}
