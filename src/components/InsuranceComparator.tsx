@@ -85,7 +85,7 @@ const InsuranceComparator: React.FC = () => {
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
-        <Shield className="h-8 w-8 text-blue-600 mr-3" />
+        <Shield className="h-8 w-8 text-[#0d2233] mr-3" />
         <h3 className="text-2xl font-bold text-gray-900">Comparador de Seguros</h3>
       </div>
 
@@ -97,7 +97,7 @@ const InsuranceComparator: React.FC = () => {
             onClick={() => setSelectedInsurance(key)}
             className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
               selectedInsurance === key
-                ? 'bg-blue-600 text-white'
+                ? 'bg-[#0d2233] text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -126,7 +126,7 @@ const InsuranceComparator: React.FC = () => {
                   <div className="font-semibold text-gray-900">{provider.name}</div>
                 </td>
                 <td className="py-4 px-2">
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-[#0d2233]">
                     {provider.price}€
                   </div>
                 </td>
@@ -153,7 +153,7 @@ const InsuranceComparator: React.FC = () => {
                   </div>
                 </td>
                 <td className="py-4 px-2">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                  <button className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors">
                     Escolher
                   </button>
                 </td>

@@ -28,7 +28,7 @@ const TvNetVozPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-blue-500 text-white py-20">
+      <section className="bg-gradient-to-br from-[#0d2233] to-blue-500 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -47,7 +47,7 @@ const TvNetVozPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Tv className="h-8 w-8 text-blue-600" />
+                <Tv className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Televisão</h3>
               <p className="text-gray-600">
@@ -57,7 +57,7 @@ const TvNetVozPage: React.FC = () => {
 
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Wifi className="h-8 w-8 text-blue-600" />
+                <Wifi className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Internet</h3>
               <p className="text-gray-600">
@@ -67,7 +67,7 @@ const TvNetVozPage: React.FC = () => {
 
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Phone className="h-8 w-8 text-blue-600" />
+                <Phone className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Voz</h3>
               <p className="text-gray-600">
@@ -106,7 +106,7 @@ const TvNetVozPage: React.FC = () => {
                 <p className="text-gray-600 mb-6">
                   {provider.description}
                 </p>
-                <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-flex items-center">
+                <button className="bg-[#0d2233] text-white px-6 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 inline-flex items-center">
                   Saber mais
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </button>
@@ -128,7 +128,7 @@ const TvNetVozPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600">1</span>
+                <span className="text-2xl font-bold text-[#0d2233]">1</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Poupança Garantida</h3>
               <p className="text-gray-600">
@@ -138,7 +138,7 @@ const TvNetVozPage: React.FC = () => {
 
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600">2</span>
+                <span className="text-2xl font-bold text-[#0d2233]">2</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Acompanhamento Total</h3>
               <p className="text-gray-600">
@@ -148,7 +148,7 @@ const TvNetVozPage: React.FC = () => {
 
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600">3</span>
+                <span className="text-2xl font-bold text-[#0d2233]">3</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Sem Complicações</h3>
               <p className="text-gray-600">
@@ -225,7 +225,7 @@ const TvNetVozPage: React.FC = () => {
               <div className="md:col-span-2">
                 <button
                   type="submit"
-                  className="w-full bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                  className="w-full bg-white text-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300"
                 >
                   Pedir Simulação
                 </button>

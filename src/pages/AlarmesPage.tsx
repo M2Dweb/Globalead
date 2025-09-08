@@ -22,25 +22,25 @@ const AlarmesPage: React.FC = () => {
       step: "1",
       title: "Deteção",
       description: "Detetamos a intenção de intrusão e o alarme é ativado.",
-      icon: <Eye className="h-8 w-8 text-blue-600" />
+      icon: <Eye className="h-8 w-8 text-[#0d2233]" />
     },
     {
       step: "2",
       title: "Comprovação",
       description: "A Central Recetora de Alarmes verifica o evento de alarme.",
-      icon: <Shield className="h-8 w-8 text-blue-600" />
+      icon: <Shield className="h-8 w-8 text-[#0d2233]" />
     },
     {
       step: "3",
       title: "Aviso",
       description: "Se se confirma, é feito o aviso imediato à Polícia.",
-      icon: <Phone className="h-8 w-8 text-blue-600" />
+      icon: <Phone className="h-8 w-8 text-[#0d2233]" />
     },
     {
       step: "4",
       title: "Atuação",
       description: "Um Vigilante de Segurança é enviado até ao local.",
-      icon: <Users className="h-8 w-8 text-blue-600" />
+      icon: <Users className="h-8 w-8 text-[#0d2233]" />
     }
   ];
 
@@ -49,56 +49,56 @@ const AlarmesPage: React.FC = () => {
       number: "20",
       title: "Resposta em menos de 20 segundos",
       description: "Somos líderes na resposta a eventos de alarme. Temos uma equipa de profissionais atentos e garantimos uma resposta em menos de 20 segundos.",
-      icon: <Clock className="h-12 w-12 text-blue-600" />
+      icon: <Clock className="h-12 w-12 text-[#0d2233]" />
     },
     {
       number: "21",
       title: "Aviso imediato à Polícia",
       description: "O nosso sistema está equipado com câmaras de videovigilância de última geração. Em caso de evento real de alarme a nossa Central 24H avisa de imediato a polícia, bombeiros ou emergência médica.",
-      icon: <Phone className="h-12 w-12 text-blue-600" />
+      icon: <Phone className="h-12 w-12 text-[#0d2233]" />
     },
     {
       number: "22",
       title: "A proteção anti-intrusão mais eficaz",
       description: "Em caso de intrusão confirmada, notificamos a polícia e ativamos o ZeroVision, que impede a visão do intruso para o expulsarem segundos.",
-      icon: <Shield className="h-12 w-12 text-blue-600" />
+      icon: <Shield className="h-12 w-12 text-[#0d2233]" />
     },
     {
       number: "23",
       title: "Equipa de vigilantes própria",
       description: "Em caso de evento real, ativamos uma dupla resposta. Enviamos um vigilante próprio e avisamos a polícia. Temos uma equipa de profissionais sempre pronta a atuar em caso de evento de alarme.",
-      icon: <Users className="h-12 w-12 text-blue-600" />
+      icon: <Users className="h-12 w-12 text-[#0d2233]" />
     },
     {
       number: "24",
       title: "A proteção da sua casa começa na Porta",
       description: "Com a nossa fechadura inteligente com cilindro antirroubo de máxima segurança, protegemos a sua casa de forma eficiente. Sincronizada com o seu alarme, permite abrir e fechar a porta sem chaves.",
-      icon: <Lock className="h-12 w-12 text-blue-600" />
+      icon: <Lock className="h-12 w-12 text-[#0d2233]" />
     },
     {
       number: "25",
       title: "A inovação premiada pelos consumidores",
       description: "Reforce a proteção em áreas exteriores e interiores e vigie o que ocorre a partir de qualquer lugar graças às câmaras de segurança Arlo.",
-      icon: <Camera className="h-12 w-12 text-blue-600" />
+      icon: <Camera className="h-12 w-12 text-[#0d2233]" />
     },
     {
       number: "26",
       title: "Controlo remoto do alarme",
       description: "Os alarmes podem ser controlados de forma remota e a partir do smartphone. Com a App, uma aplicação de fácil navegação, que lhe permite ter o controlo absoluto do seu sistema de alarme, esteja onde estiver.",
-      icon: <Smartphone className="h-12 w-12 text-blue-600" />
+      icon: <Smartphone className="h-12 w-12 text-[#0d2233]" />
     },
     {
       number: "28",
       title: "Fechadura Inteligente",
       description: "A nossa fechadura inteligente alerta em caso de manipulação para atuarmos de imediato. Além disso, criamos um escudo protetor à volta da sua casa com detetores de acesso Shock Sensor nas portas e janelas e, ainda, câmaras de segurança.",
-      icon: <Key className="h-12 w-12 text-blue-600" />
+      icon: <Key className="h-12 w-12 text-[#0d2233]" />
     }
   ];
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-600 to-blue-500 text-white py-20 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-[#0d2233] to-blue-500 text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <video
           autoPlay
@@ -176,7 +176,7 @@ const AlarmesPage: React.FC = () => {
                   <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     {step.icon}
                   </div>
-                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                  <div className="bg-[#0d2233] text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
                     {step.step}
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
@@ -239,7 +239,7 @@ const AlarmesPage: React.FC = () => {
                   <Phone className="h-6 w-6 mr-2" />
                   <span className="text-lg">915 482 365 (chamada rede fixa nacional)</span>
                 </div>
-                <button className="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 font-semibold">
+                <button className="bg-white text-[#0d2233] px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 font-semibold">
                   Ver ofertas
                 </button>
               </div>
@@ -299,7 +299,7 @@ const AlarmesPage: React.FC = () => {
                   </p>
                   <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                    className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
                   >
                     Enviar Pedido
                   </button>

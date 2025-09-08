@@ -79,17 +79,17 @@ const CreditoPage: React.FC = () => {
 
   const services = [
     {
-      icon: <CreditCard className="h-12 w-12 text-blue-600" />,
+      icon: <CreditCard className="h-12 w-12 text-[#0d2233]" />,
       title: "Intermediação de Crédito",
       description: "Ajudamos a encontrar as melhores condições de financiamento, trabalhando com as principais instituições financeiras para garantir acesso a taxas competitivas e soluções personalizadas."
     },
     {
-      icon: <Calculator className="h-12 w-12 text-blue-600" />,
+      icon: <Calculator className="h-12 w-12 text-[#0d2233]" />,
       title: "Planeamento Personalizado",
       description: "Oferecemos simulações claras e rápidas do crédito habitação, permitindo-lhe perceber o impacto das prestações no seu orçamento para tomar decisões informadas."
     },
     {
-      icon: <FileText className="h-12 w-12 text-blue-600" />,
+      icon: <FileText className="h-12 w-12 text-[#0d2233]" />,
       title: "Burocracia Simplificada",
       description: "A nossa equipa acompanha-o em todo o processo, desde a análise inicial até à aprovação do empréstimo, negociando diretamente com os bancos para poupar-lhe tempo e esforço."
     }
@@ -248,7 +248,7 @@ const CreditoPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
+      <section className="bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -385,7 +385,7 @@ const CreditoPage: React.FC = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20 bg-blue-600 text-white">
+      <section className="py-20 bg-[#0d2233] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -448,7 +448,7 @@ const CreditoPage: React.FC = () => {
 
           <div className="text-center mt-16">
             <h3 className="text-2xl font-bold mb-4">Tem alguma questão que não foi contemplada?</h3>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+            <button className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors">
               Contactar Suporte
             </button>
           </div>

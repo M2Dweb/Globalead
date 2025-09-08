@@ -11,25 +11,25 @@ const CompanyStats: React.FC = () => {
 
   const stats = [
     {
-      icon: <Users className="h-8 w-8 text-blue-600" />,
+      icon: <Users className="h-8 w-8 text-[#0d2233]" />,
       number: 2500,
       label: "Clientes Satisfeitos",
       suffix: "+"
     },
     {
-      icon: <Home className="h-8 w-8 text-blue-600" />,
+      icon: <Home className="h-8 w-8 text-[#0d2233]" />,
       number: 850,
       label: "Imóveis Vendidos",
       suffix: "+"
     },
     {
-      icon: <Award className="h-8 w-8 text-blue-600" />,
+      icon: <Award className="h-8 w-8 text-[#0d2233]" />,
       number: 15,
       label: "Anos de Experiência",
       suffix: ""
     },
     {
-      icon: <TrendingUp className="h-8 w-8 text-blue-600" />,
+      icon: <TrendingUp className="h-8 w-8 text-[#0d2233]" />,
       number: 98,
       label: "Taxa de Satisfação",
       suffix: "%"

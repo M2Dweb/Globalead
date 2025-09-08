@@ -74,12 +74,12 @@ const VideoTestimonials: React.FC = () => {
                   className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-60 transition-all duration-300 group"
                 >
                   <div className="bg-white rounded-full p-4 group-hover:scale-110 transition-transform duration-300">
-                    <Play className="h-8 w-8 text-blue-600 ml-1" />
+                    <Play className="h-8 w-8 text-[#0d2233] ml-1" />
                   </div>
                 </button>
                 
                 {/* Service Badge */}
-                <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                <div className="absolute top-4 left-4 bg-[#0d2233] text-white px-3 py-1 rounded-full text-sm font-medium">
                   {testimonial.service}
                 </div>
               </div>
@@ -96,7 +96,7 @@ const VideoTestimonials: React.FC = () => {
                 </div>
 
                 <div className="relative mb-4">
-                  <Quote className="h-6 w-6 text-blue-600 opacity-50 absolute -top-2 -left-1" />
+                  <Quote className="h-6 w-6 text-[#0d2233] opacity-50 absolute -top-2 -left-1" />
                   <p className="text-gray-700 italic pl-6">
                     {testimonial.quote}
                   </p>
@@ -105,7 +105,7 @@ const VideoTestimonials: React.FC = () => {
                 <div className="border-t pt-4">
                   <div className="font-semibold text-gray-900">{testimonial.name}</div>
                   <div className="text-sm text-gray-600">{testimonial.role}</div>
-                  <div className="text-sm text-blue-600">{testimonial.location}</div>
+                  <div className="text-sm text-[#0d2233]">{testimonial.location}</div>
                 </div>
               </div>
             </motion.div>
@@ -145,7 +145,7 @@ const VideoTestimonials: React.FC = () => {
           <p className="text-gray-600 mb-6">
             Quer partilhar a sua experiência connosco?
           </p>
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+          <button className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors font-semibold">
             Deixar Testemunho
           </button>
         </div>

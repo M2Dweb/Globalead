@@ -51,8 +51,8 @@ const Header: React.FC = () => {
                 to={item.path}
                 className={`text-sm font-medium transition-colors duration-200 ${
                   location.pathname === item.path
-                    ? `${shouldBeTransparent ? 'text-white border-b-2 border-white' : 'text-blue-600 border-b-2 border-blue-600'}`
-                    : `${shouldBeTransparent ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600'}`
+                    ? `${shouldBeTransparent ? 'text-white border-b-2 border-white' : 'text-[#0d2233] border-b-2 border-[#0d2233]'}`
+                    : `${shouldBeTransparent ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-[#0d2233]'}`
                 }`}
               >
                 {item.name}
@@ -64,7 +64,7 @@ const Header: React.FC = () => {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={shouldBeTransparent ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600'}
+              className={shouldBeTransparent ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-[#0d2233]'}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -82,8 +82,8 @@ const Header: React.FC = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ${
                     location.pathname === item.path
-                      ? `${shouldBeTransparent ? 'text-white bg-white bg-opacity-20' : 'text-blue-600 bg-blue-50'}`
-                      : `${shouldBeTransparent ? 'text-white hover:text-blue-200 hover:bg-white hover:bg-opacity-10' : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'}`
+                      ? `${shouldBeTransparent ? 'text-white bg-white bg-opacity-20' : 'text-[#0d2233] bg-blue-50'}`
+                      : `${shouldBeTransparent ? 'text-white hover:text-blue-200 hover:bg-white hover:bg-opacity-10' : 'text-gray-700 hover:text-[#0d2233] hover:bg-gray-100'}`
                   }`}
                 >
                   {item.name}

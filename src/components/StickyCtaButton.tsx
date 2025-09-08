@@ -34,7 +34,7 @@ const StickyCtaButton: React.FC = () => {
             {/* Main CTA Button */}
             <motion.button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-colors duration-300"
+              className="bg-[#0d2233] hover:bg-[#79b2e9] text-white p-4 rounded-full shadow-lg transition-colors duration-300"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -58,7 +58,7 @@ const StickyCtaButton: React.FC = () => {
                       }}
                       className="flex items-center w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors"
                     >
-                      <Phone className="h-5 w-5 text-blue-600 mr-3" />
+                      <Phone className="h-5 w-5 text-[#0d2233] mr-3" />
                       <div>
                         <div className="font-medium text-gray-900">Ligar Agora</div>
                         <div className="text-sm text-gray-500">915 482 365</div>
@@ -84,7 +84,7 @@ const StickyCtaButton: React.FC = () => {
                       onClick={() => setIsExpanded(false)}
                       className="flex items-center w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors"
                     >
-                      <div className="h-5 w-5 bg-blue-600 rounded mr-3"></div>
+                      <div className="h-5 w-5 bg-[#0d2233] rounded mr-3"></div>
                       <div>
                         <div className="font-medium text-gray-900">Contactos</div>
                         <div className="text-sm text-gray-500">Formulário</div>

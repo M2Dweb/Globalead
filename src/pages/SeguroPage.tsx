@@ -12,42 +12,42 @@ const SeguroPage: React.FC = () => {
 
   const insuranceTypes = [
     {
-      icon: <Car className="h-12 w-12 text-blue-600" />,
+      icon: <Car className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguro Automóvel",
       description: "A Globalead oferece um seguro automóvel que proporciona proteção abrangente, incluindo responsabilidade civil obrigatória, danos próprios, assistência em viagem e proteção contra roubo ou acidentes."
     },
     {
-      icon: <Heart className="h-12 w-12 text-blue-600" />,
+      icon: <Heart className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguro de Saúde",
       description: "Cobertura para despesas médicas, incluindo consultas, exames, tratamentos, hospitalizações e acesso a redes de saúde privadas. A Globalead pode oferecer pacotes flexíveis, adaptados às necessidades familiares ou empresariais."
     },
     {
-      icon: <Shield className="h-12 w-12 text-blue-600" />,
+      icon: <Shield className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguro de Vida",
       description: "Proteção financeira para os beneficiários em caso de falecimento ou invalidez do segurado, garantindo segurança para famílias e herdeiros. A Globalead pode incluir coberturas complementares, como doenças graves."
     },
     {
-      icon: <Home className="h-12 w-12 text-blue-600" />,
+      icon: <Home className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguro Multirriscos Habitação",
       description: "Cobre danos no imóvel e bens pessoais devido a eventos como incêndios, inundações, roubos e fenómenos naturais. A Globalead pode destacar soluções adaptadas a habitações primárias e secundárias."
     },
     {
-      icon: <Users className="h-12 w-12 text-blue-600" />,
+      icon: <Users className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguro de Acidentes Pessoais",
       description: "Proteção em caso de acidentes que resultem em despesas médicas, invalidez ou morte. A Globalead pode adaptar as coberturas para indivíduos, famílias e grupos profissionais."
     },
     {
-      icon: <Briefcase className="h-12 w-12 text-blue-600" />,
+      icon: <Briefcase className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguro de Acidentes de Trabalho",
       description: "Obrigatório por lei, cobre custos associados a acidentes laborais de colaboradores. A Globalead pode oferecer soluções personalizadas para pequenas, médias e grandes empresas."
     },
     {
-      icon: <Scale className="h-12 w-12 text-blue-600" />,
+      icon: <Scale className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguro de Proteção Jurídica",
       description: "Cobre custos com ações judiciais, consultas legais e processos relacionados ao segurado. A Globalead pode oferecer serviços jurídicos acessíveis para clientes particulares e empresariais."
     },
     {
-      icon: <Building className="h-12 w-12 text-blue-600" />,
+      icon: <Building className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguro Multirriscos Comercial",
       description: "Protege estabelecimentos comerciais contra danos no imóvel, equipamentos e interrupções das operações. A Globalead pode criar planos específicos para negócios de diferentes setores."
     }
@@ -57,17 +57,17 @@ const SeguroPage: React.FC = () => {
 
   const benefits = [
     {
-      icon: <Shield className="h-12 w-12 text-blue-600" />,
+      icon: <Shield className="h-12 w-12 text-[#0d2233]" />,
       title: "Poupança imediata",
       description: "Beneficie das vantagens que temos ao seu dispor!"
     },
     {
-      icon: <Users className="h-12 w-12 text-blue-600" />,
+      icon: <Users className="h-12 w-12 text-[#0d2233]" />,
       title: "Aconselhamento total",
       description: "Acompanhamento constante do cliente com experiência e confiança."
     },
     {
-      icon: <Shield className="h-12 w-12 text-blue-600" />,
+      icon: <Shield className="h-12 w-12 text-[#0d2233]" />,
       title: "Rapidez na simulação",
       description: "Ampla oferta de soluções à medida das empresas, e dos particulares."
     }
@@ -122,7 +122,7 @@ const SeguroPage: React.FC = () => {
     <div className="min-h-screen bg-white">
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-600 to-blue-500 text-white py-20 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-[#0d2233] to-blue-500 text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <video
           autoPlay
@@ -251,7 +251,7 @@ const SeguroPage: React.FC = () => {
                 <input type="text" placeholder="Assunto" className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <textarea placeholder="Mensagem" rows={4} className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 <div className="md:col-span-2">
-                  <button type="submit" className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensagem</button>
+                  <button type="submit" className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300">Enviar Mensagem</button>
                 </div>
               </form>
             </div>

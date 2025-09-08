@@ -11,41 +11,41 @@ const CertificacaoPage: React.FC = () => {
       number: "1",
       title: "Agendamento",
       description: "Após o seu contacto, ligamos em menos de 24h para agendar a visita do técnico.",
-      icon: <Clock className="h-8 w-8 text-blue-600" />
+      icon: <Clock className="h-8 w-8 text-[#0d2233]" />
     },
     {
       number: "2",
       title: "Documentação",
       description: "Antes da visita deverão ser reunidos os documentos necessários.",
-      icon: <FileText className="h-8 w-8 text-blue-600" />
+      icon: <FileText className="h-8 w-8 text-[#0d2233]" />
     },
     {
       number: "3",
       title: "Visita Técnica",
       description: "Um técnico especializado, irá recolher toda a informação necessária.",
-      icon: <CheckCircle className="h-8 w-8 text-blue-600" />
+      icon: <CheckCircle className="h-8 w-8 text-[#0d2233]" />
     },
     {
       number: "4",
       title: "Emissão do Certificado",
       description: "Entregamos o teu certificado entre 48h a 72h após a visita.",
-      icon: <FileText className="h-8 w-8 text-blue-600" />
+      icon: <FileText className="h-8 w-8 text-[#0d2233]" />
     }
   ];
 
   const certificateTypes = [
     {
-      icon: <Home className="h-12 w-12 text-blue-600" />,
+      icon: <Home className="h-12 w-12 text-[#0d2233]" />,
       title: "Apartamentos",
       description: "Avaliamos o consumo de energia de apartamentos residenciais, prestamos informações sobre a eficiência energética e identificamos áreas para melhorias."
     },
     {
-      icon: <Building className="h-12 w-12 text-blue-600" />,
+      icon: <Building className="h-12 w-12 text-[#0d2233]" />,
       title: "Moradias",
       description: "Realizamos avaliações detalhadas do consumo de energia em moradias unifamiliares, ajudamos os proprietários a compreender e melhorar a eficiência energética das suas casas."
     },
     {
-      icon: <Store className="h-12 w-12 text-blue-600" />,
+      icon: <Store className="h-12 w-12 text-[#0d2233]" />,
       title: "Comércio e Serviços",
       description: "Para estabelecimentos comerciais e de serviços, destacamos o desempenho energético do edifício e sugerimos medidas para reduzir os custos de energia e melhorar a sustentabilidade."
     }
@@ -105,7 +105,7 @@ const CertificacaoPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
+      <section className="bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -147,7 +147,7 @@ const CertificacaoPage: React.FC = () => {
                 <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   {step.icon}
                 </div>
-                <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                <div className="bg-[#0d2233] text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
                   {step.number}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
@@ -190,7 +190,7 @@ const CertificacaoPage: React.FC = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20 bg-blue-600 text-white">
+      <section className="py-20 bg-[#0d2233] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">

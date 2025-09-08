@@ -65,7 +65,7 @@ const CreditCalculator: React.FC = () => {
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
-        <Calculator className="h-8 w-8 text-blue-600 mr-3" />
+        <Calculator className="h-8 w-8 text-[#0d2233] mr-3" />
         <h3 className="text-2xl font-bold text-gray-900">
           Calculadora de Crédito Habitação
         </h3>
@@ -90,7 +90,7 @@ const CreditCalculator: React.FC = () => {
             />
             <div className="flex justify-between text-sm text-gray-500 mt-1">
               <span>50.000€</span>
-              <span className="font-medium text-blue-600">{formatCurrency(values.propertyValue)}</span>
+              <span className="font-medium text-[#0d2233]">{formatCurrency(values.propertyValue)}</span>
               <span>1.000.000€</span>
             </div>
           </div>
@@ -111,7 +111,7 @@ const CreditCalculator: React.FC = () => {
             />
             <div className="flex justify-between text-sm text-gray-500 mt-1">
               <span>0€</span>
-              <span className="font-medium text-blue-600">{formatCurrency(values.downPayment)}</span>
+              <span className="font-medium text-[#0d2233]">{formatCurrency(values.downPayment)}</span>
               <span>{formatCurrency(values.propertyValue * 0.5)}</span>
             </div>
           </div>
@@ -132,7 +132,7 @@ const CreditCalculator: React.FC = () => {
             />
             <div className="flex justify-between text-sm text-gray-500 mt-1">
               <span>2%</span>
-              <span className="font-medium text-blue-600">{values.interestRate}%</span>
+              <span className="font-medium text-[#0d2233]">{values.interestRate}%</span>
               <span>5%</span>
             </div>
           </div>
@@ -153,14 +153,14 @@ const CreditCalculator: React.FC = () => {
             />
             <div className="flex justify-between text-sm text-gray-500 mt-1">
               <span>5 anos</span>
-              <span className="font-medium text-blue-600">{values.loanTerm} anos</span>
+              <span className="font-medium text-[#0d2233]">{values.loanTerm} anos</span>
               <span>40 anos</span>
             </div>
           </div>
 
           {/* Botão Solicitar Simulação Detalhada */}
           <div className="mt-4">
-            <button className="w-full mt-4 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+            <button className="w-full mt-4 bg-[#0d2233] text-white py-3 px-6 rounded-lg hover:bg-[#79b2e9] transition-colors font-semibold">
               Solicitar Simulação Detalhada
             </button>
           </div>
@@ -171,10 +171,10 @@ const CreditCalculator: React.FC = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
               <div className="flex items-center mb-2">
-                <Home className="h-5 w-5 text-blue-600 mr-2" />
+                <Home className="h-5 w-5 text-[#0d2233] mr-2" />
                 <span className="text-sm font-medium text-gray-700">Montante do Empréstimo</span>
               </div>
-              <div className="text-xl font-bold text-blue-600">
+              <div className="text-xl font-bold text-[#0d2233]">
                 {formatCurrency(results.loanAmount)}
               </div>
             </div>

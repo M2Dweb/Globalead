@@ -118,7 +118,7 @@ const CaseStudies: React.FC = () => {
                   <div className="text-2xl font-bold text-green-600">
                     {caseStudy.value}
                   </div>
-                  <button className="text-blue-600 hover:text-blue-700 transition-colors">
+                  <button className="text-[#0d2233] hover:text-[#79b2e9] transition-colors">
                     <ArrowRight className="h-5 w-5" />
                   </button>
                 </div>
@@ -178,21 +178,21 @@ const CaseStudies: React.FC = () => {
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                           <div className="flex items-center">
-                            <Users className="h-5 w-5 text-blue-600 mr-2" />
+                            <Users className="h-5 w-5 text-[#0d2233] mr-2" />
                             <div>
                               <div className="font-medium">Cliente</div>
                               <div className="text-gray-600">{caseStudy.client}</div>
                             </div>
                           </div>
                           <div className="flex items-center">
-                            <MapPin className="h-5 w-5 text-blue-600 mr-2" />
+                            <MapPin className="h-5 w-5 text-[#0d2233] mr-2" />
                             <div>
                               <div className="font-medium">Localização</div>
                               <div className="text-gray-600">{caseStudy.location}</div>
                             </div>
                           </div>
                           <div className="flex items-center">
-                            <Clock className="h-5 w-5 text-blue-600 mr-2" />
+                            <Clock className="h-5 w-5 text-[#0d2233] mr-2" />
                             <div>
                               <div className="font-medium">Duração</div>
                               <div className="text-gray-600">{caseStudy.duration}</div>
@@ -226,7 +226,7 @@ const CaseStudies: React.FC = () => {
                         <div className="bg-blue-50 p-6 rounded-lg">
                           <h3 className="text-lg font-bold text-gray-900 mb-3">Testemunho do Cliente</h3>
                           <p className="text-gray-700 italic">"{caseStudy.testimonial}"</p>
-                          <p className="text-blue-600 font-medium mt-2">- {caseStudy.client}</p>
+                          <p className="text-[#0d2233] font-medium mt-2">- {caseStudy.client}</p>
                         </div>
                       </div>
                     </div>

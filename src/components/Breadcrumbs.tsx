@@ -21,7 +21,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, isVisible }) => {
           <li>
             <Link
               to="/"
-              className="text-gray-500 hover:text-blue-600 transition-colors flex items-center"
+              className="text-gray-500 hover:text-[#0d2233] transition-colors flex items-center"
             >
               <Home className="h-4 w-4" />
             </Link>
@@ -34,7 +34,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, isVisible }) => {
               ) : (
                 <Link
                   to={item.href || '/'}
-                  className="text-gray-500 hover:text-blue-600 transition-colors"
+                  className="text-gray-500 hover:text-[#0d2233] transition-colors"
                 >
                   {item.label}
                 </Link>

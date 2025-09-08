@@ -87,7 +87,7 @@ const BlogPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20 flex items-center overflow-hidden">
+        <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-40"></div>
           <video
             autoPlay
@@ -117,7 +117,7 @@ const BlogPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <video
           autoPlay
@@ -169,7 +169,7 @@ const BlogPage: React.FC = () => {
                       onClick={() => setSelectedCategory(category.id)}
                       className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                         selectedCategory === category.id
-                          ? 'bg-blue-600 text-white'
+                          ? 'bg-[#0d2233] text-white'
                           : 'bg-white text-gray-700 hover:bg-gray-100'
                       }`}
                     >
@@ -207,7 +207,7 @@ const BlogPage: React.FC = () => {
                     <span>Por {post.author}</span>
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
                     {post.title}
                   </h3>
                   
@@ -215,7 +215,7 @@ const BlogPage: React.FC = () => {
                     {post.excerpt}
                   </p>
                   
-                  <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center">
+                  <button className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center">
                     Ler mais
                     <ArrowRight className="ml-1 h-4 w-4" />
                   </button>

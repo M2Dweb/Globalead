@@ -94,37 +94,37 @@ const ImoveisPage: React.FC = () => {
 
   const services = [
     {
-      icon: <Hammer className="h-12 w-12 text-blue-600" />,
+      icon: <Hammer className="h-12 w-12 text-[#0d2233]" />,
       title: "Obras e Remodelações",
       description: "Executamos obras e remodelações com profissionalismo, desde o planeamento até à entrega final. De pequenas melhorias a renovações completas, contamos com mão de obra especializada e experiente, adaptada às necessidades da sua casa ou espaço comercial.",
       image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      icon: <Palette className="h-12 w-12 text-blue-600" />,
+      icon: <Palette className="h-12 w-12 text-[#0d2233]" />,
       title: "Design e Decoração",
       description: "Transformamos espaços com soluções personalizadas que aliam funcionalidade, elegância e design de excelência. Acompanhamos todas as etapas do planeamento à escolha do mobiliário e da decoração para garantir ambientes que refletem o seu estilo e respondem às suas necessidades.",
       image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      icon: <Building className="h-12 w-12 text-blue-600" />,
+      icon: <Building className="h-12 w-12 text-[#0d2233]" />,
       title: "Promotora Imobiliária",
       description: "Desenvolvemos empreendimentos inovadores que aliam design, funcionalidade e elevado potencial de valorização. Cada projeto é cuidadosamente planeado para oferecer uma experiência imobiliária distinta e rentável.",
       image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      icon: <Users className="h-12 w-12 text-blue-600" />,
+      icon: <Users className="h-12 w-12 text-[#0d2233]" />,
       title: "Relocation",
       description: "Oferecemos um acompanhamento completo para garantir uma transição tranquila para Portugal. As nossas parcerias incluem a procura de imóvel, gestão documental e apoio na integração à comunidade local.",
       image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      icon: <Compass className="h-12 w-12 text-blue-600" />,
+      icon: <Compass className="h-12 w-12 text-[#0d2233]" />,
       title: "Arquitetura",
       description: "Criamos espaços intemporais onde luz, matéria e proporção se unem com simplicidade e autenticidade. Acreditamos que o verdadeiro luxo está na clareza das ideias e na honestidade dos materiais. Cada projeto reflete a identidade de quem o habita lugares serenos que resistem ao tempo e transcendem modas.",
       image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      icon: <Scale className="h-12 w-12 text-blue-600" />,
+      icon: <Scale className="h-12 w-12 text-[#0d2233]" />,
       title: "Apoio Jurídico",
       description: "Tratamos de todo o processo desde a autenticação de documentos e escrituras até à representação fiscal e pedidos de residência. Garantimos transparência e acompanhamento completo na compra, venda, arrendamento ou investimento imobiliário.",
       image: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -151,7 +151,7 @@ const ImoveisPage: React.FC = () => {
       link: "/certificacao"
     },
     {
-      icon: <Shield className="h-12 w-12 text-blue-600" />,
+      icon: <Shield className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguros",
       description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme condições da apólice.",
       link: "/seguros"
@@ -172,7 +172,7 @@ const ImoveisPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <video
           autoPlay
@@ -223,7 +223,7 @@ const ImoveisPage: React.FC = () => {
                     className="w-full h-48 object-cover"
                   />
                   <div className="p-6">
-                    <div className="text-2xl font-bold text-blue-600 mb-2">
+                    <div className="text-2xl font-bold text-[#0d2233] mb-2">
                       {formatPrice(property.price)}
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -251,7 +251,7 @@ const ImoveisPage: React.FC = () => {
                       {property.description}
                     </p>
                     <button
-                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                      className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors"
                       onClick={() => navigate(`/imoveis/${property.id}`)}// ✅ Ajustado para rota correta
                     >
                       Ver Detalhes
@@ -266,7 +266,7 @@ const ImoveisPage: React.FC = () => {
           <div className="text-center mt-12">
             <button
               onClick={() => navigate('/imoveis/lista')}   
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
+              className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center"
             >
               Ver Todos os Imóveis
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -299,7 +299,7 @@ const ImoveisPage: React.FC = () => {
                 
                   <button
                     onClick={() => navigate(service.link)} 
-                    className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center"
+                    className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center"
                   >
                     Saber mais
                     <ArrowRight className="ml-1 h-4 w-4" />
@@ -342,7 +342,7 @@ const ImoveisPage: React.FC = () => {
                   />
                   <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-60 transition-all duration-300 group">
                     <div className="bg-white rounded-full p-6 group-hover:scale-110 transition-transform duration-300">
-                      <Play className="h-12 w-12 text-blue-600 ml-1" />
+                      <Play className="h-12 w-12 text-[#0d2233] ml-1" />
                     </div>
                   </button>
                 </>
@@ -372,7 +372,7 @@ const ImoveisPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {sellingSteps.map((step, index) => (
               <div key={index} className="flex items-start">
-                <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
+                <div className="bg-[#0d2233] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
                   {index + 1}
                 </div>
                 <p className="text-gray-700 leading-relaxed">
@@ -411,7 +411,7 @@ const ImoveisPage: React.FC = () => {
                   <p className="text-gray-600 mb-6">
                     {service.description}
                   </p>
-                  <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center">
+                  <button className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center">
                     Saber mais
                     <ArrowRight className="ml-1 h-4 w-4" />
                   </button>
@@ -535,7 +535,7 @@ const ImoveisPage: React.FC = () => {
                 </p>
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                  className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
                 >
                   Enviar Pedido
                 </button>

@@ -89,7 +89,7 @@ const PropertyListPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
+      <section className="bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -192,7 +192,7 @@ const PropertyListPage: React.FC = () => {
                     alt={property.title}
                     className="w-full h-48 object-cover"
                   />
-                  <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-4 left-4 bg-[#0d2233] text-white px-3 py-1 rounded-full text-sm font-medium">
                     {property.type === 'apartamento' ? 'Apartamento' : 'Moradia'}
                   </div>
                   <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
@@ -201,7 +201,7 @@ const PropertyListPage: React.FC = () => {
                 </div>
                 
                 <div className="p-6">
-                  <div className="text-2xl font-bold text-blue-600 mb-2">
+                  <div className="text-2xl font-bold text-[#0d2233] mb-2">
                     {formatPrice(property.price)}
                   </div>
                   
@@ -233,7 +233,7 @@ const PropertyListPage: React.FC = () => {
                     {property.description}
                   </p>
                   
-                  <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center">
+                  <div className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center justify-center">
                     Ver Detalhes
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </div>
@@ -259,7 +259,7 @@ const PropertyListPage: React.FC = () => {
               <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">
                 <ChevronLeft className="h-5 w-5" />
               </button>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg">1</button>
+              <button className="px-4 py-2 bg-[#0d2233] text-white rounded-lg">1</button>
               <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">2</button>
               <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">3</button>
               <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">

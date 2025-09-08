@@ -90,7 +90,7 @@ const SobrePage: React.FC = () => {
 return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <video
           autoPlay
@@ -171,7 +171,7 @@ return (
                 key={index}
                 className="bg-white p-8 rounded-xl shadow-lg text-center"
               >
-                <div className="bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                <div className="bg-[#0d2233] text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
                   {reason.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
@@ -200,7 +200,7 @@ return (
                 key={index}
                 className="bg-gray-50 p-6 rounded-xl flex items-start"
               >
-                <div className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
+                <div className="bg-[#0d2233] text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
                   {objective.number}
                 </div>
                 <p className="text-gray-700 leading-relaxed">
@@ -323,7 +323,7 @@ return (
                   </p>
                   <button
                       type="submit"
-                      className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                      className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
                   >
                       Enviar Pedido
                   </button>

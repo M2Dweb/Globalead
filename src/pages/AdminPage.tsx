@@ -508,7 +508,7 @@ Conteúdo: ${post.content}
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
           <div className="text-center mb-8">
-            <Lock className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <Lock className="h-12 w-12 text-[#0d2233] mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-gray-900">Painel de Administração</h1>
             <p className="text-gray-600">Introduza a senha para aceder</p>
           </div>
@@ -536,7 +536,7 @@ Conteúdo: ${post.content}
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+              className="w-full bg-[#0d2233] text-white py-3 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors font-semibold"
             >
               Entrar
             </button>
@@ -583,7 +583,7 @@ Conteúdo: ${post.content}
               onClick={() => setActiveTab('properties')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'properties'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-blue-500 text-[#0d2233]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -593,7 +593,7 @@ Conteúdo: ${post.content}
               onClick={() => setActiveTab('blog')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'blog'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-blue-500 text-[#0d2233]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -603,7 +603,7 @@ Conteúdo: ${post.content}
               onClick={() => setActiveTab('settings')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'settings'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-blue-500 text-[#0d2233]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -622,7 +622,7 @@ Conteúdo: ${post.content}
               <h2 className="text-2xl font-bold text-gray-900">Gestão de Imóveis</h2>
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
+                className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Adicionar Imóvel
@@ -843,7 +843,7 @@ Conteúdo: ${post.content}
                   </button>
                   <button
                     onClick={handleSaveProperty}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
+                    className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
                   >
                     <Save className="mr-2 h-4 w-4" />
                     Guardar
@@ -897,7 +897,7 @@ Conteúdo: ${post.content}
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
                             <button
-                              className="text-blue-600 hover:text-blue-900"
+                              className="text-[#0d2233] hover:text-blue-900"
                               onClick={() => handleViewProperty(property)}
                             >
                               <Eye className="h-4 w-4" />
@@ -932,7 +932,7 @@ Conteúdo: ${post.content}
               <h2 className="text-2xl font-bold text-gray-900">Gestão de Blog & Notícias</h2>
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
+                className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Adicionar Artigo
@@ -1036,7 +1036,7 @@ Conteúdo: ${post.content}
                   </button>
                   <button
                     onClick={editingId ? handleUpdateBlogPost : handleAddBlogPost}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
+                    className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
                   >
                     <Save className="mr-2 h-4 w-4" />
                     Guardar
@@ -1083,7 +1083,7 @@ Conteúdo: ${post.content}
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
                             <button
-                              className="text-blue-600 hover:text-blue-900"
+                              className="text-[#0d2233] hover:text-blue-900"
                               onClick={() => handleViewBlogPost(post)}
                             >
                               <Eye className="h-4 w-4" />
@@ -1158,7 +1158,7 @@ Conteúdo: ${post.content}
                 <div className="flex justify-end">
                   <button
                     onClick={handleUpdateSettings}
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
+                    className="bg-[#0d2233] text-white px-6 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
                   >
                     <Save className="mr-2 h-4 w-4" />
                     Guardar Configurações

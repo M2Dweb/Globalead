@@ -131,7 +131,7 @@ const PartnersCarousel: React.FC = () => {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
+                  index === currentIndex ? 'bg-[#0d2233]' : 'bg-gray-300'
                 }`}
               />
             ))}
@@ -142,7 +142,7 @@ const PartnersCarousel: React.FC = () => {
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-blue-600">50+</span>
+              <span className="text-2xl font-bold text-[#0d2233]">50+</span>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Parceiros Ativos</h3>
             <p className="text-gray-600">Rede alargada de parceiros em todos os setores</p>
@@ -150,7 +150,7 @@ const PartnersCarousel: React.FC = () => {
           
           <div className="text-center">
             <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-blue-600">100%</span>
+              <span className="text-2xl font-bold text-[#0d2233]">100%</span>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Cobertura Nacional</h3>
             <p className="text-gray-600">Serviços disponíveis em todo o território nacional</p>
@@ -158,7 +158,7 @@ const PartnersCarousel: React.FC = () => {
           
           <div className="text-center">
             <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-blue-600">24/7</span>
+              <span className="text-2xl font-bold text-[#0d2233]">24/7</span>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Suporte Contínuo</h3>
             <p className="text-gray-600">Apoio disponível 24 horas por dia, 7 dias por semana</p>

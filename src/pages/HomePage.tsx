@@ -144,7 +144,7 @@ const HomePage: React.FC = () => {
       link: "/energia"
     },
     {
-      icon: <Shield className="h-12 w-12 text-blue-600" />,
+      icon: <Shield className="h-12 w-12 text-[#0d2233]" />,
       title: "Seguros",
       description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme definido nas condições da apólice",
       link: "/seguros"
@@ -262,7 +262,7 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-[#0d2233] to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <video
           autoPlay
@@ -308,12 +308,14 @@ const HomePage: React.FC = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <div className="text-2xl font-bold text-blue-600 mb-2">
+                  <div className="text-2xl font-bold text-[#79b2e9] mb-2">
                     {formatPrice(property.price)}
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {property.title}
                   </h3>
+                  
+                  
                   <div className="flex items-center space-x-4 text-gray-600 mb-4">
                     <div className="flex items-center">
                       <Bed className="h-4 w-4 mr-1" />
@@ -327,15 +329,16 @@ const HomePage: React.FC = () => {
                       <Square className="h-4 w-4 mr-1" />
                       <span>{property.area}m²</span>
                     </div>
-                  </div>
-                  <div className="flex items-center text-gray-600 mb-4">
+                    <div className="flex items-center ">
                     <MapPin className="h-4 w-4 mr-1" />
                     <span>{property.location}</span>
                   </div>
+                  </div>
+                  
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                     {property.description}
                   </p>
-                  <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center">
+                  <div className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors text-center">
                     Ver Detalhes
                   </div>
                 </div>
@@ -346,7 +349,7 @@ const HomePage: React.FC = () => {
           <div className="text-center mt-12">
             <Link
               to="/imoveis/lista"
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
+              className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center"
             >
               Ver Todos os Imóveis
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -384,7 +387,7 @@ const HomePage: React.FC = () => {
                 </p>
                 <Link
                   to={service.link}
-                  className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center"
+                  className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center"
                 >
                   Saber mais
                   <ArrowRight className="ml-1 h-4 w-4" />
@@ -441,7 +444,7 @@ const HomePage: React.FC = () => {
                     onClick={() => setCurrentReview(index * reviewsPerPage)}
                     className={`w-3 h-3 rounded-full transition-colors duration-300 ${
                       Math.floor(currentReview / reviewsPerPage) === index
-                        ? "bg-blue-600"
+                        ? "bg-[#0d2233]"
                         : "bg-gray-300"
                     }`}
                   />
@@ -603,7 +606,7 @@ const HomePage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Enviando...' : 'Enviar Pedido'}
                   </button>

@@ -5,7 +5,7 @@ const ContactosPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-600 to-blue-500 text-white py-20 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-[#0d2233] to-blue-500 text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <video
           autoPlay
@@ -48,11 +48,11 @@ const ContactosPage: React.FC = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Como posso obter uma resposta mais rápida?
               </h2>
-              <h3 className="text-2xl font-semibold text-blue-600 mb-6">
+              <h3 className="text-2xl font-semibold text-[#0d2233] mb-6">
                 Entre em contacto:
               </h3>
               <div className="flex items-center justify-center mb-6">
-                <Phone className="h-8 w-8 text-blue-600 mr-3" />
+                <Phone className="h-8 w-8 text-[#0d2233] mr-3" />
                 <span className="text-2xl font-bold text-gray-900">915 482 365</span>
               </div>
             </div>
@@ -69,7 +69,7 @@ const ContactosPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Phone className="h-8 w-8 text-blue-600" />
+                <Phone className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Telefone</h3>
               <p className="text-gray-600">915 482 365</p>
@@ -77,7 +77,7 @@ const ContactosPage: React.FC = () => {
 
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="h-8 w-8 text-blue-600" />
+                <Mail className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
               <p className="text-gray-600">geral@globalead.pt</p>
@@ -85,7 +85,7 @@ const ContactosPage: React.FC = () => {
 
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageCircle className="h-8 w-8 text-blue-600" />
+                <MessageCircle className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">WhatsApp</h3>
               <p className="text-gray-600">Mensagem direta</p>
@@ -93,7 +93,7 @@ const ContactosPage: React.FC = () => {
 
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-8 w-8 text-blue-600" />
+                <Clock className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Horário</h3>
               <p className="text-gray-600">10h00 - 21h00</p>
@@ -175,7 +175,7 @@ const ContactosPage: React.FC = () => {
                   </p>
                   <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                    className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
                   >
                     Enviar Mensagem
                   </button>

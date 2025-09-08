@@ -95,9 +95,9 @@ const FAQ: React.FC<FAQProps> = ({ category = 'geral' }) => {
             >
               <span className="font-semibold text-gray-900">{item.question}</span>
               {openItems.includes(index) ? (
-                <ChevronUp className="h-5 w-5 text-blue-600" />
+                <ChevronUp className="h-5 w-5 text-[#0d2233]" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-blue-600" />
+                <ChevronDown className="h-5 w-5 text-[#0d2233]" />
               )}
             </button>
             {openItems.includes(index) && (

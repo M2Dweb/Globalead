@@ -357,7 +357,7 @@ const PropertyDetailPage: React.FC = () => {
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
                 className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 ${
-                  index === currentImageIndex ? 'border-blue-600' : 'border-transparent'
+                  index === currentImageIndex ? 'border-[#0d2233]' : 'border-transparent'
                 }`}
               >
                 <img
@@ -384,13 +384,13 @@ const PropertyDetailPage: React.FC = () => {
                 <div
                   key={index}
                   className={`bg-white p-6 rounded-xl shadow-lg cursor-pointer transition-all ${
-                    selectedPropertyType?.name === type.name ? 'ring-2 ring-blue-600' : ''
+                    selectedPropertyType?.name === type.name ? 'ring-2 ring-[#0d2233]' : ''
                   }`}
                   onClick={() => setSelectedPropertyType(type)}
                 >
                   <h4 className="text-xl font-bold text-gray-900 mb-2">{type.name}</h4>
                   <p className="text-gray-600 mb-2">Área de {type.area} m², {type.garage}</p>
-                  <p className="text-2xl font-bold text-blue-600 mb-4">desde {formatPrice(type.price)}</p>
+                  <p className="text-2xl font-bold text-[#0d2233] mb-4">desde {formatPrice(type.price)}</p>
                   <img
                     src={type.floor_plan}
                     alt={`Planta ${type.name}`}
@@ -470,7 +470,7 @@ const PropertyDetailPage: React.FC = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => shareContent('facebook')}
-                    className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors"
+                    className="bg-[#0d2233] text-white p-3 rounded-full hover:bg-[#79b2e9] transition-colors"
                   >
                     <Facebook className="h-5 w-5" />
                   </button>
@@ -482,13 +482,13 @@ const PropertyDetailPage: React.FC = () => {
                   </button>
                   <button
                     onClick={() => shareContent('telegram')}
-                    className="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 transition-colors"
+                    className="bg-blue-500 text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
                   >
                     <Send className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('linkedin')}
-                    className="bg-blue-700 text-white p-3 rounded-full hover:bg-blue-800 transition-colors"
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-blue-800 transition-colors"
                   >
                     <Linkedin className="h-5 w-5" />
                   </button>
@@ -594,7 +594,7 @@ const PropertyDetailPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Enviando...' : 'Agendar Visita'}
                   </button>
@@ -625,7 +625,7 @@ const PropertyDetailPage: React.FC = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <div className="text-2xl font-bold text-blue-600 mb-2">
+                  <div className="text-2xl font-bold text-[#0d2233] mb-2">
                     {formatPrice(similarProperty.price)}
                   </div>
                   <h4 className="text-xl font-bold text-gray-900 mb-3">

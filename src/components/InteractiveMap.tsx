@@ -87,7 +87,7 @@ const InteractiveMap: React.FC = () => {
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
-        <MapPin className="h-8 w-8 text-blue-600 mr-3" />
+        <MapPin className="h-8 w-8 text-[#0d2233] mr-3" />
         <h3 className="text-2xl font-bold text-gray-900">Propriedades no Mapa</h3>
       </div>
 
@@ -120,7 +120,7 @@ const InteractiveMap: React.FC = () => {
                       <h4 className="font-semibold text-gray-900 mb-2">
                         {property.title}
                       </h4>
-                      <div className="text-lg font-bold text-blue-600 mb-2">
+                      <div className="text-lg font-bold text-[#0d2233] mb-2">
                         {formatPrice(property.price)}
                       </div>
                       <div className="flex items-center space-x-3 text-sm text-gray-600 mb-2">
@@ -153,7 +153,7 @@ const InteractiveMap: React.FC = () => {
             <div className="text-xs font-medium text-gray-700 mb-2">Legenda</div>
             <div className="flex items-center space-x-4 text-xs">
               <div className="flex items-center">
-                <div className="w-3 h-3 bg-blue-600 rounded-full mr-1"></div>
+                <div className="w-3 h-3 bg-[#0d2233] rounded-full mr-1"></div>
                 <span>Disponível</span>
               </div>
               <div className="flex items-center">
@@ -181,7 +181,7 @@ const InteractiveMap: React.FC = () => {
                       <h4 className="text-xl font-bold text-gray-900 mb-2">
                         {property.title}
                       </h4>
-                      <div className="text-2xl font-bold text-blue-600 mb-3">
+                      <div className="text-2xl font-bold text-[#0d2233] mb-3">
                         {formatPrice(property.price)}
                       </div>
                       
@@ -205,7 +205,7 @@ const InteractiveMap: React.FC = () => {
                         <span>{property.location}</span>
                       </div>
                       
-                      <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                      <button className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors">
                         Ver Detalhes
                       </button>
                     </div>
@@ -233,12 +233,12 @@ const InteractiveMap: React.FC = () => {
               onClick={() => setSelectedProperty(property.id)}
               className={`text-left p-4 rounded-lg border transition-colors ${
                 selectedProperty === property.id
-                  ? 'border-blue-600 bg-blue-50'
+                  ? 'border-[#0d2233] bg-blue-50'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               <div className="font-medium text-gray-900 mb-1">{property.title}</div>
-              <div className="text-blue-600 font-bold">{formatPrice(property.price)}</div>
+              <div className="text-[#0d2233] font-bold">{formatPrice(property.price)}</div>
               <div className="text-sm text-gray-500">{property.location}</div>
             </button>
           ))}

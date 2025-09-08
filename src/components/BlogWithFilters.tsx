@@ -83,7 +83,7 @@ const BlogWithFilters: React.FC = () => {
                     onClick={() => setSelectedCategory(category.id)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                       selectedCategory === category.id
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-[#0d2233] text-white'
                         : 'bg-white text-gray-700 hover:bg-gray-100'
                     }`}
                   >
@@ -121,7 +121,7 @@ const BlogWithFilters: React.FC = () => {
                   <span>Por {post.author}</span>
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
                   {post.title}
                 </h3>
                 
@@ -129,7 +129,7 @@ const BlogWithFilters: React.FC = () => {
                   {post.excerpt}
                 </p>
                 
-                <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center">
+                <button className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center">
                   Ler mais
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </button>
@@ -141,7 +141,7 @@ const BlogWithFilters: React.FC = () => {
         {/* Load More */}
         {filteredPosts.length > 6 && (
           <div className="text-center mt-12">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center">
+            <button className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center">
               Carregar mais artigos
               <ArrowRight className="ml-2 h-5 w-5" />
             </button>

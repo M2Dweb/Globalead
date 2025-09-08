@@ -29,7 +29,7 @@ const EnergiaPage: React.FC = () => {
 
   const services = [
     {
-      icon: <Zap className="h-12 w-12 text-blue-600" />,
+      icon: <Zap className="h-12 w-12 text-[#0d2233]" />,
       title: "Mediação Imobiliária",
       description: "Com uma preparação e experiência única, a Globalead põem toda a sua dedicação em dar-lhe o melhor acompanhamento orientando-o na direção certa das suas necessidades e ambições.",
       link: "imoveis"
@@ -72,7 +72,7 @@ const EnergiaPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-blue-500 text-white py-20">
+      <section className="bg-gradient-to-br from-[#0d2233] to-blue-500 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -94,7 +94,7 @@ const EnergiaPage: React.FC = () => {
                 Queres poupar em que serviço?
               </h2>
               <div className="flex flex-wrap justify-center gap-4">
-                <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                <button className="bg-[#0d2233] text-white px-6 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors">
                   Electricidade + Gás natural
                 </button>
                 <button className="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
@@ -150,7 +150,7 @@ const EnergiaPage: React.FC = () => {
                 </p>
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                  className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
                 >
                   Pedir Simulação
                 </button>
@@ -186,7 +186,7 @@ const EnergiaPage: React.FC = () => {
                 <p className="text-gray-600 mb-6">
                   {provider.description}
                 </p>
-                <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                <button className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors">
                   Saber mais →
                 </button>
               </div>
@@ -216,7 +216,7 @@ const EnergiaPage: React.FC = () => {
               <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="text-center">
                   <div className="mb-6">
-                    {React.cloneElement(service.icon, { className: "h-12 w-12 text-blue-600 mx-auto" })}
+                    {React.cloneElement(service.icon, { className: "h-12 w-12 text-[#0d2233] mx-auto" })}
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
                     {service.title}
@@ -224,7 +224,7 @@ const EnergiaPage: React.FC = () => {
                   <p className="text-gray-600 mb-6">
                     {service.description}
                   </p>
-                  <button className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                  <button className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors">
                     Saber mais →
                   </button>
                 </div>
@@ -273,7 +273,7 @@ const EnergiaPage: React.FC = () => {
           </div>
 
           <div className="text-center">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-flex items-center">
+            <button className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 inline-flex items-center">
               Ver mais
               <ArrowRight className="ml-2 h-5 w-5" />
             </button>
@@ -331,7 +331,7 @@ const EnergiaPage: React.FC = () => {
               <div className="md:col-span-2">
                 <button
                   type="submit"
-                  className="w-full bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                  className="w-full bg-white text-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors duration-300"
                 >
                   Enviar Pedido
                 </button>
