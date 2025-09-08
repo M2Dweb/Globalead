@@ -97,7 +97,7 @@ const SeguroPage: React.FC = () => {
 
   const fetchPartnerLogos = async () => {
     try {
-      const { data, error } = await supabase.storage.from('imagens').list('patrocinios', { limit: 20, offset: 0 });
+      const { data, error } = await supabase.storage.from('imagens').list('seguros', { limit: 20, offset: 0 });
       if (error) {
         console.error('Erro ao carregar logos dos parceiros:', error);
         setPartnerLogos([
@@ -107,7 +107,7 @@ const SeguroPage: React.FC = () => {
         ]);
       } else if (data) {
         const logoUrls = data.map(file => {
-          const { data: urlData } = supabase.storage.from('imagens').getPublicUrl(`patrocinios/${file.name}`);
+          const { data: urlData } = supabase.storage.from('imagens').getPublicUrl(`seguros/${file.name}`);
           return urlData.publicUrl;
         });
         setPartnerLogos(logoUrls);
