@@ -97,7 +97,7 @@ const SeguroPage: React.FC = () => {
 
   const fetchPartnerLogos = async () => {
     try {
-      const { data, error } = await supabase.storage.from('imagens').list('seguros', { limit: 20, offset: 0 });
+      const { data, error } = await supabase.storage.from('imagens').list('seguros', { limit: 25, offset: 0 });
       if (error) {
         console.error('Erro ao carregar logos dos parceiros:', error);
         setPartnerLogos([
