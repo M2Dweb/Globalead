@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Home, Shield, Zap, Star, ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Tv, Phone } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Bed, Bath, Square, MapPin, Tv, Phone, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 
 const HomePage: React.FC = () => {
-  const [currentReview, setCurrentReview] = useState(0);
+  
   const [properties, setProperties] = useState<any[]>([]);
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
@@ -22,18 +22,39 @@ const HomePage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [latestPosts, setLatestPosts] = useState<any[]>([]);
 
-  const [reviewsPerPage, setReviewsPerPage] = useState(
-    window.innerWidth < 640 ? 1 : 2
-  );
+  useEffect(() => {
+    const fetchLatestPosts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .order('date', { ascending: false })
+          .limit(6);
 
+        if (error) {
+          console.error('Erro ao carregar posts:', error);
+          setLatestPosts([]);
+        } else {
+          setLatestPosts(data || []);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar posts:', error);
+        setLatestPosts([]);
+      }
+    };
+
+    fetchLatestPosts();
+  }, []);
+
+  
   const [logosPerPage, setLogosPerPage] = useState(
     window.innerWidth < 640 ? 3 : 5
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setReviewsPerPage(window.innerWidth < 640 ? 1 : 2);
       setLogosPerPage(window.innerWidth < 640 ? 3 : 5);
     };
     window.addEventListener("resize", handleResize);
@@ -157,51 +178,9 @@ const HomePage: React.FC = () => {
     }
   ];
 
-  const reviews = [
-    {
-      name: "Daniel Gomes",
-      platform: "Facebook",
-      review: "Estou extremamente satisfeito com a experiência que tive. Foram bastante profissionais e prestaram um serviço de excelência.",
-      rating: 5
-    },
-    {
-      name: "Pedro Tavares",
-      platform: "Google",
-      review: "Consegui vender o meu imóvel em menos de 1 mês e adquirir a minha moradia de sonho com a ajuda da Globalead.",
-      rating: 5
-    },
-    {
-      name: "Ana Torres",
-      platform: "Livro de Elogios",
-      review: "Valorizo a clareza na forma como a Globalead me apresentou todas as soluções de seguros para a minha viatura.",
-      rating: 5
-    },
-    {
-      name: "Maria Silva",
-      platform: "Google",
-      review: "Atendimento personalizado e profissional. Recomendo vivamente os serviços da Globalead.",
-      rating: 5
-    },
-    {
-      name: "João Santos",
-      platform: "Facebook",
-      review: "Excelente acompanhamento durante todo o processo de compra. Equipa muito competente.",
-      rating: 5
-    },
-    {
-      name: "Carla Mendes",
-      platform: "Google",
-      review: "Conseguiram-me um seguro com condições muito melhores que o anterior. Muito satisfeita!",
-      rating: 5
-    }
-  ];
+  
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentReview(prev => (prev + reviewsPerPage) % reviews.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [reviews.length, reviewsPerPage]);
+  
 
   useEffect(() => {
     if (partnerLogos.length > 0) {
@@ -398,62 +377,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Reviews Section - 2 at a time */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              O que dizem os nossos clientes
-            </h2>
-            <p className="text-xl text-gray-600">
-              6 avaliações de clientes satisfeitos
-            </p>
-          </div>
-
-          <div className="relative max-w-6xl mx-auto overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentReview * (100 / reviewsPerPage)}%)` }}
-            >
-              {reviews.map((review, index) => (
-                <div key={index} className="flex-shrink-0 w-full sm:w-1/2 px-4">
-                  <div className="bg-gray-50 p-8 rounded-xl text-center h-full">
-                    <div className="flex justify-center mb-4">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-gray-700 text-lg mb-6 italic">
-                      "{review.review}"
-                    </p>
-                    <div className="border-t pt-4">
-                      <p className="font-semibold text-gray-900">{review.name}</p>
-                      <p className="text-sm text-gray-500">Review: {review.platform}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Navigation Dots */}
-            <div className="flex justify-center mt-8 space-x-2">
-              {Array.from({ length: Math.ceil(reviews.length / reviewsPerPage) }).map(
-                (_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentReview(index * reviewsPerPage)}
-                    className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                      Math.floor(currentReview / reviewsPerPage) === index
-                        ? "bg-[#0d2233]"
-                        : "bg-gray-300"
-                    }`}
-                  />
-                )
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Partners Section */}
       <section className="py-20 bg-gray-50">
@@ -480,6 +404,15 @@ const HomePage: React.FC = () => {
                         src={logo}
                         alt={`Parceiro ${index + 1}`}
                         className="w-full h-25 object-contain p-4"
+                        style={{
+                          filter: `
+                            grayscale(100%) 
+                            brightness(20%) 
+                            sepia(100%) 
+                            
+                            hue-rotate(200deg)
+                          `,
+                        }}
                       />
                     </div>
                   </div>
@@ -490,20 +423,88 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Latest Blog Posts Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Últimas Notícias
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Fique a par das novidades mais recentes da Globalead Portugal
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {latestPosts.map(post => (
+              <Link
+                key={post.id}
+                to={`/blog/${post.id}`}
+                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group border border-gray-100"
+              >
+                <div className="relative">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-4 left-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
+                  </div>
+                  <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                    {post.read_time}
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
+                    <span className="mx-2">•</span>
+                    <span>Por {post.author}</span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors text-center">
+                    Ler Mais
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              to="/blog"
+              className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center"
+            >
+              Ver Todos os Artigos
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* CTA Section */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Pronto para começar?
+                Tem dúvidas?
               </h2>
-              <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-4">
-                <div className="flex items-center">
-                  <Phone className="h-6 w-6 mr-2" />
-                  <span className="text-lg">915 482 365 (chamada rede fixa nacional)</span>
-                </div>
-              </div>
+              <h2 className="text-3xl md:text-2xl mb-2">
+                Entre em contacto
+              </h2>
             </div>
 
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
@@ -515,7 +516,7 @@ const HomePage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Nome:"
                   required
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
@@ -523,7 +524,7 @@ const HomePage: React.FC = () => {
                   value={formData.apelido}
                   onChange={handleInputChange}
                   placeholder="Apelido:"
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="tel"
@@ -531,7 +532,7 @@ const HomePage: React.FC = () => {
                   value={formData.telemovel}
                   onChange={handleInputChange}
                   placeholder="Telemóvel:"
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="email"
@@ -540,13 +541,13 @@ const HomePage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Email:"
                   required
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <select 
                   name="meio_contacto"
                   value={formData.meio_contacto}
                   onChange={handleInputChange}
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Meio de Contacto:</option>
                   <option value="Email">Email</option>
@@ -558,7 +559,7 @@ const HomePage: React.FC = () => {
                   name="assunto"
                   value={formData.assunto}
                   onChange={handleInputChange}
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Assunto:</option>
                   <option value="Esclarecimento de Dúvidas">Esclarecimento de Dúvidas</option>
@@ -579,7 +580,7 @@ const HomePage: React.FC = () => {
                   value={formData.horario}
                   onChange={handleInputChange}
                   placeholder="Horário:"
-                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
                 <div className="md:col-span-2">
@@ -608,7 +609,7 @@ const HomePage: React.FC = () => {
                     disabled={isSubmitting}
                     className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isSubmitting ? 'Enviando...' : 'Enviar Pedido'}
+                    {isSubmitting ? 'Enviando...' : 'Entrar em contacto'}
                   </button>
                 </div>
               </form>

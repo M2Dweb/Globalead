@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Facebook,
@@ -7,22 +7,48 @@ import {
   Mail,
   Phone,
 } from 'lucide-react';
-
 import {
   FaTiktok,
   FaYoutube,
   FaTelegramPlane,
   FaWhatsapp,
 } from 'react-icons/fa';
+import { supabase } from '../lib/supabase';
 
 const Footer: React.FC = () => {
+  const [latestPosts, setLatestPosts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchLatestPosts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('id, title')
+          .order('date', { ascending: false })
+          .limit(4);
+
+        if (error) {
+          console.error('Erro ao carregar posts:', error);
+          setLatestPosts([]);
+        } else {
+          setLatestPosts(data || []);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar posts:', error);
+        setLatestPosts([]);
+      }
+    };
+
+    fetchLatestPosts();
+  }, []);
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Centralizar os blocos, mas manter texto alinhado à esquerda */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 justify-center">
+        {/* Grid principal */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 justify-center">
 
-          {/* Facebook Page Plugin + Contact Info */}
+          {/* Facebook Page + Contact Info */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-xs">
               <div
@@ -42,7 +68,6 @@ const Footer: React.FC = () => {
                 </iframe>
               </div>
 
-              {/* Contact Info */}
               <div className="mt-6 text-left">
                 <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>
                 <div className="space-y-3">
@@ -56,7 +81,6 @@ const Footer: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Redes Sociais */}
                 <div className="flex space-x-4 mt-4">
                   <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noopener noreferrer">
                     <Facebook className="h-6 w-6 text-white hover:text-blue-300 transition-colors" />
@@ -80,6 +104,28 @@ const Footer: React.FC = () => {
                     <FaWhatsapp className="h-6 w-6 text-white hover:text-green-400 transition-colors" />
                   </a>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Latest Blog Titles Section */}
+          <div className="flex flex-col items-center">
+            <div className="w-full max-w-md text-left">
+              <h3 className="text-xl font-bold mb-5">Últimas Notícias</h3>
+              <div className="space-y-5">
+                {latestPosts.length > 0 ? (
+                  latestPosts.map((post) => (
+                    <Link
+                      key={post.id}
+                      to="/blog"
+                      className="block text-white hover:text-[#79b2e9] transition-colors"
+                    >
+                      • {post.title}
+                    </Link>
+                  ))
+                ) : (
+                  <p className="text-gray-400">Carregando...</p>
+                )}
               </div>
             </div>
           </div>
