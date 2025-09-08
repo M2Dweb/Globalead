@@ -55,7 +55,6 @@ const AdminPage: React.FC = () => {
 
   //----------------------------------------------------------------------------------------------------------------------------
 
-  
   const handleCleanUnusedImages = async () => {
     try {
       console.log("🔍 A procurar imagens não usadas...");
@@ -77,16 +76,16 @@ const AdminPage: React.FC = () => {
 
       console.log("✅ URLs usados na BD:", usedUrls);
 
-      // 2. Pastas que queres verificar
-      const folders = ["imagens", "blog", "videos", "patrocinios"];
+      // 2. Pastas que queres verificar (só 'imagens' e 'blog')
+      const folders = ["imagens", "blog"];
 
       let allFiles: string[] = [];
 
       // 3. Listar ficheiros de cada pasta
       for (const folder of folders) {
         const { data: files, error } = await supabase.storage
-          .from("imagens")
-          .list(folder, { limit: 100, offset: 0 }); // 🔥 IMPORTANTE: path = folder
+          .from("imagens") // bucket
+          .list(folder, { limit: 100, offset: 0 });
 
         if (error) {
           console.error(`Erro ao listar ficheiros da pasta ${folder}:`, error);

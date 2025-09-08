@@ -13,6 +13,21 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const [properties, setProperties] = useState<any[]>([]);
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
+  
+
+  const [reviewsPerPage, setReviewsPerPage] = useState(
+    window.innerWidth < 640 ? 1 : 2
+  );
+
+// Atualiza se a tela mudar de tamanho
+  useEffect(() => {
+    const handleResize = () => {
+      setReviewsPerPage(window.innerWidth < 640 ? 1 : 2);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -347,44 +362,46 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          <div className="relative max-w-6xl mx-auto">
-            <div className="overflow-hidden">
-              <div 
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentReview * 50}%)` }}
-              >
-                {reviews.map((review, index) => (
-                  <div key={index} className="w-1/2 flex-shrink-0 px-4">
-                    <div className="bg-gray-50 p-8 rounded-xl text-center h-full">
-                      <div className="flex justify-center mb-4">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-                      <p className="text-gray-700 text-lg mb-6 italic">
-                        "{review.review}"
-                      </p>
-                      <div className="border-t pt-4">
-                        <p className="font-semibold text-gray-900">{review.name}</p>
-                        <p className="text-sm text-gray-500">Review: {review.platform}</p>
-                      </div>
+          <div className="relative max-w-6xl mx-auto overflow-hidden">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentReview * (100 / reviewsPerPage)}%)` }}
+            >
+              {reviews.map((review, index) => (
+                <div key={index} className="flex-shrink-0 w-full sm:w-1/2 px-4">
+                  <div className="bg-gray-50 p-8 rounded-xl text-center h-full">
+                    <div className="flex justify-center mb-4">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                      ))}
+                    </div>
+                    <p className="text-gray-700 text-lg mb-6 italic">
+                      "{review.review}"
+                    </p>
+                    <div className="border-t pt-4">
+                      <p className="font-semibold text-gray-900">{review.name}</p>
+                      <p className="text-sm text-gray-500">Review: {review.platform}</p>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
 
             {/* Navigation Dots */}
             <div className="flex justify-center mt-8 space-x-2">
-              {Array.from({ length: Math.ceil(reviews.length / 2) }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentReview(index * 2)}
-                  className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                    Math.floor(currentReview / 2) === index ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                />
-              ))}
+              {Array.from({ length: Math.ceil(reviews.length / reviewsPerPage) }).map(
+                (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentReview(index * reviewsPerPage)}
+                    className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                      Math.floor(currentReview / reviewsPerPage) === index
+                        ? "bg-blue-600"
+                        : "bg-gray-300"
+                    }`}
+                  />
+                )
+              )}
             </div>
           </div>
         </div>
@@ -410,11 +427,11 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                     key={index}
                     className="flex-shrink-0 w-1/5 px-4"
                   >
-                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div className="bg-white  rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                       <img
                         src={logo}
                         alt={`Parceiro ${index + 1}`}
-                        className="w-full h-16 object-contain"
+                        className="w-full h-40 object-contain"
                       />
                     </div>
                   </div>
