@@ -476,7 +476,7 @@ const HomePage: React.FC = () => {
                       <img
                         src={logo}
                         alt={`Parceiro ${index + 1}`}
-                        className="w-full h-20 object-contain p-4"
+                        className="w-full h-25 object-contain p-4"
                       />
                     </div>
                   </div>
@@ -576,7 +576,7 @@ const HomePage: React.FC = () => {
                   value={formData.horario}
                   onChange={handleInputChange}
                   placeholder="Horário:"
-                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
                 <div className="md:col-span-2">

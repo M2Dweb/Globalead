@@ -3,11 +3,9 @@ import { ArrowRight, Hammer, Palette, Building, Users, Compass, Scale, Play, Hom
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 
-interface ImoveisPageProps {
-  onNavigate: (page: string) => void;
-}
 
-const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
+
+const ImoveisPage: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [founderVideoUrl, setFounderVideoUrl] = useState('');
@@ -217,7 +215,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                 <div
                   key={property.id}
                   className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-                  onClick={() => onNavigate('property-list')}
+                  onClick={() => navigate(`/imoveis/${property.id}`)} 
                 >
                   <img
                     src={property.images[0]}
@@ -254,7 +252,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                     </p>
                     <button
                       className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-                      onClick={() => onNavigate(`/imoveis/${property.id}`)} // ✅ Ajustado para rota correta
+                      onClick={() => navigate(`/imoveis/${property.id}`)}// ✅ Ajustado para rota correta
                     >
                       Ver Detalhes
                     </button>
@@ -267,7 +265,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
 
           <div className="text-center mt-12">
             <button
-              onClick={() => onNavigate('/imoveis/lista')} 
+              onClick={() => navigate('/imoveis/lista')}   
               className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
             >
               Ver Todos os Imóveis
@@ -300,7 +298,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                 </p>
                 
                   <button
-                    onClick={() => onNavigate(`/${service.link}`)} // ✅ Vai para a aba correta
+                    onClick={() => navigate(service.link)} 
                     className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center"
                   >
                     Saber mais
