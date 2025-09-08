@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Shield, Zap, Bed, Bath, Square, MapPin, Tv, Phone, Calendar } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Bed, Bath, Square, MapPin, Tv, Phone, Calendar, Siren } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
@@ -153,25 +153,25 @@ const HomePage: React.FC = () => {
 
   const services = [
     {
-      icon: <Shield className="h-12 w-12 text-red-600" />,
+      icon: <Siren className="h-12 w-12 text-[#79b2e9]" />,
       title: "Alarmes",
       description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade etc. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar",
       link: "/alarmes"
     },
     {
-      icon: <Zap className="h-12 w-12 text-yellow-600" />,
+      icon: <Zap className="h-12 w-12 text-[#79b2e9]" />,
       title: "Energia",
       description: "A eletricidade e o gás natural desempenham papéis essenciais na vida moderna, indispensáveis para diversas atividades realizadas diariamente. É crucial atender a todos os clientes com a melhor oferta energética de forma a facilitar a sua decisão",
       link: "/energia"
     },
     {
-      icon: <Shield className="h-12 w-12 text-[#0d2233]" />,
+      icon: <Shield className="h-12 w-12 text-[#79b2e9]" />,
       title: "Seguros",
       description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme definido nas condições da apólice",
       link: "/seguros"
     },
     {
-      icon: <Tv className="h-12 w-12 text-purple-600" />,
+      icon: <Tv className="h-12 w-12 text-[#79b2e9]" />,
       title: "TV, Net, Voz",
       description: "As telecomunicações são essenciais para a conectividade e desempenham um papel crucial na propagação de informações em muitas áreas da sociedade. A Globalead apresenta várias soluções e pretende atender às reais necessidades de cada cliente",
       link: "/tv-net-voz"
@@ -426,13 +426,10 @@ const HomePage: React.FC = () => {
       {/* Latest Blog Posts Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Últimas Notícias
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Fique a par das novidades mais recentes da Globalead Portugal
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -480,15 +477,6 @@ const HomePage: React.FC = () => {
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Link
-              to="/blog"
-              className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-semibold inline-flex items-center"
-            >
-              Ver Todos os Artigos
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
         </div>
       </section>
 
