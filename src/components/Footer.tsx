@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
                   title="Globalead Facebook Page"
                   src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fglobalead.pt&tabs=timeline&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
                   width="100%"
-                  height="130"
+                  height="150"
                   style={{ border: 'none', overflow: 'hidden' }}
                   scrolling="no"
                   frameBorder="0"
@@ -140,17 +140,17 @@ const Footer: React.FC = () => {
                 <input
                   type="text"
                   placeholder="Nome:"
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-white border border-[#79b2e9] rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
                   placeholder="Apelido:"
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-white border border-[#79b2e9] rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="email"
                   placeholder="Email:"
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-white border border-[#79b2e9] rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <div className="flex items-start">
                   <input type="checkbox" id="newsletter-consent" className="mt-1 mr-2" />
@@ -160,7 +160,7 @@ const Footer: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#0d2233] hover:bg-[#79b2e9] text-white font-medium py-2 px-4 rounded-md transition-colors"
+                  className="w-full bg-[#79b2e9] hover:bg-[#0d2233] text-white font-medium py-2 px-4 rounded-md transition-colors"
                 >
                   Subscrever
                 </button>
