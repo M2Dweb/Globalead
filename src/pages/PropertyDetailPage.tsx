@@ -625,7 +625,7 @@ const PropertyDetailPage: React.FC = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <div className="text-2xl font-bold text-[#0d2233] mb-2">
+                  <div className="text-2xl font-bold text-[#79b2e9] mb-2">
                     {formatPrice(similarProperty.price)}
                   </div>
                   <h4 className="text-xl font-bold text-gray-900 mb-3">
@@ -644,11 +644,12 @@ const PropertyDetailPage: React.FC = () => {
                       <Square className="h-4 w-4 mr-1" />
                       <span>{similarProperty.area}m²</span>
                     </div>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <MapPin className="h-4 w-4 mr-1" />
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-1" />
                     <span>{similarProperty.location}</span>
                   </div>
+                  </div>
+                  
                 </div>
               </Link>
             ))}

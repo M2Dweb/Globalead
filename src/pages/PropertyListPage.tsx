@@ -89,7 +89,7 @@ const PropertyListPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20">
+      <section className="bg-gradient-to-br from-[#0d2233] to-[#79b2e9] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -192,7 +192,7 @@ const PropertyListPage: React.FC = () => {
                     alt={property.title}
                     className="w-full h-48 object-cover"
                   />
-                  <div className="absolute top-4 left-4 bg-[#0d2233] text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-4 left-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
                     {property.type === 'apartamento' ? 'Apartamento' : 'Moradia'}
                   </div>
                   <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
@@ -201,7 +201,7 @@ const PropertyListPage: React.FC = () => {
                 </div>
                 
                 <div className="p-6">
-                  <div className="text-2xl font-bold text-[#0d2233] mb-2">
+                  <div className="text-2xl font-bold text-[#79b2e9] mb-2">
                     {formatPrice(property.price)}
                   </div>
                   
@@ -222,12 +222,13 @@ const PropertyListPage: React.FC = () => {
                       <Square className="h-4 w-4 mr-1" />
                       <span>{property.area}m²</span>
                     </div>
-                  </div>
-
-                  <div className="flex items-center text-gray-600 mb-3">
+                    <div className="flex items-center">
                     <MapPin className="h-4 w-4 mr-1" />
                     <span>{property.location}</span>
                   </div>
+                  </div>
+
+                  
                   
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                     {property.description}
