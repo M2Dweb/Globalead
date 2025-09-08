@@ -68,40 +68,42 @@ const Footer: React.FC = () => {
                 </iframe>
               </div>
 
-              <div className="mt-6 text-left">
+              <div className="mt-6 text-center">
                 <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>
                 <div className="space-y-3">
-                  <div className="flex items-center">
-                    <Phone className="h-5 w-5 mr-2 text-blue-400" />
+                  <div className="flex items-center justify-center">
+                    <Phone className="h-5 w-5 mr-2 text-[#79b2e9]" />
                     <span>+351 915482365</span>
                   </div>
-                  <div className="flex items-center">
-                    <Mail className="h-5 w-5 mr-2 text-blue-400" />
+                  <div className="flex items-center justify-center">
+                    <Mail className="h-5 w-5 mr-2 text-[#79b2e9]" />
                     <span>geral@globalead.pt</span>
                   </div>
                 </div>
 
-                <div className="flex space-x-4 mt-4">
+
+
+                <div className="flex space-x-4 mt-4 flex items-center justify-center">
                   <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noopener noreferrer">
-                    <Facebook className="h-6 w-6 text-white hover:text-blue-300 transition-colors" />
+                    <Facebook className="h-6 w-6 text-white hover:text-[#79b2e9] transition-colors" />
                   </a>
                   <a href="https://www.instagram.com/globalead.pt/" target="_blank" rel="noopener noreferrer">
-                    <Instagram className="h-6 w-6 text-white hover:text-pink-300 transition-colors" />
+                    <Instagram className="h-6 w-6 text-white hover:text-[#79b2e9] transition-colors" />
                   </a>
                   <a href="https://www.linkedin.com/company/globalead/" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="h-6 w-6 text-white hover:text-blue-300 transition-colors" />
+                    <Linkedin className="h-6 w-6 text-white hover:text-[#79b2e9] transition-colors" />
                   </a>
                   <a href="https://www.tiktok.com/@globalead.pt" target="_blank" rel="noopener noreferrer">
-                    <FaTiktok className="h-6 w-6 text-white hover:text-gray-300 transition-colors" />
+                    <FaTiktok className="h-6 w-6 text-white hover:text-[#79b2e9] transition-colors" />
                   </a>
                   <a href="https://www.youtube.com/channel/UCL2Dk6vnNF6HngFlc4enKDQ" target="_blank" rel="noopener noreferrer">
-                    <FaYoutube className="h-6 w-6 text-white hover:text-red-400 transition-colors" />
+                    <FaYoutube className="h-6 w-6 text-white hover:text-[#79b2e9] transition-colors" />
                   </a>
                   <a href="https://t.me/globaleadportugal" target="_blank" rel="noopener noreferrer">
-                    <FaTelegramPlane className="h-6 w-6 text-white hover:text-blue-400 transition-colors" />
+                    <FaTelegramPlane className="h-6 w-6 text-white hover:text-[#79b2e9] transition-colors" />
                   </a>
                   <a href="https://api.whatsapp.com/send?phone=351915482365" target="_blank" rel="noopener noreferrer">
-                    <FaWhatsapp className="h-6 w-6 text-white hover:text-green-400 transition-colors" />
+                    <FaWhatsapp className="h-6 w-6 text-white hover:text-[#79b2e9] transition-colors" />
                   </a>
                 </div>
               </div>
@@ -111,7 +113,7 @@ const Footer: React.FC = () => {
           {/* Latest Blog Titles Section */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-md text-left">
-              <h3 className="text-xl font-bold mb-5">Últimas Notícias</h3>
+              <h3 className="text-xl font-bold mb-5 text-center">Últimas Notícias</h3>
               <div className="space-y-5">
                 {latestPosts.length > 0 ? (
                   latestPosts.map((post) => (
@@ -133,7 +135,7 @@ const Footer: React.FC = () => {
           {/* Newsletter */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-md text-left">
-              <h3 className="text-xl font-bold mb-4">Receba as últimas novidades!</h3>
+              <h3 className="text-xl font-bold mb-4 text-center">Receba as últimas novidades!</h3>
               <form className="space-y-3">
                 <input
                   type="text"
