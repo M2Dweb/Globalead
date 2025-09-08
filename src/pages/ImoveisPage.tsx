@@ -254,7 +254,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                     </p>
                     <button
                       className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-                      onClick={() => onNavigate(`property-detail/${property.id}`)} 
+                      onClick={() => onNavigate(`/imoveis/${property.id}`)} // ✅ Ajustado para rota correta
                     >
                       Ver Detalhes
                     </button>
@@ -267,7 +267,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
 
           <div className="text-center mt-12">
             <button
-              onClick={() => onNavigate('property-list')} 
+              onClick={() => onNavigate('/imoveis/lista')} 
               className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold inline-flex items-center"
             >
               Ver Todos os Imóveis
@@ -300,7 +300,7 @@ const ImoveisPage: React.FC<ImoveisPageProps> = ({ onNavigate }) => {
                 </p>
                 
                   <button
-                    onClick={() => onNavigate(`${service.link}`)} // ✅ Vai para a aba correta
+                    onClick={() => onNavigate(`/${service.link}`)} // ✅ Vai para a aba correta
                     className="text-blue-600 font-medium hover:text-blue-700 transition-colors inline-flex items-center"
                   >
                     Saber mais
