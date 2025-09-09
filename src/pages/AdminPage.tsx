@@ -1141,7 +1141,7 @@ Conteúdo: ${post.content}
                     value={settingsForm.founder_video_url}
                     onChange={(e) => setSettingsForm({...settingsForm, founder_video_url: e.target.value})}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="https://exemplo.com/video.mp4"
+                    placeholder="https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/video1.mp4"
                   />
                 </div>
 

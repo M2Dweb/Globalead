@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Star, Cpu, Search, ShieldCheck } from 'lucide-react';
 import { sendEmail , FormData } from '../utils/emailService';
+import FounderVideoSection from '../components/FounderVideoSection';
 
 const SobrePage: React.FC = () => {
   const [currentReview, setCurrentReview] = useState(0);
@@ -141,7 +142,7 @@ const SobrePage: React.FC = () => {
   ];
 
 return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
@@ -153,7 +154,7 @@ return (
           className="absolute inset-0 w-full h-full object-cover opacity-30"
           poster="/fotos/SobrePage-foto.png"
         >
-          <source src="/videos/SobrePage-video(1).mp4" type="video/mp4" />
+          <source src="https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/video2.mp4" type="video/mp4" />
         </video>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
@@ -209,7 +210,7 @@ return (
       </section>
 
       {/* Ajudamos a tomar decisões inteligentes */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -238,6 +239,8 @@ return (
           </div>
         </div>
       </section>
+
+      <FounderVideoSection />
 
       {/* Objetivos da Globalead */}
       <section className="py-20 bg-white">
