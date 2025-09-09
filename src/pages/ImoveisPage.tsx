@@ -1,14 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Hammer, Palette, Building, Users, Compass, Scale, Play, Home, CreditCard, FileText, Shield, Bath, Bed, MapPin, Square } from 'lucide-react';
+import {
+  ArrowRight, Hammer, Palette, Building, Users, Compass, Scale, CreditCard,
+  FileText, Shield, Bath, Bed, MapPin, Square, Siren, Camera, Globe, Paintbrush,
+  Share2, Tag, Video, ChevronLeft, ChevronRight
+} from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
-
-
 
 const ImoveisPage: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+
+  const propertiesPerPage = 3;
+  const totalPages = Math.ceil(properties.length / propertiesPerPage);
+
+  // Calcular imóveis por página
+  const indexOfLast = currentPage * propertiesPerPage;
+  const indexOfFirst = indexOfLast - propertiesPerPage;
+  const currentProperties = properties.slice(indexOfFirst, indexOfLast);
+
+  // Funções de Paginação
+  const handlePrevPage = () => currentPage > 1 && setCurrentPage((prev) => prev - 1);
+  const handleNextPage = () => currentPage < totalPages && setCurrentPage((prev) => prev + 1);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -16,7 +31,7 @@ const ImoveisPage: React.FC = () => {
         const { data, error } = await supabase
           .from('properties')
           .select('*')
-          .limit(3)
+          .limit(12)
           .order('created_at', { ascending: false });
         
         if (error) {
@@ -72,13 +87,7 @@ const ImoveisPage: React.FC = () => {
     fetchSiteSettings();
   }, []);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('pt-PT', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0
-    }).format(price);
-  };
+  
 
   const services = [
     {
@@ -121,25 +130,25 @@ const ImoveisPage: React.FC = () => {
 
   const businessServices = [
     {
-      icon: <Shield className="h-12 w-12 text-red-600" />,
+      icon: <Siren className="h-12 w-12 text-[#79b2e9]" />,
       title: "Alarmes",
       description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar.",
       link: "/alarmes"
     },
     {
-      icon: <CreditCard className="h-12 w-12 text-green-600" />,
+      icon: <CreditCard className="h-12 w-12 text-[#79b2e9]" />,
       title: "Crédito Habitação",
       description: "A Globalead é especializada em oferecer soluções de Crédito Habitação personalizadas, graças à sua relação privilegiada e poder negocial com as principais instituições bancárias em Portugal, garantindo as melhores opções para o seu agregado familiar.",
       link: "/credito"
     },
     {
-      icon: <FileText className="h-12 w-12 text-yellow-600" />,
+      icon: <FileText className="h-12 w-12 text-[#79b2e9]" />,
       title: "Certificação Energética",
       description: "O desempenho energético de um imóvel é classificado de A+ a G e deve ser indicado através de um certificado energético, obrigatório na venda. Com a Globalead, tratamos de todo o processo, garantindo todas as condições para a venda do seu imóvel.",
       link: "/certificacao"
     },
     {
-      icon: <Shield className="h-12 w-12 text-[#0d2233]" />,
+      icon: <Shield className="h-12 w-12 text-[#79b2e9]" />,
       title: "Seguros",
       description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme condições da apólice.",
       link: "/seguros"
@@ -147,15 +156,39 @@ const ImoveisPage: React.FC = () => {
   ];
 
   const sellingSteps = [
-    "Apresentação do imóvel através de tours virtuais de alta qualidade, permitindo que potenciais compradores explorem a propriedade à distância.",
-    "Promoção do imóvel em todas as plataformas sociais e digitais, com campanhas segmentadas e uma estratégia detalhada para maximizar a visibilidade.",
-    "Reportagem de imagens e vídeos promocionais para destacar as melhores características do imóvel.",
-    "Publicação do imóvel nos principais portais imobiliários em Portugal e no estrangeiro, ampliando o alcance da sua oferta.",
-    "Divulgação em zonas estratégicas para alcançar um público local relevante.",
-    "Colocação de sinalética no local do imóvel para atrair potenciais compradores na área.",
-    "Divulgação direcionada a uma carteira exclusiva de clientes qualificados e a grupos privados da Globalead Portugal.",
-    "Especialistas em decoração de interiores transformam o imóvel, destacando o seu potencial e alinhando-o às tendências e expectativas dos compradores."
-  ];
+  {
+    text: "Apresentação do imóvel através de tours virtuais de alta qualidade, permitindo que potenciais compradores explorem a propriedade à distância.",
+    icon: <Video className="w-6 h-6 text-[#79b2e9]" />
+  },
+  {
+    text: "Promoção do imóvel em todas as plataformas sociais e digitais, com campanhas segmentadas e uma estratégia detalhada para maximizar a visibilidade.",
+    icon: <Share2 className="w-6 h-6 text-[#79b2e9]" />
+  },
+  {
+    text: "Reportagem de imagens e vídeos promocionais para destacar as melhores características do imóvel.",
+    icon: <Camera className="w-6 h-6 text-[#79b2e9]" />
+  },
+  {
+    text: "Publicação do imóvel nos principais portais imobiliários em Portugal e no estrangeiro, ampliando o alcance da sua oferta.",
+    icon: <Globe className="w-6 h-6 text-[#79b2e9]" />
+  },
+  {
+    text: "Divulgação em zonas estratégicas para alcançar um público local relevante.",
+    icon: <MapPin className="w-6 h-6 text-[#79b2e9]" />
+  },
+  {
+    text: "Colocação de sinalética no local do imóvel para atrair potenciais compradores na área.",
+    icon: <Tag className="w-6 h-6 text-[#79b2e9]" />
+  },
+  {
+    text: "Divulgação direcionada a uma carteira exclusiva de clientes qualificados e a grupos privados da Globalead Portugal.",
+    icon: <Users className="w-6 h-6 text-[#79b2e9]" />
+  },
+  {
+    text: "Especialistas em decoração de interiores transformam o imóvel, destacando o seu potencial e alinhando-o às tendências e expectativas dos compradores.",
+    icon: <Paintbrush className="w-6 h-6 text-[#79b2e9]" />
+  }
+];
 
   return (
     <div className="min-h-screen bg-white">
@@ -184,7 +217,7 @@ const ImoveisPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Properties Section */}
+      {/* Featured Properties */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -194,67 +227,61 @@ const ImoveisPage: React.FC = () => {
           </div>
 
           {loading ? (
-            <div className="text-center py-12">
-              <div className="text-xl text-gray-600">A carregar imóveis...</div>
-            </div>
+            <div className="text-center py-12 text-xl text-gray-600">A carregar imóveis...</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {properties.map((property) => (
+              {currentProperties.map((property) => (
                 <div
                   key={property.id}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-                  onClick={() => navigate(`/imoveis/${property.id}`)} 
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer"
+                  onClick={() => navigate(`/imoveis/${property.id}`)}
                 >
-                  <img
-                    src={property.images[0]}
-                    alt={property.title}
-                    className="w-full h-48 object-cover"
-                  />
+                  <img src={property.images[0]} alt={property.title} className="w-full h-48 object-cover" />
                   <div className="p-6">
-                    <div className="text-2xl font-bold text-[#0d2233] mb-2">
-                      {formatPrice(property.price)}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {property.title}
-                    </h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{property.title}</h3>
                     <div className="flex items-center space-x-4 text-gray-600 mb-4">
-                      <div className="flex items-center">
-                        <Bed className="h-4 w-4 mr-1" />
-                        <span>{property.bedrooms}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Bath className="h-4 w-4 mr-1" />
-                        <span>{property.bathrooms}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Square className="h-4 w-4 mr-1" />
-                        <span>{property.area}m²</span>
-                      </div>
-                      <div className="flex items-center">
-                        <MapPin className="h-4 w-4 mr-1" />
-                        <span>{property.location}</span>
-                      </div>
+                      <div className="flex items-center"><Bed className="h-4 w-4 mr-1" /><span>{property.bedrooms}</span></div>
+                      <div className="flex items-center"><Bath className="h-4 w-4 mr-1" /><span>{property.bathrooms}</span></div>
+                      <div className="flex items-center"><Square className="h-4 w-4 mr-1" /><span>{property.area}m²</span></div>
+                      <div className="flex items-center"><MapPin className="h-4 w-4 mr-1" /><span>{property.location}</span></div>
                     </div>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {property.description}
-                    </p>
+                      <p className="text-gray-600 mb-6 text-sm line-clamp-3">
+                        {property.description}
+                      </p>
                     <button
-                      className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors"
-                      onClick={() => navigate(`/imoveis/${property.id}`)}// ✅ Ajustado para rota correta
+                      className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition"
+                      onClick={() => navigate(`/imoveis/${property.id}`)}
                     >
                       Ver Detalhes
                     </button>
                   </div>
                 </div>
               ))}
-
             </div>
           )}
 
-          <div className="text-center mt-12">
+          {/* Paginação + Botão */}
+          <div className="flex justify-between items-center mt-12 flex-col md:flex-row gap-6">
+            <div className="flex items-center space-x-2">
+              <button className="p-2 border rounded-lg disabled:opacity-50" onClick={handlePrevPage} disabled={currentPage === 1}>
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`px-4 py-2 rounded-lg ${currentPage === i + 1 ? "bg-[#79b2e9] text-white" : "border"}`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button className="p-2 border rounded-lg disabled:opacity-50" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
             <button
-              onClick={() => navigate('/imoveis/lista')}   
-              className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center"
+              onClick={() => navigate("/imoveis/lista")}
+              className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition font-semibold inline-flex items-center"
             >
               Ver Todos os Imóveis
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -287,10 +314,10 @@ const ImoveisPage: React.FC = () => {
                 
                   <button
                     onClick={() => navigate(service.link)} 
-                    className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center"
                   >
+                  <div className="w-full bg-[#79b2e9] text-white py-2 px-12 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
                     Saber mais
-                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </div>
                   </button>
 
               </div>
@@ -313,17 +340,18 @@ const ImoveisPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {sellingSteps.map((step, index) => (
               <div key={index} className="flex items-start">
-                <div className="bg-[#0d2233] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
-                  {index + 1}
+                <div className=" text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
+                  {step.icon}
                 </div>
                 <p className="text-gray-700 leading-relaxed">
-                  {step}
+                  {step.text}
                 </p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* Services Grid */}
       <section className="py-20 bg-gray-50">

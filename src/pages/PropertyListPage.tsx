@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Bed, Bath, Square, MapPin, Euro, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Bed, Bath, Square, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
