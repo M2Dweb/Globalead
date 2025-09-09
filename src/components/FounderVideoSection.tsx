@@ -45,6 +45,7 @@ const FounderVideoSection: React.FC = () => {
             {founderVideoUrl ? (
               <video
                 controls
+                playsInline
                 muted
                 className="w-full h-full object-fill"
                 poster="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800"
