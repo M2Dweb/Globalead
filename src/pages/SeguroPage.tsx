@@ -157,7 +157,7 @@ const SeguroPage: React.FC = () => {
                   style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
                 >
                   {partnerLogos.map((logo, index) => (
-                    <div key={index} className={`flex-shrink-0 w-1/3 sm:w-1/5 px-4`}>
+                    <div key={index} className="flex-shrink-0 px-4" style={{ width: `${100 / logosPerPage}%` }}>
                       <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                         <img src={logo} alt={`Parceiro ${index + 1}`} className="w-full h-30 object-contain" />
                       </div>
