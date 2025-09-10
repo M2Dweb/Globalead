@@ -498,6 +498,7 @@ const ImoveisPage: React.FC = () => {
       </section>
 
       {/* Contact Form */}
+      {/* Contact Form */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -508,6 +509,7 @@ const ImoveisPage: React.FC = () => {
 
           <div className="bg-white p-8 rounded-xl">
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Nome e Apelido */}
               <input
                 type="text"
                 name="nome"
@@ -525,6 +527,8 @@ const ImoveisPage: React.FC = () => {
                 placeholder="Apelido:"
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+
+              {/* Telemóvel e Email */}
               <input
                 type="tel"
                 name="telemovel"
@@ -542,7 +546,9 @@ const ImoveisPage: React.FC = () => {
                 required
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <select 
+
+              {/* Pretendo */}
+              <select
                 name="assunto"
                 value={formData.assunto}
                 onChange={handleInputChange}
@@ -554,13 +560,15 @@ const ImoveisPage: React.FC = () => {
                 <option>Comprar</option>
                 <option>Construir</option>
               </select>
-              <select 
-                name="meio_contacto"
-                value={formData.meio_contacto}
+
+              {/* Distrito */}
+              <select
+                name="distrito"
+                value={formData.distrito}
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Selecione o distrito</option>
+                <option value="">Distrito:</option>
                 <option>Aveiro</option>
                 <option>Beja</option>
                 <option>Braga</option>
@@ -581,15 +589,24 @@ const ImoveisPage: React.FC = () => {
                 <option>Viseu</option>
                 <option>Ilhas</option>
               </select>
+
+              {/* Código Postal */}
               <input
                 type="text"
-                name="horario"
-                value={formData.horario}
+                name="cod_postal"
+                value={formData.cod_postal}
                 onChange={handleInputChange}
                 placeholder="Código Postal:"
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <select className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+              {/* Tipo de Imóvel */}
+              <select
+                name="escolha_imovel"
+                value={formData.escolha_imovel}
+                onChange={handleInputChange}
+                className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
                 <option value="">Tipo de Imóvel:</option>
                 <option>Apartamento</option>
                 <option>Moradia</option>
@@ -602,31 +619,89 @@ const ImoveisPage: React.FC = () => {
                 <option>Garagem</option>
                 <option>Outros</option>
               </select>
+
+              {/* Preço Máximo */}
               <input
                 type="number"
+                name="preço"
+                value={formData.preço}
+                onChange={handleInputChange}
                 placeholder="Preço Máx (€):"
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+
+              {/* Área Mínima */}
               <input
                 type="number"
-                placeholder="Área Min. (m²):"
+                name="area_min"
+                value={formData.area_min}
+                onChange={handleInputChange}
+                placeholder="Área Mínima (m²):"
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <select className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+              {/* Quartos */}
+              <select
+                name="num_quartos"
+                value={formData.num_quartos}
+                onChange={handleInputChange}
+                className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
                 <option value="">Nº de Quartos:</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
                 <option>4+</option>
               </select>
-              <select className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+              {/* Casas de Banho */}
+              <select
+                name="num_casas_banho"
+                value={formData.num_casas_banho}
+                onChange={handleInputChange}
+                className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
                 <option value="">Nº de Casas de Banho:</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
                 <option>4+</option>
               </select>
-              
+
+              {/* Meio de Contacto */}
+              <select
+                name="meio_contacto"
+                value={formData.meio_contacto}
+                onChange={handleInputChange}
+                className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Meio de Contacto:</option>
+                <option>Telefone</option>
+                <option>WhatsApp</option>
+                <option>Email</option>
+              </select>
+
+              {/* Horário de Contacto */}
+              <input
+                type="text"
+                name="horario"
+                value={formData.horario}
+                onChange={handleInputChange}
+                placeholder="Horário de Contacto:"
+                className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              {/* Mensagem */}
+              <textarea
+                name="mensagem"
+                value={formData.mensagem}
+                onChange={handleInputChange}
+                placeholder="Mensagem (opcional):"
+                rows={3}
+                className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              {/* Checkbox Termos */}
               <div className="md:col-span-2">
                 <label className="flex items-start text-sm text-gray-700 mb-4">
                   <input type="checkbox" className="mt-1 mr-2" required />
@@ -635,19 +710,19 @@ const ImoveisPage: React.FC = () => {
                 <p className="text-xs text-gray-600 mb-6">
                   Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
                 </p>
-                
+
                 {submitStatus === 'success' && (
                   <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
                     Mensagem enviada com sucesso! Entraremos em contacto em breve.
                   </div>
                 )}
-                
+
                 {submitStatus === 'error' && (
                   <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
                     Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
                   </div>
                 )}
-                
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -660,6 +735,8 @@ const ImoveisPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+
     </div>
   );
 };
