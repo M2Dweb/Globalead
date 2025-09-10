@@ -137,7 +137,7 @@ const SeguroPage: React.FC = () => {
       <AnimatedSection>
         <section className="py-20 bg-gray-50">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-16">Comparamos as várias instituições em Portugal</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-16">Comparamos as várias instituições em Portugal</h2>
           </div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center mt-16">
             {benefits.map((b, idx) => (
@@ -186,9 +186,7 @@ const SeguroPage: React.FC = () => {
           <div className="flex flex-col items-center">
             <div className="text-center mb-8">
               <h2 className="text-4xl font-bold mb-6">Faça uma simulação sem compromisso!</h2>
-              <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-8">
-                <div className="flex items-center"><Phone className="h-6 w-6 mr-2 text-[#79b2e9]" /><span className="text-lg">915 482 365 (chamada rede fixa nacional)</span></div>
-                <div className="flex items-center"><Mail className="h-6 w-6 mr-2 text-[#79b2e9]" /><span className="text-lg">POR EMAIL</span></div>
+              <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-6">
               </div>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
