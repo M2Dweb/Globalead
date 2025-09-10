@@ -6,12 +6,26 @@ import {
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
+import { sendEmail, FormData } from '../utils/emailService';
 
 const ImoveisPage: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+  const [formData, setFormData] = useState<Partial<FormData>>({
+    nome: '',
+    apelido: '',
+    telemovel: '',
+    email: '',
+    assunto: '',
+    meio_contacto: '',
+    horario: '',
+    mensagem: '',
+    page: 'imoveis'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const propertiesPerPage = 3;
   const totalPages = Math.ceil(properties.length / propertiesPerPage);
@@ -24,6 +38,46 @@ const ImoveisPage: React.FC = () => {
   // Funções de Paginação
   const handlePrevPage = () => currentPage > 1 && setCurrentPage((prev) => prev - 1);
   const handleNextPage = () => currentPage < totalPages && setCurrentPage((prev) => prev + 1);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      console.log('Dados do formulário Imóveis:', formData);
+      const success = await sendEmail(formData as FormData);
+      if (success) {
+        setSubmitStatus('success');
+        setFormData({
+          nome: '',
+          apelido: '',
+          telemovel: '',
+          email: '',
+          assunto: '',
+          meio_contacto: '',
+          horario: '',
+          mensagem: '',
+          page: 'imoveis'
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -453,36 +507,60 @@ const ImoveisPage: React.FC = () => {
           </div>
 
           <div className="bg-white p-8 rounded-xl">
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <input
                 type="text"
+                name="nome"
+                value={formData.nome}
+                onChange={handleInputChange}
                 placeholder="Nome:"
+                required
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="text"
+                name="apelido"
+                value={formData.apelido}
+                onChange={handleInputChange}
                 placeholder="Apelido:"
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="tel"
+                name="telemovel"
+                value={formData.telemovel}
+                onChange={handleInputChange}
                 placeholder="Telemóvel:"
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 placeholder="Email:"
+                required
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <select className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Pretendo:</option>
+              <select 
+                name="assunto"
+                value={formData.assunto}
+                onChange={handleInputChange}
+                className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Pretendo:</option>
                 <option>Vender</option>
                 <option>Arrendar</option>
                 <option>Comprar</option>
                 <option>Construir</option>
               </select>
-              <select className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Selecione o distrito</option>
+              <select 
+                name="meio_contacto"
+                value={formData.meio_contacto}
+                onChange={handleInputChange}
+                className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Selecione o distrito</option>
                 <option>Aveiro</option>
                 <option>Beja</option>
                 <option>Braga</option>
@@ -505,11 +583,14 @@ const ImoveisPage: React.FC = () => {
               </select>
               <input
                 type="text"
+                name="horario"
+                value={formData.horario}
+                onChange={handleInputChange}
                 placeholder="Código Postal:"
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <select className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Tipo de Imóvel:</option>
+                <option value="">Tipo de Imóvel:</option>
                 <option>Apartamento</option>
                 <option>Moradia</option>
                 <option>Quinta</option>
@@ -532,14 +613,14 @@ const ImoveisPage: React.FC = () => {
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <select className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Nº de Quartos:</option>
+                <option value="">Nº de Quartos:</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
                 <option>4+</option>
               </select>
               <select className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Nº de Casas de Banho:</option>
+                <option value="">Nº de Casas de Banho:</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -548,17 +629,31 @@ const ImoveisPage: React.FC = () => {
               
               <div className="md:col-span-2">
                 <label className="flex items-start text-sm text-gray-700 mb-4">
-                  <input type="checkbox" className="mt-1 mr-2" />
+                  <input type="checkbox" className="mt-1 mr-2" required />
                   Sim, aceito os termos e condições indicados pela Globalead Portugal.
                 </label>
                 <p className="text-xs text-gray-600 mb-6">
                   Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
                 </p>
+                
+                {submitStatus === 'success' && (
+                  <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                    Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                    Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
+                  </div>
+                )}
+                
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
                 >
-                  Enviar Pedido
+                  {isSubmitting ? 'Enviando...' : 'Enviar Pedido'}
                 </button>
               </div>
             </form>
