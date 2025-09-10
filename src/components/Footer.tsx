@@ -14,9 +14,17 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa';
 import { supabase } from '../lib/supabase';
+import { sendEmail, FormData } from '../utils/emailService';
 
 const Footer: React.FC = () => {
   const [latestPosts, setLatestPosts] = useState<any[]>([]);
+  const [newsletterData, setNewsletterData] = useState({
+    nome: '',
+    apelido: '',
+    email: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     const fetchLatestPosts = async () => {
@@ -41,6 +49,49 @@ const Footer: React.FC = () => {
 
     fetchLatestPosts();
   }, []);
+
+  const handleNewsletterInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewsletterData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const emailData: FormData = {
+        nome: newsletterData.nome,
+        apelido: newsletterData.apelido,
+        email: newsletterData.email,
+        assunto: 'Subscrição Newsletter',
+        mensagem: 'Pedido de subscrição da newsletter',
+        page: 'newsletter'
+      };
+      
+      console.log('Dados da newsletter:', emailData);
+      const success = await sendEmail(emailData);
+      if (success) {
+        setSubmitStatus('success');
+        setNewsletterData({
+          nome: '',
+          apelido: '',
+          email: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Erro ao subscrever newsletter:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -136,33 +187,58 @@ const Footer: React.FC = () => {
           <div className="flex flex-col items-center">
             <div className="w-full max-w-md text-left">
               <h3 className="text-xl font-bold mb-4 text-center">Receba as últimas novidades!</h3>
-              <form className="space-y-3">
+              <form onSubmit={handleNewsletterSubmit} className="space-y-3">
                 <input
                   type="text"
+                  name="nome"
+                  value={newsletterData.nome}
+                  onChange={handleNewsletterInputChange}
                   placeholder="Nome:"
+                  required
                   className="w-full px-3 py-2 bg-white border border-[#79b2e9] rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
+                  name="apelido"
+                  value={newsletterData.apelido}
+                  onChange={handleNewsletterInputChange}
                   placeholder="Apelido:"
                   className="w-full px-3 py-2 bg-white border border-[#79b2e9] rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="email"
+                  name="email"
+                  value={newsletterData.email}
+                  onChange={handleNewsletterInputChange}
                   placeholder="Email:"
+                  required
                   className="w-full px-3 py-2 bg-white border border-[#79b2e9] rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <div className="flex items-start">
-                  <input type="checkbox" id="newsletter-consent" className="mt-1 mr-2" />
+                  <input type="checkbox" id="newsletter-consent" className="mt-1 mr-2" required />
                   <label htmlFor="newsletter-consent" className="text-xs text-gray-400">
                     Sim, autorizo receber informações e novidades da Globalead Portugal.
                   </label>
                 </div>
+                
+                {submitStatus === 'success' && (
+                  <div className="p-2 bg-green-100 border border-green-400 text-green-700 rounded text-xs">
+                    Subscrição realizada com sucesso!
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="p-2 bg-red-100 border border-red-400 text-red-700 rounded text-xs">
+                    Erro ao subscrever. Tente novamente.
+                  </div>
+                )}
+                
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full bg-[#79b2e9] hover:bg-[#0d2233] text-white font-medium py-2 px-4 rounded-md transition-colors"
                 >
-                  Subscrever
+                  {isSubmitting ? 'Enviando...' : 'Subscrever'}
                 </button>
               </form>
             </div>
