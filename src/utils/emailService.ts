@@ -37,25 +37,26 @@ export const sendEmail = async (formData: FormData): Promise<boolean> => {
       to_email: 'globaleadgroup@gmail.com',
       from_name: `${formData.nome} ${formData.apelido || ''}`.trim(),
       from_email: formData.email,
-      phone: formData.telemovel,
+      phone: formData.telemovel || '',
       subject: formData.assunto || `Contacto via ${formData.page}`,
-      message: formData.mensagem || 'Sem mensagem específica',
-      contact_method: formData.meio_contacto,   // WhatsApp / Telefone / Email
-      schedule: formData.horario,              // Horário de contacto
-      district: formData.distrito,             // NOVO: distrito real
-      page_source: formData.page,
-      help_type: formData.tipo_ajuda,
-      loan_amount: formData.valor_emprestimo,
-      property_choice: formData.escolha_imovel,
-      sell_current: formData.vender_imovel_atual,
-      num_applicants: formData.num_proponentes,
-      household_income: formData.rendimento_agregado,
-      area_min: formData.area_min,
-      bedrooms: formData.num_quartos,
-      bathrooms: formData.num_casas_banho,
-      price: formData.preço,
-      postal_code: formData.cod_postal
+      message: formData.mensagem || '',
+      contact_method: formData.meio_contacto || '',
+      schedule: formData.horario || '',
+      district: formData.distrito || '',
+      postal_code: formData.cod_postal || '',
+      property_choice: formData.escolha_imovel || '',
+      price: formData.preço || '',
+      area_min: formData.area_min || '',
+      bedrooms: formData.num_quartos || '',
+      bathrooms: formData.num_casas_banho || '',
+      loan_amount: formData.valor_emprestimo || '',
+      sell_current: formData.vender_imovel_atual || '',
+      num_applicants: formData.num_proponentes || '',
+      household_income: formData.rendimento_agregado || '',
+      help_type: formData.tipo_ajuda || '',
+      page_source: formData.page
     };
+
 
 
     const response = await emailjs.send(serviceId, templateId, templateParams, publicKey);
