@@ -221,10 +221,16 @@ const SeguroPage: React.FC = () => {
 
       {/* FAQ Section */}
       <AnimatedSection>
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FAQ category="seguros" />
-            <div className="bg-white shadow-sm text-gray-500 text-xs mt-6">
+            <div className="text-center text-white mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Tem alguma questão que não foi contemplada?
+            </h2>
+            </div>
+            <div className="bg-gray-900" ><FAQ category="seguros" /></div>
+            
+            <div className="bg-gray-900 shadow-sm text-gray-500 text-xs mt-6">
               No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a SEGUP – Corretores de Seguros, S.A., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços prestados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica e ao sólido percurso da SEGUP no setor da mediação de seguros. Em conjunto, disponibilizamos um portefólio completo de soluções nos ramos Vida e Não Vida, com acesso às principais seguradoras do mercado. Através desta parceria, garantimos condições competitivas, acompanhamento especializado e um serviço de excelência, focado nas reais necessidades dos nossos clientes. Importa referir que a SEGUP – Corretores de Seguros, S.A., sociedade anónima com o número de pessoa coletiva 510670300, matriculada na Conservatória do Registo Comercial de Braga, encontra-se inscrita, desde 05/03/2024, na ASF – Autoridade de Supervisão de Seguros e Fundos de Pensões, como corretor de seguros, sob o n.º 624584421, com autorização para o exercício da atividade de mediação de seguros nos ramos Vida e Não Vida. O seu registo pode ser consultado em www.asf.com.pt, nos termos do artigo 32.º do Decreto-Lei n.º 144/2006, de 31 de julho.
             </div>
           </div>

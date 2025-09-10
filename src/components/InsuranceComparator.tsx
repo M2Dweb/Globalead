@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { Shield, Heart, Car, Users, Check } from 'lucide-react';
+import { Shield, Heart, Car, Users } from 'lucide-react';
 
 const InsuranceComparator: React.FC = () => {
   const [selectedInsurance, setSelectedInsurance] = useState('multiriscos');
-  
 
   // Seguros principais
   const mainInsurance = {
     life: {
-      icon: <Shield className="h-6 w-6 text-[#79b2e9]" />,
       name: 'Seguro Vida',
       providers: [
         { name: 'Fidelidade', price: 35, features: ['Falecimento', 'Invalidez'], rating: 4.5 },
@@ -17,7 +15,6 @@ const InsuranceComparator: React.FC = () => {
       ],
     },
     multiriscos: {
-      icon: <Heart className="h-6 w-6 text-[#79b2e9]" />,
       name: 'Multirriscos Habitação',
       providers: [
         { name: 'Fidelidade', price: 42, features: ['Incêndio', 'Roubo', 'Inundação', 'Danos Bens'], rating: 4.6 },
@@ -27,7 +24,7 @@ const InsuranceComparator: React.FC = () => {
     },
   };
 
-  // Outros Seguros (exemplos)
+  // Outros Seguros
   const otherInsurance = [
     {
       icon: <Car className="h-6 w-6 text-[#79b2e9]" />,
@@ -60,7 +57,6 @@ const InsuranceComparator: React.FC = () => {
 
   const currentInsurance = mainInsurance[selectedInsurance as keyof typeof mainInsurance] || { providers: [] };
 
-
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
@@ -70,77 +66,62 @@ const InsuranceComparator: React.FC = () => {
 
       {/* Main Insurance Selector */}
       <div className="flex space-x-4 mb-8">
-        {Object.entries(mainInsurance).map(([key, type]) => (
-          <button
-            key={key}
-            onClick={() => setSelectedInsurance(key)}
-            className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
-              selectedInsurance === key
-                ? 'bg-[#79b2e9] text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-[#0d2233] hover:text-white'
-            }`}
-          >
-            {type.icon}
-            <span className="ml-2">{type.name}</span>
-          </button>
-        ))}
+        {Object.entries(mainInsurance).map(([key, type]) => {
+          const isSelected = selectedInsurance === key;
+          const IconComponent = key === 'life' ? Shield : Heart;
+
+          return (
+            <button
+              key={key}
+              onClick={() => setSelectedInsurance(key)}
+              className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                isSelected
+                  ? 'bg-[#79b2e9] text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-[#0d2233] hover:text-white'
+              }`}
+            >
+              <IconComponent className={`h-6 w-6 ${isSelected ? 'text-white' : 'text-[#79b2e9]'}`} />
+              <span className="ml-2">{type.name}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Main Insurance Table */}
-      <div className="overflow-x-auto mb-12">
-        <table className="w-full table-fixed min-w-[600px] border-collapse">
-          <thead>
-            <tr className="border-b">
-              <th className="py-4 px-2 text-center">Seguradora</th>
-              <th className="py-4 px-2 text-center">Preço/mês</th>
-              <th className="py-4 px-2 text-center">Avaliação</th>
-              <th className="py-4 px-2 text-center">Coberturas</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentInsurance.providers.map((provider, index) => (
-              <tr key={index} className="border-b hover:bg-gray-50 text-center align-middle">
-                <td className="py-4 px-2 font-semibold text-gray-900">{provider.name}</td>
-                <td className="py-4 px-2 text-2xl font-bold text-[#79b2e9]">{provider.price}€</td>
-                <td className="py-4 px-2">
-                  <div className="flex justify-center items-center">
-                    <div className="flex text-yellow-400 mr-2">
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i} className={i < Math.floor(provider.rating) ? 'text-yellow-400' : 'text-gray-300'}>
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-600">{provider.rating}</span>
-                  </div>
-                </td>
-                <td className="py-4 px-2">
-                  <ul className="mx-auto text-sm h-28 overflow-y-auto">
-                    {provider.features?.map((f, i) => (
-                      <li key={i} className="flex items-center justify-center">
-                        <Check className="h-4 w-4 text-green-500 mr-2" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div className="mb-6 flex flex-col md:flex-row gap-6 md:items-stretch">
+        <div className="flex-1">
+          <div className="h-full flex flex-col">
+            <table className="w-full table-fixed border-collapse flex-1">
+              <thead>
+                <tr className="border-b">
+                  <th className="py-4 px-2 text-center">Seguradora</th>
+                  <th className="py-4 px-2 text-center">Preço/mês</th>
+                </tr>
+              </thead>
+              <tbody className="flex-1">
+                {currentInsurance.providers.map((provider, index) => (
+                  <tr key={index} className="border-b hover:bg-gray-50 text-center">
+                    <td className="py-4 px-2 font-semibold text-gray-900">{provider.name}</td>
+                    <td className="py-4 px-2 text-2xl font-bold text-[#79b2e9]">{provider.price}€</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-      {/* Other Insurance */}
-      <div className="mb-6">
-        <h4 className="text-xl font-semibold text-gray-900 mb-4">Outros Seguros</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Outros Seguros */}
+        <div className="flex-1 grid grid-cols-1 gap-6">
           {otherInsurance.map((insurance, idx) => (
-            <div key={idx} className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100">
+            <div
+              key={idx}
+              className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100 h-full flex flex-col justify-between"
+            >
               <div className="flex items-center mb-3">
                 {insurance.icon}
                 <span className="ml-2 font-semibold">{insurance.name}</span>
               </div>
-              <ul className="space-y-1 text-sm">
+              <ul className="space-y-1 text-sm mt-auto">
                 {insurance.providers.map((p, i) => (
                   <li key={i} className="flex justify-between">
                     <span>{p.name}</span>
@@ -155,7 +136,10 @@ const InsuranceComparator: React.FC = () => {
 
       {/* Call to Action */}
       <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600 mb-4">Preços indicativos. Valores finais dependem do perfil do cliente.</p>
+        <p className="text-sm text-gray-600 mb-4">
+          Preços meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma
+          simulação baseada em necessidades reais.
+        </p>
         <button className="bg-[#79b2e9] text-white px-6 py-3 rounded-lg hover:bg-[#0d2233] transition-colors font-semibold">
           Solicitar Cotação Personalizada
         </button>

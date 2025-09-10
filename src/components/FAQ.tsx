@@ -43,32 +43,36 @@ const FAQ: React.FC<FAQProps> = ({ category = 'geral' }) => {
     ],
     seguros: [
       {
-        question: "Que tipos de seguros comercializam?",
-        answer: "Comercializamos seguros automóvel, habitação, vida, saúde, acidentes pessoais e seguros empresariais."
+        question: "O que é um seguro?",
+        answer: "Um seguro é um acordo entre segurador e segurado, em que o segurador assume coberturas específicas em caso de sinistro, pagando indemnizações conforme o capital seguro. O segurado, responsável pelo pagamento do prémio, celebra o contrato formalizado na apólice do seguro, que define as coberturas e o custo. A indemnização pode ser paga ao segurado, a um beneficiário ou a terceiros afetados por prejuízos atribuídos ao segurado."
       },
       {
-        question: "Posso transferir o meu seguro atual?",
-        answer: "Sim, ajudamos na transferência do seu seguro atual e comparamos com outras opções para garantir as melhores condições."
-      }
-    ],
-    energia: [
-      {
-        question: "Como posso mudar de fornecedor de energia?",
-        answer: "Tratamos de todo o processo de mudança. Apenas precisa de autorizar a transferência e nós cuidamos do resto."
+        question: "O que é a apólice de um seguro?",
+        answer: "A apólice de seguro é o contrato celebrado entre a seguradora e o tomador do seguro, que inclui todas as condições gerais, particulares e especiais do seguro. As condições gerais são cláusulas padrão aplicáveis a riscos semelhantes, enquanto as condições particulares ou especiais são ajustadas de acordo com o tipo de seguro e as necessidades específicas do segurado."
       },
       {
-        question: "Vou ficar sem energia durante a mudança?",
-        answer: "Não, a mudança é feita sem interrupção do fornecimento. O processo é totalmente transparente."
-      }
-    ],
-    alarmes: [
-      {
-        question: "Que sistemas de alarme instalam?",
-        answer: "Instalamos sistemas de alarme residenciais e comerciais com monitorização 24h, câmaras de videovigilância e sensores de movimento."
+        question: "Seguro Automóvel: Como Funciona?",
+        answer: "O seguro automóvel é um contrato entre o tomador de seguro e a seguradora, transferindo a responsabilidade por danos causados pela utilização de um veículo. O seguro obrigatório por lei é o de responsabilidade civil, que cobre apenas danos a terceiros. Para proteção do próprio veículo, é necessário um seguro de danos próprios (\"contra todos os riscos\"). O prémio do seguro é influenciado por fatores como idade, experiência de condução, histórico de sinistros, características e utilização do veículo, local de parqueamento, quilometragem anual, dispositivos de segurança e outros elementos relacionados com o condutor e o veículo."
       },
       {
-        question: "O alarme funciona sem internet?",
-        answer: "Sim, os nossos sistemas têm comunicação GSM de backup que funciona mesmo sem internet ou energia elétrica."
+        question: "Que tipos de seguros existem?",
+        answer: "O mercado de seguros oferece uma ampla variedade de opções, incluindo cerca de 200 seguros obrigatórios por lei para atividades profissionais específicas. Estes estão organizados em categorias como: acidentes de trabalho, acidentes em serviço, acidentes pessoais, assistência a pessoas, danos, doença, incêndio, seguro caução, responsabilidade civil, roubo e vida."
+      },
+      {
+        question: "Seguro de Responsabilidade Civil: O que é?",
+        answer: "O seguro de responsabilidade civil é obrigatório por lei e protege as pessoas transportadas e terceiros em caso de acidente, cobrindo lesões corporais ou materiais. A cobertura mínima estabelecida pela ASF é de 1.220.000 euros para danos materiais e 6.070.000 euros para danos corporais, com revisão a cada cinco anos. No entanto, o seguro não cobre lesões do condutor responsável pelo acidente, danos no seu veículo, ou danos resultantes de acidentes causados deliberadamente ou por negligência nas normas de segurança rodoviária."
+      },
+      {
+        question: "É importante ter um seguro de vida?",
+        answer: "O seguro de vida cobre o risco de morte ou, alternativamente, de sobrevivência. Em caso de falecimento, a seguradora paga um capital acordado aos beneficiários, e em caso de sobrevivência, paga um montante à pessoa segura no final do contrato. Existem modalidades mistas que combinam ambos os casos, e o seguro pode ser complementado com coberturas adicionais, como invalidez ou desemprego. Este tipo de seguro oferece segurança económica à família, especialmente em situações de perda de rendimento ou aumento de custos com a longevidade."
+      },
+      {
+        question: "Sou obrigado a fazer um seguro de vida no crédito habitação?",
+        answer: "Se um banco exigir a contratação de um seguro de vida ao contratar um crédito à habitação, isso não é obrigatório por lei. Segundo o Decreto-Lei n.º 222/2009, os bancos devem informar o cliente sobre a possibilidade de fazer o seguro de vida, mas o cliente tem a liberdade de escolher a instituição onde deseja contratar o seguro."
+      },
+      {
+        question: "Qual é a utilidade de um Seguro Multirriscos-Habitação?",
+        answer: "O seguro multirriscos-habitação oferece proteção indemnizatória, cobrindo danos causados ao imóvel e ao seu recheio por incidentes como catástrofes naturais, incêndios, explosões, roubo, danos por água, problemas elétricos, entre outros. Esta solução vai além da apólice obrigatória por lei, que apenas cobre danos causados por incêndios em edifícios em propriedade horizontal, oferecendo uma proteção mais abrangente para a casa."
       }
     ]
   };
@@ -78,12 +82,7 @@ const FAQ: React.FC<FAQProps> = ({ category = 'geral' }) => {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Perguntas Frequentes
-        </h2>
-        <p className="text-xl text-gray-600">
-          Encontre respostas às perguntas mais comuns
-        </p>
+        
       </div>
 
       <div className="space-y-4">
