@@ -449,7 +449,7 @@ const ImoveisPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {sellingSteps.map((step, index) => (
-              <div key={index} className="flex items-start">
+              <div key={index} className="bg-gray-50 p-6 rounded-xl flex items-start">
                 <div className=" text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
                   {step.icon}
                 </div>
