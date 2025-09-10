@@ -130,12 +130,6 @@ const ImoveisPage: React.FC = () => {
 
   const businessServices = [
     {
-      icon: <Siren className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Alarmes",
-      description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar.",
-      link: "/alarmes"
-    },
-    {
       icon: <CreditCard className="h-12 w-12 text-[#79b2e9]" />,
       title: "Crédito Habitação",
       description: "A Globalead é especializada em oferecer soluções de Crédito Habitação personalizadas, graças à sua relação privilegiada e poder negocial com as principais instituições bancárias em Portugal, garantindo as melhores opções para o seu agregado familiar.",
@@ -158,35 +152,35 @@ const ImoveisPage: React.FC = () => {
   const sellingSteps = [
   {
     text: "Apresentação do imóvel através de tours virtuais de alta qualidade, permitindo que potenciais compradores explorem a propriedade à distância.",
-    icon: <Video className="w-6 h-6 text-[#79b2e9]" />
+    icon: <Video className="h-12 w-12 text-[#79b2e9]" />
   },
   {
     text: "Promoção do imóvel em todas as plataformas sociais e digitais, com campanhas segmentadas e uma estratégia detalhada para maximizar a visibilidade.",
-    icon: <Share2 className="w-6 h-6 text-[#79b2e9]" />
+    icon: <Share2 className="h-12 w-12 text-[#79b2e9]" />
   },
   {
     text: "Reportagem de imagens e vídeos promocionais para destacar as melhores características do imóvel.",
-    icon: <Camera className="w-6 h-6 text-[#79b2e9]" />
+    icon: <Camera className="h-12 w-12 text-[#79b2e9]" />
   },
   {
     text: "Publicação do imóvel nos principais portais imobiliários em Portugal e no estrangeiro, ampliando o alcance da sua oferta.",
-    icon: <Globe className="w-6 h-6 text-[#79b2e9]" />
+    icon: <Globe className="h-12 w-12 text-[#79b2e9]" />
   },
   {
     text: "Divulgação em zonas estratégicas para alcançar um público local relevante.",
-    icon: <MapPin className="w-6 h-6 text-[#79b2e9]" />
+    icon: <MapPin className="h-12 w-12 text-[#79b2e9]" />
   },
   {
     text: "Colocação de sinalética no local do imóvel para atrair potenciais compradores na área.",
-    icon: <Tag className="w-6 h-6 text-[#79b2e9]" />
+    icon: <Tag className="h-12 w-12 text-[#79b2e9]" />
   },
   {
     text: "Divulgação direcionada a uma carteira exclusiva de clientes qualificados e a grupos privados da Globalead Portugal.",
-    icon: <Users className="w-6 h-6 text-[#79b2e9]" />
+    icon: <Users className="h-12 w-12 text-[#79b2e9]" />
   },
   {
     text: "Especialistas em decoração de interiores transformam o imóvel, destacando o seu potencial e alinhando-o às tendências e expectativas dos compradores.",
-    icon: <Paintbrush className="w-6 h-6 text-[#79b2e9]" />
+    icon: <Paintbrush className="h-12 w-12 text-[#79b2e9]" />
   }
 ];
 
@@ -215,6 +209,7 @@ const ImoveisPage: React.FC = () => {
             </p>
           </div>
         </div>
+        
       </section>
 
       {/* Featured Properties */}
@@ -261,21 +256,33 @@ const ImoveisPage: React.FC = () => {
           )}
 
           {/* Paginação + Botão */}
-          <div className="flex justify-between items-center mt-12 flex-col md:flex-row gap-6">
+          <div className="flex justify-center items-center mt-12 flex-col md:flex-row gap-6">
             <div className="flex items-center space-x-2">
-              <button className="p-2 border rounded-lg disabled:opacity-50" onClick={handlePrevPage} disabled={currentPage === 1}>
+              <button
+                className="p-2 border rounded-lg disabled:opacity-50"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentPage(i + 1)}
-                  className={`px-4 py-2 rounded-lg ${currentPage === i + 1 ? "bg-[#79b2e9] text-white" : "border"}`}
+                  className={`px-4 py-2 rounded-lg ${
+                    currentPage === i + 1
+                      ? "bg-[#79b2e9] text-white"
+                      : "border"
+                  }`}
                 >
                   {i + 1}
                 </button>
               ))}
-              <button className="p-2 border rounded-lg disabled:opacity-50" onClick={handleNextPage} disabled={currentPage === totalPages}>
+              <button
+                className="p-2 border rounded-lg disabled:opacity-50"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
                 <ChevronRight className="h-5 w-5" />
               </button>
             </div>
@@ -283,12 +290,12 @@ const ImoveisPage: React.FC = () => {
               onClick={() => navigate("/imoveis/lista")}
               className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition font-semibold inline-flex items-center"
             >
-              Ver Todos os Imóveis
+              Ver Todos
               <ArrowRight className="ml-2 h-5 w-5" />
             </button>
           </div>
-        </div>
-      </section>
+        </div> 
+        </section>
 
       {/* Business Services Section */}
       <section className="py-20">
@@ -299,7 +306,7 @@ const ImoveisPage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {businessServices.map((service, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
                 <div className="flex justify-center mb-6">
@@ -326,7 +333,56 @@ const ImoveisPage: React.FC = () => {
         </div>
       </section>
 
-      {/* vidfeooooooooooooooooooooooooooooooooooooooooooooooooooooooo */}
+      {/* Exemplo de foto na vertical */}
+      {/* Exemplo de foto na vertical */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            
+            {/* Foto ou Vídeo Vertical */}
+            <div className="flex justify-center">
+              <video
+                className="rounded-2xl shadow-lg object-cover"
+                style={{ aspectRatio: "9/16", width: "100%", maxWidth: "350px" }}
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
+              >
+                <source src="https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/video4.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            {/* Texto */}
+            <div className="flex flex-col mt-20">
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                  Carlos Gonçalves
+                </h2>
+                <h3 className="text-xl text-[#79b2e9] font-medium">
+                  A confiança constrói o amanhã
+                </h3>
+              </div>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                Sou um profissional apaixonado pelo setor imobiliário, com foco em
+                ajudar famílias e investidores a encontrar o imóvel perfeito.
+                Acredito que cada propriedade tem uma história para contar e um
+                potencial único para transformar vidas. Com anos de experiência no
+                mercado, valorizo a transparência, a confiança e o acompanhamento
+                próximo em cada etapa do processo. Para mim, o sucesso não é apenas
+                fechar negócios, mas sim construir relações duradouras. Se procura
+                orientação, apoio e alguém que trate o seu projeto como único, estou
+                pronto para fazer parte desta jornada ao seu lado, garantindo que o
+                futuro da sua casa comece com segurança e visão.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
 
       {/* Selling Process Section */}
       <section className="py-20">
@@ -380,10 +436,6 @@ const ImoveisPage: React.FC = () => {
                   <p className="text-gray-600 mb-6">
                     {service.description}
                   </p>
-                  <button className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center">
-                    Saber mais
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </button>
                 </div>
               </div>
             ))}
