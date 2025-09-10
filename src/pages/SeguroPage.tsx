@@ -9,7 +9,7 @@ import { sendEmail, FormData } from '../utils/emailService';
 const SeguroPage: React.FC = () => {
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
-  const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 3 : 5);
+  const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 2 : 5);
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
     apelido: '',
@@ -65,7 +65,7 @@ const SeguroPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const handleResize = () => setLogosPerPage(window.innerWidth < 640 ? 3 : 5);
+    const handleResize = () => setLogosPerPage(window.innerWidth < 640 ? 2 : 5);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -136,7 +136,10 @@ const SeguroPage: React.FC = () => {
       {/* Benefits */}
       <AnimatedSection>
         <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-16">Comparamos as várias instituições em Portugal</h2>
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center mt-16">
             {benefits.map((b, idx) => (
               <div key={idx}>
                 <div className="flex justify-center mb-6">{b.icon}</div>
@@ -145,16 +148,8 @@ const SeguroPage: React.FC = () => {
               </div>
             ))}
           </div>
-        </section>
-      </AnimatedSection>
-
-      {/* Partner Logos Slider */}
-      <AnimatedSection>
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Comparamos as várias instituições em Portugal</h2>
-            </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+            
             {partnerLogos.length > 0 && (
               <div className="overflow-hidden">
                 <div
@@ -174,6 +169,7 @@ const SeguroPage: React.FC = () => {
           </div>
         </section>
       </AnimatedSection>
+
 
       {/* Insurance Comparator */}
       <AnimatedSection>

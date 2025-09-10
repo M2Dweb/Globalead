@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
-import { Shield, Home, Heart, Car, Users, Check } from 'lucide-react';
+import { Shield, Heart, Car, Users, Check } from 'lucide-react';
 
 const InsuranceComparator: React.FC = () => {
-  const [selectedInsurance, setSelectedInsurance] = useState('home');
+  const [selectedInsurance, setSelectedInsurance] = useState('multiriscos');
   
 
   // Seguros principais
   const mainInsurance = {
-    home: {
-      icon: <Home className="h-6 w-6 text-[#79b2e9]" />,
-      name: 'Seguro Habitação',
-      providers: [
-        { name: 'Fidelidade', price: 25, features: ['Incêndio', 'Inundação', 'Roubo', 'Responsabilidade Civil'], rating: 4.6 },
-        { name: 'Tranquilidade', price: 28, features: ['Incêndio', 'Inundação', 'Roubo', 'Responsabilidade Civil', 'Fenómenos Naturais'], rating: 4.4 },
-        { name: 'Zurich', price: 30, features: ['Incêndio', 'Inundação', 'Roubo', 'Responsabilidade Civil', 'Assistência Domiciliária'], rating: 4.5 },
-      ],
-    },
     life: {
       icon: <Shield className="h-6 w-6 text-[#79b2e9]" />,
       name: 'Seguro Vida',
@@ -67,7 +58,8 @@ const InsuranceComparator: React.FC = () => {
     },
   ];
 
-  const currentInsurance = mainInsurance[selectedInsurance as keyof typeof mainInsurance];
+  const currentInsurance = mainInsurance[selectedInsurance as keyof typeof mainInsurance] || { providers: [] };
+
 
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
@@ -96,7 +88,7 @@ const InsuranceComparator: React.FC = () => {
 
       {/* Main Insurance Table */}
       <div className="overflow-x-auto mb-12">
-        <table className="w-full table-fixed border-collapse">
+        <table className="w-full table-fixed min-w-[600px] border-collapse">
           <thead>
             <tr className="border-b">
               <th className="py-4 px-2 text-center">Seguradora</th>
@@ -137,8 +129,6 @@ const InsuranceComparator: React.FC = () => {
           </tbody>
         </table>
       </div>
-
-
 
       {/* Other Insurance */}
       <div className="mb-6">
