@@ -241,7 +241,7 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-[#0d2233] to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <video
           autoPlay
