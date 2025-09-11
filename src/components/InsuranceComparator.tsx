@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield, Heart, Car, Users } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 const InsuranceComparator: React.FC = () => {
   const [selectedInsurance, setSelectedInsurance] = useState('multiriscos');
+
+  // LOGOS
+  const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
+  const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
+  const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 2 : 5);
 
   // Seguros principais
   const mainInsurance = {
     life: {
       name: 'Seguro Vida',
       providers: [
-        { name: 'Fidelidade', price: 35, features: ['Falecimento', 'Invalidez'], rating: 4.5 },
-        { name: 'Tranquilidade', price: 38, features: ['Falecimento', 'Invalidez', 'Doenças Graves'], rating: 4.4 },
-        { name: 'Zurich', price: 40, features: ['Falecimento', 'Invalidez', 'Complementar'], rating: 4.3 },
+        { name: 'Fidelidade', price: 35 },
+        { name: 'Tranquilidade', price: 38 },
+        { name: 'Zurich', price: 40 },
       ],
     },
     multiriscos: {
       name: 'Multirriscos Habitação',
       providers: [
-        { name: 'Fidelidade', price: 42, features: ['Incêndio', 'Roubo', 'Inundação', 'Danos Bens'], rating: 4.6 },
-        { name: 'Tranquilidade', price: 45, features: ['Incêndio', 'Roubo', 'Inundação', 'Danos Bens', 'Fenómenos Naturais'], rating: 4.5 },
-        { name: 'Zurich', price: 48, features: ['Incêndio', 'Roubo', 'Inundação', 'Danos Bens', 'Assistência Domiciliária'], rating: 4.4 },
+        { name: 'Fidelidade', price: 42 },
+        { name: 'Tranquilidade', price: 45 },
+        { name: 'Zurich', price: 48 },
       ],
     },
   };
@@ -57,11 +63,39 @@ const InsuranceComparator: React.FC = () => {
 
   const currentInsurance = mainInsurance[selectedInsurance as keyof typeof mainInsurance] || { providers: [] };
 
+  // Fetch logos
+  useEffect(() => {
+    const handleResize = () => setLogosPerPage(window.innerWidth < 640 ? 2 : 5);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => { fetchPartnerLogos(); }, []);
+
+  useEffect(() => {
+    if (partnerLogos.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentPartnerIndex(prev => (prev + 1) % (partnerLogos.length - logosPerPage + 1));
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [partnerLogos.length, logosPerPage]);
+
+  const fetchPartnerLogos = async () => {
+    try {
+      const { data, error } = await supabase.storage.from('imagens').list('seguros', { limit: 25, offset: 0 });
+      if (!error && data) {
+        const logoUrls = data.map(file => supabase.storage.from('imagens').getPublicUrl(`seguros/${file.name}`).data.publicUrl);
+        setPartnerLogos(logoUrls);
+      }
+    } catch { setPartnerLogos([]); }
+  };
+
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
         <Shield className="h-8 w-8 text-[#79b2e9] mr-3" />
-        <h3 className="text-2xl font-bold text-gray-900">Comparador de Seguros</h3>
+        <h3 className="text-2xl font-bold text-gray-900">Simulador de Seguros</h3>
       </div>
 
       {/* Main Insurance Selector */}
@@ -87,7 +121,7 @@ const InsuranceComparator: React.FC = () => {
         })}
       </div>
 
-      {/* Main Insurance Table */}
+      {/* Main Insurance Table + Outros Seguros */}
       <div className="mb-6 flex flex-col md:flex-row gap-6 md:items-stretch">
         <div className="flex-1">
           <div className="h-full flex flex-col">
@@ -113,10 +147,7 @@ const InsuranceComparator: React.FC = () => {
         {/* Outros Seguros */}
         <div className="flex-1 grid grid-cols-1 gap-6">
           {otherInsurance.map((insurance, idx) => (
-            <div
-              key={idx}
-              className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100 h-full flex flex-col justify-between"
-            >
+            <div key={idx} className="bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100 h-full flex flex-col justify-between">
               <div className="flex items-center mb-3">
                 {insurance.icon}
                 <span className="ml-2 font-semibold">{insurance.name}</span>
@@ -133,6 +164,24 @@ const InsuranceComparator: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* LOGOS dos Parceiros */}
+      {partnerLogos.length > 0 && (
+        <div className="overflow-hidden mb-6">
+          <div
+            className="flex transition-transform duration-1000 ease-in-out"
+            style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
+          >
+            {partnerLogos.map((logo, index) => (
+              <div key={index} className="flex-shrink-0 px-4" style={{ width: `${100 / logosPerPage}%` }}>
+                <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <img src={logo} alt={`Parceiro ${index + 1}`} className="w-full h-20 object-contain" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Call to Action */}
       <div className="mt-6 text-center">

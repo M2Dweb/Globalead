@@ -148,25 +148,6 @@ const SeguroPage: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-            
-            {partnerLogos.length > 0 && (
-              <div className="overflow-hidden">
-                <div
-                  className="flex transition-transform duration-1000 ease-in-out"
-                  style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
-                >
-                  {partnerLogos.map((logo, index) => (
-                    <div key={index} className="flex-shrink-0 px-4" style={{ width: `${100 / logosPerPage}%` }}>
-                      <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                        <img src={logo} alt={`Parceiro ${index + 1}`} className="w-full h-30 object-contain" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
         </section>
       </AnimatedSection>
 
