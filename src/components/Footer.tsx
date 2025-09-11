@@ -176,7 +176,7 @@ const Footer: React.FC = () => {
           {/* Newsletter */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-md text-left">
-              <h3 className="text-xl font-bold mb-4 text-center">Receba as últimas novidades!</h3>
+              <h3 className="text-xl font-bold mb-5 text-center">Receba as últimas novidades!</h3>
               <form onSubmit={handleNewsletterSubmit} className="space-y-3">
                 <input
                   type="text"
