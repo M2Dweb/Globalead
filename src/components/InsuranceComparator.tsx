@@ -167,7 +167,7 @@ const InsuranceComparator: React.FC = () => {
 
       {/* LOGOS dos Parceiros */}
       {partnerLogos.length > 0 && (
-        <div className="overflow-hidden mb-6">
+        <div className="overflow-hidden mt-16 mb-16">
           <div
             className="flex transition-transform duration-1000 ease-in-out"
             style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
