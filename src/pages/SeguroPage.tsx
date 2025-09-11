@@ -171,6 +171,7 @@ const SeguroPage: React.FC = () => {
               {/* Título "Tem dúvidas" removido */}
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="text" name="nome" value={formData.nome} onChange={handleInputChange} placeholder="Nome*" required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
+                <input type="text" name="apelido" value={formData.apelido} onChange={handleInputChange} placeholder="Apelido*" required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
                 <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email*" required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
                 <input type="tel" name="telemovel" value={formData.telemovel} onChange={handleInputChange} placeholder="Contacto*" className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
                 <select name="meio_contacto" value={formData.meio_contacto} onChange={handleInputChange} className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
@@ -184,6 +185,12 @@ const SeguroPage: React.FC = () => {
                   <option>Pedido de Simulação</option>
                   <option>Esclarecimento de Dúvidas</option>
                   <option>Outro</option>
+                </select>
+                <select name="horário" value={formData.horario} onChange={handleInputChange} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                  <option value="">Horário</option>
+                  <option>9h-12h30</option>
+                  <option>12h30-16h</option>
+                  <option>16h-19h30</option>
                 </select>
                 <textarea name="mensagem" value={formData.mensagem} onChange={handleInputChange} placeholder="Mensagem" rows={4} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"></textarea>
                 <div className="md:col-span-2">
