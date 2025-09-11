@@ -61,6 +61,14 @@ const InsuranceComparator: React.FC = () => {
     },
   ];
 
+const scrollToForm = () => {
+  const el = document.getElementById("form-section");
+  el?.scrollIntoView({ behavior: "smooth" });
+};
+
+
+
+
   const currentInsurance = mainInsurance[selectedInsurance as keyof typeof mainInsurance] || { providers: [] };
 
   // Fetch logos
@@ -189,8 +197,11 @@ const InsuranceComparator: React.FC = () => {
           Preços meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma
           simulação baseada em necessidades reais.
         </p>
-        <button className="bg-[#79b2e9] text-white px-6 py-3 rounded-lg hover:bg-[#0d2233] transition-colors font-semibold">
-          Solicitar Cotação Personalizada
+        <button 
+          onClick={scrollToForm}
+          className="bg-[#79b2e9] text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+        >
+          Pedir Simulação
         </button>
       </div>
     </div>

@@ -94,7 +94,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 items-center text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Grid principal */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 justify-center">
@@ -120,17 +120,7 @@ const Footer: React.FC = () => {
               </div>
 
               <div className="mt-6 text-center">
-                <h3 className="text-xl font-bold mb-4">Entre em Contacto!</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-center">
-                    <Phone className="h-5 w-5 mr-2 text-[#79b2e9]" />
-                    <span>+351 915482365</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <Mail className="h-5 w-5 mr-2 text-[#79b2e9]" />
-                    <span>geral@globalead.pt</span>
-                  </div>
-                </div>
+                
 
 
 

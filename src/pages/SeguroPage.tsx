@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Car, Heart, Home, Shield, Users, Briefcase, Scale, Building, Phone, Mail } from 'lucide-react';
+import { Car, Heart, Home, Shield, Users, Briefcase, Scale, Building } from 'lucide-react';
 import InsuranceComparator from '../components/InsuranceComparator';
 import FAQ from '../components/FAQ';
 import AnimatedSection from '../components/AnimatedSection';
@@ -8,7 +8,7 @@ import { sendEmail, FormData } from '../utils/emailService';
 
 const SeguroPage: React.FC = () => {
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
-  const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
+  
   const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 2 : 5);
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
@@ -23,6 +23,8 @@ const SeguroPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  
 
   const insuranceTypes = [
     { icon: <Car className="h-12 w-12 text-[#79b2e9]" />, title: "Seguro Automóvel", description: "A Globalead oferece proteção abrangente para o seu automóvel." },
@@ -73,12 +75,7 @@ const SeguroPage: React.FC = () => {
   useEffect(() => { fetchPartnerLogos(); }, []);
 
   useEffect(() => {
-    if (partnerLogos.length > 0) {
-      const interval = setInterval(() => {
-        setCurrentPartnerIndex(prev => (prev + 1) % (partnerLogos.length - logosPerPage + 1));
-      }, 3000);
-      return () => clearInterval(interval);
-    }
+    
   }, [partnerLogos.length, logosPerPage]);
 
   const fetchPartnerLogos = async () => {
@@ -92,6 +89,7 @@ const SeguroPage: React.FC = () => {
     } catch { setPartnerLogos([]); }
   };
 
+  
   return (
     <div className="min-h-screen bg-white">
 
@@ -103,9 +101,11 @@ const SeguroPage: React.FC = () => {
         </video>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1 className="text-5xl font-bold mb-6">Seguramos o seu futuro!</h1>
-          <p className="text-xl text-blue-100 max-w-4xl mx-auto">
+          <p className="text-xl text-blue-100 max-w-4xl mx-auto mb-8">
             Na Globalead, oferecemos soluções de seguros completas e personalizadas, para clientes pessoais e empresariais.
           </p>
+          {/* Botão alterado */}
+          
         </div>
       </section>
 
@@ -151,7 +151,6 @@ const SeguroPage: React.FC = () => {
         </section>
       </AnimatedSection>
 
-
       {/* Insurance Comparator */}
       <AnimatedSection>
         <section className="py-20 bg-white">
@@ -162,16 +161,14 @@ const SeguroPage: React.FC = () => {
       </AnimatedSection>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gray-900 text-white">
+      <section  id="form-section" className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             <div className="text-center mb-8">
               <h2 className="text-4xl font-bold mb-6">Faça uma simulação sem compromisso!</h2>
-              <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-6">
-              </div>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Tem dúvidas? Entre em contacto</h3>
+              {/* Título "Tem dúvidas" removido */}
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="text" name="nome" value={formData.nome} onChange={handleInputChange} placeholder="Nome*" required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
                 <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email*" required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
@@ -182,7 +179,12 @@ const SeguroPage: React.FC = () => {
                   <option>Whatsapp</option>
                   <option>Telefone</option>
                 </select>
-                <input type="text" name="assunto" value={formData.assunto} onChange={handleInputChange} placeholder="Assunto" className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
+                <select name="assunto" value={formData.assunto} onChange={handleInputChange} className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                  <option value="">Assunto</option>
+                  <option>Pedido de Simulação</option>
+                  <option>Esclarecimento de Dúvidas</option>
+                  <option>Outro</option>
+                </select>
                 <textarea name="mensagem" value={formData.mensagem} onChange={handleInputChange} placeholder="Mensagem" rows={4} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"></textarea>
                 <div className="md:col-span-2">
                   {submitStatus === 'success' && <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">Mensagem enviada com sucesso! Entraremos em contacto em breve.</div>}
@@ -192,9 +194,6 @@ const SeguroPage: React.FC = () => {
                   </button>
                 </div>
               </form>
-              <div className="max-w-2xl mx-auto px-4 sm:px-2 lg:px-8">
-                
-              </div>
             </div>
           </div>
         </div>
@@ -202,26 +201,24 @@ const SeguroPage: React.FC = () => {
 
       {/* FAQ Section */}
       <AnimatedSection>
-        <section className="py-20 bg-gray-900">
+        <section className="mt- bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center text-white mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Tem alguma questão que não foi contemplada?
-            </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Tem alguma questão que não foi contemplada?
+              </h2>
             </div>
-            <div className="bg-gray-900" ><FAQ category="seguros" /></div>
+            <div className="bg-gray-900"><FAQ category="seguros" /></div>
             
-            <div className="bg-gray-900 shadow-sm text-gray-500 text-xs mt-6">
+            {/* Texto ajustado com padding equilibrado */}
+            <div className="bg-gray-900 shadow-sm text-gray-500 text-xs py-12 text-justify">
               No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a SEGUP – Corretores de Seguros, S.A., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços prestados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica e ao sólido percurso da SEGUP no setor da mediação de seguros. Em conjunto, disponibilizamos um portefólio completo de soluções nos ramos Vida e Não Vida, com acesso às principais seguradoras do mercado. Através desta parceria, garantimos condições competitivas, acompanhamento especializado e um serviço de excelência, focado nas reais necessidades dos nossos clientes. Importa referir que a SEGUP – Corretores de Seguros, S.A., sociedade anónima com o número de pessoa coletiva 510670300, matriculada na Conservatória do Registo Comercial de Braga, encontra-se inscrita, desde 05/03/2024, na ASF – Autoridade de Supervisão de Seguros e Fundos de Pensões, como corretor de seguros, sob o n.º 624584421, com autorização para o exercício da atividade de mediação de seguros nos ramos Vida e Não Vida. O seu registo pode ser consultado em www.asf.com.pt, nos termos do artigo 32.º do Decreto-Lei n.º 144/2006, de 31 de julho.
             </div>
           </div>
-          
         </section>
       </AnimatedSection>
-
     </div>
   );
 };
 
 export default SeguroPage;
-            

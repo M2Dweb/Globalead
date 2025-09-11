@@ -81,7 +81,7 @@ const FAQ: React.FC<FAQProps> = ({ category = 'geral' }) => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-12">
+      <div className="text-center mb-2">
         
       </div>
 
