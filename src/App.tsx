@@ -22,6 +22,7 @@ import AlarmesPage from './pages/AlarmesPage';
 import EnergiaPage from './pages/EnergiaPage';
 import TvNetVozPage from './pages/TvNetVozPage';
 import BlogPage from './pages/BlogPage';
+import BlogPostPage from './pages/BlogPostPage';
 
 // Scroll to top component
 const ScrollToTop: React.FC = () => {
@@ -49,53 +50,50 @@ const AppLayout: React.FC = () => {
   }, []);
 
   const getBreadcrumbs = () => {
-    const path = location.pathname;
-    
-    switch (path) {
-      case '/sobre':
-        return [{ label: 'Sobre Nós', current: true }];
-      case '/imoveis':
-        return [{ label: 'Imóveis', current: true }];
-      case '/imoveis/lista':
-        return [
-          { label: 'Imóveis', href: '/imoveis' },
-          { label: 'Catálogo', current: true }
-        ];
-      case '/seguros':
-        return [{ label: 'Seguros', current: true }];
-      case '/credito':
-        return [
-          { label: 'Imóveis', href: '/imoveis' },
-          { label: 'Crédito Habitação', current: true }
-        ];
-      case '/certificacao':
-        return [
-          { label: 'Imóveis', href: '/imoveis' },
-          { label: 'Certificação Energética', current: true }
-        ];
-      case '/alarmes':
-        return [{ label: 'Alarmes', current: true }];
-      case '/energia':
-        return [{ label: 'Energia', current: true }];
-      case '/tv-net-voz':
-        return [{ label: 'TV, Net & Voz', current: true }];
-      case '/blog':
-        return [{ label: 'Blog', current: true }];
-      case '/contactos':
-        return [{ label: 'Contactos', current: true }];
-      case '/admin':
-        return [{ label: 'Administração', current: true }];
-      default:
-        if (path.startsWith('/imoveis/')) {
-          return [
-            { label: 'Imóveis', href: '/imoveis' },
-            { label: 'Catálogo', href: '/imoveis/lista' },
-            { label: 'Detalhes', current: true }
-          ];
-        }
-        return [];
-    }
-  };
+  const path = location.pathname;
+
+  if (path === '/sobre') return [{ label: 'Sobre Nós', current: true }];
+  if (path === '/imoveis') return [{ label: 'Imóveis', current: true }];
+  if (path === '/imoveis/lista') return [
+    { label: 'Imóveis', href: '/imoveis' },
+    { label: 'Catálogo', current: true }
+  ];
+  if (path === '/seguros') return [{ label: 'Seguros', current: true }];
+  if (path === '/credito') return [
+    { label: 'Imóveis', href: '/imoveis' },
+    { label: 'Crédito Habitação', current: true }
+  ];
+  if (path === '/certificacao') return [
+    { label: 'Imóveis', href: '/imoveis' },
+    { label: 'Certificação Energética', current: true }
+  ];
+  if (path === '/alarmes') return [{ label: 'Alarmes', current: true }];
+  if (path === '/energia') return [{ label: 'Energia', current: true }];
+  if (path === '/tv-net-voz') return [{ label: 'TV, Net & Voz', current: true }];
+  if (path === '/blog') return [{ label: 'Blog', current: true }];
+  if (path === '/contactos') return [{ label: 'Contactos', current: true }];
+  if (path === '/admin') return [{ label: 'Administração', current: true }];
+
+  // Detalhes de imóveis
+  if (path.startsWith('/imoveis/')) {
+    return [
+      { label: 'Imóveis', href: '/imoveis' },
+      { label: 'Catálogo', href: '/imoveis/lista' },
+      { label: 'Detalhes', current: true }
+    ];
+  }
+
+  // Detalhes do blog
+  if (path.startsWith('/blog/')) {
+    return [
+      { label: 'Blog', href: '/blog' },
+      { label: 'Artigo', current: true }
+    ];
+  }
+
+  return [];
+};
+
 
   const breadcrumbs = getBreadcrumbs();
 
@@ -125,6 +123,7 @@ const AppLayout: React.FC = () => {
           <Route path="/energia" element={<EnergiaPage />} />
           <Route path="/tv-net-voz" element={<TvNetVozPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogPostPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/contactos" element={<ContactosPage />} />
         </Routes>

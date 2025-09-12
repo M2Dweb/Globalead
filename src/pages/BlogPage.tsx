@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, ArrowRight, Search, Filter } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { Link } from 'react-router-dom';
 
 const BlogPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -10,11 +11,14 @@ const BlogPage: React.FC = () => {
 
   const categories = [
     { id: 'all', name: 'Todos', count: 0 },
-    { id: 'imoveis', name: 'Imobiliário', count: 0 },
-    { id: 'credito', name: 'Crédito Habitação', count: 0 },
-    { id: 'certificacao', name: 'Certificado Energético', count: 0 },
-    { id: 'seguros', name: 'Seguros', count: 0 }
+    { id: 'imobiliario', name: 'Imobiliário', count: 0 },
+    { id: 'financas', name: 'Finanças', count: 0 },
+    { id: 'seguros', name: 'Seguros', count: 0 },
+    { id: 'energia', name: 'Energia', count: 0 },
+    { id: 'telecom', name: 'Telecomunicações', count: 0 },
+    { id: 'alarmes', name: 'Alarmes', count: 0 },
   ];
+
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
@@ -102,7 +106,7 @@ const BlogPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center relative z-10">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Blog & Notícias
+                Últimas notícias 
               </h1>
               <p className="text-xl text-blue-100 max-w-4xl mx-auto">
                 A carregar artigos...
@@ -132,10 +136,10 @@ const BlogPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Blog & Notícias
+              Últimas notícias 
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-              Mantenha-se atualizado com as últimas novidades do mercado imobiliário e financeiro
+              Mantenha-se atualizado com as últimas novidades sobre os vários setores de atividade da Globalead Portugal
             </p>
           </div>
         </div>
@@ -215,10 +219,14 @@ const BlogPage: React.FC = () => {
                     {post.excerpt}
                   </p>
                   
-                  <button className="text-[#0d2233] font-medium hover:text-[#79b2e9] transition-colors inline-flex items-center">
-                    Ler mais
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </button>
+                  <Link
+                    to={`/blog/${post.id}`}
+                    className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center inline-block font-medium"
+                  >
+                    Saber mais
+                  </Link>
+
+
                 </div>
               </article>
             ))}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Save, X, Upload, Eye, Lock } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Eye, Lock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
@@ -423,19 +423,20 @@ Descrição: ${property.description}
   };
 
   const handleEditBlogPost = (post: any) => {
-    setEditingId(post.id);
-    setNewBlogPost({
-      title: post.title,
-      content: post.content,
-      excerpt: post.excerpt,
-      category: post.category,
-      date: newBlogPost.date,
-      author: post.author,
-      image: post.image,
-      read_time: post.read_time
-    });
-    setIsEditing(true);
-  };
+  setEditingId(post.id);
+  setNewBlogPost({
+    title: post.title,
+    content: post.content,
+    excerpt: post.excerpt,
+    category: post.category,
+    date: post.date, // ⚡ corrigido
+    author: post.author,
+    image: post.image,
+    read_time: post.read_time
+  });
+  setIsEditing(true);
+};
+
 
   const handleViewBlogPost = (post: any) => {
     alert(`
@@ -931,7 +932,20 @@ Conteúdo: ${post.content}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900">Gestão de Blog & Notícias</h2>
               <button
-                onClick={() => setIsEditing(true)}
+                onClick={() => {
+                  setIsEditing(true);
+                  setEditingId(null);
+                  setNewBlogPost({
+                    title: '',
+                    content: '',
+                    excerpt: '',
+                    category: 'imoveis',
+                    author: 'Globalead Portugal',
+                    image: '',
+                    read_time: '5 min',
+                    date: new Date().toISOString().slice(0, 10)
+                  });
+                }}
                 className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
               >
                 <Plus className="mr-2 h-4 w-4" />
@@ -956,6 +970,7 @@ Conteúdo: ${post.content}
                     <X className="h-5 w-5" />
                   </button>
                 </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="flex flex-col">
                     <label className="mb-2">Título do artigo:</label>
@@ -972,7 +987,6 @@ Conteúdo: ${post.content}
                     <label className="mb-2">Data do artigo:</label>
                     <input
                       type="date"
-                      placeholder="Data do artigo"
                       value={newBlogPost.date}
                       onChange={(e) => setNewBlogPost({...newBlogPost, date: e.target.value})}
                       className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -983,13 +997,15 @@ Conteúdo: ${post.content}
                     <label className="mb-2">Categoria:</label>
                     <select
                       value={newBlogPost.category}
-                      onChange={(e) => setNewBlogPost({...newBlogPost, category: e.target.value})}
+                      onChange={(e) => setNewBlogPost({ ...newBlogPost, category: e.target.value })}
                       className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="imoveis">Imobiliário</option>
-                      <option value="credito">Crédito Habitação</option>
-                      <option value="certificacao">Certificado Energético</option>
+                      <option value="imobiliario">Imobiliário</option>
+                      <option value="financas">Finanças</option>
                       <option value="seguros">Seguros</option>
+                      <option value="energia">Energia</option>
+                      <option value="telecomunicacoes">Telecomunicações</option>
+                      <option value="alarmes">Alarmes</option>
                     </select>
                   </div>
                 </div>
@@ -1024,6 +1040,7 @@ Conteúdo: ${post.content}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
+
                 <div className="flex justify-end space-x-4">
                   <button
                     onClick={() => {
@@ -1073,13 +1090,37 @@ Conteúdo: ${post.content}
                           <div className="text-sm text-gray-500 line-clamp-2">{post.excerpt}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            {post.category}
+                          {/* Badges das categorias na lista */}
+                          <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              post.category === 'imobiliario'
+                                ? 'bg-blue-100 text-blue-800'
+                                : post.category === 'financas'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : post.category === 'seguros'
+                                ? 'bg-green-100 text-green-800'
+                                : post.category === 'energia'
+                                ? 'bg-purple-100 text-purple-800'
+                                : post.category === 'telecomunicacoes'
+                                ? 'bg-indigo-100 text-indigo-800'
+                                : 'bg-red-100 text-red-800'
+                            }`}
+                          >
+                            {post.category === 'imobiliario'
+                              ? 'Imobiliário'
+                              : post.category === 'financas'
+                              ? 'Finanças'
+                              : post.category === 'seguros'
+                              ? 'Seguros'
+                              : post.category === 'energia'
+                              ? 'Energia'
+                              : post.category === 'telecomunicacoes'
+                              ? 'Telecomunicações'
+                              : 'Alarmes'}
                           </span>
+
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {post.date}
-                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{post.date}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
                             <button
@@ -1110,6 +1151,7 @@ Conteúdo: ${post.content}
             </div>
           </div>
         )}
+
         {/* Settings Tab */}
         {activeTab === 'settings' && (
           <div>
