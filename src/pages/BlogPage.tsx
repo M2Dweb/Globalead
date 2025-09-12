@@ -151,9 +151,10 @@ const BlogPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Search and Filters */}
           <div className="mb-12">
-            <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
+           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
+              
               {/* Search */}
-              <div className="relative flex-1 max-w-md">
+              <div className="relative w-full max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
@@ -165,8 +166,11 @@ const BlogPage: React.FC = () => {
               </div>
 
               {/* Category Filter */}
-              <div className="flex items-center space-x-2">
-                <Filter className="h-5 w-5 text-gray-500" />
+              <div>
+                <div className="flex items-center gap-2 mb-3 text-gray-600">
+                  <Filter className="h-5 w-5" />
+                  <span className="text-sm font-medium">Filtrar por categoria:</span>
+                </div>
                 <div className="flex flex-wrap gap-2">
                   {categories.map(category => (
                     <button
@@ -183,8 +187,10 @@ const BlogPage: React.FC = () => {
                   ))}
                 </div>
               </div>
+
             </div>
           </div>
+
 
           {/* Blog Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

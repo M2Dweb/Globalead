@@ -63,7 +63,7 @@ const BlogPostPage: React.FC = () => {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <h1 className="text-4xl font-bold relative z-10 text-center px-4">{post.title}</h1>
+        <h1 className="text-3xl mt-10 font-bold relative z-10 text-center px-4">{post.title}</h1>
       </section>
 
       {/* Conteúdo + Sidebar */}
@@ -95,7 +95,7 @@ const BlogPostPage: React.FC = () => {
                     alt={op.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-medium">
+                  <div className="absolute top-2 left-2 bg-[#79b2e9] text-white px-2 py-0.5 rounded text-xs font-medium">
                     {categories.find(cat => cat.id === op.category)?.name}
                   </div>
                   <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-0.5 rounded text-xs">
@@ -117,8 +117,11 @@ const BlogPostPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="mt-6">
-            <Link to="/blog" className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center inline-block font-medium mt-2">
+          <div className="mt-6 flex justify-center">
+            <Link
+              to="/blog"
+              className="bg-[#0d2233] text-white py-2 px-6 rounded-lg hover:bg-[#79b2e9] transition-colors text-center font-medium inline-block"
+            >
               Ver mais →
             </Link>
           </div>
