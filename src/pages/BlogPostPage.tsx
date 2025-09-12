@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 import { Link, useParams } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
+import ContentRenderer from '../components/ContentRenderer';
+
 
 const categories = [
   { id: 'imobiliario', name: 'Imobiliário' },
@@ -74,7 +76,7 @@ const BlogPostPage: React.FC = () => {
             <span>Por {post.author}</span>
           </div>
 
-          <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+          <ContentRenderer content={post.content} className="prose-headings:text-gray-900 prose-p:text-gray-700" />
         </article>
 
         {/* Sidebar com outras notícias */}
@@ -104,14 +106,12 @@ const BlogPostPage: React.FC = () => {
                   <h4 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-700 transition-colors">
                     {op.title}
                   </h4>
-                  <p className="text-gray-600 text-sm line-clamp-2 mt-1">{op.excerpt}</p>
-                    <Link
-                        to={`/blog/${op.id}`}
-                        className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center inline-block font-medium mt-2"
-                    >
-                        Saber mais
-                    </Link>
-
+                  <div className="text-gray-600 text-sm line-clamp-2 mt-1">
+                    <ContentRenderer content={op.excerpt} />
+                  </div>
+                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center inline-block font-medium mt-2">
+                    Saber mais
+                  </div>
                 </div>
               </Link>
             ))}

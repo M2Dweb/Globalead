@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, Save, X, Eye, Lock } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import ContentRenderer from '../components/ContentRenderer';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
+import RichTextEditor from '../components/RichTextEditor';
+import { supabase } from '../lib/supabase';
+
 
 const AdminPage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -15,6 +18,7 @@ const AdminPage: React.FC = () => {
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [siteSettings, setSiteSettings] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const [previewMode, setPreviewMode] = useState<string | null>(null);
 
   const [newProperty, setNewProperty] = useState<any>({
     title: '',
@@ -25,18 +29,17 @@ const AdminPage: React.FC = () => {
     area: 0,
     location: '',
     type: 'apartamento',
-    energy_class: 'B',       // Novo
-    year_built: new Date().getFullYear(), // Novo
-    features: [],             // Novo (_text array)
+    energy_class: 'B',
+    year_built: new Date().getFullYear(),
+    features: [],
     images: [],
     floor_plans: [],
-    property_types: [],       // jsonb
-    state: '',                // Novo
-    parking: 0,               // Novo
-    reference: '',            // Novo
+    property_types: [],
+    state: '',
+    parking: 0,
+    reference: '',
     videos: ''
   });
-
 
   const [newBlogPost, setNewBlogPost] = useState<any>({
     title: '',
@@ -287,7 +290,7 @@ const AdminPage: React.FC = () => {
       type: property.type || 'apartamento',
       energy_class: property.energy_class || 'B',
       year_built: property.year_built || new Date().getFullYear(),
-      features: property.features || [],         // Garantir array
+      features: property.features || [],
       images: property.images || [],
       videos: property.videos || '',
       floor_plans: property.floor_plans || [],
@@ -297,20 +300,11 @@ const AdminPage: React.FC = () => {
       reference: property.reference || ''
     });
     setIsEditing(true);
+    setPreviewMode(null);
   };
 
-
   const handleViewProperty = (property: any) => {
-    alert(`
-Título: ${property.title}
-Preço: €${property.price?.toLocaleString()}
-Localização: ${property.location}
-Quartos: ${property.bedrooms}
-Casas de banho: ${property.bathrooms}
-Área: ${property.area}m²
-Tipo: ${property.type}
-Descrição: ${property.description}
-    `);
+    setPreviewMode(`property-${property.id}`);
   };
 
   const handleSaveProperty = async () => {
@@ -384,8 +378,6 @@ Descrição: ${property.description}
           author: newBlogPost.author,
           image: newBlogPost.image,
           read_time: newBlogPost.read_time
-          
-
         }])
         .select();
       
@@ -423,30 +415,23 @@ Descrição: ${property.description}
   };
 
   const handleEditBlogPost = (post: any) => {
-  setEditingId(post.id);
-  setNewBlogPost({
-    title: post.title,
-    content: post.content,
-    excerpt: post.excerpt,
-    category: post.category,
-    date: post.date, // ⚡ corrigido
-    author: post.author,
-    image: post.image,
-    read_time: post.read_time
-  });
-  setIsEditing(true);
-};
-
+    setEditingId(post.id);
+    setNewBlogPost({
+      title: post.title,
+      content: post.content,
+      excerpt: post.excerpt,
+      category: post.category,
+      date: post.date,
+      author: post.author,
+      image: post.image,
+      read_time: post.read_time
+    });
+    setIsEditing(true);
+    setPreviewMode(null);
+  };
 
   const handleViewBlogPost = (post: any) => {
-    alert(`
-Título: ${post.title}
-Categoria: ${post.category}
-Autor: ${post.author}
-Data: ${post.date}
-Resumo: ${post.excerpt}
-Conteúdo: ${post.content}
-    `);
+    setPreviewMode(`blog-${post.id}`);
   };
 
   const handleUpdateBlogPost = async () => {
@@ -555,6 +540,74 @@ Conteúdo: ${post.content}
     );
   }
 
+  // Preview Modal
+  const renderPreview = () => {
+    if (!previewMode) return null;
+
+    const [type, id] = previewMode.split('-');
+    let item = null;
+
+    if (type === 'property') {
+      item = properties.find(p => p.id === id);
+      if (!item) return null;
+
+      return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl max-w-4xl max-h-[90vh] overflow-auto p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-2xl font-bold">Pré-visualização: {item.title}</h3>
+              <button
+                onClick={() => setPreviewMode(null)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div><strong>Preço:</strong> €{item.price?.toLocaleString()}</div>
+              <div><strong>Localização:</strong> {item.location}</div>
+              <div><strong>Características:</strong> {item.bedrooms}Q • {item.bathrooms}WC • {item.area}m²</div>
+              <div><strong>Descrição:</strong></div>
+              <ContentRenderer content={item.description || ''} className="bg-gray-50 p-4 rounded-lg" />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (type === 'blog') {
+      item = blogPosts.find(p => p.id === id);
+      if (!item) return null;
+
+      return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl max-w-4xl max-h-[90vh] overflow-auto p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-2xl font-bold">Pré-visualização: {item.title}</h3>
+              <button
+                onClick={() => setPreviewMode(null)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div><strong>Categoria:</strong> {item.category}</div>
+              <div><strong>Autor:</strong> {item.author}</div>
+              <div><strong>Data:</strong> {item.date}</div>
+              <div><strong>Resumo:</strong></div>
+              <ContentRenderer content={item.excerpt || ''} className="bg-gray-50 p-4 rounded-lg" />
+              <div><strong>Conteúdo:</strong></div>
+              <ContentRenderer content={item.content || ''} className="bg-gray-50 p-4 rounded-lg" />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header do Admin */}
@@ -574,7 +627,6 @@ Conteúdo: ${post.content}
           </div>
         </div>
       </div>
-
 
       {/* Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -795,14 +847,14 @@ Conteúdo: ${post.content}
                       <label className="mb-2">Features:</label>
                       <textarea
                         placeholder="Features (separadas por vírgula)"
-                        value={(newProperty.features || []).join(', ')} // <-- CORRIGIDO
+                        value={(newProperty.features || []).join(', ')}
                         onChange={(e) =>
                           setNewProperty({ ...newProperty, features: e.target.value.split(',').map(f => f.trim()) })
                         }
                         className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
-
                     </div>
+
                     <div className="flex flex-col col-span-1 md:col-span-2">
                       <input
                         type="url"
@@ -824,13 +876,16 @@ Conteúdo: ${post.content}
                       />
                     </div>
                   </div>
-                <textarea
-                  placeholder="Descrição do imóvel"
-                  value={newProperty.description}
-                  onChange={(e) => setNewProperty({ ...newProperty, description: e.target.value })}
-                  rows={4}
-                  className="w-full mt-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+
+                <div className="mt-4">
+                  <label className="mb-2 block font-medium">Descrição do imóvel:</label>
+                  <RichTextEditor
+                    value={newProperty.description}
+                    onChange={(value) => setNewProperty({ ...newProperty, description: value })}
+                    placeholder="Escreva uma descrição detalhada do imóvel..."
+                    height="300px"
+                  />
+                </div>
 
                 <div className="flex justify-end space-x-4 mt-6">
                   <button
@@ -852,7 +907,6 @@ Conteúdo: ${post.content}
                 </div>
               </div>
             )}
-
 
             {/* Properties List */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -1020,24 +1074,22 @@ Conteúdo: ${post.content}
                 </div>
 
                 <div className="mb-4 flex flex-col">
-                  <label className="mb-2">Resumo do artigo:</label>
-                  <textarea
-                    placeholder="Resumo do artigo"
+                  <label className="mb-2 font-medium">Resumo do artigo:</label>
+                  <RichTextEditor
                     value={newBlogPost.excerpt}
-                    onChange={(e) => setNewBlogPost({...newBlogPost, excerpt: e.target.value})}
-                    rows={3}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(value) => setNewBlogPost({...newBlogPost, excerpt: value})}
+                    placeholder="Escreva um resumo atrativo do artigo..."
+                    height="150px"
                   />
                 </div>
 
                 <div className="mb-4 flex flex-col">
-                  <label className="mb-2">Conteúdo completo do artigo:</label>
-                  <textarea
-                    placeholder="Conteúdo completo do artigo"
+                  <label className="mb-2 font-medium">Conteúdo completo do artigo:</label>
+                  <RichTextEditor
                     value={newBlogPost.content}
-                    onChange={(e) => setNewBlogPost({...newBlogPost, content: e.target.value})}
-                    rows={8}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(value) => setNewBlogPost({...newBlogPost, content: value})}
+                    placeholder="Escreva o conteúdo completo do artigo..."
+                    height="400px"
                   />
                 </div>
 
@@ -1087,10 +1139,11 @@ Conteúdo: ${post.content}
                       <tr key={post.id}>
                         <td className="px-6 py-4">
                           <div className="text-sm font-medium text-gray-900">{post.title}</div>
-                          <div className="text-sm text-gray-500 line-clamp-2">{post.excerpt}</div>
+                          <div className="text-sm text-gray-500 line-clamp-2">
+                            <ContentRenderer content={post.excerpt} />
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {/* Badges das categorias na lista */}
                           <span
                             className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                               post.category === 'imobiliario'
@@ -1118,7 +1171,6 @@ Conteúdo: ${post.content}
                               ? 'Telecomunicações'
                               : 'Alarmes'}
                           </span>
-
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{post.date}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -1187,7 +1239,6 @@ Conteúdo: ${post.content}
                   />
                 </div>
 
-                {/* 🔥 Botão para limpar imagens não usadas */}
                 <div>
                   <button
                     onClick={handleCleanUnusedImages}
@@ -1211,6 +1262,8 @@ Conteúdo: ${post.content}
           </div>
         )}
       </div>
+
+      {renderPreview()}
     </div>
   );
 };
