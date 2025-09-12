@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/ContentRenderer.css';
 
 interface ContentRendererProps {
   content: string;
@@ -6,13 +7,16 @@ interface ContentRendererProps {
 }
 
 const ContentRenderer: React.FC<ContentRendererProps> = ({ content, className = "" }) => {
+  // Se o conteúdo for vazio ou apenas espaços, não renderizar nada
+  if (!content || content.trim() === '') {
+    return null;
+  }
+  
   return (
-    <div 
-      className={`prose prose-lg max-w-none ${className}`}
+    <div
+      className={`content-renderer prose max-w-none ${className}`}
       dangerouslySetInnerHTML={{ __html: content }}
-      style={{
-        lineHeight: '1.6'
-      }}
+      style={{ lineHeight: '1.6', wordBreak: 'break-word' }}
     />
   );
 };

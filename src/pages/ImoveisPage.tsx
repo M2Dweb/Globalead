@@ -7,6 +7,7 @@ import {
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { sendEmail, FormData } from '../utils/emailService';
+import ContentRenderer from '../components/ContentRenderer';
 
 const ImoveisPage: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
@@ -294,9 +295,9 @@ const ImoveisPage: React.FC = () => {
                       <div className="flex items-center"><Square className="h-4 w-4 mr-1" /><span>{property.area}m²</span></div>
                       <div className="flex items-center"><MapPin className="h-4 w-4 mr-1" /><span>{property.location}</span></div>
                     </div>
-                      <p className="text-gray-600 mb-6 text-sm line-clamp-3">
-                        {property.description}
-                      </p>
+                      <div className="text-gray-600 mb-6 text-sm line-clamp-3">
+                        <ContentRenderer content={property.description || ''} />
+                      </div>
                     <button
                       className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition"
                       onClick={() => navigate(`/imoveis/${property.id}`)}

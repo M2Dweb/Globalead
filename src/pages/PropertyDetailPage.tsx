@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Calendar, Eye, Heart, Share2, Phone, Mail, Facebook, MessageCircle, Send, Linkedin, Twitter } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Linkedin, Twitter } from 'lucide-react';
 import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
+import ContentRenderer from '../components/ContentRenderer';
 
 const PropertyDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -459,9 +460,9 @@ const PropertyDetailPage: React.FC = () => {
               {/* Description */}
               <div className="bg-gray-50 p-6 rounded-xl mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Descrição do Imóvel</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  {property.description}
-                </p>
+                <div className="text-gray-700 leading-relaxed">
+                  <ContentRenderer content={property.description || ''} />
+                </div>
               </div>
 
               {/* Share Content */}

@@ -6,7 +6,6 @@ import { MultiFileUploader } from '../components/MultiFileUploader';
 import RichTextEditor from '../components/RichTextEditor';
 import { supabase } from '../lib/supabase';
 
-
 const AdminPage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
@@ -19,6 +18,8 @@ const AdminPage: React.FC = () => {
   const [siteSettings, setSiteSettings] = useState<any>({});
   const [loading, setLoading] = useState(true);
   const [previewMode, setPreviewMode] = useState<string | null>(null);
+  const [showExcerpt, setShowExcerpt] = useState(true);
+  const [showContent, setShowContent] = useState(true);
 
   const [newProperty, setNewProperty] = useState<any>({
     title: '',
@@ -45,18 +46,17 @@ const AdminPage: React.FC = () => {
     title: '',
     content: '',
     excerpt: '',
-    category: 'imoveis',
+    category: 'imobiliario',
     author: 'Globalead Portugal',
     image: '',
-    read_time: '5 min'
+    read_time: '5 min',
+    date: new Date().toISOString().slice(0, 10)
   });
 
   const [settingsForm, setSettingsForm] = useState({
     admin_password: '',
     founder_video_url: ''
   });
-
-  //----------------------------------------------------------------------------------------------------------------------------
 
   const handleCleanUnusedImages = async () => {
     try {
@@ -128,8 +128,6 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  //----------------------------------------------------------------------------------------------------------------------------
-  
   useEffect(() => {
     if (isAuthenticated) {
       fetchData();
@@ -215,8 +213,36 @@ const AdminPage: React.FC = () => {
     setLoading(false);
   };
 
+  const resetPropertyForm = () => {
+    setNewProperty({
+      title: '',
+      description: '',
+      price: 0,
+      bedrooms: 0,
+      bathrooms: 0,
+      area: 0,
+      location: '',
+      type: 'apartamento',
+      energy_class: 'B',
+      year_built: new Date().getFullYear(),
+      features: [],
+      images: [],
+      floor_plans: [],
+      property_types: [],
+      state: '',
+      parking: 0,
+      reference: '',
+      videos: ''
+    });
+  };
+
   const handleAddProperty = async () => {
-    if (newProperty.title && newProperty.price) {
+    if (!newProperty.title || !newProperty.price) {
+      alert('Por favor, preencha pelo menos o título e o preço');
+      return;
+    }
+
+    try {
       const { data, error } = await supabase
         .from('properties')
         .insert([{
@@ -228,9 +254,12 @@ const AdminPage: React.FC = () => {
           area: newProperty.area,
           location: newProperty.location,
           type: newProperty.type,
-          energy_class: 'B',
-          year_built: new Date().getFullYear(),
-          features: ['Garagem', 'Jardim'],
+          energy_class: newProperty.energy_class,
+          year_built: newProperty.year_built,
+          state: newProperty.state,
+          parking: newProperty.parking,
+          reference: newProperty.reference,
+          features: newProperty.features || [],
           images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
           videos: newProperty.videos || '',
           floor_plans: newProperty.floor_plans || [],
@@ -242,41 +271,41 @@ const AdminPage: React.FC = () => {
         console.error('Erro ao adicionar imóvel:', error);
         alert('Erro ao adicionar imóvel');
       } else {
+        alert('Imóvel adicionado com sucesso!');
         await fetchData();
-        setNewProperty({
-          title: '',
-          description: '',
-          price: 0,
-          bedrooms: 0,
-          bathrooms: 0,
-          area: 0,
-          location: '',
-          type: 'apartamento',
-          images: [],
-          videos: '',
-          floor_plans: [],
-          property_types: []
-        });
+        resetPropertyForm();
         setIsEditing(false);
       }
+    } catch (error) {
+      console.error('Erro ao adicionar imóvel:', error);
+      alert('Erro ao adicionar imóvel');
     }
   };
 
   const handleDeleteProperty = async (id: string) => {
-    const { error } = await supabase
-      .from('properties')
-      .delete()
-      .eq('id', id);
-    
-    if (error) {
+    if (!confirm('Tem a certeza que deseja eliminar este imóvel?')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('properties')
+        .delete()
+        .eq('id', id);
+      
+      if (error) {
+        console.error('Erro ao eliminar imóvel:', error);
+        alert('Erro ao eliminar imóvel');
+      } else {
+        alert('Imóvel eliminado com sucesso!');
+        await fetchData();
+      }
+    } catch (error) {
       console.error('Erro ao eliminar imóvel:', error);
       alert('Erro ao eliminar imóvel');
-    } else {
-      await fetchData();
     }
   };
 
-  // Dentro do handleEditProperty
   const handleEditProperty = (property: any) => {
     setEditingId(property.id);
     setNewProperty({
@@ -290,14 +319,14 @@ const AdminPage: React.FC = () => {
       type: property.type || 'apartamento',
       energy_class: property.energy_class || 'B',
       year_built: property.year_built || new Date().getFullYear(),
+      state: property.state || '',
+      parking: property.parking || 0,
+      reference: property.reference || '',
       features: property.features || [],
       images: property.images || [],
       videos: property.videos || '',
       floor_plans: property.floor_plans || [],
-      property_types: property.property_types || [],
-      state: property.state || '',
-      parking: property.parking || 0,
-      reference: property.reference || ''
+      property_types: property.property_types || []
     });
     setIsEditing(true);
     setPreviewMode(null);
@@ -308,65 +337,66 @@ const AdminPage: React.FC = () => {
   };
 
   const handleSaveProperty = async () => {
-    if (!newProperty.title || !newProperty.price) return;
-
-    if (editingId) {
-      // Update
-      const { error } = await supabase
-        .from('properties')
-        .update({
-          title: newProperty.title,
-          description: newProperty.description,
-          price: newProperty.price,
-          bedrooms: newProperty.bedrooms,
-          bathrooms: newProperty.bathrooms,
-          area: newProperty.area,
-          state: newProperty.state,
-          parking: newProperty.parking,
-          location: newProperty.location,
-          year_built: newProperty.year_built,
-          energy_class: newProperty.energy_class,
-          type: newProperty.type,
-          features: newProperty.features || [],
-          images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
-          videos: newProperty.videos || '',
-          floor_plans: newProperty.floor_plans || [],
-          property_types: newProperty.property_types || []
-        })
-        .eq('id', editingId);
-
-      if (error) {
-        console.error('Erro ao atualizar imóvel:', error);
-        alert('Erro ao atualizar imóvel');
-        return;
-      }
-    } else {
-      await handleAddProperty();
+    if (!newProperty.title || !newProperty.price) {
+      alert('Por favor, preencha pelo menos o título e o preço');
       return;
     }
 
-    setIsEditing(false);
-    setEditingId(null);
-    setNewProperty({
-      title: '',
-      description: '',
-      price: 0,
-      bedrooms: 0,
-      bathrooms: 0,
-      area: 0,
-      location: '',
-      type: 'apartamento',
-      images: [],
-      videos: '',
-      floor_plans: [],
-      property_types: []
-    });
+    if (editingId) {
+      // Update existing property
+      try {
+        const { error } = await supabase
+          .from('properties')
+          .update({
+            title: newProperty.title,
+            description: newProperty.description,
+            price: newProperty.price,
+            bedrooms: newProperty.bedrooms,
+            bathrooms: newProperty.bathrooms,
+            area: newProperty.area,
+            location: newProperty.location,
+            type: newProperty.type,
+            energy_class: newProperty.energy_class,
+            year_built: newProperty.year_built,
+            state: newProperty.state,
+            parking: newProperty.parking,
+            reference: newProperty.reference,
+            features: newProperty.features || [],
+            images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
+            videos: newProperty.videos || '',
+            floor_plans: newProperty.floor_plans || [],
+            property_types: newProperty.property_types || []
+          })
+          .eq('id', editingId);
 
-    fetchData();
+        if (error) {
+          console.error('Erro ao atualizar imóvel:', error);
+          alert('Erro ao atualizar imóvel');
+          return;
+        }
+
+        alert('Imóvel atualizado com sucesso!');
+        await fetchData();
+        resetPropertyForm();
+        setIsEditing(false);
+        setEditingId(null);
+      } catch (error) {
+        console.error('Erro ao atualizar imóvel:', error);
+        alert('Erro ao atualizar imóvel');
+      }
+    } else {
+      // Add new property
+      await handleAddProperty();
+    }
   };
 
   const handleAddBlogPost = async () => {
-    if (newBlogPost.title && newBlogPost.content) {
+    if (!newBlogPost.title || !newBlogPost.content) {
+      alert('Por favor, preencha pelo menos o título e o conteúdo');
+      return;
+    }
+
+    try {
       const { data, error } = await supabase
         .from('blog_posts')
         .insert([{
@@ -385,32 +415,47 @@ const AdminPage: React.FC = () => {
         console.error('Erro ao adicionar artigo:', error);
         alert('Erro ao adicionar artigo');
       } else {
+        alert('Artigo adicionado com sucesso!');
         await fetchData();
         setNewBlogPost({
           title: '',
           content: '',
           excerpt: '',
-          category: 'imoveis',
+          category: 'imobiliario',
           author: 'Globalead Portugal',
           image: '',
-          read_time: '5 min'
+          read_time: '5 min',
+          date: new Date().toISOString().slice(0, 10)
         });
         setIsEditing(false);
       }
+    } catch (error) {
+      console.error('Erro ao adicionar artigo:', error);
+      alert('Erro ao adicionar artigo');
     }
   };
 
   const handleDeleteBlogPost = async (id: string) => {
-    const { error } = await supabase
-      .from('blog_posts')
-      .delete()
-      .eq('id', id);
-    
-    if (error) {
+    if (!confirm('Tem a certeza que deseja eliminar este artigo?')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('blog_posts')
+        .delete()
+        .eq('id', id);
+      
+      if (error) {
+        console.error('Erro ao eliminar artigo:', error);
+        alert('Erro ao eliminar artigo');
+      } else {
+        alert('Artigo eliminado com sucesso!');
+        await fetchData();
+      }
+    } catch (error) {
       console.error('Erro ao eliminar artigo:', error);
       alert('Erro ao eliminar artigo');
-    } else {
-      await fetchData();
     }
   };
 
@@ -437,54 +482,71 @@ const AdminPage: React.FC = () => {
   const handleUpdateBlogPost = async () => {
     if (!editingId) return;
 
-    const { data, error } = await supabase
-      .from('blog_posts')
-      .update({
-        title: newBlogPost.title,
-        content: newBlogPost.content,
-        excerpt: newBlogPost.excerpt,
-        category: newBlogPost.category,
-        author: newBlogPost.author,
-        image: newBlogPost.image,
-        read_time: newBlogPost.read_time
-      })
-      .eq('id', editingId)
-      .select();
+    if (!newBlogPost.title || !newBlogPost.content) {
+      alert('Por favor, preencha pelo menos o título e o conteúdo');
+      return;
+    }
 
-    if (error) {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .update({
+          title: newBlogPost.title,
+          content: newBlogPost.content,
+          excerpt: newBlogPost.excerpt,
+          category: newBlogPost.category,
+          author: newBlogPost.author,
+          image: newBlogPost.image,
+          read_time: newBlogPost.read_time
+        })
+        .eq('id', editingId)
+        .select();
+
+      if (error) {
+        console.error('Erro ao atualizar artigo:', error);
+        alert('Erro ao atualizar artigo');
+      } else {
+        alert('Artigo atualizado com sucesso!');
+        await fetchData();
+        setNewBlogPost({
+          title: '',
+          content: '',
+          excerpt: '',
+          category: 'imobiliario',
+          author: 'Globalead Portugal',
+          image: '',
+          read_time: '5 min',
+          date: new Date().toISOString().slice(0, 10)
+        });
+        setIsEditing(false);
+        setEditingId(null);
+      }
+    } catch (error) {
       console.error('Erro ao atualizar artigo:', error);
       alert('Erro ao atualizar artigo');
-    } else {
-      await fetchData();
-      setNewBlogPost({
-        title: '',
-        content: '',
-        excerpt: '',
-        category: 'imoveis',
-        author: 'Globalead Portugal',
-        image: '',
-        read_time: '5 min'
-      });
-      setIsEditing(false);
-      setEditingId(null);
     }
   };
 
   const handleUpdateSettings = async () => {
-    const { error } = await supabase
-      .from('site_settings')
-      .upsert({
-        id: siteSettings.id || 1,
-        admin_password: settingsForm.admin_password,
-        founder_video_url: settingsForm.founder_video_url
-      });
+    try {
+      const { error } = await supabase
+        .from('site_settings')
+        .upsert({
+          id: siteSettings.id || 1,
+          admin_password: settingsForm.admin_password,
+          founder_video_url: settingsForm.founder_video_url
+        });
 
-    if (error) {
+      if (error) {
+        console.error('Erro ao atualizar configurações:', error);
+        alert('Erro ao atualizar configurações');
+      } else {
+        alert('Configurações atualizadas com sucesso!');
+        await fetchData();
+      }
+    } catch (error) {
       console.error('Erro ao atualizar configurações:', error);
       alert('Erro ao atualizar configurações');
-    } else {
-      alert('Configurações atualizadas com sucesso!');
-      await fetchData();
     }
   };
 
@@ -674,7 +736,11 @@ const AdminPage: React.FC = () => {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900">Gestão de Imóveis</h2>
               <button
-                onClick={() => setIsEditing(true)}
+                onClick={() => {
+                  resetPropertyForm();
+                  setIsEditing(true);
+                  setEditingId(null);
+                }}
                 className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
               >
                 <Plus className="mr-2 h-4 w-4" />
@@ -693,193 +759,196 @@ const AdminPage: React.FC = () => {
                     onClick={() => {
                       setIsEditing(false);
                       setEditingId(null);
+                      resetPropertyForm();
                     }}
                     className="text-gray-500 hover:text-gray-700"
                   >
                     <X className="h-5 w-5" />
                   </button>
                 </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex flex-col">
-                      <label className="mb-2">Título do imóvel:</label>
-                      <input
-                        type="text"
-                        placeholder="Título do imóvel"
-                        value={newProperty.title}
-                        onChange={(e) => setNewProperty({ ...newProperty, title: e.target.value })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Preço:</label>
-                      <input
-                        type="number"
-                        placeholder="Preço"
-                        value={newProperty.price}
-                        onChange={(e) => setNewProperty({ ...newProperty, price: Number(e.target.value) })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Localização:</label>
-                      <input
-                        type="text"
-                        placeholder="Localização"
-                        value={newProperty.location}
-                        onChange={(e) => setNewProperty({ ...newProperty, location: e.target.value })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Tipo:</label>
-                      <select
-                        value={newProperty.type}
-                        onChange={(e) => setNewProperty({ ...newProperty, type: e.target.value })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="apartamento">Apartamento</option>
-                        <option value="moradia">Moradia</option>
-                        <option value="terreno">Terreno</option>
-                      </select>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Quartos:</label>
-                      <input
-                        type="number"
-                        placeholder="Quartos"
-                        value={newProperty.bedrooms}
-                        onChange={(e) => setNewProperty({ ...newProperty, bedrooms: Number(e.target.value) })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Casas de banho:</label>
-                      <input
-                        type="number"
-                        placeholder="Casas de banho"
-                        value={newProperty.bathrooms}
-                        onChange={(e) => setNewProperty({ ...newProperty, bathrooms: Number(e.target.value) })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Área (m²):</label>
-                      <input
-                        type="number"
-                        placeholder="Área (m²)"
-                        value={newProperty.area}
-                        onChange={(e) => setNewProperty({ ...newProperty, area: Number(e.target.value) })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Estado:</label>
-                      <input
-                        type="text"
-                        placeholder="Estado"
-                        value={newProperty.state}
-                        onChange={(e) => setNewProperty({ ...newProperty, state: e.target.value })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Certificado energético:</label>
-                      <select
-                        value={newProperty.energy_class}
-                        onChange={(e) => setNewProperty({ ...newProperty, energy_class: e.target.value })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="A+">A+</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="B-">B-</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="E">E</option>
-                        <option value="F">F</option>
-                      </select>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Ano de Construção:</label>
-                      <input
-                        type="number"
-                        placeholder="Ano de Construção"
-                        value={newProperty.year_built}
-                        onChange={(e) => setNewProperty({ ...newProperty, year_built: Number(e.target.value) })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Estacionamento:</label>
-                      <select
-                        value={newProperty.parking}
-                        onChange={(e) => setNewProperty({ ...newProperty, parking: Number(e.target.value) })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value={1}>Sim</option>
-                        <option value={0}>Não</option>
-                      </select>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label className="mb-2">Referência:</label>
-                      <input
-                        type="text"
-                        placeholder="Referência"
-                        value={newProperty.reference}
-                        onChange={(e) => setNewProperty({ ...newProperty, reference: e.target.value })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    {/* Features */}
-                    <div className="flex flex-col col-span-1 md:col-span-2">
-                      <label className="mb-2">Features:</label>
-                      <textarea
-                        placeholder="Features (separadas por vírgula)"
-                        value={(newProperty.features || []).join(', ')}
-                        onChange={(e) =>
-                          setNewProperty({ ...newProperty, features: e.target.value.split(',').map(f => f.trim()) })
-                        }
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div className="flex flex-col col-span-1 md:col-span-2">
-                      <input
-                        type="url"
-                        placeholder="URL do vídeo"
-                        value={newProperty.videos}
-                        onChange={(e) => setNewProperty({ ...newProperty, videos: e.target.value })}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    {/* Imagens */}
-                    <div className="flex flex-col col-span-1 md:col-span-2">
-                      <label className="mb-2">Imagens:</label>
-                      <MultiFileUploader
-                        folder="imagens"
-                        files={newProperty.images}
-                        accept="image/*"
-                        onUpload={(urls) => setNewProperty({ ...newProperty, images: urls })}
-                      />
-                    </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label className="mb-2">Título do imóvel:</label>
+                    <input
+                      type="text"
+                      placeholder="Título do imóvel"
+                      value={newProperty.title}
+                      onChange={(e) => setNewProperty({ ...newProperty, title: e.target.value })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
                   </div>
 
+                  <div className="flex flex-col">
+                    <label className="mb-2">Preço:</label>
+                    <input
+                      type="number"
+                      placeholder="Preço"
+                      value={newProperty.price}
+                      onChange={(e) => setNewProperty({ ...newProperty, price: Number(e.target.value) })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Localização:</label>
+                    <input
+                      type="text"
+                      placeholder="Localização"
+                      value={newProperty.location}
+                      onChange={(e) => setNewProperty({ ...newProperty, location: e.target.value })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Tipo:</label>
+                    <select
+                      value={newProperty.type}
+                      onChange={(e) => setNewProperty({ ...newProperty, type: e.target.value })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="apartamento">Apartamento</option>
+                      <option value="moradia">Moradia</option>
+                      <option value="terreno">Terreno</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Quartos:</label>
+                    <input
+                      type="number"
+                      placeholder="Quartos"
+                      value={newProperty.bedrooms}
+                      onChange={(e) => setNewProperty({ ...newProperty, bedrooms: Number(e.target.value) })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Casas de banho:</label>
+                    <input
+                      type="number"
+                      placeholder="Casas de banho"
+                      value={newProperty.bathrooms}
+                      onChange={(e) => setNewProperty({ ...newProperty, bathrooms: Number(e.target.value) })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Área (m²):</label>
+                    <input
+                      type="number"
+                      placeholder="Área (m²)"
+                      value={newProperty.area}
+                      onChange={(e) => setNewProperty({ ...newProperty, area: Number(e.target.value) })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Estado:</label>
+                    <input
+                      type="text"
+                      placeholder="Estado"
+                      value={newProperty.state}
+                      onChange={(e) => setNewProperty({ ...newProperty, state: e.target.value })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Certificado energético:</label>
+                    <select
+                      value={newProperty.energy_class}
+                      onChange={(e) => setNewProperty({ ...newProperty, energy_class: e.target.value })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="A+">A+</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="B-">B-</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="E">E</option>
+                      <option value="F">F</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Ano de Construção:</label>
+                    <input
+                      type="number"
+                      placeholder="Ano de Construção"
+                      value={newProperty.year_built}
+                      onChange={(e) => setNewProperty({ ...newProperty, year_built: Number(e.target.value) })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Lugares de Estacionamento:</label>
+                    <input
+                      type="number"
+                      placeholder="Número de lugares"
+                      value={newProperty.parking}
+                      onChange={(e) => setNewProperty({ ...newProperty, parking: Number(e.target.value) })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="mb-2">Referência:</label>
+                    <input
+                      type="text"
+                      placeholder="Referência"
+                      value={newProperty.reference}
+                      onChange={(e) => setNewProperty({ ...newProperty, reference: e.target.value })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  {/* Features */}
+                  <div className="flex flex-col col-span-1 md:col-span-2">
+                    <label className="mb-2">Features:</label>
+                    <textarea
+                      placeholder="Features (separadas por vírgula)"
+                      value={(newProperty.features || []).join(', ')}
+                      onChange={(e) =>
+                        setNewProperty({ ...newProperty, features: e.target.value.split(',').map(f => f.trim()) })
+                      }
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex flex-col col-span-1 md:col-span-2">
+                    <label className="mb-2">URL do vídeo:</label>
+                    <input
+                      type="url"
+                      placeholder="URL do vídeo"
+                      value={newProperty.videos}
+                      onChange={(e) => setNewProperty({ ...newProperty, videos: e.target.value })}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  {/* Imagens */}
+                  <div className="flex flex-col col-span-1 md:col-span-2">
+                    <label className="mb-2">Imagens:</label>
+                    <MultiFileUploader
+                      folder="imagens"
+                      files={newProperty.images}
+                      accept="image/*"
+                      onUpload={(urls) => setNewProperty({ ...newProperty, images: urls })}
+                    />
+                  </div>
+                </div>
+
                 <div className="mt-4">
-                  <label className="mb-2 block font-medium">Descrição do imóvel:</label>
+                  <label htmlFor="content" className="mb-2 block font-medium">Descrição do imóvel:</label>
                   <RichTextEditor
+                    id="content" 
                     value={newProperty.description}
                     onChange={(value) => setNewProperty({ ...newProperty, description: value })}
                     placeholder="Escreva uma descrição detalhada do imóvel..."
@@ -892,6 +961,7 @@ const AdminPage: React.FC = () => {
                     onClick={() => {
                       setIsEditing(false);
                       setEditingId(null);
+                      resetPropertyForm();
                     }}
                     className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
@@ -902,7 +972,7 @@ const AdminPage: React.FC = () => {
                     className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
                   >
                     <Save className="mr-2 h-4 w-4" />
-                    Guardar
+                    {editingId ? 'Atualizar' : 'Guardar'}
                   </button>
                 </div>
               </div>
@@ -936,7 +1006,10 @@ const AdminPage: React.FC = () => {
                       <tr key={property.id}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">{property.title}</div>
-                          <div className="text-sm text-gray-500">{property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²</div>
+                          <div className="text-sm text-gray-500">
+                            {property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²
+                            {property.reference && ` • Ref: ${property.reference}`}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           €{property.price?.toLocaleString()}
@@ -954,18 +1027,21 @@ const AdminPage: React.FC = () => {
                             <button
                               className="text-[#0d2233] hover:text-blue-900"
                               onClick={() => handleViewProperty(property)}
+                              title="Ver pré-visualização"
                             >
                               <Eye className="h-4 w-4" />
                             </button>
                             <button
                               className="text-indigo-600 hover:text-indigo-900"
                               onClick={() => handleEditProperty(property)}
+                              title="Editar imóvel"
                             >
                               <Edit className="h-4 w-4" />
                             </button>
                             <button
                               onClick={() => handleDeleteProperty(property.id)}
                               className="text-red-600 hover:text-red-900"
+                              title="Eliminar imóvel"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
@@ -993,7 +1069,7 @@ const AdminPage: React.FC = () => {
                     title: '',
                     content: '',
                     excerpt: '',
-                    category: 'imoveis',
+                    category: 'imobiliario',
                     author: 'Globalead Portugal',
                     image: '',
                     read_time: '5 min',
@@ -1073,25 +1149,49 @@ const AdminPage: React.FC = () => {
                   />
                 </div>
 
-                <div className="mb-4 flex flex-col">
-                  <label className="mb-2 font-medium">Resumo do artigo:</label>
-                  <RichTextEditor
-                    value={newBlogPost.excerpt}
-                    onChange={(value) => setNewBlogPost({...newBlogPost, excerpt: value})}
-                    placeholder="Escreva um resumo atrativo do artigo..."
-                    height="150px"
-                  />
+                {/* Alternar entre resumo e conteúdo */}
+                <div className="flex gap-4 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => { setShowExcerpt(true); setShowContent(false); }}
+                    className={`px-3 py-1 rounded ${showExcerpt ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                  >
+                    Resumo
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowExcerpt(false); setShowContent(true); }}
+                    className={`px-3 py-1 rounded ${showContent ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                  >
+                    Conteúdo
+                  </button>
                 </div>
 
-                <div className="mb-4 flex flex-col">
-                  <label className="mb-2 font-medium">Conteúdo completo do artigo:</label>
-                  <RichTextEditor
-                    value={newBlogPost.content}
-                    onChange={(value) => setNewBlogPost({...newBlogPost, content: value})}
-                    placeholder="Escreva o conteúdo completo do artigo..."
-                    height="400px"
-                  />
-                </div>
+                {showExcerpt && (
+                  <div className="mb-4 flex flex-col">
+                    <label htmlFor="excerpt" className="mb-2 font-medium">Resumo do artigo:</label>
+                    <RichTextEditor
+                      id="excerpt"
+                      value={newBlogPost.excerpt}
+                      onChange={(value) => setNewBlogPost({...newBlogPost, excerpt: value})}
+                      placeholder="Escreva um resumo atrativo do artigo..."
+                      height="150px"
+                    />
+                  </div>
+                )}
+
+                {showContent && (
+                  <div className="mb-4 flex flex-col">
+                    <label htmlFor="content" className="mb-2 font-medium">Conteúdo completo do artigo:</label>
+                    <RichTextEditor
+                      id="content"
+                      value={newBlogPost.content}
+                      onChange={(value) => setNewBlogPost({...newBlogPost, content: value})}
+                      placeholder="Escreva o conteúdo completo do artigo..."
+                      height="400px"
+                    />
+                  </div>
+                )}
 
                 <div className="flex justify-end space-x-4">
                   <button
@@ -1108,7 +1208,7 @@ const AdminPage: React.FC = () => {
                     className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
                   >
                     <Save className="mr-2 h-4 w-4" />
-                    Guardar
+                    {editingId ? 'Atualizar' : 'Guardar'}
                   </button>
                 </div>
               </div>
@@ -1178,18 +1278,21 @@ const AdminPage: React.FC = () => {
                             <button
                               className="text-[#0d2233] hover:text-blue-900"
                               onClick={() => handleViewBlogPost(post)}
+                              title="Ver pré-visualização"
                             >
                               <Eye className="h-4 w-4" />
                             </button>
                             <button
                               className="text-indigo-600 hover:text-indigo-900"
                               onClick={() => handleEditBlogPost(post)}
+                              title="Editar artigo"
                             >
                               <Edit className="h-4 w-4" />
                             </button>
                             <button
                               onClick={() => handleDeleteBlogPost(post.id)}
                               className="text-red-600 hover:text-red-900"
+                              title="Eliminar artigo"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>

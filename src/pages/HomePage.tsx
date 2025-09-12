@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
+import ContentRenderer from '../components/ContentRenderer';
 
 const HomePage: React.FC = () => {
   
@@ -312,9 +313,9 @@ const HomePage: React.FC = () => {
                   </div>
                   </div>
                   
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {property.description}
-                  </p>
+                  <div className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    <ContentRenderer content={property.description || ''} />
+                  </div>
                   <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
                     Ver Detalhes
                   </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Bed, Bath, Square, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import ContentRenderer from '../components/ContentRenderer';
 
 const PropertyListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -230,9 +231,9 @@ const PropertyListPage: React.FC = () => {
 
                   
                   
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {property.description}
-                  </p>
+                  <div className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    <ContentRenderer content={property.description || ''} />
+                  </div>
                   
                   <div className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center justify-center">
                     Ver Detalhes

@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import '../styles/RichTextEditor.css';
+import '../styles/RichTextEditor.css';
 
 interface RichTextEditorProps {
+  id?: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -10,6 +13,7 @@ interface RichTextEditorProps {
 }
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
+  id,
   value,
   onChange,
   placeholder = "Escreva o conteúdo aqui...",
@@ -30,9 +34,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       ['blockquote', 'code-block'],
       ['clean']
     ],
-    clipboard: {
-      matchVisual: false,
-    }
+    clipboard: { matchVisual: false }
   };
 
   const formats = [
@@ -47,106 +49,20 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   ];
 
   return (
-    <div className="rich-text-editor">
+    <div
+      className="rich-text-editor"
+      style={{ '--editor-height': height } as React.CSSProperties}
+    >
       <ReactQuill
+        id={id}
         theme="snow"
         value={value}
         onChange={onChange}
         modules={modules}
         formats={formats}
         placeholder={placeholder}
-        style={{
-          height: height,
-          marginBottom: '42px'
-        }}
+        style={{ marginBottom: '42px' }}
       />
-      <style jsx global>{`
-        .rich-text-editor .ql-editor {
-          min-height: ${height};
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        .rich-text-editor .ql-toolbar {
-          border-top: 1px solid #ccc;
-          border-left: 1px solid #ccc;
-          border-right: 1px solid #ccc;
-          border-radius: 8px 8px 0 0;
-        }
-        
-        .rich-text-editor .ql-container {
-          border-bottom: 1px solid #ccc;
-          border-left: 1px solid #ccc;
-          border-right: 1px solid #ccc;
-          border-radius: 0 0 8px 8px;
-        }
-
-        .rich-text-editor .ql-editor.ql-blank::before {
-          font-style: italic;
-          color: #999;
-        }
-
-        .rich-text-editor .ql-editor h1 {
-          font-size: 2rem;
-          font-weight: bold;
-          margin: 1rem 0;
-        }
-
-        .rich-text-editor .ql-editor h2 {
-          font-size: 1.75rem;
-          font-weight: bold;
-          margin: 0.875rem 0;
-        }
-
-        .rich-text-editor .ql-editor h3 {
-          font-size: 1.5rem;
-          font-weight: bold;
-          margin: 0.75rem 0;
-        }
-
-        .rich-text-editor .ql-editor h4 {
-          font-size: 1.25rem;
-          font-weight: bold;
-          margin: 0.625rem 0;
-        }
-
-        .rich-text-editor .ql-editor h5 {
-          font-size: 1.125rem;
-          font-weight: bold;
-          margin: 0.5rem 0;
-        }
-
-        .rich-text-editor .ql-editor h6 {
-          font-size: 1rem;
-          font-weight: bold;
-          margin: 0.375rem 0;
-        }
-
-        .rich-text-editor .ql-editor p {
-          margin: 0.5rem 0;
-          line-height: 1.6;
-        }
-
-        .rich-text-editor .ql-editor blockquote {
-          border-left: 4px solid #0d2233;
-          padding-left: 16px;
-          margin: 1rem 0;
-          font-style: italic;
-          background: #f8f9fa;
-          padding: 12px 16px;
-          border-radius: 4px;
-        }
-
-        .rich-text-editor .ql-editor ul, 
-        .rich-text-editor .ql-editor ol {
-          margin: 0.5rem 0;
-          padding-left: 1.5rem;
-        }
-
-        .rich-text-editor .ql-editor li {
-          margin: 0.25rem 0;
-          line-height: 1.6;
-        }
-      `}</style>
     </div>
   );
 };

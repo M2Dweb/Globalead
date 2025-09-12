@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, ArrowRight, Search, Filter } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Link } from 'react-router-dom';
+import ContentRenderer from '../components/ContentRenderer';
 
 const BlogPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -215,9 +216,9 @@ const BlogPage: React.FC = () => {
                     {post.title}
                   </h3>
                   
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
+                  <div className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    <ContentRenderer content={post.excerpt} className="line-clamp-3" />
+                  </div>
                   
                   <Link
                     to={`/blog/${post.id}`}
@@ -231,6 +232,7 @@ const BlogPage: React.FC = () => {
               </article>
             ))}
           </div>
+          
 
           {/* No Results */}
           {filteredPosts.length === 0 && (
