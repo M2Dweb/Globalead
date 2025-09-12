@@ -240,6 +240,44 @@
   font-size: smaller;
 }
 
+/* Estilos específicos para descrições curtas em cards */
+.content-renderer.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.content-renderer.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Reduzir margens em contextos de cards */
+.content-renderer.line-clamp-2 p,
+.content-renderer.line-clamp-3 p {
+  margin: 0.25rem 0;
+}
+
+.content-renderer.line-clamp-2 h1,
+.content-renderer.line-clamp-2 h2,
+.content-renderer.line-clamp-2 h3,
+.content-renderer.line-clamp-2 h4,
+.content-renderer.line-clamp-2 h5,
+.content-renderer.line-clamp-2 h6,
+.content-renderer.line-clamp-3 h1,
+.content-renderer.line-clamp-3 h2,
+.content-renderer.line-clamp-3 h3,
+.content-renderer.line-clamp-3 h4,
+.content-renderer.line-clamp-3 h5,
+.content-renderer.line-clamp-3 h6 {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 /* Espaçamento responsivo */
 @media (max-width: 768px) {
   .content-renderer h1 { font-size: 1.75rem; }

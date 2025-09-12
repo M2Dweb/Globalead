@@ -118,7 +118,7 @@ const BlogPostPage: React.FC = () => {
           </div>
 
           <div className="mt-6">
-            <Link to="/blog" className="text-blue-600 hover:underline font-medium">
+            <Link to="/blog" className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center inline-block font-medium mt-2">
               Ver mais →
             </Link>
           </div>
