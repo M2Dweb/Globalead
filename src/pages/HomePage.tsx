@@ -467,7 +467,7 @@ const HomePage: React.FC = () => {
                   </h3>
 
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {post.excerpt}
+                    <ContentRenderer content={post.excerpt} className="line-clamp-3" />
                   </p>
 
                   <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
