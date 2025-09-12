@@ -118,7 +118,7 @@ const SeguroPage: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {insuranceTypes.map((i, idx) => (
-                <div key={idx} className="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg border border-gray-100 transition-shadow duration-300">
+                <div key={idx} className="bg-white p-8 rounded-2xl shadow-md hover:[#0d2233] border border-gray-100 transition-shadow duration-300">
                   <div className="flex items-start">
                     <div className="mr-6 flex-shrink-0">{i.icon}</div>
                     <div>
@@ -203,8 +203,8 @@ const SeguroPage: React.FC = () => {
                   </p>
                   {submitStatus === 'success' && <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">Mensagem enviada com sucesso! Entraremos em contacto em breve.</div>}
                   {submitStatus === 'error' && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.</div>}
-                  <button type="submit" disabled={isSubmitting} className="w-full bg-[#79b2e9] text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                    {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
+                  <button type="submit" disabled={isSubmitting} className="w-full bg-[#79b2e9] text-white font-semibold py-3 px-8 rounded-lg hover:[#0d2233] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                    {isSubmitting ? 'Enviando...' : 'Entrar em Contacto'}
                   </button>
                 </div>
               </form>

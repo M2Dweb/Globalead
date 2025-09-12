@@ -142,7 +142,7 @@ const scrollToForm = () => {
               </thead>
               <tbody className="flex-1">
                 {currentInsurance.providers.map((provider, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50 text-center">
+                  <tr key={index} className="border-b hover:[#0d2233] text-center">
                     <td className="py-4 px-2 font-semibold text-gray-900">{provider.name}</td>
                     <td className="py-4 px-2 text-2xl font-bold text-[#79b2e9]">{provider.price}€</td>
                   </tr>
@@ -182,7 +182,7 @@ const scrollToForm = () => {
           >
             {partnerLogos.map((logo, index) => (
               <div key={index} className="flex-shrink-0 px-4" style={{ width: `${100 / logosPerPage}%` }}>
-                <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div className="bg-white rounded-lg shadow-md hover:[#0d2233] transition-shadow duration-300">
                   <img src={logo} alt={`Parceiro ${index + 1}`} className="w-full h-20 object-contain" />
                 </div>
               </div>
@@ -199,7 +199,7 @@ const scrollToForm = () => {
         </p>
         <button 
           onClick={scrollToForm}
-          className="bg-[#79b2e9] text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+          className="bg-[#79b2e9] text-white font-semibold py-3 px-8 rounded-lg hover:[#0d2233]"
         >
           Pedir Simulação
         </button>
