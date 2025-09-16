@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Shield, Zap, Bed, Bath, Square, MapPin, Tv, Phone, Calendar, Siren } from 'lucide-react';
+import { Shield, Zap, Tv, Calendar, Siren, Cctv } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
+import FeaturedProperties from '../components/FeaturedProperties';
 
 const HomePage: React.FC = () => {
-  
-  const [properties, setProperties] = useState<any[]>([]);
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
   const [formData, setFormData] = useState<Partial<FormData>>({
@@ -51,12 +50,12 @@ const HomePage: React.FC = () => {
 
   
   const [logosPerPage, setLogosPerPage] = useState(
-    window.innerWidth < 640 ? 3 : 5
+    window.innerWidth < 640 ? 2 : 5
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setLogosPerPage(window.innerWidth < 640 ? 3 : 5);
+      setLogosPerPage(window.innerWidth < 640 ? 2 : 5);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -73,44 +72,12 @@ const HomePage: React.FC = () => {
         
         if (error) {
           console.error('Erro ao carregar propriedades:', error);
-          setProperties([
-            {
-              id: 1,
-              title: "Empreendimento Noval Park",
-              price: 432600,
-              bedrooms: 3,
-              bathrooms: 2,
-              area: 145,
-              location: "Vila Nova de Gaia",
-              images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
-            },
-            {
-              id: 2,
-              title: "Apartamento T2 Moderno",
-              price: 280000,
-              bedrooms: 2,
-              bathrooms: 1,
-              area: 85,
-              location: "Cedofeita, Porto",
-              images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"]
-            },
-            {
-              id: 3,
-              title: "Moradia T4 com Jardim",
-              price: 520000,
-              bedrooms: 4,
-              bathrooms: 3,
-              area: 200,
-              location: "Matosinhos, Porto",
-              images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800"]
-            }
-          ]);
-        } else {
-          setProperties(data || []);
+          
+        
         }
       } catch (error) {
         console.error('Erro ao carregar propriedades:', error);
-        setProperties([]);
+        
       }
     };
 
@@ -154,7 +121,7 @@ const HomePage: React.FC = () => {
 
   const services = [
     {
-      icon: <Siren className="h-12 w-12 text-[#79b2e9]" />,
+      icon: <Cctv className="h-12 w-12 text-[#79b2e9]" />,
       title: "Alarmes",
       description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade etc. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar",
       link: "/alarmes"
@@ -192,13 +159,13 @@ const HomePage: React.FC = () => {
     }
   }, [partnerLogos.length, logosPerPage]);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('pt-PT', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0
-    }).format(price);
-  };
+  //{ const formatPrice = (price: number) => {
+  //  return new Intl.NumberFormat('pt-PT', {
+  //    style: 'currency',
+  //    currency: 'EUR',
+  //    maximumFractionDigits: 0
+  // }).format(price);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -252,7 +219,7 @@ const HomePage: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover opacity-30"
           poster="/fotos/HomePage-foto.png"
         >
-          <source src="/videos/HomePage-video(1).mp4" type="video/mp4" />
+          <source src="https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/Cidade_do_Porto_-_www.globalead.pt_1_kzfzqg.mp4" type="video/mp4" />
         </video>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
@@ -266,75 +233,8 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Properties Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Visite o seu próximo lar de sonho
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {properties.map((property) => (
-              <Link
-                key={property.id}
-                to={`/imoveis/${property.id}`}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-              >
-                <img
-                  src={property.images[0]}
-                  alt={property.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {property.title}
-                  </h3>
-                  
-                  
-                  <div className="flex items-center space-x-4 text-gray-600 mb-4">
-                    <div className="flex items-center">
-                      <Bed className="h-4 w-4 mr-1" />
-                      <span>{property.bedrooms}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Bath className="h-4 w-4 mr-1" />
-                      <span>{property.bathrooms}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Square className="h-4 w-4 mr-1" />
-                      <span>{property.area}m²</span>
-                    </div>
-                    <div className="flex items-center ">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    <span>{property.location}</span>
-                  </div>
-                  </div>
-                  
-                  <div className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    <ContentRenderer content={property.description || ''} />
-                  </div>
-                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
-                    Ver Detalhes
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              to="/imoveis/lista"
-              className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-semibold inline-flex items-center"
-            >
-              Ver Todos os Imóveis
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Featured Properties */}
+      <FeaturedProperties />
 
       {/* Services Section */}
       <section className="py-20">
@@ -563,14 +463,12 @@ const HomePage: React.FC = () => {
                   <option value="Pedido de Simulação Alarmes">Pedido de Simulação Alarmes</option>
                 </select>
                 
-                <input
-                  type="text"
-                  name="horario"
-                  value={formData.horario}
-                  onChange={handleInputChange}
-                  placeholder="Horário:"
-                  className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <select name="horário" value={formData.horario} onChange={handleInputChange} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                  <option value="">Horário</option>
+                  <option>9h-12h30</option>
+                  <option>12h30-16h</option>
+                  <option>16h-19h30</option>
+                </select>
 
                 <div className="md:col-span-2">
                   <label className="flex items-start text-sm text-gray-700 mb-4">

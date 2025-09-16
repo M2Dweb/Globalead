@@ -13,7 +13,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   page, 
   showExtraFields = false, 
   extraFields,
-  title = "Tem dúvidas? Entre em contacto",
+  title = "Contratar um crédito habitação é a decisão financeira mais impactante da tua vida",
   buttonText = "Enviar Mensagem"
 }) => {
   const [formData, setFormData] = useState<Partial<FormData>>({
@@ -22,11 +22,18 @@ const ContactForm: React.FC<ContactFormProps> = ({
     telemovel: '',
     email: '',
     assunto: '',
+    tipo_ajuda: '',
+    valor_emprestimo: '',
+    escolha_imovel: '',
+    vender_imovel_atual: '',
+    num_proponentes: '',
+    rendimento_agregado: '',
     meio_contacto: '',
     horario: '',
     mensagem: '',
     page: page
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -54,6 +61,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
           telemovel: '',
           email: '',
           assunto: '',
+          tipo_ajuda: '',
+          valor_emprestimo: '',
+          escolha_imovel: '',
+          vender_imovel_atual: '',
+          num_proponentes: '',
+          rendimento_agregado: '',
           meio_contacto: '',
           horario: '',
           mensagem: '',
@@ -72,11 +85,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
   return (
     <div>
-      {title && (
-        <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-          {title}
-        </h3>
-      )}
       
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <input
@@ -86,7 +94,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           onChange={handleInputChange}
           placeholder="Nome:"
           required
-          className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="text"
@@ -94,15 +102,15 @@ const ContactForm: React.FC<ContactFormProps> = ({
           value={formData.apelido}
           onChange={handleInputChange}
           placeholder="Apelido:"
-          className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
-          type="tel"
+          type="text"
           name="telemovel"
           value={formData.telemovel}
           onChange={handleInputChange}
-          placeholder="Telemóvel:"
-          className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Contacto:"
+          className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="email"
@@ -111,37 +119,101 @@ const ContactForm: React.FC<ContactFormProps> = ({
           onChange={handleInputChange}
           placeholder="Email:"
           required
-          className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <input
-          type="text"
+
+        <select 
           name="assunto"
           value={formData.assunto}
           onChange={handleInputChange}
-          placeholder="Assunto:"
-          className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+          className="md:col-span-2 px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Selecione o assunto...</option>
+          <option>Quero adquirir um novo imóvel com crédito habitação</option>
+          <option>Quero melhorar as condições do meu crédito habitação atual</option>
+          <option>Quero construir o meu imóvel</option>
+        </select>
+
+        <select 
+          name="tipo_ajuda"
+          value={formData.tipo_ajuda}
+          onChange={handleInputChange}
+          className="md:col-span-2 px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Em que podemos ajudar...</option>
+          <option>Simular que imóvel consigo comprar</option>
+          <option>Obter simulação</option>
+          <option>Conseguir aprovação de crédito</option>
+          <option>Aprovar crédito e ajuda até à escritura</option>
+        </select>
+
+        <select 
+          name="valor_emprestimo"
+          value={formData.valor_emprestimo}
+          onChange={handleInputChange}
+          className="md:col-span-2 px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Escolha do imóvel...</option>
+          <option>Já tenho imóvel escolhido</option>
+          <option>Não tenho imóvel escolhido</option>
+        </select>
+
+        <select 
+          name="vender_imovel_atual"
+          value={formData.vender_imovel_atual}
+          onChange={handleInputChange}
+          className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Pensa vender o seu imóvel atual?</option>
+          <option>Sim</option>
+          <option>Não</option>
+        </select>
+
+        <select 
+          name="num_proponentes"
+          value={formData.num_proponentes}
+          onChange={handleInputChange}
+          className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Número de proponentes...</option>
+          <option>1</option>
+          <option>2</option>
+          <option>Mais de 2</option>
+        </select>
+
+        <input
+          type="text"
+          name="rendimento_agregado"
+          value={formData.rendimento_agregado}
+          onChange={handleInputChange}
+          placeholder="Rendimento total do agregado"
+          className="md:col-span-2 px-4 py-3 border text-gray-900  border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+
         <select 
           name="meio_contacto"
           value={formData.meio_contacto}
           onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Meio de Contacto:</option>
-          <option value="Email">Email</option>
-          <option value="Telefone">Telefone</option>
-          <option value="WhatsApp">WhatsApp</option>
-          <option value="Telegram">Telegram</option>
-          <option value="Messenger">Messenger</option>
+          <option>Email</option>
+          <option>Telefone</option>
+          <option>WhatsApp</option>
         </select>
-        <input
-          type="text"
+
+        <select 
           name="horario"
           value={formData.horario}
           onChange={handleInputChange}
-          placeholder="Horário:"
-          className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+          className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Horário:</option>
+          <option>9h–12h30</option>
+          <option>12h30–16h</option>
+          <option>16h–19h30</option>
+        </select>
 
         {showExtraFields && extraFields}
         
@@ -151,7 +223,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             Sim, aceito os termos e condições indicados pela Globalead Portugal.
           </label>
           <p className="text-xs text-gray-600 mb-6">
-            Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
+            Os dados submetidos através deste formulário serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
           </p>
           
           {submitStatus === 'success' && (

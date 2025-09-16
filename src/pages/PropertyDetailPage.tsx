@@ -298,8 +298,8 @@ const PropertyDetailPage: React.FC = () => {
         <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">Detalhes do Imóvel</h1>
-          <h2 className="text-2xl md:text-3xl font-semibold mb-6">{property.title}</h2>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">{property.title}</h1>
+          
           
           <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
             <div className="flex items-center">
@@ -471,37 +471,37 @@ const PropertyDetailPage: React.FC = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => shareContent('facebook')}
-                    className="bg-[#0d2233] text-white p-3 rounded-full hover:bg-[#79b2e9] transition-colors"
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
                   >
                     <Facebook className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('whatsapp')}
-                    className="bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition-colors"
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
                   >
                     <MessageCircle className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('telegram')}
-                    className="bg-blue-500 text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
                   >
                     <Send className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('linkedin')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-blue-800 transition-colors"
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
                   >
                     <Linkedin className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('twitter')}
-                    className="bg-black text-white p-3 rounded-full hover:bg-gray-800 transition-colors"
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
                   >
                     <Twitter className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('email')}
-                    className="bg-gray-600 text-white p-3 rounded-full hover:bg-gray-700 transition-colors"
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
                   >
                     <Mail className="h-5 w-5" />
                   </button>
@@ -551,14 +551,12 @@ const PropertyDetailPage: React.FC = () => {
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  <input
-                    type="date"
-                    name="horario"
-                    value={formData.horario}
-                    onChange={handleInputChange}
-                    placeholder="Data da Visita:"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                  <select name="horário" value={formData.horario} onChange={handleInputChange} className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                    <option value="">Horário</option>
+                    <option>9h-12h30</option>
+                    <option>12h30-16h</option>
+                    <option>16h-19h30</option>
+                  </select>
                   <select 
                     name="meio_contacto"
                     value={formData.meio_contacto}
@@ -626,9 +624,7 @@ const PropertyDetailPage: React.FC = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <div className="text-2xl font-bold text-[#79b2e9] mb-2">
-                    {formatPrice(similarProperty.price)}
-                  </div>
+                  
                   <h4 className="text-xl font-bold text-gray-900 mb-3">
                     {similarProperty.title}
                   </h4>
@@ -648,7 +644,11 @@ const PropertyDetailPage: React.FC = () => {
                     <div className="flex items-center">
                       <MapPin className="h-4 w-4 mr-1" />
                     <span>{similarProperty.location}</span>
+                  
                   </div>
+                  </div>
+                  <div className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  <ContentRenderer content={property.description || ''} />
                   </div>
                   
                 </div>

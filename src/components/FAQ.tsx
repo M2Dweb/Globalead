@@ -74,6 +74,138 @@ const FAQ: React.FC<FAQProps> = ({ category = 'geral' }) => {
         question: "Qual é a utilidade de um Seguro Multirriscos-Habitação?",
         answer: "O seguro multirriscos-habitação oferece proteção indemnizatória, cobrindo danos causados ao imóvel e ao seu recheio por incidentes como catástrofes naturais, incêndios, explosões, roubo, danos por água, problemas elétricos, entre outros. Esta solução vai além da apólice obrigatória por lei, que apenas cobre danos causados por incêndios em edifícios em propriedade horizontal, oferecendo uma proteção mais abrangente para a casa."
       }
+    ],
+    certificacao: [
+      {
+        question: "O que é um certificado energético?",
+        answer: "O Certificado Energético é um documento que avalia a eficácia energética de um imóvel numa escala de A+ (muito eficiente) a F (pouco eficiente), emitido por técnicos autorizados pela Agência para a Energia (ADENE). No documento podes encontrar informação sobre o consumo energético relativo a climatização e águas quentes sanitárias, mas também medidas de melhoria para reduzir o consumo."
+      },
+      {
+        question: "Para que serve um certificado energético?",
+        answer: "O certificado energético é obrigatório desde 2013 para quem pretende vender ou arrendar um imóvel. O objetivo é que informe o proprietário sobre o desempenho energético do imóvel e quais as medidas de melhoria que pode implementar."
+      },
+      {
+        question: "Quais as vantagens da certificação energética?",
+        answer: "Para os proprietários que pretendem vender ou arrendar o imóvel, a obrigatoriedade da certificação energética apresenta vantagens. A certificação energética pode levar à valorização do imóvel e à redução do gasto de energia com soluções energéticas adequadas, resultando numa poupança energética. Além disso, através da certificação energética do imóvel podes ter acesso a benefícios fiscais. Se o imóvel possuir uma classificação energética igual ou superior a A pode existir uma redução até 25% do IMI."
+      },
+      {
+        question: "Quais são os documentos necessários para a visita técnica?",
+        answer: "Os documentos obrigatórios a apresentar na visita técnica são a Caderneta Predial Urbana e a Certidão de Registo Permanente. Porém, podes ainda apresentar documentos facultativos como a ficha técnica de habitação, a planta do imóvel e o corte construtivo, os quais contribuem para a otimização da Classificação do Certificado Energético do seu imóvel."
+      },
+      {
+        question: "Quem pode atribuir um certificado energético?",
+        answer: "O certificado energético apenas pode ser elaborado por um perito qualificado pela ADENE. Estes profissionais são arquitetos ou engenheiros, com experiência mínima de 5 anos, que atuam no âmbito do Sistema de Certificação Energética dos Edifícios (SCE), aprovado pelo Decreto-Lei nº 101-D/2020, de 7 de dezembro."
+      },
+      {
+        question: "O certificado energético tem validade?",
+        answer: "O certificado energético é válido por 10 anos para edifícios de habitação e pequenos edifícios de comércio e serviços. No caso de grandes edifícios de comércio e serviços, o prazo é de 6 anos para certificados emitidos até 30 de abril e 2015 e 8 anos para certificados emitidos após 30 de abril de 2015."
+      },
+      {
+        question: "Posso usar o Certificado Energético para efeitos de escritura?",
+        answer: "Os Certificados Energéticos emitidos apenas servem para efeitos de escritura, se acompanhados uma certidão de registo permanente válida para o efeito."
+      },
+      {
+        question: "Em que situações é obrigatório o certificado energético?",
+        answer: "O artigo 18 do Decreto-Lei n.º 101-D/2020 determina a obrigatoriedade do certificado energético nas seguintes situações: aluguer, venda, trespasse ou dação em cumprimento de imóveis; construção de novos edifícios; grandes renovações com custo superior a 25% do valor do imóvel; grandes edifícios comerciais ou de serviços (área >1000m² ou 500m² para certos usos), sujeitos a inspeções periódicas; e programas que exijam o certificado para acesso a financiamento ou benefícios fiscais."
+      },
+      {
+        question: "Ter certificado energético nos estabelecimentos comerciais é obrigatório por lei?",
+        answer: "Sim, o certificado energético é obrigatório para estabelecimentos comerciais, conforme o DL 101-D/2020, que se aplica a todos os edifícios destinados à utilização humana. Se o estabelecimento comercial for vendido, trespassado ou alugado por mais de 4 meses, a emissão do certificado energético é obrigatória. Se o seu estabelecimento tiver mais de 250m², é feito um diagnóstico inicial e, depois, um orçamento para a realização do certificado energético."
+      },
+      {
+        question: "Coimas se vender ou arrendar sem Certificado Energético?",
+        answer: "Caso um imóvel seja publicitado, vendido ou arrendado sem a emissão prévia do Certificado Energético, tal facto constitui contraordenação punível com coima até 3 750 €, no caso de pessoas singulares e de até 44 890 €, no caso de pessoas coletivas, conforme Artigo 35.º do DL 101-D/2020."
+      }
+    ],
+    credito: [
+      {
+        question: "Quanto posso pedir de crédito habitação?",
+        answer: "Antes de procurar casa, o primeiro passo é calcular quanto de crédito habitação pode solicitar com base nas poupanças disponíveis e no rendimento mensal. Deve reservar-se entre 15% e 20% do preço do imóvel como entrada, pois o banco não financia 100% do valor e existem impostos e despesas extras. As prestações mensais ideais não devem ultrapassar 35% do rendimento mensal líquido."
+      },
+      {
+        question: "Falar com um intermediário de crédito à habitação",
+        answer: "Acesso a acompanhamento personalizado sem ter de visitar cada banco. Comparação consolidada das ofertas bancárias em vigor. Processo de contratação simplificado e possibilidade de condições mais favoráveis. Serviço gratuito prestado pelo idealista/créditohabitação."
+      },
+      {
+        question: "Enviar a documentação necessária para pedir um crédito habitação",
+        answer: "A apresentação de propostas personalizadas pelos bancos depende do envio prévio de documentação que comprove a situação financeira. Sem o envio antecipado, as ofertas tornam-se genéricas e pouco representativas do perfil real. As propostas personalizadas incluem taxa de juro, spread, comissões e custos de produtos adicionais exigidos. A análise detalhada de cada componente permite identificar margens de negociação. Acompanhamento da Globalead Portugal garante decisões informadas e vantajosas."
+      },
+      {
+        question: "Receber ofertas de crédito habitação e compará-las",
+        answer: "A apresentação de propostas personalizadas pelos bancos depende do envio prévio de documentação que comprove a situação financeira. Sem o envio antecipado, as ofertas tornam-se genéricas e pouco representativas do perfil real. As propostas personalizadas incluem taxa de juro, spread, comissões e custos de produtos adicionais exigidos. A análise detalhada de cada componente permite identificar margens de negociação. Acompanhamento da Globalead Portugal garante decisões informadas e vantajosas."
+      },
+      {
+        question: "Pede uma avaliação imobiliária para o crédito à habitação",
+        answer: "A avaliação oficial do imóvel é obrigatória para os bancos no processo de crédito habitação. Serve para determinar o valor real do imóvel e aferir o risco do empréstimo. O custo da avaliação situa-se entre 200€ e 350€, conforme a instituição bancária. A Globalead Portugal acompanha todo o procedimento, assegurando transparência e cumprimento dos prazos necessários."
+      },
+      {
+        question: "Oferta definitiva de aprovação do crédito habitação: FINE",
+        answer: "A emissão da FINE ocorre após a conclusão da avaliação do imóvel e validações complementares, caso o crédito seja aprovado. A FINE detalha montante do empréstimo, forma de disponibilização, taxa de juro, plano de amortização, comissões e outras despesas. Validade de 30 dias para análise cuidadosa e decisão sobre a aceitação da oferta. Antes da escritura, é essencial rever todas as condições e esclarecer dúvidas. A Globalead Portugal disponibiliza especialistas para apoiar o cliente nesta fase decisiva."
+      },
+      {
+        question: "Assinar crédito à habitação e fazer a escritura de compra e venda",
+        answer: "Ao aceitares a proposta de crédito habitação, o banco emite a FINE (Ficha de Informação Normalizada Europeia), que detalha montante, taxa de juro, comissões, amortização e demais encargos. Após a entrega da FINE, cumpre um período mínimo de 7 dias antes da escritura, para refletires e confirmares que a decisão está alinhada com o acordado. Este intervalo é essencial para garantir a plena compreensão de todos os termos contratuais. A Globalead Portugal recomenda que solicites informação detalhada e esclareças todas as dúvidas antes de assinar qualquer documento."
+      },
+      {
+        question: "Em que consiste o Spread?",
+        answer: "O spread é um elemento da taxa de juro que é definido individualmente por cada banco num empréstimo habitação. No fundo, trata-se da margem de lucro da instituição financeira. O spread que o banco atribui a um determinado cliente tem muito que ver com o seu risco (aferido através do historial de crédito, dos seus rendimentos, do montante de empréstimo que está a ser solicitado e das garantias apresentadas pelo consumidor, etc.) e, muitas vezes, com os produtos que podem ser contratados para baixar o spread."
+      },
+      {
+        question: "Qual é a diferença entre taxa fixa e variável?",
+        answer: "A taxa fixa mantém-se constante ao longo do empréstimo, nunca se alterando, sendo acordada com a instituição financeira aquando do pedido de financiamento. Já a taxa variável oscila de acordo com um indexante, o que significa que irá sofrer alterações ao longo do período de vida do empréstimo, o que, consequentemente, vai fazer com que a prestação mensal também se modifique. Isto significa que, caso optes por este tipo de taxa no crédito habitação, se o valor do indexante aumentar, a taxa aplicável também será mais elevada, enquanto que, se baixar, a taxa também descerá. Em Portugal, o indexante que normalmente se utiliza nos empréstimos habitação é a Euribor, que pode ser a 3, 6 ou 12 meses."
+      },
+      {
+        question: "Taxa Anual Nominal (TAN): O que é?",
+        answer: "Sendo aplicada a todo o tipo de operações, sejam aplicações financeiras ou empréstimos que impliquem o pagamento de juros, a Taxa Anual Nominal (TAN) é um indicador que permite comparar produtos entre si. No caso do crédito habitação com taxa de juro variável, esta resulta simplesmente da soma do spread com a da Euribor."
+      },
+      {
+        question: "O que é a Taxa Euribor?",
+        answer: "A Euribor ou, Euro Interbank Offered Rate, é um juro que os bancos pagam a outras instituições para financiar a sua atividade. A Euribor é calculada pela média das taxas de juros praticadas pelos 52 maiores bancos da zona euro, num determinado prazo. A Taxa Euribor não é fixa e encontra-se sujeita a oscilações diárias. Apesar de a Euribor sofrer flutuações diárias, o cliente pode decidir o momento em que a taxa é recalculada. Os prazos mais comuns são 3, 6 e 12 meses."
+      },
+      {
+        question: "Como conseguir aprovação num empréstimo imobiliário?",
+        answer: "Para se obter uma aprovação rápida nos empréstimos bancários para habitação é fundamental que o consumidor apresente o máximo de garantias à instituição de crédito, de forma a reduzir a perceção de risco. Para além do nível de rendimentos, um bom histórico de pagamentos de empréstimos anteriores é uma condição essencial. Outro fator que os bancos privilegiam é a estabilidade profissional. O ideal é que o encargo com a mensalidade não ultrapasse os 40% do rendimento do agregado familiar."
+      },
+      {
+        question: "Que bancos vão aderir ao 100% financiamento?",
+        answer: "Todos os bancos que concedem crédito habitação (17 instituições no geral) já aderiram à garantia pública, que incluem todos os nossos parceiros com os quais já trabalhamos."
+      },
+      {
+        question: "Qual é o prazo para pedir a garantia?",
+        answer: "Para beneficiar da garantia pública e ter 100% financiamento na habitação, terás de celebrar o contrato de crédito até ao dia 31 de dezembro de 2026."
+      },
+      {
+        question: "Tenho de pagar comissões se falhar o pagamento da prestação de empréstimo da casa?",
+        answer: "Quando o cliente bancário não paga as prestações na data estipulada, entra em mora. Nestas situações, a instituição bancária pode exigir o pagamento de juros moratórios e de uma comissão respeitante à recuperação de valores em dívida. Juros de mora: resultam da aplicação de uma sobretaxa anual máxima de 3%, que acresce à taxa de juros remuneratórios; Comissão de recuperação de valores em dívida: não pode ultrapassar 4% do valor da prestação, com um valor mínimo de 12 euros e um valor máximo de 150 euros."
+      },
+      {
+        question: "O que acontece se falhar o pagamento da prestação do crédito habitação?",
+        answer: "Entrar em incumprimento no empréstimo para comprar casa é uma situação indesejável para qualquer devedor. Caso falhes alguma mensalidade, e da primeira vez que isso acontecer, o banco tem 15 dias para entrar em contacto contigo. Entre o 31º e o 60º dia após o incumprimento, o caso é integrado no PERSI (Procedimento Extrajudicial de Regularização de Situações de Incumprimento), que visa chegar a um acordo entre o banco e o cliente."
+      },
+      {
+        question: "Podes ainda ter isenção de impostos?",
+        answer: "Sim. Tens a possibilidade de ainda usufruir da isenção do IMT (Imposto sobre Transmissões Onerosas de Imóveis) e Imposto de Selo que geram poupanças significativas no processo de compra de casa."
+      },
+      {
+        question: "Quanto tempo dura a garantia do estado?",
+        answer: "A garantia em questão irá vigorar durante dez anos após a data da escritura do contrato de crédito habitação."
+      },
+      {
+        question: "A comissão de processamento da prestação, ainda é cobrada?",
+        answer: "Cobrada a cada prestação liquidada pelo cliente (com acréscimo do Imposto do Selo) e ao longo de toda a vigência do crédito, a comissão de processamento aplica-se mensalmente aquando do pagamento da prestação mensal. Apesar de desde janeiro de 2021 ter sido decretado o fim da comissão de processamento, esta medida é apenas aplicável aos novos créditos."
+      },
+      {
+        question: "Amortização Antecipada de Crédito: Direitos e Custos Associados?",
+        answer: "Os consumidores têm direito a reembolsar antecipadamente o seu crédito, isto é, proceder à sua amortização antes da data prevista para a respetiva liquidação. Tal poderá na forma de um reembolso total ou apenas parcial. Porém, a amortização antecipada acarreta custos: Taxa variável: a comissão não pode ser superior a 0,5% do capital reembolsado; Taxa Fixa: a comissão não pode ultrapassar os 2% do capital amortizado."
+      },
+      {
+        question: "Alterações no spread do crédito habitação: Como evitar surpresas?",
+        answer: "Embora seja uma prática pouco comum, poderão verificar-se alterações no Spread do crédito habitação ao longo da vigência do contrato. Tal pode suceder, por exemplo, caso o cliente tenha acordado com o banco o cumprimento de determinadas condições para a obtenção de um Spread mais baixo, tais como a domiciliação do ordenado ou ter débitos diretos ativos associados à conta detida na instituição, mas, por algum motivo, deixar de cumprir essas mesmas condições."
+      },
+      {
+        question: "Taxa Anual Efetiva Global (TAEG): O que é?",
+        answer: "Representando o custo total do crédito habitação, a Taxa Anual Efetiva Global (TAEG) inclui todos os encargos associados ao contrato. Isto inclui juros, comissões, impostos, seguros associados ao crédito e encargos com a manutenção da conta à ordem associada ao empréstimo. Também inclui outros custos como emolumentos cobrados no registo da hipoteca."
+      }
     ]
   };
 

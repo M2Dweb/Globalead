@@ -385,14 +385,12 @@ return (
                   <option value="Pedido de Simulação Alarmes">Pedido de Simulação Alarmes</option>
                 </select>
                 
-                <input
-                  type="text"
-                  name="horario"
-                  value={formData.horario}
-                  onChange={handleInputChange}
-                  placeholder="Horário:"
-                  className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <select name="horário" value={formData.horario} onChange={handleInputChange} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                  <option value="">Horário</option>
+                  <option>9h-12h30</option>
+                  <option>12h30-16h</option>
+                  <option>16h-19h30</option>
+                </select>
 
                 <div className="md:col-span-2">
                   <label className="flex items-start text-sm text-gray-700 mb-4">

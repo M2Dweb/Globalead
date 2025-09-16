@@ -121,7 +121,7 @@ const CreditCalculator: React.FC = () => {
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
       <div className="flex items-center mb-6">
-        <Calculator className="h-8 w-8 text-[#0d2233] mr-3" />
+        <Calculator className="h-8 w-8 text-[#79b2e9] mr-3" />
         <h3 className="text-2xl font-bold text-gray-900">
           Calculadora de Crédito Habitação
         </h3>
@@ -129,7 +129,7 @@ const CreditCalculator: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Inputs */}
-        <div className="space-y-6">
+        <div className="space-y-6 order-2 lg:order-1">
           {/* Valor do imóvel */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -142,7 +142,7 @@ const CreditCalculator: React.FC = () => {
               step="5000"
               value={values.propertyValue}
               onChange={(e) => handleInputChange('propertyValue', Number(e.target.value))}
-              className="w-full"
+              className="w-full "
             />
             <div className="flex justify-between text-sm text-gray-500 mt-1">
               <span>50.000€</span>
@@ -259,7 +259,7 @@ const CreditCalculator: React.FC = () => {
               <button 
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#0d2233] text-white py-3 px-6 rounded-lg hover:bg-[#79b2e9] transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#79b2e9] text-white py-3 px-6 rounded-lg hover:bg-[#0d2233] transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Enviando...' : 'Solicitar Simulação Detalhada'}
               </button>
@@ -268,7 +268,7 @@ const CreditCalculator: React.FC = () => {
         </div>
 
         {/* Resultados + Gráfico */}
-        <div className="space-y-4">
+        <div className="space-y-4 order-1 lg:order-2">
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
               <div className="flex items-center mb-2">
@@ -311,8 +311,8 @@ const CreditCalculator: React.FC = () => {
             </div>
           </div>
 
-          {/* Gráfico Doughnut */}
-          <div className="bg-white p-4 rounded-xl border border-gray-200 h-72">
+          {/* Gráfico Doughnut (apenas desktop) */}
+          <div className="hidden lg:block bg-white p-4 rounded-xl border border-gray-200 h-72">
             <ResponsiveContainer>
               <PieChart>
                 <Pie
