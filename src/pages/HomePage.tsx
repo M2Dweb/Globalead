@@ -153,7 +153,11 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (partnerLogos.length > 0) {
       const interval = setInterval(() => {
-        setCurrentPartnerIndex(prev => (prev + 1) % Math.max(1, partnerLogos.length - logosPerPage + 1));
+        setCurrentPartnerIndex(prev => {
+          // Corrigido para evitar índice negativo
+          const maxIndex = Math.max(0, partnerLogos.length - logosPerPage);
+          return (prev + 1) % (maxIndex + 1);
+        });
       }, 3000);
       return () => clearInterval(interval);
     }
@@ -298,7 +302,7 @@ const HomePage: React.FC = () => {
                 {partnerLogos.map((logo, index) => (
                   <div
                     key={index}
-                    className={`flex-shrink-0 w-1/3 sm:w-1/5 px-4`}
+                    className={`flex-shrink-0 w-1/2 sm:w-1/5 px-4`}
                   >
                     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                       <img

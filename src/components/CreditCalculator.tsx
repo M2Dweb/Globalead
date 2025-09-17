@@ -312,7 +312,7 @@ const CreditCalculator: React.FC = () => {
           </div>
 
           {/* Gráfico Doughnut (apenas desktop) */}
-          <div className="hidden lg:block bg-white p-4 rounded-xl border border-gray-200 h-72">
+          <div className="hidden lg:block bg-white p-4 rounded-xl border border-gray-200 h-96">
             <ResponsiveContainer>
               <PieChart>
                 <Pie

@@ -11,9 +11,9 @@ const CreditoPage: React.FC = () => {
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
 
   const [logosPerPage, setLogosPerPage] = useState(
-      window.innerWidth < 640 ? 2 : 5
-    );
-  
+    window.innerWidth < 640 ? 2 : 5
+  );
+
   useEffect(() => {
     const handleResize = () => {
       setLogosPerPage(window.innerWidth < 640 ? 2 : 5);
@@ -21,7 +21,7 @@ const CreditoPage: React.FC = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-    
+
   useEffect(() => {
     fetchPartnerLogos();
   }, []);
@@ -29,7 +29,11 @@ const CreditoPage: React.FC = () => {
   useEffect(() => {
     if (partnerLogos.length > 0) {
       const interval = setInterval(() => {
-        setCurrentPartnerIndex(prev => (prev + 1) % (partnerLogos.length - logosPerPage));
+        setCurrentPartnerIndex(prev => {
+          // Corrigido para evitar índice negativo
+          const maxIndex = Math.max(0, partnerLogos.length - logosPerPage);
+          return (prev + 1) % (maxIndex + 1);
+        });
       }, 3000);
       return () => clearInterval(interval);
     }
@@ -91,13 +95,13 @@ const CreditoPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-16 sm:py-20 px-4">
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold mt-9">
               Ajudamos na compra da sua casa
             </h1>
-            <p className="text-xl text-blue-100 max-w-4xl mx-auto">
+            <p className="text-xl text-blue-100 max-w-4xl mx-auto mt-4">
               Na Globalead Portugal, reconhecemos que a aquisição de um imóvel é um dos momentos mais significativos na vida de qualquer família e por isso oferecemos um serviço de crédito habitação totalmente personalizado.
             </p>
           </div>
@@ -105,8 +109,8 @@ const CreditoPage: React.FC = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
           <div className="prose prose-lg max-w-none text-gray-700">
             <p className="leading-relaxed mb-6">
               A nossa equipa estabelece parcerias com as principais instituições financeiras para negociar condições de financiamento que reflitam o seu perfil, objetivos e necessidades reais, garantindo um acompanhamento próximo em todas as etapas.
@@ -122,9 +126,9 @@ const CreditoPage: React.FC = () => {
       </section>
 
       {/* Services */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {services.map((service, index) => (
               <div key={index} className="bg-white p-8 rounded-xl shadow-lg text-center">
                 <div className="flex justify-center mb-6">
@@ -143,20 +147,21 @@ const CreditoPage: React.FC = () => {
       </section>
 
       {/* Credit Calculator */}
-      <section className="py-20">
-        <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           <CreditCalculator />
-          <div className="text-center mt-6">
-            <p className="text-lg text-gray-600 font-medium">
-              Para números precisos, entre em contacto
+          <div className="text-center mt-6"> 
+            <p className="text-sm text-gray-600 mb-4">
+              Preços meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma
+              simulação baseada em necessidades reais.
             </p>
           </div>
         </div>
       </section>
 
       {/* Partners Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Compare as várias instituições em Portugal
@@ -172,7 +177,8 @@ const CreditoPage: React.FC = () => {
                 {partnerLogos.map((logo, index) => (
                   <div
                     key={index}
-                    className={`flex-shrink-0 w-1/3 sm:w-1/5 px-4`} // 2 por vez no mobile, 5 no desktop
+                    // 2 logos por vez no mobile, 5 no desktop, menos padding para mobile
+                    className={`flex-shrink-0 w-1/2 sm:w-1/5 px-2`}
                   >
                     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                       <img
@@ -189,14 +195,11 @@ const CreditoPage: React.FC = () => {
         </div>
       </section>
 
-      
-      
-
       {/* Contact Form */}
-      <section className="py-20 bg-[#0d2233] text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section className="py-20 bg-[#0d2233] text-white px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Contratar um crédito habitação é a decisão financeira mais impactante da tua vida
             </h2>
           </div>
@@ -210,8 +213,8 @@ const CreditoPage: React.FC = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-gray-900 text-white px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Pedir um crédito habitação passo a passo
