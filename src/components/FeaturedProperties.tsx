@@ -93,7 +93,7 @@ const FeaturedProperties: React.FC = () => {
               <div
                 key={property.id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer"
-                onClick={() => navigate(`/imoveis/${property.id}`)}
+               onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
               >
                 <img src={property.images[0]} alt={property.title} className="w-full h-48 object-cover" />
                 <div className="p-6">
@@ -109,7 +109,7 @@ const FeaturedProperties: React.FC = () => {
                   </div>
                   <button
                     className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition"
-                    onClick={() => navigate(`/imoveis/${property.id}`)}
+                   onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
                   >
                     Ver Detalhes
                   </button>

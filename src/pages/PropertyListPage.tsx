@@ -184,7 +184,7 @@ const PropertyListPage: React.FC = () => {
             {filteredProperties.map((property) => (
               <Link
                 key={property.id}
-                to={`/imoveis/${property.id}`}
+                to={`/imoveis/${property.ref || property.id}`}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="relative">

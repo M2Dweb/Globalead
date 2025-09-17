@@ -4,8 +4,6 @@ import {
   Facebook,
   Instagram,
   Linkedin,
-  Mail,
-  Phone,
 } from 'lucide-react';
 import {
   FaTiktok,
@@ -159,7 +157,7 @@ const Footer: React.FC = () => {
                 {latestPosts.length > 0 ? (
                   latestPosts.map((post) => (
                     <Link
-                      key={post.id}
+                     key={post.ref || post.id}
                       to="/blog"
                       className="block text-white hover:text-[#79b2e9] transition-colors"
                     >

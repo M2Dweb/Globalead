@@ -189,43 +189,8 @@ const CreditoPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 100% Financing Section */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-blue-50 p-8 rounded-xl">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-              Como funciona o Crédito Habitação com 100% financiamento para jovens?
-            </h2>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              Quando solicitas um crédito habitação existem vários fatores que influenciam o banco a financiar, sendo 90% o limite máximo do valor do imóvel emprestado pelos bancos para habitação própria e permanente. No entanto, desde setembro de 2024 é possível o crédito habitação 100% financiado através da garantia pública do Estado.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-8">
-              Esta poderá chegar até aos 15% do valor do imóvel, cobrindo o valor que não é financiado pelos bancos. Válido para jovens até aos 35 anos com imóveis até 450.000 euros ou para casas do banco. No caso das instituições bancárias, vendem-nos a preços inferiores e com condições únicas, para reaverem parte do valor investido.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Requisitos:</h3>
-                <ul className="space-y-2 text-gray-700">
-                  <li><strong>Idade:</strong> Entre 18 e 35 anos, com domicílio fiscal em Portugal</li>
-                  <li><strong>Rendimentos:</strong> Não podem ultrapassar 81.199 euros anuais</li>
-                  <li><strong>Propriedade:</strong> Não pode ser proprietário de qualquer imóvel</li>
-                  <li><strong>Benefícios anteriores:</strong> Não pode ter beneficiado de garantias públicas</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Condições:</h3>
-                <ul className="space-y-2 text-gray-700">
-                  <li><strong>Valor do imóvel:</strong> Até 350.000€ (450.000€ em certas regiões)</li>
-                  <li><strong>Limite da garantia:</strong> Máximo 25% do valor da transação</li>
-                  <li><strong>Duração:</strong> Garantia válida por 10 anos</li>
-                  <li><strong>Prazo:</strong> Contrato até 31 de dezembro de 2026</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
+      
 
       {/* Contact Form */}
       <section className="py-20 bg-[#0d2233] text-white">

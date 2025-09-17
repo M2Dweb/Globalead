@@ -337,7 +337,7 @@ const HomePage: React.FC = () => {
             {latestPosts.map(post => (
               <Link
                 key={post.id}
-                to={`/blog/${post.id}`}
+               to={`/blog/${post.ref || post.id}`}
                 className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group border border-gray-100"
               >
                 <div className="relative">

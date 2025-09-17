@@ -279,20 +279,31 @@ return (
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Centraliza a grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
-                <div className="flex items-center mb-4">
+              <div
+                key={index}
+                className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
+              >
+                {/* estrelas */}
+                <div className="flex justify-center mb-4">
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-5 w-5 fill-current" />
                     ))}
                   </div>
                 </div>
-                <p className="text-gray-600 mb-6 italic">
-                  "{testimonial.review}"
-                </p>
-                <div className="border-t pt-4">
+
+                {/* review no centro */}
+                <div className="flex-grow flex items-center justify-center">
+                  <p className="text-gray-600 italic">
+                    "{testimonial.review}"
+                  </p>
+                </div>
+
+                {/* nome + plataforma sempre no fundo */}
+                <div className="border-t pt-4 mt-6">
                   <p className="font-semibold text-gray-900">
                     {testimonial.name}
                   </p>
@@ -305,6 +316,11 @@ return (
           </div>
         </div>
       </section>
+
+
+
+
+
       {/* CTA Section */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

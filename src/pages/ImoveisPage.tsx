@@ -101,40 +101,41 @@ const ImoveisPage: React.FC = () => {
     {
       icon: <Hammer className="h-12 w-12 text-[#0d2233]" />,
       title: "Obras e Remodelações",
-      description: "Executamos obras e remodelações com profissionalismo, desde o planeamento até à entrega final. De pequenas melhorias a renovações completas, contamos com mão de obra especializada e experiente, adaptada às necessidades da sua casa ou espaço comercial.",
+      description: "Realizamos obras e remodelações de forma profissional, desde pequenas melhorias a renovações completas.",
       image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Palette className="h-12 w-12 text-[#0d2233]" />,
       title: "Design e Decoração",
-      description: "Transformamos espaços com soluções personalizadas que aliam funcionalidade, elegância e design de excelência. Acompanhamos todas as etapas do planeamento à escolha do mobiliário e da decoração para garantir ambientes que refletem o seu estilo e respondem às suas necessidades.",
+      description: "Criamos ambientes funcionais e elegantes, acompanhando desde o planeamento até à escolha do mobiliário e decoração.",
       image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Building className="h-12 w-12 text-[#0d2233]" />,
       title: "Promotora Imobiliária",
-      description: "Desenvolvemos empreendimentos inovadores que aliam design, funcionalidade e elevado potencial de valorização. Cada projeto é cuidadosamente planeado para oferecer uma experiência imobiliária distinta e rentável.",
+      description: "Desenvolvemos projetos imobiliários inovadores, com design, funcionalidade e elevado potencial de valorização.",
       image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Users className="h-12 w-12 text-[#0d2233]" />,
       title: "Relocation",
-      description: "Oferecemos um acompanhamento completo para garantir uma transição tranquila para Portugal. As nossas parcerias incluem a procura de imóvel, gestão documental e apoio na integração à comunidade local.",
+      description: "Apoiamos a sua mudança para Portugal com procura de imóvel, gestão documental e integração local.",
       image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Compass className="h-12 w-12 text-[#0d2233]" />,
       title: "Arquitetura",
-      description: "Criamos espaços intemporais onde luz, matéria e proporção se unem com simplicidade e autenticidade. Acreditamos que o verdadeiro luxo está na clareza das ideias e na honestidade dos materiais. Cada projeto reflete a identidade de quem o habita lugares serenos que resistem ao tempo e transcendem modas.",
+      description: "Projetamos espaços intemporais e autênticos, que refletem identidade e resistem ao tempo.",
       image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Scale className="h-12 w-12 text-[#0d2233]" />,
       title: "Apoio Jurídico",
-      description: "Tratamos de todo o processo desde a autenticação de documentos e escrituras até à representação fiscal e pedidos de residência. Garantimos transparência e acompanhamento completo na compra, venda, arrendamento ou investimento imobiliário.",
+      description: "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo.",
       image: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=600"
     }
   ];
+
 
   const businessServices = [
     {
@@ -282,9 +283,14 @@ const ImoveisPage: React.FC = () => {
 
             {/* Texto */}
             <div className="flex flex-col mt-20">
-              <div className="mb-6">
+              <div className="mb-6 text-center md:text-left">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                  Carlos Gonçalves
+                  <a
+                    href="/sobre" // alterar rota
+                    className="hover:underline cursor-pointer"
+                  >
+                    Carlos Gonçalves
+                  </a>
                 </h2>
                 <h3 className="text-xl text-[#79b2e9] font-medium">
                   A confiança constrói o amanhã
@@ -303,6 +309,8 @@ const ImoveisPage: React.FC = () => {
                 futuro da sua casa comece com segurança e visão.
               </p>
             </div>
+
+
           </div>
         </div>
       </section>
@@ -346,20 +354,30 @@ const ImoveisPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div
+                key={index}
+                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
+              >
+                {/* Imagem apenas no desktop */}
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-48 object-cover"
+                  className="hidden md:block w-full h-48 object-cover"
                 />
-                <div className="p-6">
+
+                <div className="p-6 flex flex-col flex-grow">
+                  {/* Ícone sempre visível */}
                   <div className="flex items-center mb-4">
-                    {service.icon}
+                    <div className="flex items-center justify-center w-14 h-14 text-white rounded-xl">
+                      {service.icon}
+                    </div>
                     <h3 className="text-xl font-semibold text-gray-900 ml-3">
                       {service.title}
                     </h3>
                   </div>
-                  <p className="text-gray-600 mb-6">
+
+                  {/* Texto curto no mobile, completo no desktop */}
+                  <p className="text-gray-600 mb-6 line-clamp-3 md:line-clamp-none">
                     {service.description}
                   </p>
                 </div>
@@ -368,6 +386,7 @@ const ImoveisPage: React.FC = () => {
           </div>
         </div>
       </section>
+
 
       {/* Contact Form */}
       {/* Contact Form */}

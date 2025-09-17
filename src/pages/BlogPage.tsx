@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, ArrowRight, Search, Filter } from 'lucide-react';
+import { Calendar, Search, Filter } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Link } from 'react-router-dom';
 import ContentRenderer from '../components/ContentRenderer';
@@ -19,7 +19,6 @@ const BlogPage: React.FC = () => {
     { id: 'telecom', name: 'Telecomunicações', count: 0 },
     { id: 'alarmes', name: 'Alarmes', count: 0 },
   ];
-
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
@@ -91,7 +90,6 @@ const BlogPage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        {/* Hero Section */}
         <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-40"></div>
           <video
@@ -176,13 +174,21 @@ const BlogPage: React.FC = () => {
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center justify-center ${
                         selectedCategory === category.id
                           ? 'bg-[#0d2233] text-white'
                           : 'bg-white text-gray-700 hover:bg-gray-100'
                       }`}
                     >
-                      {category.name}
+                      {category.id === 'all' ? (
+                        <img
+                          src="/fotos/globalead-icon.png" // caminho do logo
+                          alt="Todos"
+                          className="h-6 w-auto"
+                        />
+                      ) : (
+                        category.name
+                      )}
                     </button>
                   ))}
                 </div>
@@ -191,24 +197,28 @@ const BlogPage: React.FC = () => {
             </div>
           </div>
 
-
           {/* Blog Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map(post => (
               <article key={post.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group border border-gray-100">
-                <div className="relative">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                <div className="relative group">
+                  <a href={`/blog/${post.ref || post.id}`}>
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </a>
+
                   <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                     {categories.find(cat => cat.id === post.category)?.name}
                   </div>
+
                   <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
                     {post.read_time}
                   </div>
                 </div>
+
                 
                 <div className="p-6">
                   <div className="flex items-center text-sm text-gray-500 mb-3">
@@ -232,13 +242,10 @@ const BlogPage: React.FC = () => {
                   >
                     Saber mais
                   </Link>
-
-
                 </div>
               </article>
             ))}
           </div>
-          
 
           {/* No Results */}
           {filteredPosts.length === 0 && (

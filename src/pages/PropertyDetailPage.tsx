@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Linkedin, Twitter } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Linkedin, Twitter, Phone } from 'lucide-react';
 import { useParams, Link } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { supabase, getPropertyByRef } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
 
 const PropertyDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { ref } = useParams<{ ref: string }>();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [property, setProperty] = useState<any | null>(null);
   const [similarProperties, setSimilarProperties] = useState<any[]>([]);
@@ -28,22 +28,19 @@ const PropertyDetailPage: React.FC = () => {
 
   useEffect(() => {
     const fetchProperty = async () => {
-      if (!id) {
+      if (!ref) {
         setLoading(false);
         return;
       }
 
       try {
-        const { data, error } = await supabase
-          .from('properties')
-          .select('*')
-          .eq('id', id)
-          .single();
+        const { data, error } = await getPropertyByRef(ref);
         
         if (error) {
           console.error('Erro ao carregar propriedade:', error);
           setProperty({
-            id: id,
+            id: ref,
+            ref: ref,
             title: "Empreendimento Noval Park",
             description: "O empreendimento Novel Park nasce em Vila Nova de Gaia, junto ao Monte da Virgem, numa das zonas mais elevadas e tranquilas da cidade. Implantado nos terrenos da Quinta do Cravel, o projeto usufrui de uma envolvente natural privilegiada, ao mesmo tempo que garante proximidade ao centro urbano e à ampla rede de serviços e acessos, tornando-se uma opção ideal para quem procura viver com equilíbrio entre natureza e comodidade.",
             price: 432600,
@@ -119,7 +116,7 @@ const PropertyDetailPage: React.FC = () => {
         const { data, error } = await supabase
           .from('properties')
           .select('*')
-          .neq('id', id)
+          .neq('ref', ref)
           .limit(3);
         
         if (error) {
@@ -166,7 +163,7 @@ const PropertyDetailPage: React.FC = () => {
 
     fetchProperty();
     fetchSimilarProperties();
-  }, [id]);
+  }, [ref]);
 
   useEffect(() => {
     if (!property || !property.images) return;
@@ -240,7 +237,7 @@ const PropertyDetailPage: React.FC = () => {
     try {
       const emailData = {
         ...formData,
-        mensagem: `Interesse no imóvel: ${property?.title} (ID: ${id})`
+        mensagem: `Interesse no imóvel: ${property?.title} (Ref: ${ref})`
       };
       console.log('Dados do formulário PropertyDetail:', emailData);
       const success = await sendEmail(emailData as FormData);
@@ -468,7 +465,7 @@ const PropertyDetailPage: React.FC = () => {
               {/* Share Content */}
               <div className="bg-gray-50 p-6 rounded-xl">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Partilha este conteúdo</h3>
-                <div className="flex space-x-4">
+                <div className="flex flex-wrap gap-4">
                   <button
                     onClick={() => shareContent('facebook')}
                     className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
@@ -486,12 +483,6 @@ const PropertyDetailPage: React.FC = () => {
                     className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
                   >
                     <Send className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => shareContent('linkedin')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                  >
-                    <Linkedin className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('twitter')}
@@ -512,6 +503,23 @@ const PropertyDetailPage: React.FC = () => {
             {/* Visit Form */}
             <div className="lg:col-span-1">
               <div className="bg-white p-6 rounded-xl shadow-lg sticky top-32">
+                <div className="flex items-center space-x-4 mb-6">
+                  <img
+                    src="/fotos/globalead-icon.png" // ajusta o caminho conforme necessário
+                    alt="Paulo Paredes"
+                    className="w-16 h-16 rounded-full border-4 border-[#79b2e9] object-cover"
+                  />
+                  <div>
+                    <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
+                    <div className="flex items-center text-gray-800 text-base">
+                      <Phone className="h-4 w-4 mr-1" />
+                      <a href="tel:+351915482365" className="hover:underline">
+                        +351 915482365
+                      </a>
+                    </div>
+                    <p className="text-sm text-gray-500">Chamada para a rede móvel nacional</p>
+                  </div>
+                </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
                   Agende a sua visita
                 </h3>
@@ -524,7 +532,7 @@ const PropertyDetailPage: React.FC = () => {
                     onChange={handleInputChange}
                     placeholder="Nome:"
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="text"
@@ -532,7 +540,7 @@ const PropertyDetailPage: React.FC = () => {
                     value={formData.apelido}
                     onChange={handleInputChange}
                     placeholder="Apelido:"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="tel"
@@ -540,7 +548,7 @@ const PropertyDetailPage: React.FC = () => {
                     value={formData.telemovel}
                     onChange={handleInputChange}
                     placeholder="Telemóvel:"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="email"
@@ -549,7 +557,7 @@ const PropertyDetailPage: React.FC = () => {
                     onChange={handleInputChange}
                     placeholder="Email:"
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <select name="horário" value={formData.horario} onChange={handleInputChange} className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
                     <option value="">Horário</option>
@@ -561,7 +569,7 @@ const PropertyDetailPage: React.FC = () => {
                     name="meio_contacto"
                     value={formData.meio_contacto}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">Meio de Contacto:</option>
                     <option value="Email">Email</option>
@@ -615,7 +623,7 @@ const PropertyDetailPage: React.FC = () => {
             {similarProperties.map((similarProperty) => (
               <Link
                 key={similarProperty.id}
-                to={`/imoveis/${similarProperty.id}`}
+                to={`/imoveis/${similarProperty.ref || similarProperty.id}`}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <img

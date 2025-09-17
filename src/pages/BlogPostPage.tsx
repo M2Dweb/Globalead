@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { supabase, getBlogPostByRef } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
 
 
@@ -15,7 +15,7 @@ const categories = [
 ];
 
 const BlogPostPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { ref } = useParams<{ ref: string }>();
   const [post, setPost] = useState<any>(null);
   const [otherPosts, setOtherPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,16 +23,12 @@ const BlogPostPage: React.FC = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const { data: postData } = await supabase
-          .from('blog_posts')
-          .select('*')
-          .eq('id', id)
-          .single();
+        const { data: postData } = await getBlogPostByRef(ref || '');
 
         const { data: otherData } = await supabase
           .from('blog_posts')
           .select('*')
-          .neq('id', id)
+          .neq('ref', ref)
           .order('date', { ascending: false })
           .limit(5);
 
@@ -46,7 +42,7 @@ const BlogPostPage: React.FC = () => {
     };
 
     fetchPost();
-  }, [id]);
+  }, [ref]);
 
   if (loading) return <p className="text-center py-20">A carregar...</p>;
   if (!post) return <p className="text-center py-20">Artigo não encontrado.</p>;
@@ -85,7 +81,7 @@ const BlogPostPage: React.FC = () => {
           <div className="grid grid-cols-1 gap-6">
             {otherPosts.map(op => (
               <Link
-                to={`/blog/${op.id}`}
+                to={`/blog/${op.ref || op.id}`}
                 key={op.id}
                 className="group block bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >

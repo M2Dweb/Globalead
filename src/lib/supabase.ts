@@ -7,6 +7,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface Property {
   id: string;
+  ref: string;
   created_at: string;
   title: string;
   description: string;
@@ -24,6 +25,7 @@ export interface Property {
 
 export interface BlogPost {
   id: string;
+  ref: string;
   created_at: string;
   title: string;
   content: string;
@@ -34,3 +36,34 @@ export interface BlogPost {
   image: string;
   read_time: string;
 }
+
+// Função para gerar referência única
+export const generateRef = (prefix: string = ''): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = prefix;
+  for (let i = 0; i < 6; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
+
+// Função para buscar por referência
+export const getPropertyByRef = async (ref: string) => {
+  const { data, error } = await supabase
+    .from('properties')
+    .select('*')
+    .eq('ref', ref)
+    .single();
+  
+  return { data, error };
+};
+
+export const getBlogPostByRef = async (ref: string) => {
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('ref', ref)
+    .single();
+  
+  return { data, error };
+};

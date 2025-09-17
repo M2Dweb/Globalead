@@ -75,7 +75,7 @@ const AppLayout: React.FC = () => {
   if (path === '/admin') return [{ label: 'Administração', current: true }];
 
   // Detalhes de imóveis
-  if (path.startsWith('/imoveis/')) {
+  if (path.startsWith('/imoveis/') && path !== '/imoveis/lista') {
     return [
       { label: 'Imóveis', href: '/imoveis' },
       { label: 'Catálogo', href: '/imoveis/lista' },
@@ -115,7 +115,7 @@ const AppLayout: React.FC = () => {
           <Route path="/sobre" element={<SobrePage />} />
           <Route path="/imoveis" element={<ImoveisPage />} />
           <Route path="/imoveis/lista" element={<PropertyListPage />} />
-          <Route path="/imoveis/:id" element={<PropertyDetailPage />} />
+          <Route path="/imoveis/:ref" element={<PropertyDetailPage />} />
           <Route path="/seguros" element={<SeguroPage />} />
           <Route path="/credito" element={<CreditoPage />} />
           <Route path="/certificacao" element={<CertificacaoPage />} />
@@ -123,7 +123,7 @@ const AppLayout: React.FC = () => {
           <Route path="/energia" element={<EnergiaPage />} />
           <Route path="/tv-net-voz" element={<TvNetVozPage />} />
           <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:id" element={<BlogPostPage />} />
+          <Route path="/blog/:ref" element={<BlogPostPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/contactos" element={<ContactosPage />} />
         </Routes>
