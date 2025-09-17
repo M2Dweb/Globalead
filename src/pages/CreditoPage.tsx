@@ -152,7 +152,7 @@ const CreditoPage: React.FC = () => {
           <CreditCalculator />
           <div className="text-center mt-6"> 
             <p className="text-sm text-gray-600 mb-4">
-              Preços meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma
+              Valores meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma
               simulação baseada em necessidades reais.
             </p>
           </div>
