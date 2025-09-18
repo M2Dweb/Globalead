@@ -243,26 +243,35 @@ const CreditCalculator: React.FC = () => {
                 placeholder="Telemóvel"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              
-              {submitStatus === 'success' && (
-                <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                  Pedido enviado com sucesso! Entraremos em contacto em breve.
+              <div className="md:col-span-2">
+                  <label className="flex items-start text-sm text-gray-700 mb-4">
+                    <input type="checkbox" className="mt-1 mr-2" required />
+                    Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                  </label>
+                  <p className="text-xs text-gray-600 mb-4">
+                    Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                  </p>
+                  
+                  {submitStatus === 'success' && (
+                    <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                      Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                    </div>
+                  )}
+                  
+                  {submitStatus === 'error' && (
+                    <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                      Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
+                    </div>
+                  )}
+                  
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Enviando...' : 'Entrar em contacto'}
+                  </button>
                 </div>
-              )}
-              
-              {submitStatus === 'error' && (
-                <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                  Erro ao enviar pedido. Tente novamente.
-                </div>
-              )}
-              
-              <button 
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-[#79b2e9] text-white py-3 px-6 rounded-lg hover:bg-[#0d2233] transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Enviando...' : 'Solicitar Simulação Detalhada'}
-              </button>
             </form>  
           </div>
         </div>
@@ -270,7 +279,7 @@ const CreditCalculator: React.FC = () => {
         {/* Resultados + Gráfico */}
         <div className="space-y-4 order-1 lg:order-2">
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+            <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
               <div className="flex items-center mb-2">
                 <Home className="h-5 w-5 text-[#0d2233] mr-2" />
                 <span className="text-sm font-medium text-gray-700">Montante do Empréstimo</span>
@@ -280,7 +289,7 @@ const CreditCalculator: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-green-50 p-4 rounded-xl border border-green-100">
+            <div className="bg-green-50 p-6 rounded-xl border border-green-100">
               <div className="flex items-center mb-2">
                 <DollarSign className="h-5 w-5 text-green-600 mr-2" />
                 <span className="text-sm font-medium text-gray-700">Prestação Mensal</span>
@@ -290,7 +299,7 @@ const CreditCalculator: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-orange-50 p-4 rounded-xl border border-orange-100">
+            <div className="bg-orange-50 p-6 rounded-xl border border-orange-100">
               <div className="flex items-center mb-2">
                 <TrendingUp className="h-5 w-5 text-orange-600 mr-2" />
                 <span className="text-sm font-medium text-gray-700">Total de Juros</span>
@@ -300,7 +309,7 @@ const CreditCalculator: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
+            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
               <div className="flex items-center mb-2">
                 <Calculator className="h-5 w-5 text-gray-600 mr-2" />
                 <span className="text-sm font-medium text-gray-700">Total a Pagar</span>
