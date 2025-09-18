@@ -263,10 +263,10 @@ const CreditCalculator: React.FC = () => {
               >
                 {isSubmitting ? 'Enviando...' : 'Solicitar Simulação Detalhada'}
               </button>
-            </form>
+            </form>  
           </div>
         </div>
-
+              
         {/* Resultados + Gráfico */}
         <div className="space-y-4 order-1 lg:order-2">
           <div className="grid grid-cols-2 gap-4">
@@ -336,6 +336,13 @@ const CreditCalculator: React.FC = () => {
             </ResponsiveContainer>
           </div>
         </div>
+      </div>
+
+      {/* Disclaimer */}
+      <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <p className="text-sm text-gray-600 text-center">
+          Valores meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma simulação baseada em necessidades reais.
+        </p>
       </div>
     </div>
   );
