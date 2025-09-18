@@ -206,7 +206,7 @@ const ImoveisPage: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover opacity-30"
           poster="/fotos/ImoveisPage-foto.png"
         >
-          <source src="https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/video4.mp4" type="video/mp4" />
+          <source src="/videos/ImoveisPage-video(1).mp4" type="video/mp4" />
         </video>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
