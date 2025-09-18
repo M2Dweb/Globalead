@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
-import FeaturedProperties from '../components/FeaturedProperties';
+import FeaturedProperties2 from '../components/FeaturedProperties2';
 
 const HomePage: React.FC = () => {
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
@@ -238,7 +238,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Featured Properties */}
-      <FeaturedProperties />
+      <FeaturedProperties2 />
 
       {/* Services Section */}
       <section className="py-20">

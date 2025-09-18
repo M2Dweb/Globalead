@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Play } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { Link } from 'react-router-dom';
 
 const FounderVideoSection: React.FC = () => {
   const [founderVideoUrl, setFounderVideoUrl] = useState<string | null>(null);
@@ -33,10 +34,10 @@ const FounderVideoSection: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Conheça o Fundador
+            Porquê a Globalead Portugal ?
           </h2>
           <p className="text-xl text-gray-600">
-            Uma mensagem pessoal sobre a nossa missão
+            Na Globalead, acreditamos que a chave para o sucesso está na proximidade com o cliente.
           </p>
         </div>
 
@@ -68,11 +69,11 @@ const FounderVideoSection: React.FC = () => {
             )}
           </div>
           <div className="p-8 text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            <Link to="/CEOPage" className="text-2xl font-bold text-gray-900 mb-12 hover:underline">
               Carlos Gonçalves - Fundador & CEO
-            </h3>
-            <p className="text-gray-600">
-              "Na Globalead, acreditamos que cada cliente merece um acompanhamento personalizado e de excelência. A nossa missão é simplificar processos complexos e garantir que encontra sempre a melhor solução."
+            </Link>
+            <p className="text-gray-600 mt-2">
+              "Na Globalead, acreditamos que cada cliente merece um atendimento personalizado e de excelência. A nossa missão é tornar simples processos complexos, assegurando que encontra sempre a melhor solução, de forma eficaz e eficiente."
             </p>
           </div>
         </div>
