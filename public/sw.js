@@ -1,59 +1,69 @@
 const CACHE_NAME = 'globalead-v1';
 const urlsToCache = [
-  '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/logo.png'
+  '/', // Apenas o index
+  '/logo.png', // Logo básico
 ];
 
-// Install event - cache core assets
+// Instala o SW e adiciona os arquivos iniciais ao cache
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
   );
-  self.skipWaiting(); // Activate immediately
+  self.skipWaiting(); // Ativa imediatamente
 });
 
-// Activate event - cleanup old caches
+// Ativa o SW e limpa caches antigos
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
+            console.log('[ServiceWorker] Deletando cache antigo:', cacheName);
             return caches.delete(cacheName);
           }
         })
-      )
-    )
+      );
+    })
   );
-  self.clients.claim(); // Take control of all clients
+  self.clients.claim(); // Assume controle das páginas
 });
 
-// Fetch event - serve from cache or fetch from network
+// Intercepta as requisições
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
+  const requestUrl = new URL(event.request.url);
+
+  // ⚠️ Evita interceptar arquivos com hash (como os do Vite)
+  if (requestUrl.pathname.startsWith('/assets/')) {
+    return; // Deixa o navegador lidar com isso
+  }
+
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        if (response) return response;
+    caches.match(event.request).then((cachedResponse) => {
+      // Se estiver no cache, retorna
+      if (cachedResponse) return cachedResponse;
 
-        return fetch(event.request)
-          .then((fetchRes) => {
-            return fetchRes;
-          })
-          .catch((err) => {
-            console.warn('[ServiceWorker] Fetch failed:', event.request.url, err);
+      // Caso contrário, tenta buscar da rede
+      return fetch(event.request)
+        .then((networkResponse) => {
+          return networkResponse;
+        })
+        .catch((err) => {
+          console.warn('[ServiceWorker] Erro ao buscar:', event.request.url, err);
 
-            // Optional fallback
-            return new Response('Offline ou erro de rede.', {
-              status: 504,
-              statusText: 'Offline',
-              headers: { 'Content-Type': 'text/plain' }
-            });
+          // Fallback se estiver offline
+          if (event.request.mode === 'navigate') {
+            return caches.match('/');
+          }
+
+          return new Response('Offline ou erro de rede.', {
+            status: 504,
+            statusText: 'Offline',
+            headers: { 'Content-Type': 'text/plain' }
           });
-      })
+        });
+    })
   );
 });
