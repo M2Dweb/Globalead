@@ -344,15 +344,16 @@ const CreditCalculator: React.FC = () => {
               </PieChart>
             </ResponsiveContainer>
           </div>
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <p className="text-sm text-gray-600 text-center">
+              Valores meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma simulação baseada em necessidades reais.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Disclaimer */}
-      <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-        <p className="text-sm text-gray-600 text-center">
-          Valores meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma simulação baseada em necessidades reais.
-        </p>
-      </div>
+      
     </div>
   );
 };

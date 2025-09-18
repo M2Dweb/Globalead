@@ -43,7 +43,7 @@ const CreditoPage: React.FC = () => {
     try {
       const { data, error } = await supabase.storage
         .from('imagens')
-        .list('patrocinios', {
+        .list('bancos', {
           limit: 20,
           offset: 0
         });
@@ -57,7 +57,7 @@ const CreditoPage: React.FC = () => {
           "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
           "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
           "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-          "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
+          "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/bancos/xxx.png"
         ]);
       } else if (data) {
         const logoUrls = data.map(file => {
