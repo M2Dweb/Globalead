@@ -587,30 +587,6 @@ const SimulacaoEnergia: React.FC = () => {
                 )}
               </div>
 
-              {/* Empresas */}
-              <div className="mt-8">
-                <h4 className="text-sm font-semibold text-[#0d2233] mb-4 text-center">Comparamos todas as empresas comercializadoras</h4>
-                <div className="grid grid-cols-2 gap-3 opacity-60">
-                  <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center">
-                    <span className="text-xs font-medium text-gray-600">EDP</span>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center">
-                    <span className="text-xs font-medium text-gray-600">Endesa</span>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center">
-                    <span className="text-xs font-medium text-gray-600">Galp</span>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center">
-                    <span className="text-xs font-medium text-gray-600">Gold Energy</span>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center">
-                    <span className="text-xs font-medium text-gray-600">Iberdrola</span>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center">
-                    <span className="text-xs font-medium text-gray-600">Repsol</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
