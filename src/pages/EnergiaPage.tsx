@@ -179,7 +179,7 @@ const EnergiaPage: React.FC = () => {
 
       {/* 2. Energy Services Section */}
       <AnimatedSection>
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -216,7 +216,7 @@ const EnergiaPage: React.FC = () => {
 
       {/* 3. How to Contract Energy */}
       <AnimatedSection>
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -257,7 +257,7 @@ const EnergiaPage: React.FC = () => {
 
       {/* 4. Solar Panel Installation Section */}
       <AnimatedSection>
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left side - Content */}
@@ -326,42 +326,7 @@ const EnergiaPage: React.FC = () => {
         </section>
       </AnimatedSection>
 
-      {/* 5. 3 Reasons to Choose Globalead */}
-      <AnimatedSection>
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                3 razões para escolher a Globalead
-              </h2>
-              <p className="text-xl text-gray-600">
-                Porque é importante que sinta que está acompanhado, e que estamos consigo sempre.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <div className="text-center">
-                    <div className="mb-6">
-                      {React.cloneElement(service.icon, { className: "h-12 w-12 text-[#79b2e9] mx-auto" })}
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 mb-6">
-                      {service.description}
-                    </p>
-                    <button className="bg-[#79b2e9] text-white px-6 py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-medium">
-                      Saber Mais
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
+      
 
       {/* 6. Contract Analysis Section */}
       <AnimatedSection>
