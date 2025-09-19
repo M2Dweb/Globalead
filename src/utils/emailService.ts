@@ -24,8 +24,6 @@ export interface FormData {
   num_casas_banho?: string;
 }
 
-
-
 export const sendEmail = async (formData: FormData): Promise<boolean> => {
   // Configure these with your EmailJS credentials
   const serviceId = 'service_t50zwho';
@@ -56,8 +54,6 @@ export const sendEmail = async (formData: FormData): Promise<boolean> => {
       help_type: formData.tipo_ajuda || '',
       page_source: formData.page
     };
-
-
 
     const response = await emailjs.send(serviceId, templateId, templateParams, publicKey);
     console.log('Email enviado com sucesso!', response.status, response.text);

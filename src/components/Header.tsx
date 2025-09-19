@@ -20,6 +20,7 @@ const Header: React.FC = () => {
     { name: 'Sobre', path: '/sobre' },
     { name: 'Imóveis', path: '/imoveis' },
     { name: 'Seguros', path: '/seguros' },
+    { name: 'Energia', path: '/energia' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contactos', path: '/contactos' },
     { name: 'Admin', path: '/admin' }

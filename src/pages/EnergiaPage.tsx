@@ -1,16 +1,43 @@
-import React, { useState } from 'react';
-import { Zap, ArrowRight, Calendar, Sun, BarChart3, Flame, Euro, Clock, CreditCard, Plus, Percent, Lightbulb, ChevronsUp } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Zap, ArrowRight, Calendar, Sun, BarChart3, Flame, Euro, Clock, CreditCard, Plus, Percent } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import FAQ from '../components/FAQ';
 import Header from '../components/HeaderEnergia';
 import ProcessFAQ from '../components/ProcessFAQ';
 import { sendEmail, FormData } from '../utils/emailService';
-import { LuChartLine } from 'react-icons/lu';
+import { Link } from 'react-router-dom';
+import ContentRenderer from '../components/ContentRenderer';
+import { supabase } from '../lib/supabase';
 
 
 
 const EnergiaPage: React.FC = () => {
   const [activeProcessStep, setActiveProcessStep] = useState(0);
+  const [latestPosts, setLatestPosts] = useState<any[]>([]);
+  
+    useEffect(() => {
+      const fetchLatestPosts = async () => {
+        try {
+          const { data, error } = await supabase
+            .from('blog_posts')
+            .select('*')
+            .order('date', { ascending: false })
+            .limit(6);
+  
+          if (error) {
+            console.error('Erro ao carregar posts:', error);
+            setLatestPosts([]);
+          } else {
+            setLatestPosts(data || []);
+          }
+        } catch (error) {
+          console.error('Erro ao carregar posts:', error);
+          setLatestPosts([]);
+        }
+      };
+  
+      fetchLatestPosts();
+    }, []);
 
   const [formData, setFormData] = React.useState<Partial<FormData>>({
     nome: '',
@@ -66,11 +93,7 @@ const EnergiaPage: React.FC = () => {
     }
   };
 
-  const processIcons = [
-    <Lightbulb size={250} color="#79b2e9" />, 
-    <LuChartLine size={250} color="#79b2e9" />,   
-    <ChevronsUp size={250} color="#79b2e9" />    
-];
+  
 
   const energyServices = [
     {
@@ -204,30 +227,15 @@ const EnergiaPage: React.FC = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Como contratar energia com a Globalead?
               </h2>
-              <p className="text-xl text-gray-600">
-                Conhece as vantagens do nosso serviço:
-              </p>
             </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-              {/* Left side - FAQ */}
+            <div className="gap-12 items-center items-start">
               <div>
                 <ProcessFAQ onActiveChange={setActiveProcessStep} />
-                
                 <div className="mt-8">
                   <button className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:[#0d2233] transition-colors duration-300 font-medium inline-flex items-center">
                     Simular
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </button>
-                </div>
-              </div>
-
-              <div className="flex justify-center">
-                <div className="relative w-full max-w-sm">
-                  {/* Render icon dynamically based on the activeProcessStep */}
-                  <div className="w-full h-auto flex justify-center items-center transition-opacity duration-500">
-                    {processIcons[activeProcessStep]} {/* This renders the appropriate icon */}
-                  </div>
                 </div>
               </div>
             </div>
@@ -255,8 +263,8 @@ const EnergiaPage: React.FC = () => {
                       <span className="text-white font-bold text-sm">1</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Análise Personalizada</h4>
-                      <p className="text-gray-600">Avaliamos o seu consumo e a exposição solar da sua propriedade</p>
+                      <h4 className="font-semibold text-gray-900 mb-2">Protegem o meio ambiente</h4>
+                      <p className="text-gray-600">Os painéis solares produzem eletricidade de forma sustentável. Contribuem para a proteção do meio ambiente através da produção sustentável de eletricidade. </p>
                     </div>
                   </div>
                   
@@ -265,8 +273,8 @@ const EnergiaPage: React.FC = () => {
                       <span className="text-white font-bold text-sm">2</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Projeto Customizado</h4>
-                      <p className="text-gray-600">Desenvolvemos um sistema solar adaptado às suas necessidades</p>
+                      <h4 className="font-semibold text-gray-900 mb-2">Aumentam o valor da tua casa</h4>
+                      <p className="text-gray-600 text-base">A instalação de um sistema fotovoltaico pode aumentar a classe de eficiência energética da tua casa e o respetivo valor de mercado. Torna o imóvel mais atraente para compradores com uma maior consciência ambiental.</p>
                     </div>
                   </div>
                   
@@ -275,8 +283,18 @@ const EnergiaPage: React.FC = () => {
                       <span className="text-white font-bold text-sm">3</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Instalação Profissional</h4>
-                      <p className="text-gray-600">Instalação rápida e segura por técnicos certificados</p>
+                      <h4 className="font-semibold text-gray-900 mb-2">Reduzem a fatura de eletricidade</h4>
+                      <p className="text-gray-600">A produção de energia gerada por painéis solares permite-te diminuir o consumo de eletricidade da rede e, assim, reduzir significativamente a fatura da luz. </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 w-8 h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-4 mt-1">
+                      <span className="text-white font-bold text-sm">4</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Incentivos e subsídios governamentais</h4>
+                      <p className="text-gray-600">Existem programas de apoio e subsídios governamentais para a instalação de painéis solares. Esses benefícios podem reduzir o custo inicial e tornar a energia solar mais acessível.</p>
                     </div>
                   </div>
                 </div>
@@ -345,49 +363,62 @@ const EnergiaPage: React.FC = () => {
 
       {/* 7. Blog Section */}
       <AnimatedSection>
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Novidades em tempo real
-              </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                Subscreva a Newsletter e fique a par de todas as novidades, descontos e promoções disponíveis para si
-              </p>
-            </div>
+        {/* Latest Blog Posts Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              Últimas Notícias
+            </h2>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {newsArticles.map((article, index) => (
-                <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {latestPosts.map(post => (
+              <Link
+                key={post.id}
+               to={`/blog/${post.ref || post.id}`}
+                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group border border-gray-100"
+              >
+                <div className="relative">
                   <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-48 object-cover"
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="p-6">
-                    <div className="flex items-center text-sm text-gray-500 mb-2">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      {article.date}
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                      {article.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      {article.excerpt}
-                    </p>
+                  <div className="absolute top-4 left-4 bg-[#0d2233] text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
+                  </div>
+                  <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                    {post.read_time}
                   </div>
                 </div>
-              ))}
-            </div>
 
-            <div className="text-center">
-              <button className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 inline-flex items-center">
-                Ver mais
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </button>
-            </div>
+                <div className="p-6">
+                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
+                    <span className="mx-2">•</span>
+                    <span>Por {post.author}</span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    <ContentRenderer content={post.excerpt} className="line-clamp-3" />
+                  </p>
+
+                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
+                    Ler Mais
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-        </section>
+
+        </div>
+      </section>
       </AnimatedSection>
 
       {/* 8. FAQ Section */}

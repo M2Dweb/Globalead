@@ -23,6 +23,7 @@ import EnergiaPage from './pages/EnergiaPage';
 import TvNetVozPage from './pages/TvNetVozPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
+import SimulacaoEnergia from './components/SimulacaoEnergia';
 
 // Scroll to top component
 const ScrollToTop: React.FC = () => {
@@ -69,6 +70,7 @@ const AppLayout: React.FC = () => {
   ];
   if (path === '/alarmes') return [{ label: 'Alarmes', current: true }];
   if (path === '/energia') return [{ label: 'Energia', current: true }];
+  if (path === '/simulacao') return [{ label: 'Simulação', current: true }];
   if (path === '/tv-net-voz') return [{ label: 'TV, Net & Voz', current: true }];
   if (path === '/blog') return [{ label: 'Blog', current: true }];
   if (path === '/contactos') return [{ label: 'Contactos', current: true }];
@@ -121,6 +123,7 @@ const AppLayout: React.FC = () => {
           <Route path="/certificacao" element={<CertificacaoPage />} />
           <Route path="/alarmes" element={<AlarmesPage />} />
           <Route path="/energia" element={<EnergiaPage />} />
+          <Route path="/simulacao" element={<SimulacaoEnergia />} />
           <Route path="/tv-net-voz" element={<TvNetVozPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:ref" element={<BlogPostPage />} />
