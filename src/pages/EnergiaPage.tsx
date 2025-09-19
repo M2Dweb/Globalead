@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Zap, Leaf, TrendingDown, ArrowRight, Calendar, Lightbulb, Sun, Home, Thermometer, DollarSign, Settings, BarChart3, Wrench, Flame, Euro, FileText, Shield, Clock, CreditCard, Headphones, Plus, Percent } from 'lucide-react';
+import { Zap, ArrowRight, Calendar, Sun, BarChart3, Flame, Euro, Clock, CreditCard, Plus, Percent } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import FAQ from '../components/FAQ';
 import Header from '../components/HeaderEnergia';
 import ProcessFAQ from '../components/ProcessFAQ';
 import { sendEmail, FormData } from '../utils/emailService';
-import { MdDiscount } from 'react-icons/md';
+
 
 const EnergiaPage: React.FC = () => {
   const [activeProcessStep, setActiveProcessStep] = useState(0);
@@ -469,7 +469,7 @@ const EnergiaPage: React.FC = () => {
                   <option value="SMS">SMS</option>
                 </select>
                 {/* Horário */}
-                <select name="horário" value={formData.horario} onChange={handleInputChange} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                <select name="horário" value={formData.horario} onChange={handleInputChange} className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
                   <option value="">Horário</option>
                   <option>9h-12h30</option>
                   <option>12h30-16h</option>
