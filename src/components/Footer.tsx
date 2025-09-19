@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-} from 'lucide-react';
-import {
-  FaTiktok,
-  FaYoutube,
-  FaTelegramPlane,
-  FaWhatsapp,
-} from 'react-icons/fa';
+import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { FaTiktok, FaYoutube, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 
@@ -29,10 +20,10 @@ const Footer: React.FC = () => {
       try {
         const { data, error } = await supabase
           .from('blog_posts')
-          .select('id, title')
+          .select('id, title, ref')  // Incluindo o "ref" aqui
           .order('date', { ascending: false })
           .limit(4);
-
+        
         if (error) {
           console.error('Erro ao carregar posts:', error);
           setLatestPosts([]);
@@ -60,7 +51,6 @@ const Footer: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
-
     try {
       const emailData: FormData = {
         nome: newsletterData.nome,
@@ -70,16 +60,11 @@ const Footer: React.FC = () => {
         mensagem: 'Pedido de subscrição da newsletter',
         page: 'newsletter'
       };
-      
       console.log('Dados da newsletter:', emailData);
       const success = await sendEmail(emailData);
       if (success) {
         setSubmitStatus('success');
-        setNewsletterData({
-          nome: '',
-          apelido: '',
-          email: ''
-        });
+        setNewsletterData({ nome: '', apelido: '', email: '' });
       } else {
         setSubmitStatus('error');
       }
@@ -96,14 +81,10 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Grid principal */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 justify-center">
-
           {/* Facebook Page + Contact Info */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-xs">
-              <div
-                className="bg-gray-900 rounded-lg overflow-hidden"
-                style={{ height: '130px' }}
-              >
+              <div className="bg-gray-900 rounded-lg overflow-hidden" style={{ height: '130px' }}>
                 <iframe
                   className="focus:outline-none"
                   title="Globalead Facebook Page"
@@ -113,15 +94,10 @@ const Footer: React.FC = () => {
                   style={{ border: 'none', overflow: 'hidden' }}
                   scrolling="no"
                   frameBorder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-                </iframe>
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                />
               </div>
-
               <div className="mt-6 text-center">
-                
-
-
-
                 <div className="flex space-x-4 mt-4 flex items-center justify-center">
                   <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noopener noreferrer">
                     <Facebook className="h-6 w-6 text-white hover:text-[#79b2e9] transition-colors" />
@@ -148,7 +124,6 @@ const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-
           {/* Latest Blog Titles Section */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-md text-left">
@@ -157,8 +132,8 @@ const Footer: React.FC = () => {
                 {latestPosts.length > 0 ? (
                   latestPosts.map((post) => (
                     <Link
-                     key={post.ref || post.id}
-                      to="/blog"
+                      key={post.ref || post.id}
+                      to={`/blog/${post.ref || post.id}`} // Link atualizado para apontar para o post individual
                       className="block text-white hover:text-[#79b2e9] transition-colors"
                     >
                       • {post.title}
@@ -170,7 +145,6 @@ const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-
           {/* Newsletter */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-md text-left">
@@ -208,19 +182,16 @@ const Footer: React.FC = () => {
                     Sim, autorizo receber informações e novidades da Globalead Portugal.
                   </label>
                 </div>
-                
                 {submitStatus === 'success' && (
                   <div className="p-2 bg-green-100 border border-green-400 text-green-700 rounded text-xs">
                     Subscrição realizada com sucesso!
                   </div>
                 )}
-                
                 {submitStatus === 'error' && (
                   <div className="p-2 bg-red-100 border border-red-400 text-red-700 rounded text-xs">
                     Erro ao subscrever. Tente novamente.
                   </div>
                 )}
-                
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -232,11 +203,8 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400 text-sm">
-            © 2025 Globalead Portugal. Todos os direitos reservados.
-          </p>
+          <p className="text-gray-400 text-sm">© 2025 Globalead Portugal. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

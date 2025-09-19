@@ -56,12 +56,10 @@ const CertificacaoPage: React.FC = () => {
       <section className="bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold mt-12">
               O que é o certificado energético?
             </h1>
-            <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-              Na Globalead Portugal, compreendemos que a venda ou arrendamento de um imóvel pode ser um processo complexo, repleto de detalhes que exigem atenção. Um dos passos indispensáveis para garantir a conformidade legal e valorizar o seu imóvel é a obtenção do Certificado Energético.
-            </p>
+            
           </div>
         </div>
       </section>
@@ -70,6 +68,9 @@ const CertificacaoPage: React.FC = () => {
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none text-gray-700">
+            <p className="leading-relaxed mb-6">
+              Na Globalead Portugal, compreendemos que a venda ou arrendamento de um imóvel pode ser um processo complexo, repleto de detalhes que exigem atenção. Um dos passos indispensáveis para garantir a conformidade legal e valorizar o seu imóvel é a obtenção do Certificado Energético.
+            </p>
             <p className="leading-relaxed mb-6">
               O certificado energético é um documento oficial que avalia a eficiência energética de um imóvel, indicando a classe energética (A+ a F) e recomendações para melhorias, com poupanças estimadas. Este certificado, emitido por peritos qualificados da ADENE no âmbito do Sistema de Certificação dos Edifícios (SCE), regulado pelo Decreto-Lei n.º 101-D/2020.
             </p>
@@ -136,7 +137,7 @@ const CertificacaoPage: React.FC = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20 bg-[#0d2233] text-white">
+      <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">

@@ -117,6 +117,7 @@ const FAQ: React.FC<FAQProps> = ({ category = 'geral' }) => {
         answer: "Caso um imóvel seja publicitado, vendido ou arrendado sem a emissão prévia do Certificado Energético, tal facto constitui contraordenação punível com coima até 3 750 €, no caso de pessoas singulares e de até 44 890 €, no caso de pessoas coletivas, conforme Artigo 35.º do DL 101-D/2020."
       }
     ],
+    
     credito: [
       {
         question: "Quanto posso pedir de crédito habitação?",
@@ -206,9 +207,60 @@ const FAQ: React.FC<FAQProps> = ({ category = 'geral' }) => {
         question: "Taxa Anual Efetiva Global (TAEG): O que é?",
         answer: "Representando o custo total do crédito habitação, a Taxa Anual Efetiva Global (TAEG) inclui todos os encargos associados ao contrato. Isto inclui juros, comissões, impostos, seguros associados ao crédito e encargos com a manutenção da conta à ordem associada ao empréstimo. Também inclui outros custos como emolumentos cobrados no registo da hipoteca."
       }
-    ]
-  };
+    ],
+  
 
+  energiaFAQ: [
+    {
+      question: "O que é a Tarifa Social?",
+      answer: "A Tarifa Social é um benefício destinado a famílias em dificuldades económicas, oferecendo descontos na fatura de energia. Os principais pontos são: Descontos: 33,8% na eletricidade e 31,2% no gás natural. Apoio a quem precisa: destinado a consumidores vulneráveis. Atribuição automática: o desconto é aplicado diretamente na fatura, se os requisitos forem atendidos."
+    },
+    {
+      question: "Quais os procedimentos para mudar de fornecedor de energia?",
+      answer: "Mudar de comercializador de energia é um processo simples e sem custos, que não envolve mudança de contadores ou interrupção no fornecimento. Pode ser feito a qualquer momento, por telefone, presencialmente ou online. Documentos necessários: NIF do titular (Cartão de Cidadão); Contrato de arrendamento ou escritura; Código CPE/CUI; Dados da morada da instalação; Dados de pagamento; Potência da energia elétrica ou escalão do gás natural a contratar."
+    },
+    {
+      question: "Como contratar energia elétrica numa casa a estrear?",
+      answer: "Para obter energia em uma casa nova, é necessário fazer a ligação à rede de distribuição elétrica, que em Portugal é exclusiva da E-REDES. O processo envolve solicitar ao operador a ligação à rede e o respetivo orçamento."
+    },
+    {
+      question: "Como fazer a leitura de consumo no contador de eletricidade?",
+      answer: "A leitura do consumo de energia elétrica depende do tipo de contador instalado: Contadores Eletromecânicos: leitura visível diretamente no ecrã, considerar apenas os algarismos à esquerda da vírgula. Contadores Estáticos: completamente eletrónicos, a leitura varia conforme a marca. Contadores Híbridos: combinam componente eletromecânica e digital. No caso do gás natural, a leitura é mais simples e uniforme."
+    },
+    {
+      question: "O que é o CPE & CUI?",
+      answer: "O Código de Ponto de Entrega (CPE) identifica a instalação de eletricidade, enquanto o Código Universal da Instalação (CUI) serve para identificar a instalação de gás natural. Ambos os códigos podem ser encontrados nas faturas de luz e gás da respetiva morada ou junto da distribuidora de energia."
+    },
+    {
+      question: "Em que consiste a ficha informativa normalizada de energia?",
+      answer: "A Ficha de Informação Normalizada (FIN) é um documento obrigatório para os comercializadores de eletricidade e gás natural, conforme regulamento da ERSE. Ela contém informações padronizadas sobre as condições contratuais, facilitando a comparação das ofertas disponíveis."
+    },
+    {
+      question: "Quais as principais entidades no setor da energia em Portugal?",
+      answer: "ERSE - Entidade Reguladora dos Serviços Energéticos: regula energia elétrica e gás natural. DGEG - Direção Geral de Energia e Geologia: políticas energéticas e recursos geológicos. ADENE - Agência para a Energia: eficiência energética e mobilidade sustentável."
+    },
+    {
+      question: "Qual é o IVA da eletricidade em 2025?",
+      answer: "Em 2025, o IVA aplicado à eletricidade varia: Componente variável (consumo) e potências superiores a 3,45 kVA: IVA de 23%. Componente fixa da tarifa com potências ≤ 3,45 kVA: IVA de 6%. Esta diferenciação visa reduzir custos para consumos menores."
+    },
+    {
+      question: "Como poupar no consumo de eletricidade?",
+      answer: "Para poupar eletricidade: optar por equipamentos classe AAA; usar iluminação LED; evitar standby; usar equipamentos na capacidade máxima; arejar a casa ao final do dia; desligar luzes desnecessárias. Estas ações reduzem o consumo e a fatura."
+    },
+    {
+      question: "O que são painéis solares?",
+      answer: "Os Painéis Solares convertem energia solar em eletricidade, utilizando células semicondutoras. A produção depende da intensidade solar, variando ao longo do dia e estações. Devem ser instalados em locais com boa exposição solar para otimizar a produção."
+    },
+    {
+      question: "Onde podem ser instalados os painéis solares?",
+      answer: "Os Painéis Solares são instalados no telhado, terrenos, quintais ou terraços, desde que sem sombreamento. É proibido instalar em locais com contadores provisórios. A instalação deve ser feita após o contador definitivo estar instalado."
+    },
+    {
+      question: "Como funcionam os painéis solares?",
+      answer: "A eletricidade gerada é corrente contínua, convertida para alternada através de inversor. Idealmente, toda energia deve ser consumida imediatamente ou armazenada em baterias. O excedente é injetado na rede através de UPAC, geralmente sem remuneração."
+    }
+  ]
+};
   const currentFAQ = faqData[category as keyof typeof faqData] || faqData.geral;
 
   return (
