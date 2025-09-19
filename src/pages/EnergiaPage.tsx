@@ -130,26 +130,6 @@ const EnergiaPage: React.FC = () => {
     }
   ];
 
-  const services = [
-    {
-      icon: <Home className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Mediação Imobiliária",
-      description: "Com uma preparação e experiência única, a Globalead põem toda a sua dedicação em dar-lhe o melhor acompanhamento orientando-o na direção certa das suas necessidades e ambições.",
-      link: "imoveis"
-    },
-    {
-      icon: <Leaf className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Mercado Energético",
-      description: "Com energia 100% renovável pretendemos atender a todos os clientes residentes em Portugal com a melhor eficiência energética e assim ajudá-lo a escolher, bem informado, a melhor para si",
-      link: "energia"
-    },
-    {
-      icon: <FileText className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Certificação Energética",
-      description: "Classifica o desempenho energético de um imóvel, medido numa escala de A+ a G e propõe medidas de aprimoramento, sendo este documento obrigatório na venda do seu imóvel",
-      link: "certificacao"
-    }
-  ];
 
   const newsArticles = [
     {
@@ -220,7 +200,7 @@ const EnergiaPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Como contratar energia com o ComparaJá?
+                Como contratar energia com a Globalead?
               </h2>
               <p className="text-xl text-gray-600">
                 Conhece as vantagens do nosso serviço:
@@ -332,26 +312,20 @@ const EnergiaPage: React.FC = () => {
       <AnimatedSection>
         <section className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Análise de contratos de energia: o que deves considerar
               </h2>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="text-xl text-gray-600 mb-4">
                 Antes de mudar de fornecedor, é importante compreender todos os elementos que influenciam a fatura.
               </p>
-              <p className="text-lg text-gray-600">
-                Estes são os principais fatores a ter em conta:
-              </p>
+              
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center items-center mx-auto">
               {contractAnalysis.map((item, index) => (
                 <div key={index} className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-48 object-cover rounded-xl mb-6"
-                  />
+                  
                   <div className="mb-4 "style={{display: 'flex', justifyContent: 'center'}}>
                     {item.icon}
                   </div>
@@ -422,7 +396,7 @@ const EnergiaPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Perguntas Frequentes - Energia
+                Tem alguma questão que não foi contemplada?
               </h2>
             </div>
             <FAQ category="energiaFAQ" />
@@ -436,15 +410,13 @@ const EnergiaPage: React.FC = () => {
           <div className="flex flex-col items-center">
             <div className="text-center mb-8 max-w-3xl">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Acompanhamento Personalizado
+                Tem dúvidas? Entre em contacto.
               </h2>
-              <p className="text-xl text-blue-100 mb-4">
-                Já tem uma ideia de aquilo que deseja mas não tem a certeza de como concretizar?
-              </p>
             </div>
 
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Nome */}
                 <input
                   type="text"
                   name="nome"
@@ -454,6 +426,27 @@ const EnergiaPage: React.FC = () => {
                   required
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+                {/* Apelido */}
+                <input
+                  type="text"
+                  name="apelido"
+                  value={formData.apelido}
+                  onChange={handleInputChange}
+                  placeholder="Apelido*"
+                  required
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {/* Contacto */}
+                <input
+                  type="tel"
+                  name="contacto"
+                  value={formData.telemovel}
+                  onChange={handleInputChange}
+                  placeholder="Contacto*"
+                  required
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {/* Email */}
                 <input
                   type="email"
                   name="email"
@@ -463,30 +456,53 @@ const EnergiaPage: React.FC = () => {
                   required
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <input
-                  type="tel"
-                  name="telemovel"
-                  value={formData.telemovel}
+                {/* Meio de Contacto */}
+                <select
+                  name="meioContacto"
+                  value={formData.meio_contacto}
                   onChange={handleInputChange}
-                  placeholder="Contacto*"
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  type="text"
-                  name="horario"
-                  value={formData.horario}
-                  onChange={handleInputChange}
-                  placeholder="Localidade*"
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  type="text"
+                >
+                  <option value="" disabled>Meio de Contacto*</option>
+                  <option value="Telefone">Telefone</option>
+                  <option value="Email">Email</option>
+                  <option value="SMS">SMS</option>
+                </select>
+                {/* Horário */}
+                <select name="horário" value={formData.horario} onChange={handleInputChange} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                  <option value="">Horário</option>
+                  <option>9h-12h30</option>
+                  <option>12h30-16h</option>
+                  <option>16h-19h30</option>
+                </select>
+                
+                {/* Assunto */}
+                <select
                   name="assunto"
                   value={formData.assunto}
                   onChange={handleInputChange}
-                  placeholder="Código Postal*"
                   className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                >
+                  <option value="" disabled>Assunto*</option>
+                  <option value="Eletricidade">Eletricidade</option>
+                  <option value="Gas Natural">Gás Natural</option>
+                  <option value="Eletricidade + Gas Natural">Eletricidade + Gás Natural</option>
+                  <option value="Paineis Solares">Paineis Solares</option>
+                </select>
+
+                {/* Motivo de Contacto */}
+                <select
+                  name="motivoContato"
+                  value={formData.mensagem}
+                  onChange={handleInputChange}
+                  className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" disabled>Motivo de Contacto*</option>
+                  <option value="Explicacao de Fatura">Explicação de Fatura</option>
+                  <option value="Analise de Consumos">Análise de Consumos</option>
+                  <option value="Simulacao de Fatura">Simulação de Fatura</option>
+                  <option value="Simulacao para Paineis Solares">Simulação para Painéis Solares</option>
+                </select>
 
                 <div className="md:col-span-2">
                   <label className="flex items-start text-sm text-gray-700 mb-4">
@@ -522,6 +538,7 @@ const EnergiaPage: React.FC = () => {
           </div>
         </div>
       </section>
+
     </div>
   );
 };
