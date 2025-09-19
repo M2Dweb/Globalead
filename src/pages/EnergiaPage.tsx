@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Zap, ArrowRight, Calendar, Sun, BarChart3, Flame, Euro, Clock, CreditCard, Plus, Percent } from 'lucide-react';
+import { Zap, ArrowRight, Calendar, Sun, BarChart3, Flame, Euro, Clock, CreditCard, Plus, Percent, Lightbulb, ChevronsUp } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import FAQ from '../components/FAQ';
 import Header from '../components/HeaderEnergia';
 import ProcessFAQ from '../components/ProcessFAQ';
 import { sendEmail, FormData } from '../utils/emailService';
+import { LuChartLine } from 'react-icons/lu';
+
 
 
 const EnergiaPage: React.FC = () => {
@@ -64,11 +66,11 @@ const EnergiaPage: React.FC = () => {
     }
   };
 
-  const processImages = [
-    "/energia-step-1.webp",
-    "/energia-step-2.webp", 
-    "/energia-step-3.webp"
-  ];
+  const processIcons = [
+    <Lightbulb size={250} color="#79b2e9" />, 
+    <LuChartLine size={250} color="#79b2e9" />,   
+    <ChevronsUp size={250} color="#79b2e9" />    
+];
 
   const energyServices = [
     {
@@ -220,14 +222,12 @@ const EnergiaPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right side - Images */}
               <div className="flex justify-center">
                 <div className="relative w-full max-w-sm">
-                  <img
-                    src={processImages[activeProcessStep]}
-                    alt="Análise de fatura energética"
-                    className="w-full h-auto object-contain transition-opacity duration-500"
-                  />
+                  {/* Render icon dynamically based on the activeProcessStep */}
+                  <div className="w-full h-auto flex justify-center items-center transition-opacity duration-500">
+                    {processIcons[activeProcessStep]} {/* This renders the appropriate icon */}
+                  </div>
                 </div>
               </div>
             </div>
@@ -251,7 +251,7 @@ const EnergiaPage: React.FC = () => {
                 
                 <div className="space-y-6 mb-8">
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <div className="flex-shrink-0 w-8 h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-4 mt-1">
                       <span className="text-white font-bold text-sm">1</span>
                     </div>
                     <div>
@@ -261,7 +261,7 @@ const EnergiaPage: React.FC = () => {
                   </div>
                   
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <div className="flex-shrink-0 w-8 h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-4 mt-1">
                       <span className="text-white font-bold text-sm">2</span>
                     </div>
                     <div>
@@ -271,7 +271,7 @@ const EnergiaPage: React.FC = () => {
                   </div>
                   
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <div className="flex-shrink-0 w-8 h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-4 mt-1">
                       <span className="text-white font-bold text-sm">3</span>
                     </div>
                     <div>
@@ -296,7 +296,7 @@ const EnergiaPage: React.FC = () => {
                 />
                 <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600">300€+</div>
+                    <div className="text-2xl font-bold text-[#79b2e9]">300€+</div>
                     <div className="text-sm text-gray-600">Poupança anual</div>
                   </div>
                 </div>
