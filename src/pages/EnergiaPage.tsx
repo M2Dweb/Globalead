@@ -184,31 +184,31 @@ const EnergiaPage: React.FC = () => {
 
       {/* 2. Energy Services Section */}
       <AnimatedSection>
-        <section className="py-20 bg-white">
+        <section className="py-12 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-8 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
                 Os Nossos Serviços de Energia
               </h2>
-              <p className="text-xl text-gray-600">
+              <p className="text-lg sm:text-xl text-gray-600 px-4">
                 Descubra as soluções energéticas que temos para si
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {energyServices.map((service, index) => (
-                <div key={index} className="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                <div key={index} className="bg-white p-4 sm:p-6 lg:p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
                   <div className="text-center">
-                    <div className="mb-6" style={{display: 'flex', justifyContent: 'center'}}>
+                    <div className="mb-4 sm:mb-6 flex justify-center">
                       {service.icon}
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
                       {service.title}
                     </h3>
-                    <p className="text-gray-600 mb-6">
+                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
                       {service.description}
                     </p>
-                    <button className="bg-[#79b2e9] text-white px-6 py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-medium">
+                    <button className="bg-[#79b2e9] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-medium text-sm sm:text-base">
                       Saber Mais
                     </button>
                   </div>
@@ -221,20 +221,20 @@ const EnergiaPage: React.FC = () => {
 
       {/* 3. How to Contract Energy */}
       <AnimatedSection>
-        <section className="py-20 bg-gray-50">
+        <section className="py-12 sm:py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-8 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4 px-4">
                 Como contratar energia com a Globalead?
               </h2>
             </div>
             <div className="gap-12 items-center items-start">
               <div>
                 <ProcessFAQ onActiveChange={setActiveProcessStep} />
-                <div className="mt-8">
-                  <button className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:[#0d2233] transition-colors duration-300 font-medium inline-flex items-center">
+                <div className="mt-6 sm:mt-8 text-center">
+                  <button className="bg-[#79b2e9] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base">
                     Simular
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <ArrowRight className="ml-2 w-3 h-3 sm:w-4 sm:h-4" />
                   </button>
                 </div>
               </div>
@@ -245,77 +245,77 @@ const EnergiaPage: React.FC = () => {
 
       {/* 4. Solar Panel Installation Section */}
       <AnimatedSection>
-        <section className="py-20 bg-white">
+        <section className="py-12 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
               {/* Left side - Content */}
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Instalação de Painéis Solares
                 </h2>
-                <p className="text-xl text-gray-600 mb-8">
+                <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">
                   Produza a sua própria energia limpa e sustentável com os nossos sistemas solares fotovoltaicos.
                 </p>
                 
-                <div className="space-y-6 mb-8">
+                <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-4 mt-1">
-                      <span className="text-white font-bold text-sm">1</span>
+                    <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-3 sm:mr-4 mt-1">
+                      <span className="text-white font-bold text-xs sm:text-sm">1</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Protegem o meio ambiente</h4>
-                      <p className="text-gray-600">Os painéis solares produzem eletricidade de forma sustentável. Contribuem para a proteção do meio ambiente através da produção sustentável de eletricidade. </p>
+                      <h4 className="font-semibold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Protegem o meio ambiente</h4>
+                      <p className="text-gray-600 text-sm sm:text-base">Os painéis solares produzem eletricidade de forma sustentável. Contribuem para a proteção do meio ambiente através da produção sustentável de eletricidade.</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-4 mt-1">
-                      <span className="text-white font-bold text-sm">2</span>
+                    <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-3 sm:mr-4 mt-1">
+                      <span className="text-white font-bold text-xs sm:text-sm">2</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Aumentam o valor da tua casa</h4>
-                      <p className="text-gray-600 text-base">A instalação de um sistema fotovoltaico pode aumentar a classe de eficiência energética da tua casa e o respetivo valor de mercado. Torna o imóvel mais atraente para compradores com uma maior consciência ambiental.</p>
+                      <h4 className="font-semibold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Aumentam o valor da tua casa</h4>
+                      <p className="text-gray-600 text-sm sm:text-base">A instalação de um sistema fotovoltaico pode aumentar a classe de eficiência energética da tua casa e o respetivo valor de mercado. Torna o imóvel mais atraente para compradores com uma maior consciência ambiental.</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-4 mt-1">
-                      <span className="text-white font-bold text-sm">3</span>
+                    <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-3 sm:mr-4 mt-1">
+                      <span className="text-white font-bold text-xs sm:text-sm">3</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Reduzem a fatura de eletricidade</h4>
-                      <p className="text-gray-600">A produção de energia gerada por painéis solares permite-te diminuir o consumo de eletricidade da rede e, assim, reduzir significativamente a fatura da luz. </p>
+                      <h4 className="font-semibold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Reduzem a fatura de eletricidade</h4>
+                      <p className="text-gray-600 text-sm sm:text-base">A produção de energia gerada por painéis solares permite-te diminuir o consumo de eletricidade da rede e, assim, reduzir significativamente a fatura da luz.</p>
                     </div>
                   </div>
 
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-4 mt-1">
-                      <span className="text-white font-bold text-sm">4</span>
+                    <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-3 sm:mr-4 mt-1">
+                      <span className="text-white font-bold text-xs sm:text-sm">4</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Incentivos e subsídios governamentais</h4>
-                      <p className="text-gray-600">Existem programas de apoio e subsídios governamentais para a instalação de painéis solares. Esses benefícios podem reduzir o custo inicial e tornar a energia solar mais acessível.</p>
+                      <h4 className="font-semibold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Incentivos e subsídios governamentais</h4>
+                      <p className="text-gray-600 text-sm sm:text-base">Existem programas de apoio e subsídios governamentais para a instalação de painéis solares. Esses benefícios podem reduzir o custo inicial e tornar a energia solar mais acessível.</p>
                     </div>
                   </div>
                 </div>
 
-                <button className="bg-[#0d2233] text-white px-8 py-4 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-medium inline-flex items-center">
-                  <Sun className="mr-3 h-5 w-5" />
+                <button className="bg-[#0d2233] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base">
+                  <Sun className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
                   Pedir Orçamento Gratuito
                 </button>
               </div>
 
               {/* Right side - Image */}
-              <div className="relative">
+              <div className="relative mt-8 lg:mt-0">
                 <img
                   src="https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=600"
                   alt="Instalação de painéis solares"
                   className="w-full h-auto rounded-2xl shadow-lg"
                 />
-                <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
+                <div className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-6 rounded-xl shadow-lg">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#79b2e9]">300€+</div>
-                    <div className="text-sm text-gray-600">Poupança anual</div>
+                    <div className="text-lg sm:text-2xl font-bold text-[#79b2e9]">300€+</div>
+                    <div className="text-xs sm:text-sm text-gray-600">Poupança anual</div>
                   </div>
                 </div>
               </div>
@@ -328,29 +328,29 @@ const EnergiaPage: React.FC = () => {
 
       {/* 6. Contract Analysis Section */}
       <AnimatedSection>
-        <section className="py-20 bg-gray-50">
+        <section className="py-12 sm:py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4 px-4">
                 Análise de contratos de energia: o que deves considerar
               </h2>
-              <p className="text-xl text-gray-600 mb-4">
+              <p className="text-lg sm:text-xl text-gray-600 mb-2 sm:mb-4 px-4">
                 Antes de mudar de fornecedor, é importante compreender todos os elementos que influenciam a fatura.
               </p>
               
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center items-center mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {contractAnalysis.map((item, index) => (
-                <div key={index} className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div key={index} className="bg-white p-4 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 w-full">
                   
-                  <div className="mb-4 "style={{display: 'flex', justifyContent: 'center'}}>
+                  <div className="mb-3 sm:mb-4 flex justify-center">
                     {item.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-center text-gray-900 mb-3">
+                  <h3 className="text-lg sm:text-xl font-semibold text-center text-gray-900 mb-2 sm:mb-3">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 text-center">
+                  <p className="text-sm sm:text-base text-gray-600 text-center">
                     {item.description}
                   </p>
                 </div>
@@ -364,52 +364,52 @@ const EnergiaPage: React.FC = () => {
       {/* 7. Blog Section */}
       <AnimatedSection>
         {/* Latest Blog Posts Section */}
-      <section className="py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          <div className="text-center mb-8 sm:mb-14">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Últimas Notícias
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {latestPosts.map(post => (
               <Link
                 key={post.id}
                to={`/blog/${post.ref || post.id}`}
-                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group border border-gray-100"
+                className="bg-white rounded-xl sm:rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group border border-gray-100"
               >
                 <div className="relative">
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-4 left-4 bg-[#0d2233] text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-2 sm:top-4 left-2 sm:left-4 bg-[#0d2233] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
                     {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
                   </div>
-                  <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                  <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-xs sm:text-sm">
                     {post.read_time}
                   </div>
                 </div>
 
-                <div className="p-6">
-                  <div className="flex items-center text-sm text-gray-500 mb-3">
-                    <Calendar className="h-4 w-4 mr-1" />
+                <div className="p-4 sm:p-6">
+                  <div className="flex items-center text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">
+                    <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                     <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
                     <span className="mx-2">•</span>
                     <span>Por {post.author}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
                     {post.title}
                   </h3>
 
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">
                     <ContentRenderer content={post.excerpt} className="line-clamp-3" />
                   </p>
 
-                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
+                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center text-sm sm:text-base">
                     Ler Mais
                   </div>
                 </div>
@@ -423,10 +423,10 @@ const EnergiaPage: React.FC = () => {
 
       {/* 8. FAQ Section */}
       <AnimatedSection>
-        <section className="py-20 bg-gray-900">
+        <section className="py-12 sm:py-20 bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <div className="text-center mb-8 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-4 px-4">
                 Tem alguma questão que não foi contemplada?
               </h2>
             </div>
@@ -436,17 +436,17 @@ const EnergiaPage: React.FC = () => {
       </AnimatedSection>
 
       {/* 9. Contact Form Section */}
-      <section className="py-20 bg-gray-900 text-white">
+      <section className="py-12 sm:py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
-            <div className="text-center mb-8 max-w-3xl">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <div className="text-center mb-6 sm:mb-8 max-w-3xl">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4 px-4">
                 Tem dúvidas? Entre em contacto.
               </h2>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {/* Nome */}
                 <input
                   type="text"
@@ -455,7 +455,7 @@ const EnergiaPage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Nome*"
                   required
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 />
                 {/* Apelido */}
                 <input
@@ -465,7 +465,7 @@ const EnergiaPage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Apelido*"
                   required
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 />
                 {/* Contacto */}
                 <input
@@ -475,7 +475,7 @@ const EnergiaPage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Contacto*"
                   required
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 />
                 {/* Email */}
                 <input
@@ -485,14 +485,14 @@ const EnergiaPage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Email*"
                   required
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 />
                 {/* Meio de Contacto */}
                 <select
                   name="meioContacto"
                   value={formData.meio_contacto}
                   onChange={handleInputChange}
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 >
                   <option value="" disabled>Meio de Contacto*</option>
                   <option value="Telefone">Telefone</option>
@@ -500,7 +500,7 @@ const EnergiaPage: React.FC = () => {
                   <option value="SMS">SMS</option>
                 </select>
                 {/* Horário */}
-                <select name="horário" value={formData.horario} onChange={handleInputChange} className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                <select name="horário" value={formData.horario} onChange={handleInputChange} className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9] text-sm sm:text-base">
                   <option value="">Horário</option>
                   <option>9h-12h30</option>
                   <option>12h30-16h</option>
@@ -512,7 +512,7 @@ const EnergiaPage: React.FC = () => {
                   name="assunto"
                   value={formData.assunto}
                   onChange={handleInputChange}
-                  className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="sm:col-span-2 px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 >
                   <option value="" disabled>Assunto*</option>
                   <option value="Eletricidade">Eletricidade</option>
@@ -526,7 +526,7 @@ const EnergiaPage: React.FC = () => {
                   name="motivoContato"
                   value={formData.mensagem}
                   onChange={handleInputChange}
-                  className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="sm:col-span-2 px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 >
                   <option value="" disabled>Motivo de Contacto*</option>
                   <option value="Explicacao de Fatura">Explicação de Fatura</option>
@@ -535,23 +535,23 @@ const EnergiaPage: React.FC = () => {
                   <option value="Simulacao para Paineis Solares">Simulação para Painéis Solares</option>
                 </select>
 
-                <div className="md:col-span-2">
-                  <label className="flex items-start text-sm text-gray-700 mb-4">
+                <div className="sm:col-span-2">
+                  <label className="flex items-start text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">
                     <input type="checkbox" className="mt-1 mr-2" required />
                     Sim, aceito os termos e condições indicados pela Globalead Portugal.
                   </label>
-                  <p className="text-xs text-gray-600 mb-4">
+                  <p className="text-xs text-gray-600 mb-3 sm:mb-4">
                     Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
                   </p>
                   
                   {submitStatus === 'success' && (
-                    <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                    <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-green-100 border border-green-400 text-green-700 rounded text-xs sm:text-sm">
                       Mensagem enviada com sucesso! Entraremos em contacto em breve.
                     </div>
                   )}
                   
                   {submitStatus === 'error' && (
-                    <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                    <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-red-100 border border-red-400 text-red-700 rounded text-xs sm:text-sm">
                       Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
                     </div>
                   )}
@@ -559,7 +559,7 @@ const EnergiaPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#0d2233] text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
                   >
                     {isSubmitting ? 'Enviando...' : 'Entrar em contacto'}
                   </button>
