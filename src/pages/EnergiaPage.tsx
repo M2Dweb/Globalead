@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Zap, Leaf, TrendingDown, ArrowRight, Calendar, Lightbulb, Sun, Home, Thermometer, DollarSign, Settings, BarChart3, Wrench, Flame, Euro, FileText, Shield, Clock, CreditCard, Headphones } from 'lucide-react';
+import { Zap, Leaf, TrendingDown, ArrowRight, Calendar, Lightbulb, Sun, Home, Thermometer, DollarSign, Settings, BarChart3, Wrench, Flame, Euro, FileText, Shield, Clock, CreditCard, Headphones, Plus, Percent } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import FAQ from '../components/FAQ';
 import Header from '../components/HeaderEnergia';
 import ProcessFAQ from '../components/ProcessFAQ';
 import { sendEmail, FormData } from '../utils/emailService';
+import { MdDiscount } from 'react-icons/md';
 
 const EnergiaPage: React.FC = () => {
   const [activeProcessStep, setActiveProcessStep] = useState(0);
@@ -110,7 +111,7 @@ const EnergiaPage: React.FC = () => {
       image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
-      icon: <Settings className="h-12 w-12 text-[#79b2e9]" />,
+      icon: <Percent className="h-12 w-12 text-[#79b2e9]" />,
       title: "Descontos e ofertas",
       description: "Os fornecedores de energia regularmente lançam campanhas limitadas. É importante que analises o custo real a longo prazo.",
       image: "https://images.pexels.com/photos/4792509/pexels-photo-4792509.jpeg?auto=compress&cs=tinysrgb&w=400"
@@ -122,7 +123,7 @@ const EnergiaPage: React.FC = () => {
       image: "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
-      icon: <Headphones className="h-12 w-12 text-[#79b2e9]" />,
+      icon: <Plus className="h-12 w-12 text-[#79b2e9]" />,
       title: "Serviços adicionais",
       description: "Muitos fornecedores oferecem serviços adicionais, como seguros ou assistência. Analisa a tua situação e decide se os queres incluir.",
       image: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400"
