@@ -298,10 +298,12 @@ const EnergiaPage: React.FC = () => {
                 </div>
 
                 {/* Button */}
-                <button className="bg-[#0d2233] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base">
-                  <Sun className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
-                  Pedir Orçamento Gratuito
-                </button>
+                <div className="flex justify-center">
+                  <button className="bg-[#0d2233] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base">
+                    <Sun className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
+                    Pedir Orçamento Gratuito
+                  </button>
+                </div>
               </div>
 
               {/* Right side - Image (Desktop only) */}
