@@ -33,21 +33,18 @@ const HeaderEnergia: React.FC<HeaderProps> = ({ formData, handleInputChange }) =
         {/* Contrast background effect */}
         <div className="absolute w-80 h-80 bg-blue-200/30 rounded-full blur-3xl"></div>
         
-        {/* Businessman image */}
+        {/* Businessman image - Hidden on mobile */}
         <img
           src="/fotos/aaaaaa.png"
           alt="Professional businessman"
-          className="relative w-96 h-auto object-contain drop-shadow-2xl z-10"
+          className="relative w-96 h-auto object-contain drop-shadow-2xl z-10 hidden lg:block" // This will hide the image on mobile (below lg breakpoint)
         />
       </div>
 
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-start">
-          {/* Coluna da esquerda - Texto - Centralizada verticalmente */}
-          <div className="flex flex-col justify-center h-full pr-20">
-            
-            
+          {/* Coluna da esquerda - Texto */}
+          <div className="flex flex-col justify-center h-full lg:pr-20">
             <h1 className="text-3xl lg:text-4xl font-bold text-[#0d2233] mb-8 leading-tight">
               Garante o plano de energia mais vantajoso para ti e{' '}
               <span className="text-[#79b2e9]">nós tratamos da adesão</span>
@@ -78,8 +75,8 @@ const HeaderEnergia: React.FC<HeaderProps> = ({ formData, handleInputChange }) =
             </div>
           </div>
 
-          {/* Coluna da direita - Formulário - Mais largo */}
-          <div className="flex justify-center lg:justify-end pl-20">
+          {/* Coluna da direita - Formulário */}
+          <div className="flex justify-center lg:justify-end lg:pl-20">
             <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 w-full max-w-md lg:max-w-lg">
               <h3 className="text-xl font-semibold text-[#0d2233] mb-6 text-center">Serviço a contratar</h3>
               

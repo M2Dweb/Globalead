@@ -156,27 +156,6 @@ const EnergiaPage: React.FC = () => {
   ];
 
 
-  const newsArticles = [
-    {
-      title: "Garantia pública sobe risco de incumprimento (e tende a elevar juros)",
-      date: "Janeiro 6, 2025",
-      excerpt: "A garantia pública para crédito à habitação de jovens, que permite financiamento a 100%, já está em vigor, mas só deverá estar operacional no final do ano. O Banco de...",
-      image: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-      title: "Como organizar a casa no inverno: dicas para ter tudo à mão",
-      date: "Janeiro 6, 2025",
-      excerpt: "Manter a casa organizada no inverno pode ser simples e rápido, proporcionando mais conforto e momentos de relaxamento. Apesar da rotina agitada, envolver toda a família nas tarefas domésticas, especialmente...",
-      image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-      title: "Preço da eletricidade aumenta 2,1% no mercado regulado em 2025",
-      date: "Janeiro 6, 2025",
-      excerpt: "O regulador propõe um aumento de 2,1% no preço da eletricidade para os clientes do mercado regulado em 2025. Mas a ERSE prevê uma descida na fatura média mensal até...",
-      image: "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=400"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-white">
       {/* 1. Header Section */}
@@ -228,16 +207,18 @@ const EnergiaPage: React.FC = () => {
                 Como contratar energia com a Globalead?
               </h2>
             </div>
-            <div className="gap-12 items-center items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 lg:gap-16 items-start max-w-4xl mx-auto">
               <div>
                 <ProcessFAQ onActiveChange={setActiveProcessStep} />
-                <div className="mt-6 sm:mt-8 text-center">
-                  <button className="bg-[#79b2e9] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base">
-                    Simular
-                    <ArrowRight className="ml-2 w-3 h-3 sm:w-4 sm:h-4" />
-                  </button>
-                </div>
               </div>
+            </div>
+            <div className="mt-6 sm:mt-8 text-center">
+              <Link to={'/simulacao'}>
+                <button className="bg-[#79b2e9] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base">
+                  Simular
+                  <ArrowRight className="ml-2 w-3 h-3 sm:w-4 sm:h-4" />
+                </button>
+              </Link>
             </div>
           </div>
         </section>
@@ -247,7 +228,8 @@ const EnergiaPage: React.FC = () => {
       <AnimatedSection>
         <section className="py-12 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start lg:items-center">
+              
               {/* Left side - Content */}
               <div>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
@@ -256,7 +238,23 @@ const EnergiaPage: React.FC = () => {
                 <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">
                   Produza a sua própria energia limpa e sustentável com os nossos sistemas solares fotovoltaicos.
                 </p>
-                
+
+                {/* Image (Only on mobile, placed between the title and the topics) */}
+                <div className="lg:hidden relative mb-8">
+                  <img
+                    src="https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Instalação de painéis solares"
+                    className="w-full h-auto rounded-2xl shadow-lg"
+                  />
+                  <div className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-6 rounded-xl shadow-lg">
+                    <div className="text-center">
+                      <div className="text-lg sm:text-2xl font-bold text-[#79b2e9]">300€+</div>
+                      <div className="text-xs sm:text-sm text-gray-600">Poupança anual</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Benefits List */}
                 <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
                   <div className="flex items-start">
                     <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-3 sm:mr-4 mt-1">
@@ -299,18 +297,19 @@ const EnergiaPage: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Button */}
                 <button className="bg-[#0d2233] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base">
                   <Sun className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
                   Pedir Orçamento Gratuito
                 </button>
               </div>
 
-              {/* Right side - Image */}
-              <div className="relative mt-8 lg:mt-0">
+              {/* Right side - Image (Desktop only) */}
+              <div className="hidden lg:block relative mt-8 lg:mt-0 lg:ml-8">
                 <img
                   src="https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=600"
                   alt="Instalação de painéis solares"
-                  className="w-full h-auto rounded-2xl shadow-lg"
+                  className="w-full lg:full h-auto rounded-2xl shadow-lg" 
                 />
                 <div className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-6 rounded-xl shadow-lg">
                   <div className="text-center">
@@ -324,7 +323,6 @@ const EnergiaPage: React.FC = () => {
         </section>
       </AnimatedSection>
 
-      
 
       {/* 6. Contract Analysis Section */}
       <AnimatedSection>
@@ -421,21 +419,7 @@ const EnergiaPage: React.FC = () => {
       </section>
       </AnimatedSection>
 
-      {/* 8. FAQ Section */}
-      <AnimatedSection>
-        <section className="py-12 sm:py-20 bg-gray-900">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-4 px-4">
-                Tem alguma questão que não foi contemplada?
-              </h2>
-            </div>
-            <FAQ category="energiaFAQ" />
-          </div>
-        </section>
-      </AnimatedSection>
-
-      {/* 9. Contact Form Section */}
+      {/* 8. Contact Form Section */}
       <section className="py-12 sm:py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
@@ -569,6 +553,20 @@ const EnergiaPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* 9. FAQ Section */}
+      <AnimatedSection>
+        <section className="py-12 sm:py-20 bg-gray-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-4 px-4">
+                Tem alguma questão que não foi contemplada?
+              </h2>
+            </div>
+            <FAQ category="energiaFAQ" />
+          </div>
+        </section>
+      </AnimatedSection>
 
     </div>
   );
