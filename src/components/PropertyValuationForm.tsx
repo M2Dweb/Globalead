@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Home, MapPin, ChevronRight, Plus, Minus, ArrowLeft, User, Phone, Mail, Building, Car, Euro } from 'lucide-react';
+import { Home, MapPin, ChevronRight, Plus, Minus, ArrowLeft, User, Phone, Mail, Building, Car, Euro, TreePine, Store, Warehouse, FileText, Shield, Zap } from 'lucide-react';
 import { sendEmail } from '../utils/emailService';
 
 interface PropertyData {
-  tipoImovel: 'apartamento' | 'moradia' | 'terreno' | 'comercial' | null;
+  finalidade: 'vender' | 'arrendar' | 'trespasse' | null;
+  tipoImovel: 'apartamento' | 'moradia' | 'terreno' | 'quinta-herdade' | 'garagem' | 'predio' | 'quarto' | 'escritorio' | 'loja' | 'armazem' | 'imovel-negocio' | null;
   tipologia: string;
-  area: number;
+  areaUtil: number;
+  areaBruta: number;
+  areaTerreno: number;
   anoConstucao: number;
   quartos: number;
   casasBanho: number;
@@ -14,7 +17,10 @@ interface PropertyData {
   terracoVaranda: boolean;
   piscina: boolean;
   jardim: boolean;
-  estadoConservacao: 'novo' | 'bom' | 'razoavel' | 'recuperar' | null;
+  estadoConservacao: 'novo' | 'usado' | 'renovado' | 'construcao' | 'planta' | null;
+  certificadoEnergetico: string;
+  estacionamento: string;
+  outrasCaracteristicas: string;
   localizacao: string;
   rua: string;
   codigoPostal: string;
@@ -28,9 +34,12 @@ const PropertyValuationForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [data, setData] = useState<PropertyData>({
+    finalidade: null,
     tipoImovel: null,
     tipologia: '',
-    area: 0,
+    areaUtil: 0,
+    areaBruta: 0,
+    areaTerreno: 0,
     anoConstucao: new Date().getFullYear(),
     quartos: 1,
     casasBanho: 1,
@@ -40,6 +49,9 @@ const PropertyValuationForm: React.FC = () => {
     piscina: false,
     jardim: false,
     estadoConservacao: null,
+    certificadoEnergetico: '',
+    estacionamento: '',
+    outrasCaracteristicas: '',
     localizacao: '',
     rua: '',
     codigoPostal: '',
@@ -49,25 +61,30 @@ const PropertyValuationForm: React.FC = () => {
     telemovel: ''
   });
 
+  const handleFinalidadeSelect = (finalidade: PropertyData['finalidade']) => {
+    setData({ ...data, finalidade });
+    setCurrentStep(2);
+  };
+
   const handleTipoImovelSelect = (tipo: PropertyData['tipoImovel']) => {
     setData({ ...data, tipoImovel: tipo });
-    setCurrentStep(2);
+    setCurrentStep(3);
   };
 
   const handleEstadoSelect = (estado: PropertyData['estadoConservacao']) => {
     setData({ ...data, estadoConservacao: estado });
-    setCurrentStep(5);
+    setCurrentStep(6);
   };
 
   const handleMotivoSelect = (motivo: PropertyData['motivoVenda']) => {
     setData({ ...data, motivoVenda: motivo });
-    setCurrentStep(6);
+    setCurrentStep(7);
   };
 
-  const adjustCount = (field: 'quartos' | 'casasBanho' | 'area' | 'anoConstucao', increment: boolean, step: number = 1) => {
+  const adjustCount = (field: 'quartos' | 'casasBanho' | 'areaUtil' | 'areaBruta' | 'areaTerreno' | 'anoConstucao', increment: boolean, step: number = 1) => {
     setData(prev => ({
       ...prev,
-      [field]: Math.max(field === 'anoConstucao' ? 1900 : (field === 'area' ? 10 : 0), 
+      [field]: Math.max(field === 'anoConstucao' ? 1900 : (field.includes('area') ? 0 : 0), 
                        prev[field] + (increment ? step : -step))
     }));
   };
@@ -93,12 +110,15 @@ const PropertyValuationForm: React.FC = () => {
       telemovel: data.telemovel,
       page: 'Avaliação de Imóvel - Carlos Gonçalves',
       mensagem: `
+        Finalidade: ${getFinalidadeLabel(data.finalidade)}
         Tipo de Imóvel: ${getTipoImovelLabel(data.tipoImovel)}
         ${data.tipologia ? `Tipologia: ${data.tipologia}` : ''}
-        Área: ${data.area}m²
+        ${data.areaUtil > 0 ? `Área Útil: ${data.areaUtil}m²` : ''}
+        ${data.areaBruta > 0 ? `Área Bruta: ${data.areaBruta}m²` : ''}
+        ${data.areaTerreno > 0 ? `Área do Terreno: ${data.areaTerreno}m²` : ''}
         Ano de Construção: ${data.anoConstucao}
-        Quartos: ${data.quartos}
-        Casas de Banho: ${data.casasBanho}
+        ${needsRoomsAndBathrooms() ? `Quartos: ${data.quartos}` : ''}
+        ${needsRoomsAndBathrooms() ? `Casas de Banho: ${data.casasBanho}` : ''}
         Características:
         ${data.garagem ? '✓ Garagem' : '✗ Sem Garagem'}
         ${data.elevador ? '✓ Elevador' : '✗ Sem Elevador'}
@@ -106,10 +126,13 @@ const PropertyValuationForm: React.FC = () => {
         ${data.piscina ? '✓ Piscina' : '✗ Sem Piscina'}
         ${data.jardim ? '✓ Jardim' : '✗ Sem Jardim'}
         Estado de Conservação: ${getEstadoLabel(data.estadoConservacao)}
+        ${data.certificadoEnergetico ? `Certificado Energético: ${data.certificadoEnergetico}` : ''}
+        ${data.estacionamento ? `Estacionamento: ${data.estacionamento}` : ''}
+        ${data.outrasCaracteristicas ? `Outras Características: ${data.outrasCaracteristicas}` : ''}
         Localização: ${data.localizacao}
         Rua: ${data.rua}
         Código Postal: ${data.codigoPostal}
-        Motivo da Venda: ${getMotivoLabel(data.motivoVenda)}
+        Motivo da ${data.finalidade === 'vender' ? 'Venda' : data.finalidade === 'arrendar' ? 'Arrendamento' : 'Trespasse'}: ${getMotivoLabel(data.motivoVenda)}
       `.trim()
     };
 
@@ -119,9 +142,12 @@ const PropertyValuationForm: React.FC = () => {
       alert('Pedido de avaliação enviado com sucesso! O Carlos Gonçalves entrará em contacto consigo brevemente.');
       // Reset form
       setData({
+        finalidade: null,
         tipoImovel: null,
         tipologia: '',
-        area: 0,
+        areaUtil: 0,
+        areaBruta: 0,
+        areaTerreno: 0,
         anoConstucao: new Date().getFullYear(),
         quartos: 1,
         casasBanho: 1,
@@ -131,6 +157,9 @@ const PropertyValuationForm: React.FC = () => {
         piscina: false,
         jardim: false,
         estadoConservacao: null,
+        certificadoEnergetico: '',
+        estacionamento: '',
+        outrasCaracteristicas: '',
         localizacao: '',
         rua: '',
         codigoPostal: '',
@@ -147,37 +176,79 @@ const PropertyValuationForm: React.FC = () => {
     setIsSubmitting(false);
   };
 
+  const getFinalidadeLabel = (finalidade: PropertyData['finalidade']) => {
+    switch (finalidade) {
+      case 'vender': return 'Vender';
+      case 'arrendar': return 'Arrendar';
+      case 'trespasse': return 'Trespasse';
+      default: return '';
+    }
+  };
+
   const getTipoImovelLabel = (tipo: PropertyData['tipoImovel']) => {
     switch (tipo) {
       case 'apartamento': return 'Apartamento';
       case 'moradia': return 'Moradia';
       case 'terreno': return 'Terreno';
-      case 'comercial': return 'Imóvel Comercial';
+      case 'quinta-herdade': return 'Quinta ou Herdade';
+      case 'garagem': return 'Garagem';
+      case 'predio': return 'Prédio';
+      case 'quarto': return 'Quarto';
+      case 'escritorio': return 'Escritório';
+      case 'loja': return 'Loja';
+      case 'armazem': return 'Armazém';
+      case 'imovel-negocio': return 'Imóvel com Negócio';
       default: return '';
     }
   };
 
   const getEstadoLabel = (estado: PropertyData['estadoConservacao']) => {
     switch (estado) {
-      case 'novo': return 'Novo/Excelente';
-      case 'bom': return 'Bom Estado';
-      case 'razoavel': return 'Estado Razoável';
-      case 'recuperar': return 'Para Recuperar';
+      case 'novo': return 'Novo';
+      case 'usado': return 'Usado';
+      case 'renovado': return 'Renovado';
+      case 'construcao': return 'Construção';
+      case 'planta': return 'Planta';
       default: return '';
     }
   };
 
   const getMotivoLabel = (motivo: PropertyData['motivoVenda']) => {
     switch (motivo) {
-      case 'vender-rapidamente': return 'Vender Rapidamente';
+      case 'vender-rapidamente': return 'Vender/Arrendar Rapidamente';
       case 'melhor-preco': return 'Obter o Melhor Preço';
       case 'avaliar-opcoes': return 'Avaliar Opções';
       default: return '';
     }
   };
 
+  const needsRoomsAndBathrooms = () => {
+    return ['apartamento', 'moradia', 'quinta-herdade', 'predio', 'quarto', 'escritorio', 'imovel-negocio'].includes(data.tipoImovel || '');
+  };
+
+  const needsDetailed = () => {
+    return ['apartamento', 'moradia', 'quinta-herdade', 'predio', 'escritorio', 'loja', 'imovel-negocio'].includes(data.tipoImovel || '');
+  };
+
   const getProgressPercentage = () => {
-    return (currentStep / 6) * 100;
+    return (currentStep / 7) * 100;
+  };
+
+  const getPropertyIcon = (tipo: string) => {
+    switch (tipo) {
+      case 'apartamento': return Building;
+      case 'moradia': return Home;
+      case 'terreno': return TreePine;
+      case 'quinta-herdade': return TreePine;
+      case 'garagem': return Car;
+      case 'predio': return Building;
+      case 'quarto': return Home;
+      case 'escritorio': return Building;
+      case 'loja': return Store;
+      case 'armazem': return Warehouse;
+      case 'imovel-negocio': return Store;
+      default: return Building;
+    }
   };
 
   return (
@@ -188,7 +259,7 @@ const PropertyValuationForm: React.FC = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-8">
               <button 
-                onClick={() => setCurrentStep(Math.max(currentStep -1, 1))}
+                onClick={() => setCurrentStep(Math.max(currentStep - 1, 1))}
                 className="flex items-center text-[#0d2233] hover:text-[#79b2e9] transition-colors"
               >
                 <ArrowLeft className="h-5 w-5 mr-2" />
@@ -200,6 +271,10 @@ const PropertyValuationForm: React.FC = () => {
                   <Euro className="h-4 w-4 mr-2" />
                   AVALIAÇÃO
                 </div>
+                <ChevronRight className="h-4 w-4 text-gray-400" />
+                <span className="text-gray-500">FINALIDADE</span>
+                <ChevronRight className="h-4 w-4 text-gray-400" />
+                <span className="text-gray-500">IMÓVEL</span>
                 <ChevronRight className="h-4 w-4 text-gray-400" />
                 <span className="text-gray-500">CARACTERÍSTICAS</span>
                 <ChevronRight className="h-4 w-4 text-gray-400" />
@@ -220,7 +295,7 @@ const PropertyValuationForm: React.FC = () => {
               {/* Progress Bar */}
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-[#0d2233]">Passo {currentStep} de 6</span>
+                  <span className="text-sm font-medium text-[#0d2233]">Passo {currentStep} de 7</span>
                   <span className="text-sm text-gray-500">{Math.round(getProgressPercentage())}% concluído</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
@@ -231,77 +306,89 @@ const PropertyValuationForm: React.FC = () => {
                 </div>
               </div>
 
-              {/* Step 1: Tipo de Imóvel */}
+              {/* Step 1: Finalidade */}
               {currentStep === 1 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Que tipo de imóvel pretende avaliar?</h2>
-                  <p className="text-gray-600 mb-8">Selecione o tipo de propriedade que possui</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Qual a finalidade?</h2>
+                  <p className="text-gray-600 mb-8">Selecione o objetivo para o seu imóvel</p>
                   
                   <div className="space-y-4">
-                    <button
-                      onClick={() => handleTipoImovelSelect('apartamento')}
-                      className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#0d2233] hover:bg-[#f8fbff] transition-all group"
-                    >
-                      <div className="flex items-center">
-                        <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#0d2233] transition-colors">
-                          <Building className="h-6 w-6 text-[#0d2233] group-hover:text-white" />
+                    {[
+                      { key: 'vender', label: 'Vender', desc: 'Pretendo vender o imóvel', icon: Euro },
+                      { key: 'arrendar', label: 'Arrendar', desc: 'Pretendo arrendar o imóvel', icon: Home },
+                      { key: 'trespasse', label: 'Trespasse', desc: 'Pretendo fazer trespasse', icon: FileText }
+                    ].map(({ key, label, desc, icon: Icon }) => (
+                      <button
+                        key={key}
+                        onClick={() => handleFinalidadeSelect(key as PropertyData['finalidade'])}
+                        className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#0d2233] hover:bg-[#f8fbff] transition-all group"
+                      >
+                        <div className="flex items-center">
+                          <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#0d2233] transition-colors">
+                            <Icon className="h-6 w-6 text-[#0d2233] group-hover:text-white" />
+                          </div>
+                          <div className="text-left">
+                            <span className="font-medium text-[#0d2233] block">{label}</span>
+                            <span className="text-sm text-gray-600">{desc}</span>
+                          </div>
                         </div>
-                        <span className="font-medium text-[#0d2233]">Apartamento</span>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-gray-400" />
-                    </button>
-
-                    <button
-                      onClick={() => handleTipoImovelSelect('moradia')}
-                      className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#0d2233] hover:bg-[#f8fbff] transition-all group"
-                    >
-                      <div className="flex items-center">
-                        <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#0d2233] transition-colors">
-                          <Home className="h-6 w-6 text-[#0d2233] group-hover:text-white" />
-                        </div>
-                        <span className="font-medium text-[#0d2233]">Moradia</span>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-gray-400" />
-                    </button>
-
-                    <button
-                      onClick={() => handleTipoImovelSelect('terreno')}
-                      className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#0d2233] hover:bg-[#f8fbff] transition-all group"
-                    >
-                      <div className="flex items-center">
-                        <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#0d2233] transition-colors">
-                          <MapPin className="h-6 w-6 text-[#0d2233] group-hover:text-white" />
-                        </div>
-                        <span className="font-medium text-[#0d2233]">Terreno</span>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-gray-400" />
-                    </button>
-
-                    <button
-                      onClick={() => handleTipoImovelSelect('comercial')}
-                      className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#0d2233] hover:bg-[#f8fbff] transition-all group"
-                    >
-                      <div className="flex items-center">
-                        <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#0d2233] transition-colors">
-                          <Building className="h-6 w-6 text-[#0d2233] group-hover:text-white" />
-                        </div>
-                        <span className="font-medium text-[#0d2233]">Imóvel Comercial</span>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-gray-400" />
-                    </button>
+                        <ChevronRight className="h-5 w-5 text-gray-400" />
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
 
-              {/* Step 2: Características Básicas */}
+              {/* Step 2: Tipo de Imóvel */}
               {currentStep === 2 && (
+                <div>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Que tipo de imóvel pretende avaliar?</h2>
+                  <p className="text-gray-600 mb-8">Selecione o tipo de propriedade que possui</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      { key: 'apartamento', label: 'Apartamento' },
+                      { key: 'moradia', label: 'Moradia' },
+                      { key: 'terreno', label: 'Terreno' },
+                      { key: 'quinta-herdade', label: 'Quinta ou Herdade' },
+                      { key: 'garagem', label: 'Garagem' },
+                      { key: 'predio', label: 'Prédio' },
+                      { key: 'quarto', label: 'Quarto' },
+                      { key: 'escritorio', label: 'Escritório' },
+                      { key: 'loja', label: 'Loja' },
+                      { key: 'armazem', label: 'Armazém' },
+                      { key: 'imovel-negocio', label: 'Imóvel com Negócio' }
+                    ].map(({ key, label }) => {
+                      const Icon = getPropertyIcon(key);
+                      return (
+                        <button
+                          key={key}
+                          onClick={() => handleTipoImovelSelect(key as PropertyData['tipoImovel'])}
+                          className="flex items-center justify-between p-4 border-2 border-gray-200 rounded-2xl hover:border-[#0d2233] hover:bg-[#f8fbff] transition-all group"
+                        >
+                          <div className="flex items-center">
+                            <div className="flex items-center justify-center w-10 h-10 bg-[#e5f3ff] rounded-xl mr-3 group-hover:bg-[#0d2233] transition-colors">
+                              <Icon className="h-5 w-5 text-[#0d2233] group-hover:text-white" />
+                            </div>
+                            <span className="font-medium text-[#0d2233] text-sm">{label}</span>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-gray-400" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3: Características Básicas */}
+              {currentStep === 3 && (
                 <div>
                   <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Características do imóvel</h2>
                   <p className="text-gray-600 mb-8">Indique as características principais</p>
                   
                   <div className="space-y-6">
                     {/* Tipologia */}
-                    {(data.tipoImovel === 'apartamento' || data.tipoImovel === 'moradia') && (
+                    {needsDetailed() && (
                       <div>
                         <label className="block text-sm font-medium text-[#0d2233] mb-2">
                           Tipologia
@@ -312,35 +399,46 @@ const PropertyValuationForm: React.FC = () => {
                           className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                         >
                           <option value="">Selecione a tipologia</option>
-                          <option value="T0">T0</option>
-                          <option value="T1">T1</option>
-                          <option value="T2">T2</option>
-                          <option value="T3">T3</option>
-                          <option value="T4">T4</option>
-                          <option value="T5">T5</option>
-                          <option value="T6+">T6+</option>
+                          {data.tipoImovel === 'apartamento' || data.tipoImovel === 'moradia' ? (
+                            <>
+                              <option value="T0">T0</option>
+                              <option value="T1">T1</option>
+                              <option value="T2">T2</option>
+                              <option value="T3">T3</option>
+                              <option value="T4">T4</option>
+                              <option value="T5">T5</option>
+                              <option value="T6+">T6+</option>
+                            </>
+                          ) : (
+                            <>
+                              <option value="Pequeno">Pequeno</option>
+                              <option value="Médio">Médio</option>
+                              <option value="Grande">Grande</option>
+                              <option value="Muito Grande">Muito Grande</option>
+                            </>
+                          )}
                         </select>
                       </div>
                     )}
 
-                    {/* Área */}
+                    {/* Área Útil */}
                     <div className="p-6 border-2 border-gray-200 rounded-2xl">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-semibold text-[#0d2233] mb-1">Área (m²)</h3>
+                          <h3 className="font-semibold text-[#0d2233] mb-1">Área Útil (m²)</h3>
                           <p className="text-sm text-gray-600">Área útil do imóvel</p>
                         </div>
                         <div className="flex items-center space-x-4">
                           <button
-                            onClick={() => adjustCount('area', false, 10)}
+                            onClick={() => adjustCount('areaUtil', false, 10)}
                             className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
-                            disabled={data.area <= 10}
+                            disabled={data.areaUtil <= 0}
                           >
                             <Minus className="h-4 w-4" />
                           </button>
-                          <span className="text-2xl font-bold text-[#0d2233] w-16 text-center">{data.area}</span>
+                          <span className="text-2xl font-bold text-[#0d2233] w-16 text-center">{data.areaUtil}</span>
                           <button
-                            onClick={() => adjustCount('area', true, 10)}
+                            onClick={() => adjustCount('areaUtil', true, 10)}
                             className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                           >
                             <Plus className="h-4 w-4" />
@@ -348,35 +446,93 @@ const PropertyValuationForm: React.FC = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Área Bruta */}
+                    {needsDetailed() && (
+                      <div className="p-6 border-2 border-gray-200 rounded-2xl">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-semibold text-[#0d2233] mb-1">Área Bruta (m²)</h3>
+                            <p className="text-sm text-gray-600">Área bruta de construção</p>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <button
+                              onClick={() => adjustCount('areaBruta', false, 10)}
+                              className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                              disabled={data.areaBruta <= 0}
+                            >
+                              <Minus className="h-4 w-4" />
+                            </button>
+                            <span className="text-2xl font-bold text-[#0d2233] w-16 text-center">{data.areaBruta}</span>
+                            <button
+                              onClick={() => adjustCount('areaBruta', true, 10)}
+                              className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                            >
+                              <Plus className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Área do Terreno */}
+                    {(data.tipoImovel === 'moradia' || data.tipoImovel === 'terreno' || data.tipoImovel === 'quinta-herdade') && (
+                      <div className="p-6 border-2 border-gray-200 rounded-2xl">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-semibold text-[#0d2233] mb-1">Área do Terreno (m²)</h3>
+                            <p className="text-sm text-gray-600">Área total do terreno</p>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <button
+                              onClick={() => adjustCount('areaTerreno', false, 50)}
+                              className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                              disabled={data.areaTerreno <= 0}
+                            >
+                              <Minus className="h-4 w-4" />
+                            </button>
+                            <span className="text-2xl font-bold text-[#0d2233] w-16 text-center">{data.areaTerreno}</span>
+                            <button
+                              onClick={() => adjustCount('areaTerreno', true, 50)}
+                              className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                            >
+                              <Plus className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Ano de Construção */}
-                    <div className="p-6 border-2 border-gray-200 rounded-2xl">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-semibold text-[#0d2233] mb-1">Ano de Construção</h3>
-                          <p className="text-sm text-gray-600">Quando foi construído</p>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                          <button
-                            onClick={() => adjustCount('anoConstucao', false, 1)}
-                            className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
-                            disabled={data.anoConstucao <= 1900}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </button>
-                          <span className="text-2xl font-bold text-[#0d2233] w-20 text-center">{data.anoConstucao}</span>
-                          <button
-                            onClick={() => adjustCount('anoConstucao', true, 1)}
-                            className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
-                          >
-                            <Plus className="h-4 w-4" />
-                          </button>
+                    {data.tipoImovel !== 'terreno' && (
+                      <div className="p-6 border-2 border-gray-200 rounded-2xl">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-semibold text-[#0d2233] mb-1">Ano de Construção</h3>
+                            <p className="text-sm text-gray-600">Quando foi construído</p>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <button
+                              onClick={() => adjustCount('anoConstucao', false, 1)}
+                              className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                              disabled={data.anoConstucao <= 1900}
+                            >
+                              <Minus className="h-4 w-4" />
+                            </button>
+                            <span className="text-2xl font-bold text-[#0d2233] w-20 text-center">{data.anoConstucao}</span>
+                            <button
+                              onClick={() => adjustCount('anoConstucao', true, 1)}
+                              className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                            >
+                              <Plus className="h-4 w-4" />
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
 
                     <button
-                      onClick={() => setCurrentStep(3)}
+                      onClick={() => setCurrentStep(4)}
                       className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium"
                     >
                       Continuar
@@ -385,8 +541,8 @@ const PropertyValuationForm: React.FC = () => {
                 </div>
               )}
 
-              {/* Step 3: Quartos e Casas de Banho */}
-              {currentStep === 3 && (data.tipoImovel === 'apartamento' || data.tipoImovel === 'moradia') && (
+              {/* Step 4: Quartos e Casas de Banho */}
+              {currentStep === 4 && needsRoomsAndBathrooms() && (
                 <div>
                   <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Quartos e casas de banho</h2>
                   <p className="text-gray-600 mb-8">Quantos quartos e casas de banho tem o imóvel?</p>
@@ -453,7 +609,7 @@ const PropertyValuationForm: React.FC = () => {
                           { key: 'elevador', label: 'Elevador', icon: Building },
                           { key: 'terracoVaranda', label: 'Terraço/Varanda', icon: Home },
                           { key: 'piscina', label: 'Piscina', icon: Home },
-                          { key: 'jardim', label: 'Jardim', icon: Home }
+                          { key: 'jardim', label: 'Jardim', icon: TreePine }
                         ].map(({ key, label, icon: Icon }) => (
                           <button
                             key={key}
@@ -471,8 +627,68 @@ const PropertyValuationForm: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Certificado Energético */}
+                    <div>
+                      <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                        Certificado Energético
+                      </label>
+                      <select
+                        value={data.certificadoEnergetico}
+                        onChange={(e) => setData({ ...data, certificadoEnergetico: e.target.value })}
+                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
+                      >
+                        <option value="">Selecione a classificação</option>
+                        <option value="A+">A+</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="B-">B-</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="Isento">Isento</option>
+                        <option value="Em curso">Em curso</option>
+                      </select>
+                    </div>
+
+                    {/* Estacionamento */}
+                    <div>
+                      <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                        Estacionamento
+                      </label>
+                      <select
+                        value={data.estacionamento}
+                        onChange={(e) => setData({ ...data, estacionamento: e.target.value })}
+                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
+                      >
+                        <option value="">Selecione o tipo</option>
+                        <option value="Sem estacionamento">Sem estacionamento</option>
+                        <option value="1 lugar">1 lugar</option>
+                        <option value="2 lugares">2 lugares</option>
+                        <option value="3 lugares">3 lugares</option>
+                        <option value="4+ lugares">4+ lugares</option>
+                        <option value="Box fechada">Box fechada</option>
+                        <option value="Garagem coletiva">Garagem coletiva</option>
+                        <option value="Lugar exterior">Lugar exterior</option>
+                      </select>
+                    </div>
+
+                    {/* Outras Características */}
+                    <div>
+                      <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                        Outras Características
+                      </label>
+                      <textarea
+                        value={data.outrasCaracteristicas}
+                        onChange={(e) => setData({ ...data, outrasCaracteristicas: e.target.value })}
+                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
+                        rows={3}
+                        placeholder="Descreva outras características relevantes (opcional)"
+                      />
+                    </div>
+
                     <button
-                      onClick={() => setCurrentStep(4)}
+                      onClick={() => setCurrentStep(5)}
                       className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium"
                     >
                       Continuar
@@ -481,31 +697,77 @@ const PropertyValuationForm: React.FC = () => {
                 </div>
               )}
 
-              {/* Step 3 alternativo para terreno/comercial */}
-              {currentStep === 3 && (data.tipoImovel === 'terreno' || data.tipoImovel === 'comercial') && (
+              {/* Step 4 alternativo para tipos sem quartos */}
+              {currentStep === 4 && !needsRoomsAndBathrooms() && (
                 <div>
-                  <button
-                    onClick={() => setCurrentStep(4)}
-                    className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium"
-                  >
-                    Continuar
-                  </button>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Características adicionais</h2>
+                  <p className="text-gray-600 mb-8">Informações adicionais sobre o imóvel</p>
+                  
+                  <div className="space-y-6">
+                    {/* Certificado Energético - se aplicável */}
+                    {data.tipoImovel !== 'terreno' && (
+                      <div>
+                        <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                          Certificado Energético
+                        </label>
+                        <select
+                          value={data.certificadoEnergetico}
+                          onChange={(e) => setData({ ...data, certificadoEnergetico: e.target.value })}
+                          className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
+                        >
+                          <option value="">Selecione a classificação</option>
+                          <option value="A+">A+</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="B-">B-</option>
+                          <option value="C">C</option>
+                          <option value="D">D</option>
+                          <option value="E">E</option>
+                          <option value="F">F</option>
+                          <option value="Isento">Isento</option>
+                          <option value="Em curso">Em curso</option>
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Outras Características */}
+                    <div>
+                      <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                        Outras Características
+                      </label>
+                      <textarea
+                        value={data.outrasCaracteristicas}
+                        onChange={(e) => setData({ ...data, outrasCaracteristicas: e.target.value })}
+                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
+                        rows={4}
+                        placeholder="Descreva características relevantes do imóvel (opcional)"
+                      />
+                    </div>
+
+                    <button
+                      onClick={() => setCurrentStep(5)}
+                      className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium"
+                    >
+                      Continuar
+                    </button>
+                  </div>
                 </div>
               )}
 
-              {/* Step 4: Estado de Conservação */}
-              {currentStep === 4 && (
+              {/* Step 5: Estado de Conservação */}
+              {currentStep === 5 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Estado de conservação</h2>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Estado do imóvel</h2>
                   <p className="text-gray-600 mb-8">Como classifica o estado atual do imóvel?</p>
                   
                   <div className="space-y-4">
                     {[
-                      { key: 'novo', label: 'Novo/Excelente', desc: 'Imóvel em perfeito estado' },
-                      { key: 'bom', label: 'Bom Estado', desc: 'Pequenas reparações necessárias' },
-                      { key: 'razoavel', label: 'Estado Razoável', desc: 'Necessita algumas obras' },
-                      { key: 'recuperar', label: 'Para Recuperar', desc: 'Necessita obras significativas' }
-                    ].map(({ key, label, desc }) => (
+                      { key: 'novo', label: 'Novo', desc: 'Imóvel novo ou em excelente estado', icon: Shield },
+                      { key: 'usado', label: 'Usado', desc: 'Imóvel usado em bom estado geral', icon: Home },
+                      { key: 'renovado', label: 'Renovado', desc: 'Imóvel recentemente renovado', icon: Zap },
+                      { key: 'construcao', label: 'Construção', desc: 'Imóvel em fase de construção', icon: Building },
+                      { key: 'planta', label: 'Planta', desc: 'Projeto aprovado, ainda não iniciado', icon: FileText }
+                    ].map(({ key, label, desc, icon: Icon }) => (
                       <button
                         key={key}
                         onClick={() => handleEstadoSelect(key as PropertyData['estadoConservacao'])}
@@ -513,7 +775,7 @@ const PropertyValuationForm: React.FC = () => {
                       >
                         <div className="flex items-center">
                           <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#0d2233] transition-colors">
-                            <Home className="h-6 w-6 text-[#0d2233] group-hover:text-white" />
+                            <Icon className="h-6 w-6 text-[#0d2233] group-hover:text-white" />
                           </div>
                           <div className="text-left">
                             <span className="font-medium text-[#0d2233] block">{label}</span>
@@ -527,8 +789,8 @@ const PropertyValuationForm: React.FC = () => {
                 </div>
               )}
 
-              {/* Step 5: Localização */}
-              {currentStep === 5 && (
+              {/* Step 6: Localização */}
+              {currentStep === 6 && (
                 <div>
                   <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Localização do imóvel</h2>
                   <p className="text-gray-600 mb-8">Indique a localização para uma avaliação mais precisa</p>
@@ -577,13 +839,27 @@ const PropertyValuationForm: React.FC = () => {
                       />
                     </div>
 
-                    <h3 className="text-lg font-semibold text-[#0d2233] mt-8 mb-4">Qual o seu objetivo?</h3>
+                    <h3 className="text-lg font-semibold text-[#0d2233] mt-8 mb-4">
+                      Qual o seu objetivo para {data.finalidade === 'vender' ? 'a venda' : data.finalidade === 'arrendar' ? 'o arrendamento' : 'o trespasse'}?
+                    </h3>
                     
                     <div className="space-y-4">
                       {[
-                        { key: 'vender-rapidamente', label: 'Vender Rapidamente', desc: 'Preciso vender o mais rápido possível' },
-                        { key: 'melhor-preco', label: 'Obter o Melhor Preço', desc: 'Quero maximizar o valor de venda' },
-                        { key: 'avaliar-opcoes', label: 'Avaliar Opções', desc: 'Estou a considerar vender' }
+                        { 
+                          key: 'vender-rapidamente', 
+                          label: data.finalidade === 'vender' ? 'Vender Rapidamente' : data.finalidade === 'arrendar' ? 'Arrendar Rapidamente' : 'Trespasse Rápido',
+                          desc: `Preciso ${data.finalidade === 'vender' ? 'vender' : data.finalidade === 'arrendar' ? 'arrendar' : 'fazer trespasse'} o mais rápido possível` 
+                        },
+                        { 
+                          key: 'melhor-preco', 
+                          label: 'Obter o Melhor Preço', 
+                          desc: 'Quero maximizar o valor' 
+                        },
+                        { 
+                          key: 'avaliar-opcoes', 
+                          label: 'Avaliar Opções', 
+                          desc: `Estou a considerar ${data.finalidade === 'vender' ? 'vender' : data.finalidade === 'arrendar' ? 'arrendar' : 'trespasse'}` 
+                        }
                       ].map(({ key, label, desc }) => (
                         <button
                           key={key}
@@ -607,8 +883,8 @@ const PropertyValuationForm: React.FC = () => {
                 </div>
               )}
 
-              {/* Step 6: Dados de Contacto */}
-              {currentStep === 6 && (
+              {/* Step 7: Dados de Contacto */}
+              {currentStep === 7 && (
                 <div>
                   <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Os seus dados de contacto</h2>
                   <p className="text-gray-600 mb-8">Para que o Carlos Gonçalves possa contactá-lo com a avaliação</p>
@@ -694,6 +970,13 @@ const PropertyValuationForm: React.FC = () => {
               <h3 className="text-xl font-bold text-[#0d2233] mb-6">Resumo da Avaliação</h3>
               
               <div className="space-y-4">
+                {data.finalidade && (
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
+                    <span className="text-sm text-gray-600">Finalidade</span>
+                    <span className="font-medium text-[#0d2233] text-sm">{getFinalidadeLabel(data.finalidade)}</span>
+                  </div>
+                )}
+
                 {data.tipoImovel && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
                     <span className="text-sm text-gray-600">Tipo de Imóvel</span>
@@ -708,21 +991,35 @@ const PropertyValuationForm: React.FC = () => {
                   </div>
                 )}
 
-                {data.area > 0 && (
+                {data.areaUtil > 0 && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Área</span>
-                    <span className="font-medium text-[#0d2233] text-sm">{data.area}m²</span>
+                    <span className="text-sm text-gray-600">Área Útil</span>
+                    <span className="font-medium text-[#0d2233] text-sm">{data.areaUtil}m²</span>
                   </div>
                 )}
 
-                {data.anoConstucao && (
+                {data.areaBruta > 0 && (
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
+                    <span className="text-sm text-gray-600">Área Bruta</span>
+                    <span className="font-medium text-[#0d2233] text-sm">{data.areaBruta}m²</span>
+                  </div>
+                )}
+
+                {data.areaTerreno > 0 && (
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
+                    <span className="text-sm text-gray-600">Terreno</span>
+                    <span className="font-medium text-[#0d2233] text-sm">{data.areaTerreno}m²</span>
+                  </div>
+                )}
+
+                {data.anoConstucao && data.tipoImovel !== 'terreno' && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
                     <span className="text-sm text-gray-600">Ano</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.anoConstucao}</span>
                   </div>
                 )}
 
-                {(data.tipoImovel === 'apartamento' || data.tipoImovel === 'moradia') && currentStep >= 3 && (
+                {needsRoomsAndBathrooms() && currentStep >= 4 && (
                   <div className="p-3 bg-[#f8fbff] rounded-xl">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm text-gray-600">Divisões</span>
@@ -737,6 +1034,20 @@ const PropertyValuationForm: React.FC = () => {
                         <span className="text-xs font-medium text-[#0d2233]">{data.casasBanho}</span>
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {data.certificadoEnergetico && (
+                  <div className="p-3 bg-[#f8fbff] rounded-xl">
+                    <span className="text-sm text-gray-600 block mb-1">Cert. Energético</span>
+                    <span className="font-medium text-[#0d2233] text-sm">{data.certificadoEnergetico}</span>
+                  </div>
+                )}
+
+                {data.estacionamento && (
+                  <div className="p-3 bg-[#f8fbff] rounded-xl">
+                    <span className="text-sm text-gray-600 block mb-1">Estacionamento</span>
+                    <span className="font-medium text-[#0d2233] text-xs">{data.estacionamento}</span>
                   </div>
                 )}
 
