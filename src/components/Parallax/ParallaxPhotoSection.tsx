@@ -26,9 +26,8 @@ const PhotoPlaceholder: React.FC<PhotoPlaceholderProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Parallax effect for each photo
+  // Parallax effect for each photo (adjusted for smoother behavior)
   const parallaxSpring = useSpring({
-    transform: `translateY(${scrollY * (0.05 + index * 0.02)}px)`,
     config: config.slow,
   });
 
@@ -91,25 +90,25 @@ const ParallaxPhotoSection: React.FC<ParallaxPhotoSectionProps> = ({ title, subt
       title: "Foto Corpo Inteiro",
       description: "Foto profissional de corpo inteiro em pé",
       aspectRatio: "aspect-[3/4]",
-      placeholderImage: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop"
+      placeholderImage: "/carlos-goncalves-hero.png"
     },
     {
       title: "Foto Sentado",
       description: "Foto profissional sentado em ambiente corporativo",
-      aspectRatio: "aspect-[4/5]",
-      placeholderImage: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop"
+      aspectRatio: "aspect-[3/5]",
+      placeholderImage: "/carlos-goncalves-hero.png"
     },
     {
       title: "Foto Meio Corpo",
       description: "Foto profissional da cintura para cima",
       aspectRatio: "aspect-[3/4]",
-      placeholderImage: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop"
+      placeholderImage: "/carlos-goncalves-hero.png"
     },
     {
       title: "Foto em Pé",
       description: "Foto profissional em pé, ambiente executivo",
       aspectRatio: "aspect-[3/4]",
-      placeholderImage: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop"
+      placeholderImage: "/carlos-goncalves-hero.png"
     }
   ];
 
