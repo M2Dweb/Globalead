@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Zap, Flame, Check, FileText, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';

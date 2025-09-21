@@ -69,7 +69,7 @@ const FounderVideoSection: React.FC = () => {
             )}
           </div>
           <div className="p-8 text-center">
-            <Link to="/CEOPage" className="text-2xl font-bold text-gray-900 mb-12 hover:underline">
+            <Link to="/carlos-goncalves" className="text-2xl font-bold text-gray-900 mb-12 hover:underline">
               Carlos Gonçalves - Fundador & CEO
             </Link>
             <p className="text-gray-600 mt-2">
