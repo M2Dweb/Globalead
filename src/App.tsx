@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './components/Header';
-import Footer from './components/Footer';
+import Footer from './components/Footer'; // Importa o Footer
 import Breadcrumbs from './components/Breadcrumbs';
 import StickyCtaButton from './components/StickyCtaButton';
 import SEOHead from './components/SEOHead';
@@ -52,55 +52,57 @@ const AppLayout: React.FC = () => {
   }, []);
 
   const getBreadcrumbs = () => {
-  const path = location.pathname;
+    const path = location.pathname;
 
-  if (path === '/sobre') return [{ label: 'Sobre Nós', current: true }];
-  if (path === '/imoveis') return [{ label: 'Imóveis', current: true }];
-  if (path === '/imoveis/lista') return [
-    { label: 'Imóveis', href: '/imoveis' },
-    { label: 'Catálogo', current: true }
-  ];
-  if (path === '/seguros') return [{ label: 'Seguros', current: true }];
-  if (path === '/credito') return [
-    { label: 'Imóveis', href: '/imoveis' },
-    { label: 'Crédito Habitação', current: true }
-  ];
-  if (path === '/certificacao') return [
-    { label: 'Imóveis', href: '/imoveis' },
-    { label: 'Certificação Energética', current: true }
-  ];
-  if (path === '/alarmes') return [{ label: 'Alarmes', current: true }];
-  if (path === '/energia') return [{ label: 'Energia', current: true }];
-  if (path === '/carlos-goncalves') return [{ label: 'Carlos Gonçalves', current: true }];
-
-  if (path === '/simulacao') return [{ label: 'Simulação', current: true }];
-  if (path === '/tv-net-voz') return [{ label: 'TV, Net & Voz', current: true }];
-  if (path === '/blog') return [{ label: 'Blog', current: true }];
-  if (path === '/contactos') return [{ label: 'Contactos', current: true }];
-  if (path === '/admin') return [{ label: 'Administração', current: true }];
-
-  // Detalhes de imóveis
-  if (path.startsWith('/imoveis/') && path !== '/imoveis/lista') {
-    return [
+    if (path === '/sobre') return [{ label: 'Sobre Nós', current: true }];
+    if (path === '/imoveis') return [{ label: 'Imóveis', current: true }];
+    if (path === '/imoveis/lista') return [
       { label: 'Imóveis', href: '/imoveis' },
-      { label: 'Catálogo', href: '/imoveis/lista' },
-      { label: 'Detalhes', current: true }
+      { label: 'Catálogo', current: true }
     ];
-  }
-
-  // Detalhes do blog
-  if (path.startsWith('/blog/')) {
-    return [
-      { label: 'Blog', href: '/blog' },
-      { label: 'Artigo', current: true }
+    if (path === '/seguros') return [{ label: 'Seguros', current: true }];
+    if (path === '/credito') return [
+      { label: 'Imóveis', href: '/imoveis' },
+      { label: 'Crédito Habitação', current: true }
     ];
-  }
+    if (path === '/certificacao') return [
+      { label: 'Imóveis', href: '/imoveis' },
+      { label: 'Certificação Energética', current: true }
+    ];
+    if (path === '/alarmes') return [{ label: 'Alarmes', current: true }];
+    if (path === '/energia') return [{ label: 'Energia', current: true }];
+    if (path === '/carlos-goncalves') return [{ label: 'Carlos Gonçalves', current: true }];
 
-  return [];
-};
+    if (path === '/simulacao') return [{ label: 'Simulação', current: true }];
+    if (path === '/tv-net-voz') return [{ label: 'TV, Net & Voz', current: true }];
+    if (path === '/blog') return [{ label: 'Blog', current: true }];
+    if (path === '/contactos') return [{ label: 'Contactos', current: true }];
+    if (path === '/admin') return [{ label: 'Administração', current: true }];
 
+    // Detalhes de imóveis
+    if (path.startsWith('/imoveis/') && path !== '/imoveis/lista') {
+      return [
+        { label: 'Imóveis', href: '/imoveis' },
+        { label: 'Catálogo', href: '/imoveis/lista' },
+        { label: 'Detalhes', current: true }
+      ];
+    }
+
+    // Detalhes do blog
+    if (path.startsWith('/blog/')) {
+      return [
+        { label: 'Blog', href: '/blog' },
+        { label: 'Artigo', current: true }
+      ];
+    }
+
+    return [];
+  };
 
   const breadcrumbs = getBreadcrumbs();
+
+  // Verifica se a página atual é a "Carlos Goncalves", para não renderizar o footer
+  const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
 
   return (
     <div className="min-h-screen bg-white">
@@ -136,7 +138,9 @@ const AppLayout: React.FC = () => {
         </Routes>
       </main>
       
-      <Footer />
+      {/* Verifica se não está na página Carlos Goncalves antes de renderizar o Footer */}
+      {!isCarlosGoncalvesPage && <Footer />}
+      
       <StickyCtaButton />
     </div>
   );

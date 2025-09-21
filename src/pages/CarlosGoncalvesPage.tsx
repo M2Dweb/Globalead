@@ -6,6 +6,7 @@ import ParallaxPhotoSection from '../components/Parallax/ParallaxPhotoSection';
 import ParallaxTestimonials from '../components/Parallax/ParallaxTestimonials';
 import FounderVideoSection from '../components/FounderVideoSection';
 import PropertyValuationForm from '../components/PropertyValuationForm';
+import Footer from '../components/Footer';
 
 
 
@@ -394,11 +395,16 @@ const CarlosGoncalvesPage: React.FC = () => {
 
       {/* Property Valuation Section */}
       <AnimatedSectionSpring>
-        <section className="py-20 bg-white">
+        <section className="bg-white">
           <PropertyValuationForm />
         </section>
       </AnimatedSectionSpring>
+
+      <AnimatedSectionSpring>
+        <Footer />
+      </AnimatedSectionSpring>
     </div>
+
   );
 };
 
