@@ -204,8 +204,17 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400 text-sm">© 2025 Globalead Portugal. Todos os direitos reservados.</p>
+          <p className="text-gray-400 text-sm">
+            
+            <span 
+              onClick={() => window.location.href = '/admin'}
+            >
+            © 2025 Globalead Portugal
+            </span>
+            . Todos os direitos reservados.
+          </p>
         </div>
+
       </div>
     </footer>
   );

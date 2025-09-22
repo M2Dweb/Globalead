@@ -25,7 +25,7 @@ const Header: React.FC = () => {
     
     { name: 'Blog', path: '/blog' },
     { name: 'Contactos', path: '/contactos' },
-    { name: 'Admin', path: '/admin' }
+    
   ];
 
   const isHeroPage = ['/', '/sobre', '/imoveis', '/seguros', '/blog', '/contactos'].includes(location.pathname);
