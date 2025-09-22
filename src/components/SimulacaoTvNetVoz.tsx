@@ -1,44 +1,43 @@
 import React, { useState } from 'react';
-import { Zap, Flame, ChevronRight, Plus, Minus, MapPin, Clock, ArrowLeft, Home, Phone, Mail, User } from 'lucide-react';
+import { Tv, Wifi, Phone, ChevronRight, Plus, Minus, MapPin, Clock, ArrowLeft, Home, Mail, User, Euro, Smartphone } from 'lucide-react';
 import { sendEmail } from '../utils/emailService';
 
-
 interface SimulacaoData {
-  servico: 'electricidade-gas' | 'electricidade' | 'gas' | null;
+  servicos: 'tv-internet-telefone' | 'tv-internet' | 'internet' | null;
   tipoMorada: 'actual' | 'nova' | null;
   adultos: number;
   criancas: number;
-  habitacao: 'permanentemente' | 'parte-dia' | 'pontualmente' | null;
-  escalao: 'escalao1' | 'escalao2' | 'escalao3' | 'escalao4' | 'nao-tenho-certeza' | null;
-  comercializadora: string;
+  utilizacao: 'basica' | 'media' | 'intensiva' | null;
+  velocidade: '100mb' | '200mb' | '500mb' | '1gb' | 'nao-sei' | null;
+  operador: string;
   nome: string;
   email: string;
   telemovel: string;
 }
 
-const comercializadoras = [
-  'EDP', 'Endesa', 'Iberdrola', 'Galp', 'Repsol', 'Gold Energy', 'SU Eletricidade',
-  'Luzboa', 'Coopernico', 'Muon', 'YLC', 'MEO Energia', 'Enat', 'Não tenho/Não sei'
+const operadores = [
+  'MEO', 'NOS', 'Vodafone', 'NOWO', 'Fibroglobal', 'Onitelecom', 
+  'Nowo', 'Digi', 'Não tenho/Não sei'
 ];
 
-const SimulacaoEnergia: React.FC = () => {
+const SimulacaoTvNetVoz: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [data, setData] = useState<SimulacaoData>({
-    servico: null,
+    servicos: null,
     tipoMorada: null,
     adultos: 2,
     criancas: 0,
-    habitacao: null,
-    escalao: null,
-    comercializadora: '',
+    utilizacao: null,
+    velocidade: null,
+    operador: '',
     nome: '',
     email: '',
     telemovel: ''
   });
 
-  const handleServicoSelect = (servico: SimulacaoData['servico']) => {
-    setData({ ...data, servico });
+  const handleServicosSelect = (servicos: SimulacaoData['servicos']) => {
+    setData({ ...data, servicos });
     setCurrentStep(2);
   };
 
@@ -47,13 +46,13 @@ const SimulacaoEnergia: React.FC = () => {
     setCurrentStep(3);
   };
 
-  const handleHabitacaoSelect = (habitacao: SimulacaoData['habitacao']) => {
-    setData({ ...data, habitacao });
-    setCurrentStep(data.servico?.includes('gas') ? 5 : 6);
+  const handleUtilizacaoSelect = (utilizacao: SimulacaoData['utilizacao']) => {
+    setData({ ...data, utilizacao });
+    setCurrentStep(5);
   };
 
-  const handleEscalaoSelect = (escalao: SimulacaoData['escalao']) => {
-    setData({ ...data, escalao });
+  const handleVelocidadeSelect = (velocidade: SimulacaoData['velocidade']) => {
+    setData({ ...data, velocidade });
     setCurrentStep(6);
   };
 
@@ -76,15 +75,15 @@ const SimulacaoEnergia: React.FC = () => {
       nome: data.nome,
       email: data.email,
       telemovel: data.telemovel,
-      page: 'Simulação de Energia',
+      page: 'Simulação TV Net Voz',
       mensagem: `
-        Serviço: ${getServicoLabel(data.servico)}
+        Serviços: ${getServicosLabel(data.servicos)}
         Tipo de Morada: ${data.tipoMorada === 'actual' ? 'Morada Actual' : 'Nova Morada'}
         Adultos: ${data.adultos}
         Crianças: ${data.criancas}
-        Habitação: ${getHabitacaoLabel(data.habitacao)}
-        ${data.escalao ? `Escalão de Gás: ${getEscalaoLabel(data.escalao)}` : ''}
-        ${data.comercializadora ? `Comercializadora Atual: ${data.comercializadora}` : ''}
+        Utilização: ${getUtilizacaoLabel(data.utilizacao)}
+        Velocidade: ${getVelocidadeLabel(data.velocidade)}
+        ${data.operador ? `Operador Atual: ${data.operador}` : ''}
       `.trim()
     };
 
@@ -94,13 +93,13 @@ const SimulacaoEnergia: React.FC = () => {
       alert('Pedido enviado com sucesso! Entraremos em contacto consigo brevemente.');
       // Reset form
       setData({
-        servico: null,
+        servicos: null,
         tipoMorada: null,
         adultos: 2,
         criancas: 0,
-        habitacao: null,
-        escalao: null,
-        comercializadora: '',
+        utilizacao: null,
+        velocidade: null,
+        operador: '',
         nome: '',
         email: '',
         telemovel: ''
@@ -113,38 +112,37 @@ const SimulacaoEnergia: React.FC = () => {
     setIsSubmitting(false);
   };
 
-  const getServicoLabel = (servico: SimulacaoData['servico']) => {
-    switch (servico) {
-      case 'electricidade-gas': return 'Eletricidade + Gás Natural';
-      case 'electricidade': return 'Eletricidade';
-      case 'gas': return 'Gás Natural';
+  const getServicosLabel = (servicos: SimulacaoData['servicos']) => {
+    switch (servicos) {
+      case 'tv-internet-telefone': return 'TV + Internet + Telefone';
+      case 'tv-internet': return 'TV + Internet';
+      case 'internet': return 'Apenas Internet';
       default: return '';
     }
   };
 
-  const getHabitacaoLabel = (habitacao: SimulacaoData['habitacao']) => {
-    switch (habitacao) {
-      case 'permanentemente': return 'Permanentemente - 24 horas por dia';
-      case 'parte-dia': return 'Parte do dia - Manhãs, noites e fins-de-semana';
-      case 'pontualmente': return 'Pontualmente - Casa de férias';
+  const getUtilizacaoLabel = (utilizacao: SimulacaoData['utilizacao']) => {
+    switch (utilizacao) {
+      case 'basica': return 'Básica - Email, redes sociais';
+      case 'media': return 'Média - Streaming, videochamadas';
+      case 'intensiva': return 'Intensiva - Gaming, trabalho remoto';
       default: return '';
     }
   };
 
-  const getEscalaoLabel = (escalao: SimulacaoData['escalao']) => {
-    switch (escalao) {
-      case 'escalao1': return 'Escalão 1';
-      case 'escalao2': return 'Escalão 2';
-      case 'escalao3': return 'Escalão 3';
-      case 'escalao4': return 'Escalão 4';
-      case 'nao-tenho-certeza': return 'Não tenho a certeza';
+  const getVelocidadeLabel = (velocidade: SimulacaoData['velocidade']) => {
+    switch (velocidade) {
+      case '100mb': return '100 Mbps';
+      case '200mb': return '200 Mbps';
+      case '500mb': return '500 Mbps';
+      case '1gb': return '1 Gbps';
+      case 'nao-sei': return 'Não sei / Preciso de ajuda';
       default: return '';
     }
   };
 
   const getProgressPercentage = () => {
-    const totalSteps = data.servico?.includes('gas') ? 7 : 6;
-    return (currentStep / totalSteps) * 100;
+    return (currentStep / 6) * 100;
   };
 
   return (
@@ -187,7 +185,7 @@ const SimulacaoEnergia: React.FC = () => {
               {/* Progress Bar */}
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-[#79b2e9]">Passo {currentStep} de {data.servico?.includes('gas') ? '7' : '6'}</span>
+                  <span className="text-sm font-medium text-[#79b2e9]">Passo {currentStep} de 6</span>
                   <span className="text-sm text-gray-500">{Math.round(getProgressPercentage())}% concluído</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
@@ -198,49 +196,64 @@ const SimulacaoEnergia: React.FC = () => {
                 </div>
               </div>
 
-              {/* Step 1: Serviço */}
+              {/* Step 1: Serviços */}
               {currentStep === 1 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Queres poupar em que serviço?</h2>
-                  <p className="text-gray-600 mb-8">Seleciona o serviço que pretendes contratar</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Que serviços pretendes contratar?</h2>
+                  <p className="text-gray-600 mb-8">Seleciona o pacote que melhor se adequa às tuas necessidades</p>
                   
                   <div className="space-y-4">
                     <button
-                      onClick={() => handleServicoSelect('electricidade-gas')}
+                      onClick={() => handleServicosSelect('tv-internet-telefone')}
                       className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#79b2e9] hover:bg-[#f8fbff] transition-all group"
                     >
                       <div className="flex items-center">
                         <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#79b2e9] transition-colors">
-                          <Zap className="h-5 w-5 text-[#79b2e9] group-hover:text-white mr-1" />
-                          <Flame className="h-5 w-5 text-[#79b2e9] group-hover:text-white" />
+                          <div className="flex">
+                            <Tv className="h-4 w-4 text-[#79b2e9] group-hover:text-white mr-1" />
+                            <Wifi className="h-4 w-4 text-[#79b2e9] group-hover:text-white mr-1" />
+                            <Phone className="h-4 w-4 text-[#79b2e9] group-hover:text-white" />
+                          </div>
                         </div>
-                        <span className="font-medium text-[#0d2233]">Eletricidade + Gás Natural</span>
+                        <div>
+                          <span className="font-medium text-[#0d2233] block">TV + Internet + Telefone</span>
+                          <span className="text-sm text-gray-600">Pacote completo</span>
+                        </div>
                       </div>
                       <ChevronRight className="h-5 w-5 text-gray-400" />
                     </button>
 
                     <button
-                      onClick={() => handleServicoSelect('electricidade')}
+                      onClick={() => handleServicosSelect('tv-internet')}
                       className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#79b2e9] hover:bg-[#f8fbff] transition-all group"
                     >
                       <div className="flex items-center">
                         <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#79b2e9] transition-colors">
-                          <Zap className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
+                          <div className="flex">
+                            <Tv className="h-5 w-5 text-[#79b2e9] group-hover:text-white mr-1" />
+                            <Wifi className="h-5 w-5 text-[#79b2e9] group-hover:text-white" />
+                          </div>
                         </div>
-                        <span className="font-medium text-[#0d2233]">Eletricidade</span>
+                        <div>
+                          <span className="font-medium text-[#0d2233] block">TV + Internet</span>
+                          <span className="text-sm text-gray-600">Entretenimento e conectividade</span>
+                        </div>
                       </div>
                       <ChevronRight className="h-5 w-5 text-gray-400" />
                     </button>
 
                     <button
-                      onClick={() => handleServicoSelect('gas')}
+                      onClick={() => handleServicosSelect('internet')}
                       className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#79b2e9] hover:bg-[#f8fbff] transition-all group"
                     >
                       <div className="flex items-center">
                         <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#79b2e9] transition-colors">
-                          <Flame className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
+                          <Wifi className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
                         </div>
-                        <span className="font-medium text-[#0d2233]">Gás Natural</span>
+                        <div>
+                          <span className="font-medium text-[#0d2233] block">Apenas Internet</span>
+                          <span className="text-sm text-gray-600">Conectividade essencial</span>
+                        </div>
                       </div>
                       <ChevronRight className="h-5 w-5 text-gray-400" />
                     </button>
@@ -251,7 +264,7 @@ const SimulacaoEnergia: React.FC = () => {
               {/* Step 2: Tipo de Morada */}
               {currentStep === 2 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Precisas do serviço para que morada?</h2>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Para que morada precisas dos serviços?</h2>
                   <p className="text-gray-600 mb-8">Indica se é para a tua morada atual ou uma nova</p>
                   
                   <div className="space-y-4">
@@ -287,7 +300,7 @@ const SimulacaoEnergia: React.FC = () => {
               {/* Step 3: Pessoas */}
               {currentStep === 3 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Quantas pessoas consomem energia?</h2>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Quantas pessoas vão usar os serviços?</h2>
                   <p className="text-gray-600 mb-8">Indica o número de pessoas que vivem na habitação</p>
                   
                   <div className="space-y-6">
@@ -353,56 +366,56 @@ const SimulacaoEnergia: React.FC = () => {
                 </div>
               )}
 
-              {/* Step 4: Habitação */}
+              {/* Step 4: Utilização */}
               {currentStep === 4 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Quanto tempo está a casa habitada?</h2>
-                  <p className="text-gray-600 mb-8">Indica o padrão de ocupação da habitação</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Como vais usar a internet?</h2>
+                  <p className="text-gray-600 mb-8">Seleciona o tipo de utilização que melhor te descreve</p>
                   
                   <div className="space-y-4">
                     <button
-                      onClick={() => handleHabitacaoSelect('permanentemente')}
+                      onClick={() => handleUtilizacaoSelect('basica')}
                       className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#79b2e9] hover:bg-[#f8fbff] transition-all group"
                     >
                       <div className="flex items-center">
                         <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#79b2e9] transition-colors">
-                          <Clock className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
+                          <Smartphone className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
                         </div>
                         <div>
-                          <span className="font-medium text-[#0d2233] block">Permanentemente</span>
-                          <span className="text-sm text-gray-600">24 horas por dia</span>
+                          <span className="font-medium text-[#0d2233] block">Utilização Básica</span>
+                          <span className="text-sm text-gray-600">Email, redes sociais, navegação</span>
                         </div>
                       </div>
                       <ChevronRight className="h-5 w-5 text-gray-400" />
                     </button>
 
                     <button
-                      onClick={() => handleHabitacaoSelect('parte-dia')}
+                      onClick={() => handleUtilizacaoSelect('media')}
                       className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#79b2e9] hover:bg-[#f8fbff] transition-all group"
                     >
                       <div className="flex items-center">
                         <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#79b2e9] transition-colors">
-                          <Clock className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
+                          <Tv className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
                         </div>
                         <div>
-                          <span className="font-medium text-[#0d2233] block">Parte do dia</span>
-                          <span className="text-sm text-gray-600">Manhãs, noites e fins-de-semana</span>
+                          <span className="font-medium text-[#0d2233] block">Utilização Média</span>
+                          <span className="text-sm text-gray-600">Streaming, videochamadas, downloads</span>
                         </div>
                       </div>
                       <ChevronRight className="h-5 w-5 text-gray-400" />
                     </button>
 
                     <button
-                      onClick={() => handleHabitacaoSelect('pontualmente')}
+                      onClick={() => handleUtilizacaoSelect('intensiva')}
                       className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#79b2e9] hover:bg-[#f8fbff] transition-all group"
                     >
                       <div className="flex items-center">
                         <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#79b2e9] transition-colors">
-                          <Home className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
+                          <Wifi className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
                         </div>
                         <div>
-                          <span className="font-medium text-[#0d2233] block">Pontualmente</span>
-                          <span className="text-sm text-gray-600">Casa de férias</span>
+                          <span className="font-medium text-[#0d2233] block">Utilização Intensiva</span>
+                          <span className="text-sm text-gray-600">Gaming, trabalho remoto, múltiplos dispositivos</span>
                         </div>
                       </div>
                       <ChevronRight className="h-5 w-5 text-gray-400" />
@@ -411,24 +424,24 @@ const SimulacaoEnergia: React.FC = () => {
                 </div>
               )}
 
-              {/* Step 5: Escalão de Gás (só aparece se gás foi selecionado) */}
-              {currentStep === 5 && data.servico?.includes('gas') && (
+              {/* Step 5: Velocidade */}
+              {currentStep === 5 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Qual o escalão de gás a contratar?</h2>
-                  <p className="text-gray-600 mb-8">Seleciona o escalão de consumo de gás natural</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Que velocidade de internet pretendes?</h2>
+                  <p className="text-gray-600 mb-8">Seleciona a velocidade que melhor se adequa às tuas necessidades</p>
                   
                   <div className="space-y-4">
-                    {['escalao1', 'escalao2', 'escalao3', 'escalao4', 'nao-tenho-certeza'].map((escalao) => (
+                    {['100mb', '200mb', '500mb', '1gb', 'nao-sei'].map((velocidade) => (
                       <button
-                        key={escalao}
-                        onClick={() => handleEscalaoSelect(escalao as SimulacaoData['escalao'])}
+                        key={velocidade}
+                        onClick={() => handleVelocidadeSelect(velocidade as SimulacaoData['velocidade'])}
                         className="w-full flex items-center justify-between p-6 border-2 border-gray-200 rounded-2xl hover:border-[#79b2e9] hover:bg-[#f8fbff] transition-all group"
                       >
                         <div className="flex items-center">
                           <div className="flex items-center justify-center w-12 h-12 bg-[#e5f3ff] rounded-xl mr-4 group-hover:bg-[#79b2e9] transition-colors">
-                            <Flame className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
+                            <Wifi className="h-6 w-6 text-[#79b2e9] group-hover:text-white" />
                           </div>
-                          <span className="font-medium text-[#0d2233]">{getEscalaoLabel(escalao as SimulacaoData['escalao'])}</span>
+                          <span className="font-medium text-[#0d2233]">{getVelocidadeLabel(velocidade as SimulacaoData['velocidade'])}</span>
                         </div>
                         <ChevronRight className="h-5 w-5 text-gray-400" />
                       </button>
@@ -437,29 +450,27 @@ const SimulacaoEnergia: React.FC = () => {
                 </div>
               )}
 
-              {/* Step 6: Comercializadora e Dados */}
+              {/* Step 6: Operador e Dados */}
               {currentStep === 6 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-8">Dados para apoio personalizado</h2>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-8">Dados para proposta personalizada</h2>
                   
                   <div className="space-y-6">
-                    {data.servico?.includes('gas') && (
-                      <div>
-                        <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                          Qual a comercializadora de gás natural atual?
-                        </label>
-                        <select
-                          value={data.comercializadora}
-                          onChange={(e) => setData({ ...data, comercializadora: e.target.value })}
-                          className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#79b2e9] focus:outline-none transition-all"
-                        >
-                          <option value="">Seleciona a tua comercializadora</option>
-                          {comercializadoras.map(com => (
-                            <option key={com} value={com}>{com}</option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
+                    <div>
+                      <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                        Qual o teu operador atual?
+                      </label>
+                      <select
+                        value={data.operador}
+                        onChange={(e) => setData({ ...data, operador: e.target.value })}
+                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#79b2e9] focus:outline-none transition-all"
+                      >
+                        <option value="">Seleciona o teu operador</option>
+                        {operadores.map(op => (
+                          <option key={op} value={op}>{op}</option>
+                        ))}
+                      </select>
+                    </div>
 
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
@@ -517,7 +528,7 @@ const SimulacaoEnergia: React.FC = () => {
                       disabled={isSubmitting}
                       className="w-full bg-[#79b2e9] text-white py-4 px-6 rounded-2xl hover:bg-[#0d2233] transition-all duration-300 font-medium shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {isSubmitting ? 'A enviar...' : 'Pedir Apoio'}
+                      {isSubmitting ? 'A enviar...' : 'Pedir Proposta'}
                     </button>
                   </div>
                 </div>
@@ -531,10 +542,10 @@ const SimulacaoEnergia: React.FC = () => {
               <h3 className="text-xl font-bold text-[#0d2233] mb-6">O teu resumo</h3>
               
               <div className="space-y-4">
-                {data.servico && (
+                {data.servicos && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Serviço a contratar</span>
-                    <span className="font-medium text-[#0d2233] text-sm">{getServicoLabel(data.servico)}</span>
+                    <span className="text-sm text-gray-600">Serviços</span>
+                    <span className="font-medium text-[#0d2233] text-sm">{getServicosLabel(data.servicos)}</span>
                   </div>
                 )}
 
@@ -565,28 +576,37 @@ const SimulacaoEnergia: React.FC = () => {
                   </div>
                 )}
 
-                {data.habitacao && (
+                {data.utilizacao && (
                   <div className="p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600 block mb-1">Habitação</span>
-                    <span className="font-medium text-[#0d2233] text-xs">{getHabitacaoLabel(data.habitacao)}</span>
+                    <span className="text-sm text-gray-600 block mb-1">Utilização</span>
+                    <span className="font-medium text-[#0d2233] text-xs">{getUtilizacaoLabel(data.utilizacao)}</span>
                   </div>
                 )}
 
-                {data.escalao && (
+                {data.velocidade && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Escalão de Gás</span>
-                    <span className="font-medium text-[#0d2233] text-sm">{getEscalaoLabel(data.escalao)}</span>
+                    <span className="text-sm text-gray-600">Velocidade</span>
+                    <span className="font-medium text-[#0d2233] text-sm">{getVelocidadeLabel(data.velocidade)}</span>
                   </div>
                 )}
 
-                {data.comercializadora && (
+                {data.operador && (
                   <div className="p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600 block mb-1">Comercializadora Atual</span>
-                    <span className="font-medium text-[#0d2233] text-sm">{data.comercializadora}</span>
+                    <span className="text-sm text-gray-600 block mb-1">Operador Atual</span>
+                    <span className="font-medium text-[#0d2233] text-sm">{data.operador}</span>
                   </div>
                 )}
               </div>
 
+              <div className="mt-6 p-4 bg-gradient-to-r from-[#79b2e9] to-[#0d2233] rounded-xl text-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm opacity-90">Poupança estimada</div>
+                    <div className="text-2xl font-bold">até 40€/mês</div>
+                  </div>
+                  <Euro className="h-8 w-8 opacity-80" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -595,4 +615,4 @@ const SimulacaoEnergia: React.FC = () => {
   );
 };
 
-export default SimulacaoEnergia;
+export default SimulacaoTvNetVoz;
