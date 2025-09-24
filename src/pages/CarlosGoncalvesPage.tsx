@@ -402,36 +402,37 @@ const CarlosGoncalvesPage: React.FC = () => {
               {testimonials.map((testimonial, index) => (
                 <div
                   key={index}
-                  className="bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
+                  className="bg-whiterounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
                 >
                   <div className="flex justify-center mb-3 sm:mb-4">
                     <img src={testimonial.image} alt="testimonial" className=" rounded-xl w-full h-auto" />
                   </div>
-
-                  {/* estrelas */}
-                  <div className="flex justify-center mb-3 sm:mb-4">
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
-                      ))}
+                    <div className="p-6">
+                    {/* estrelas */}
+                    <div className="flex justify-center mb-3 sm:mb-4">
+                      <div className="flex text-yellow-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* review no centro */}
-                  <div className="flex-grow flex items-center justify-center">
-                    <p className="text-sm sm:text-base text-gray-600 italic">
-                      "{testimonial.review}"
-                    </p>
-                  </div>
+                    {/* review no centro */}
+                    <div className="flex-grow flex items-center justify-center">
+                      <p className="text-sm sm:text-base text-gray-600 italic">
+                        "{testimonial.review}"
+                      </p>
+                    </div>
 
-                  {/* nome + plataforma sempre no fundo */}
-                  <div className="border-t pt-3 sm:pt-4 mt-4 sm:mt-6">
-                    <p className="text-sm sm:text-base font-semibold text-gray-900">
-                      {testimonial.name}
-                    </p>
-                    <p className="text-xs sm:text-sm text-gray-500">
-                      Review: {testimonial.platform}
-                    </p>
+                    {/* nome + plataforma sempre no fundo */}
+                    <div className="border-t pt-3 sm:pt-4 mt-4 sm:mt-6">
+                      <p className="text-sm sm:text-base font-semibold text-gray-900">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-500">
+                        Review: {testimonial.platform}
+                      </p>
+                    </div>
                   </div>
                 </div>
               ))}

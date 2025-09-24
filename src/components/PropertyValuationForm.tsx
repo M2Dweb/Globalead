@@ -316,12 +316,18 @@ const PropertyValuationForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+          Venda o seu imóvel de forma rápida,
+segura e sem complicações!  
+        </h2>
+      </div>
       {/* Header Navigation */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center h-16"> 
-            <div className="flex items-center space-x-8">
+          <div className="flex items-center justify-center h-16">
+            <div className="flex items-center justify-start space-x-8 w-full overflow-x-auto whitespace-nowrap">
               <button 
                 onClick={() => setCurrentStep(Math.max(currentStep - 1, 1))}
                 className="flex items-center text-[#0d2233] hover:text-[#79b2e9] transition-colors"
@@ -329,7 +335,7 @@ const PropertyValuationForm: React.FC = () => {
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Voltar
               </button>
-              
+
               <div className="flex items-center space-x-6 text-sm">
                 <div className="flex items-center text-[#0d2233] font-medium">
                   <Euro className="h-4 w-4 mr-2" />
@@ -351,6 +357,8 @@ const PropertyValuationForm: React.FC = () => {
         </div>
       </div>
 
+
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Formulário - Lado Esquerdo */}
@@ -362,7 +370,7 @@ const PropertyValuationForm: React.FC = () => {
                   <span className="text-sm font-medium text-[#0d2233]">Passo {currentStep} de 7</span>
                   <span className="text-sm text-gray-500">{Math.round(getProgressPercentage())}% concluído</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-2 ">
                   <div 
                     className="bg-[#0d2233] h-2 rounded-full transition-all duration-300"
                     style={{ width: `${getProgressPercentage()}%` }}
@@ -495,6 +503,13 @@ const PropertyValuationForm: React.FC = () => {
                         <div className="flex items-center space-x-4">
                           <button
                             onClick={() => adjustCount('areaUtil', false, 10)}
+                            className="w-6 h-6 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                            disabled={data.areaUtil <= 0}
+                          >
+                            <Minus className="h-2 w-2" />
+                          </button>
+                          <button
+                            onClick={() => adjustCount('areaUtil', false, 100)}
                             className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                             disabled={data.areaUtil <= 0}
                           >
@@ -502,10 +517,16 @@ const PropertyValuationForm: React.FC = () => {
                           </button>
                           <span className="text-2xl font-bold text-[#0d2233] w-16 text-center">{data.areaUtil}</span>
                           <button
-                            onClick={() => adjustCount('areaUtil', true, 10)}
+                            onClick={() => adjustCount('areaUtil', true, 100)}
                             className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                           >
                             <Plus className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => adjustCount('areaUtil', true, 10)}
+                            className="w-6 h-6 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                          >
+                            <Plus className="h-2 w-2" />
                           </button>
                         </div>
                       </div>
@@ -522,6 +543,13 @@ const PropertyValuationForm: React.FC = () => {
                           <div className="flex items-center space-x-4">
                             <button
                               onClick={() => adjustCount('areaBruta', false, 10)}
+                              className="w-6 h-6 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                              disabled={data.areaBruta <= 0}
+                            >
+                              <Minus className="h-2 w-2" />
+                            </button>
+                            <button
+                              onClick={() => adjustCount('areaBruta', false, 100)}
                               className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                               disabled={data.areaBruta <= 0}
                             >
@@ -529,10 +557,16 @@ const PropertyValuationForm: React.FC = () => {
                             </button>
                             <span className="text-2xl font-bold text-[#0d2233] w-16 text-center">{data.areaBruta}</span>
                             <button
-                              onClick={() => adjustCount('areaBruta', true, 10)}
+                              onClick={() => adjustCount('areaBruta', true, 100)}
                               className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                             >
                               <Plus className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => adjustCount('areaBruta', true, 10)}
+                              className="w-6 h-6 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                            >
+                              <Plus className="h-2 w-2" />
                             </button>
                           </div>
                         </div>
@@ -549,7 +583,14 @@ const PropertyValuationForm: React.FC = () => {
                           </div>
                           <div className="flex items-center space-x-4">
                             <button
-                              onClick={() => adjustCount('areaTerreno', false, 50)}
+                              onClick={() => adjustCount('areaTerreno', false, 10)}
+                              className="w-6 h-6 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                              disabled={data.areaTerreno <= 0}
+                            >
+                              <Minus className="h-2 w-2" />
+                            </button>
+                             <button
+                              onClick={() => adjustCount('areaTerreno', false, 100)}
                               className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                               disabled={data.areaTerreno <= 0}
                             >
@@ -557,10 +598,16 @@ const PropertyValuationForm: React.FC = () => {
                             </button>
                             <span className="text-2xl font-bold text-[#0d2233] w-16 text-center">{data.areaTerreno}</span>
                             <button
-                              onClick={() => adjustCount('areaTerreno', true, 50)}
+                              onClick={() => adjustCount('areaTerreno', true, 100)}
                               className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                             >
                               <Plus className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => adjustCount('areaTerreno', true, 10)}
+                              className="w-6 h-6 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                            >
+                              <Plus className="h-2 w-2" />
                             </button>
                           </div>
                         </div>
@@ -578,6 +625,13 @@ const PropertyValuationForm: React.FC = () => {
                           <div className="flex items-center space-x-4">
                             <button
                               onClick={() => adjustCount('anoConstucao', false, 1)}
+                              className="w-6 h-6 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                              disabled={data.anoConstucao <= 1900}
+                            >
+                              <Minus className="h-2 w-2" />
+                            </button>
+                            <button
+                              onClick={() => adjustCount('anoConstucao', false, 10)}
                               className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                               disabled={data.anoConstucao <= 1900}
                             >
@@ -585,10 +639,16 @@ const PropertyValuationForm: React.FC = () => {
                             </button>
                             <span className="text-2xl font-bold text-[#0d2233] w-20 text-center">{data.anoConstucao}</span>
                             <button
-                              onClick={() => adjustCount('anoConstucao', true, 1)}
+                              onClick={() => adjustCount('anoConstucao', true, 10)}
                               className="w-10 h-10 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
                             >
                               <Plus className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => adjustCount('anoConstucao', true, 1)}
+                              className="w-6 h-6 rounded-full border-2 border-[#0d2233] flex items-center justify-center text-[#0d2233] hover:bg-[#0d2233] hover:text-white transition-all"
+                            >
+                              <Plus className="h-2 w-2" />
                             </button>
                           </div>
                         </div>
@@ -1101,7 +1161,7 @@ const PropertyValuationForm: React.FC = () => {
           </div>
 
           {/* Resumo - Lado Direito */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 hidden lg:block">
             <div className="bg-white rounded-3xl shadow-xl p-6 border border-gray-100 sticky top-8">
               <h3 className="text-xl font-bold text-[#0d2233] mb-6">Resumo da Avaliação</h3>
               
