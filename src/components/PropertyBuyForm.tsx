@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, Send, Home, MapPin, Euro, Users, Clock, MessageSquare } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { sendEmail } from '../utils/emailService';
 
@@ -8,8 +8,6 @@ interface PropertyBuyData {
   apelido: string;
   email: string;
   telemovel: string;
-  distrito: string;
-  cod_postal: string;
   tipo_imovel: string;
   localizacao: string;
   area_min: string;
@@ -30,8 +28,6 @@ const PropertyBuyForm: React.FC = () => {
     apelido: '',
     email: '',
     telemovel: '',
-    distrito: '',
-    cod_postal: '',
     tipo_imovel: '',
     localizacao: '',
     area_min: '',
@@ -78,31 +74,15 @@ const PropertyBuyForm: React.FC = () => {
         return;
       }
 
-      // Send email with form data
+      // Send notification email
       const emailData = {
-        nome: formData.nome,
-        apelido: formData.apelido,
-        email: formData.email,
-        telemovel: formData.telemovel,
-        distrito: formData.distrito,
-        cod_postal: formData.cod_postal,
-        escolha_imovel: formData.tipo_imovel,
-        area_min: formData.area_min,
-        area_max: formData.area_max,
-        num_quartos: formData.quartos,
-        num_casas_banho: formData.casas_banho,
-        preço: formData.preco_max,
-        meio_contacto: formData.meio_contacto,
-        horario: formData.horario,
-        mensagem: `Procura de imóvel: ${formData.tipo_imovel} em ${formData.localizacao}. Finalidade: ${formData.finalidade}. Urgência: ${formData.urgencia}. Observações: ${formData.observacoes}`,
-        assunto: 'Procura de Imóvel para Compra',
-        page: 'property-buy-form'
+        nome: 'Globalead Admin',
+        email: 'globaleadgroup@gmail.com',
+        page: 'Notificação - Nova Proposta de Compra',
+        mensagem: `Nova proposta de compra recebida de ${formData.nome} ${formData.apelido}. Verifique o painel de administração para mais detalhes.`
       };
 
-      const success = await sendEmail(emailData);
-      if (!success) {
-        console.error('Erro ao enviar email');
-      }
+      await sendEmail(emailData);
 
       setSubmitStatus('success');
       setFormData({
@@ -110,8 +90,6 @@ const PropertyBuyForm: React.FC = () => {
         apelido: '',
         email: '',
         telemovel: '',
-        distrito: '',
-        cod_postal: '',
         tipo_imovel: '',
         localizacao: '',
         area_min: '',
@@ -150,229 +128,237 @@ const PropertyBuyForm: React.FC = () => {
       </div>
 
       <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100">
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-          <input
-            type="text"
-            name="nome"
-            value={formData.nome}
-            onChange={handleInputChange}
-            placeholder="Nome*"
-            required
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
-          
-          <input
-            type="text"
-            name="apelido"
-            value={formData.apelido}
-            onChange={handleInputChange}
-            placeholder="Apelido*"
-            required
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Dados Pessoais */}
+          <div>
+            <div className="flex items-center mb-4">
+              <Users className="h-5 w-5 text-[#79b2e9] mr-2" />
+              <h3 className="text-lg font-semibold text-gray-900">Dados Pessoais</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <input
+                type="text"
+                name="nome"
+                value={formData.nome}
+                onChange={handleInputChange}
+                placeholder="Nome*"
+                required
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
+              
+              <input
+                type="text"
+                name="apelido"
+                value={formData.apelido}
+                onChange={handleInputChange}
+                placeholder="Apelido*"
+                required
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
 
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            placeholder="Email*"
-            required
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Email*"
+                required
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
 
-          <input
-            type="tel"
-            name="telemovel"
-            value={formData.telemovel}
-            onChange={handleInputChange}
-            placeholder="Telemóvel*"
-            required
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
+              <input
+                type="tel"
+                name="telemovel"
+                value={formData.telemovel}
+                onChange={handleInputChange}
+                placeholder="Telemóvel*"
+                required
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
+            </div>
+          </div>
 
-          <select
-            name="distrito"
-            value={formData.distrito}
-            onChange={handleInputChange}
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          >
-            <option value="">Distrito:</option>
-            <option>Aveiro</option>
-            <option>Beja</option>
-            <option>Braga</option>
-            <option>Bragança</option>
-            <option>Castelo Branco</option>
-            <option>Coimbra</option>
-            <option>Évora</option>
-            <option>Faro</option>
-            <option>Guarda</option>
-            <option>Leiria</option>
-            <option>Lisboa</option>
-            <option>Portalegre</option>
-            <option>Porto</option>
-            <option>Santarém</option>
-            <option>Setúbal</option>
-            <option>Viana do Castelo</option>
-            <option>Vila Real</option>
-            <option>Viseu</option>
-            <option>Ilhas</option>
-          </select>
+          {/* Características do Imóvel */}
+          <div>
+            <div className="flex items-center mb-4">
+              <Home className="h-5 w-5 text-[#79b2e9] mr-2" />
+              <h3 className="text-lg font-semibold text-gray-900">Características do Imóvel</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <select
+                name="tipo_imovel"
+                value={formData.tipo_imovel}
+                onChange={handleInputChange}
+                required
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              >
+                <option value="">Tipo de Imóvel*</option>
+                <option value="Apartamento">Apartamento</option>
+                <option value="Moradia">Moradia</option>
+                <option value="Quinta">Quinta</option>
+                <option value="Terreno">Terreno</option>
+                <option value="Prédio">Prédio</option>
+                <option value="Loja">Loja</option>
+                <option value="Armazém">Armazém</option>
+                <option value="Escritório">Escritório</option>
+                <option value="Garagem">Garagem</option>
+                <option value="Outros">Outros</option>
+              </select>
 
-          <input
-            type="text"
-            name="cod_postal"
-            value={formData.cod_postal}
-            onChange={handleInputChange}
-            placeholder="Código Postal"
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
-          <select
-            name="tipo_imovel"
-            value={formData.tipo_imovel}
-            onChange={handleInputChange}
-            required
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          >
-            <option value="">Tipo de Imóvel*</option>
-            <option>Apartamento</option>
-            <option>Moradia</option>
-            <option>Quinta</option>
-            <option>Terreno</option>
-            <option>Prédio</option>
-            <option>Loja</option>
-            <option>Armazém</option>
-            <option>Escritório</option>
-            <option>Garagem</option>
-            <option>Outros</option>
-          </select>
+              <input
+                type="text"
+                name="localizacao"
+                value={formData.localizacao}
+                onChange={handleInputChange}
+                placeholder="Localização Pretendida*"
+                required
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
 
-          <input
-            type="text"
-            name="localizacao"
-            value={formData.localizacao}
-            onChange={handleInputChange}
-            placeholder="Localização Pretendida*"
-            required
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
+              <input
+                type="number"
+                name="area_min"
+                value={formData.area_min}
+                onChange={handleInputChange}
+                placeholder="Área Mínima (m²)"
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
 
-          <input
-            type="number"
-            name="area_min"
-            value={formData.area_min}
-            onChange={handleInputChange}
-            placeholder="Área Mínima (m²)"
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
+              <input
+                type="number"
+                name="area_max"
+                value={formData.area_max}
+                onChange={handleInputChange}
+                placeholder="Área Máxima (m²)"
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
 
-          <input
-            type="number"
-            name="area_max"
-            value={formData.area_max}
-            onChange={handleInputChange}
-            placeholder="Área Máxima (m²)"
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
+              <select
+                name="quartos"
+                value={formData.quartos}
+                onChange={handleInputChange}
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              >
+                <option value="">Nº de Quartos</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5+">5+</option>
+              </select>
 
-          <select
-            name="quartos"
-            value={formData.quartos}
-            onChange={handleInputChange}
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          >
-            <option value="">Nº de Quartos</option>
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5+</option>
-          </select>
+              <select
+                name="casas_banho"
+                value={formData.casas_banho}
+                onChange={handleInputChange}
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              >
+                <option value="">Nº de Casas de Banho</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4+">4+</option>
+              </select>
+            </div>
+          </div>
 
-          <select
-            name="casas_banho"
-            value={formData.casas_banho}
-            onChange={handleInputChange}
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          >
-            <option value="">Nº de Casas de Banho</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4+</option>
-          </select>
+          {/* Orçamento e Finalidade */}
+          <div>
+            <div className="flex items-center mb-4">
+              <Euro className="h-5 w-5 text-[#79b2e9] mr-2" />
+              <h3 className="text-lg font-semibold text-gray-900">Orçamento e Finalidade</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <input
+                type="number"
+                name="preco_max"
+                value={formData.preco_max}
+                onChange={handleInputChange}
+                placeholder="Orçamento Máximo (€)*"
+                required
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
 
-          <input
-            type="number"
-            name="preco_max"
-            value={formData.preco_max}
-            onChange={handleInputChange}
-            placeholder="Orçamento Máximo (€)*"
-            required
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
+              <select
+                name="finalidade"
+                value={formData.finalidade}
+                onChange={handleInputChange}
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              >
+                <option value="">Finalidade</option>
+                <option value="Habitação Própria">Habitação Própria</option>
+                <option value="Investimento">Investimento</option>
+                <option value="Habitação Secundária">Habitação Secundária</option>
+                <option value="Arrendamento">Arrendamento</option>
+              </select>
 
-          <select
-            name="finalidade"
-            value={formData.finalidade}
-            onChange={handleInputChange}
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          >
-            <option value="">Finalidade</option>
-            <option>Habitação Própria</option>
-            <option>Investimento</option>
-            <option>Habitação Secundária</option>
-            <option>Arrendamento</option>
-          </select>
+              <select
+                name="urgencia"
+                value={formData.urgencia}
+                onChange={handleInputChange}
+                className="sm:col-span-2 px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              >
+                <option value="">Urgência da Compra</option>
+                <option value="Muito Urgente (1-2 meses)">Muito Urgente (1-2 meses)</option>
+                <option value="Urgente (3-6 meses)">Urgente (3-6 meses)</option>
+                <option value="Normal (6-12 meses)">Normal (6-12 meses)</option>
+                <option value="Sem Pressa">Sem Pressa</option>
+              </select>
+            </div>
+          </div>
 
-          <select
-            name="urgencia"
-            value={formData.urgencia}
-            onChange={handleInputChange}
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          >
-            <option value="">Urgência da Compra</option>
-            <option>Muito Urgente (1-2 meses)</option>
-            <option>Urgente (3-6 meses)</option>
-            <option>Normal (6-12 meses)</option>
-            <option>Sem Pressa</option>
-          </select>
+          {/* Preferências de Contacto */}
+          <div>
+            <div className="flex items-center mb-4">
+              <Clock className="h-5 w-5 text-[#79b2e9] mr-2" />
+              <h3 className="text-lg font-semibold text-gray-900">Preferências de Contacto</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <select
+                name="meio_contacto"
+                value={formData.meio_contacto}
+                onChange={handleInputChange}
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              >
+                <option value="">Meio de Contacto Preferido</option>
+                <option value="Telefone">Telefone</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Email">Email</option>
+              </select>
 
-          <select
-            name="meio_contacto"
-            value={formData.meio_contacto}
-            onChange={handleInputChange}
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          >
-            <option value="">Meio de Contacto Preferido</option>
-            <option>Telefone</option>
-            <option>WhatsApp</option>
-            <option>Email</option>
-          </select>
+              <select
+                name="horario"
+                value={formData.horario}
+                onChange={handleInputChange}
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              >
+                <option value="">Horário Preferido</option>
+                <option value="9h-12h30">9h-12h30</option>
+                <option value="12h30-16h">12h30-16h</option>
+                <option value="16h-19h30">16h-19h30</option>
+              </select>
+            </div>
+          </div>
 
-          <select
-            name="horario"
-            value={formData.horario}
-            onChange={handleInputChange}
-            className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          >
-            <option value="">Horário Preferido</option>
-            <option>9h-12h30</option>
-            <option>12h30-16h</option>
-            <option>16h-19h30</option>
-          </select>
+          {/* Observações */}
+          <div>
+            <div className="flex items-center mb-4">
+              <MessageSquare className="h-5 w-5 text-[#79b2e9] mr-2" />
+              <h3 className="text-lg font-semibold text-gray-900">Observações Adicionais</h3>
+            </div>
+            <textarea
+              name="observacoes"
+              value={formData.observacoes}
+              onChange={handleInputChange}
+              placeholder="Observações adicionais, características específicas que procura, etc. (opcional)"
+              rows={4}
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+            />
+          </div>
 
-          <textarea
-            name="observacoes"
-            value={formData.observacoes}
-            onChange={handleInputChange}
-            placeholder="Observações adicionais (opcional)"
-            rows={4}
-            className="sm:col-span-2 px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-          />
-
-          <div className="sm:col-span-2">
+          {/* Termos e Submissão */}
+          <div className="border-t pt-6">
             <label className="flex items-start text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">
               <input type="checkbox" className="mt-1 mr-2" required />
               Sim, aceito os termos e condições indicados pela Globalead Portugal.

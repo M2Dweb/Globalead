@@ -1,1595 +1,986 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Save, X, Eye, Lock } from 'lucide-react';
-import ContentRenderer from '../components/ContentRenderer';
+import { supabase } from '../lib/supabase';
+import { Plus, Edit, Trash2, Eye, EyeOff, Save, X, Upload, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare } from 'lucide-react';
+import RichTextEditor from '../components/RichTextEditor';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
-import RichTextEditor from '../components/RichTextEditor';
-import { supabase } from '../lib/supabase';
 
 const AdminPage: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('properties');
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
   const [properties, setProperties] = useState<any[]>([]);
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
-  const [siteSettings, setSiteSettings] = useState<any>({});
-  const [loading, setLoading] = useState(true);
-  const [previewMode, setPreviewMode] = useState<string | null>(null);
-  const [showExcerpt, setShowExcerpt] = useState(true);
-  const [showContent, setShowContent] = useState(true);
   const [propertyLeads, setPropertyLeads] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editingProperty, setEditingProperty] = useState<any>(null);
+  const [editingPost, setEditingPost] = useState<any>(null);
+  const [showForm, setShowForm] = useState(false);
 
-  const [newProperty, setNewProperty] = useState<any>({
+  // Form states
+  const [propertyForm, setPropertyForm] = useState({
     title: '',
     description: '',
-    price: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-    area: 0,
+    price: '',
+    bedrooms: '',
+    bathrooms: '',
+    area: '',
     location: '',
-    type: 'apartamento',
-    energy_class: 'B',
-    year_built: new Date().getFullYear(),
-    features: [],
-    images: [],
-    floor_plans: [],
-    property_types: [],
-    state: '',
-    parking: 0,
-    reference: '',
-    videos: ''
+    type: '',
+    energy_class: '',
+    year_built: '',
+    features: [] as string[],
+    images: [] as string[],
+    property_types: [] as any[]
   });
 
-  const [newBlogPost, setNewBlogPost] = useState<any>({
+  const [blogForm, setBlogForm] = useState({
     title: '',
     content: '',
     excerpt: '',
-    category: 'imobiliario',
+    category: '',
     author: 'Globalead Portugal',
     image: '',
-    read_time: '5 min',
-    date: new Date().toISOString().slice(0, 10)
+    read_time: '5 min'
   });
-
-  const [settingsForm, setSettingsForm] = useState({
-    admin_password: '',
-    founder_video_url: ''
-  });
-
-  const handleCleanUnusedImages = async () => {
-    try {
-      console.log("🔍 A procurar imagens não usadas...");
-
-      // 1. Buscar todas as URLs usadas na BD
-      const usedUrls: string[] = [];
-
-      const { data: properties } = await supabase.from("properties").select("images, videos");
-      const { data: blogPosts } = await supabase.from("blog_posts").select("image");
-
-      properties?.forEach((p) => {
-        if (p.images) usedUrls.push(...p.images);
-        if (p.videos) usedUrls.push(p.videos);
-      });
-
-      blogPosts?.forEach((b) => {
-        if (b.image) usedUrls.push(b.image);
-      });
-
-      console.log("✅ URLs usados na BD:", usedUrls);
-
-      // 2. Pastas que queres verificar (só 'imagens' e 'blog')
-      const folders = ["imagens", "blog"];
-
-      let allFiles: string[] = [];
-
-      // 3. Listar ficheiros de cada pasta
-      for (const folder of folders) {
-        const { data: files, error } = await supabase.storage
-          .from("imagens") // bucket
-          .list(folder, { limit: 100, offset: 0 });
-
-        if (error) {
-          console.error(`Erro ao listar ficheiros da pasta ${folder}:`, error);
-          continue;
-        }
-
-        if (files) {
-          const filePaths = files.map((f) => `${folder}/${f.name}`);
-          allFiles.push(...filePaths);
-        }
-      }
-
-      console.log("📂 Todos os ficheiros encontrados:", allFiles);
-
-      // 4. Filtrar ficheiros não usados
-      const unusedFiles = allFiles.filter((filePath) => {
-        const publicUrl = `${supabase.storageUrl}/object/public/imagens/${filePath}`;
-        return !usedUrls.includes(publicUrl);
-      });
-
-      console.log("🗑️ Ficheiros não usados:", unusedFiles);
-
-      // 5. Apagar ficheiros não usados
-      for (const file of unusedFiles) {
-        const { error } = await supabase.storage.from("imagens").remove([file]);
-        if (error) {
-          console.error(`Erro ao apagar ${file}:`, error);
-        } else {
-          console.log(`✅ Apagado: ${file}`);
-        }
-      }
-
-      alert(`🧹 Limpeza concluída! Apagados ${unusedFiles.length} ficheiros.`);
-    } catch (err) {
-      console.error("Erro ao apagar imagens:", err);
-      alert("❌ Erro ao apagar imagens não usadas");
-    }
-  };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchData();
-      fetchPropertyLeads();
-    }
-  }, [isAuthenticated]);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoginError('');
-
-    try {
-      const { data, error } = await supabase
-        .from('site_settings')
-        .select('admin_password')
-        .single();
-
-      if (error) {
-        console.error('Erro ao verificar senha:', error);
-        setLoginError('Erro ao verificar credenciais');
-        return;
-      }
-
-      if (data && data.admin_password === password) {
-        setIsAuthenticated(true);
-        setPassword('');
-      } else {
-        setLoginError('Senha incorreta');
-      }
-    } catch (error) {
-      console.error('Erro no login:', error);
-      setLoginError('Erro ao fazer login');
-    }
-  };
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     setLoading(true);
-    
     try {
       // Fetch properties
-      const { data: propertiesData, error: propertiesError } = await supabase
+      const { data: propertiesData } = await supabase
         .from('properties')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       // Fetch blog posts
-      const { data: blogData, error: blogError } = await supabase
+      const { data: blogData } = await supabase
         .from('blog_posts')
         .select('*')
         .order('created_at', { ascending: false });
 
-      // Fetch site settings
-      const { data: settingsData, error: settingsError } = await supabase
-        .from('site_settings')
+      // Fetch property leads
+      const { data: leadsData } = await supabase
+        .from('property_leads')
         .select('*')
-        .single();
-      
-      if (propertiesError) {
-        console.error('Erro ao carregar propriedades:', propertiesError);
-      }
-      if (blogError) {
-        console.error('Erro ao carregar posts:', blogError);
-      }
-      if (settingsError) {
-        console.error('Erro ao carregar configurações:', settingsError);
-      }
-      
+        .order('created_at', { ascending: false });
+
       setProperties(propertiesData || []);
       setBlogPosts(blogData || []);
-      setSiteSettings(settingsData || {});
-      
-      if (settingsData) {
-        setSettingsForm({
-          admin_password: settingsData.admin_password || '',
-          founder_video_url: settingsData.founder_video_url || ''
-        });
-      }
+      setPropertyLeads(leadsData || []);
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
-      setProperties([]);
-      setBlogPosts([]);
-      setSiteSettings({});
     }
     setLoading(false);
   };
 
-  const fetchPropertyLeads = async () => {
+  const generateRef = (prefix: string = ''): string => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = prefix;
+    for (let i = 0; i < 6; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
+  const handlePropertySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
     try {
-      const { data, error } = await supabase
-        .from('property_leads')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (error) {
-        console.error('Erro ao carregar leads:', error);
-        setPropertyLeads([]);
+      const propertyData = {
+        ...propertyForm,
+        ref: editingProperty?.ref || generateRef('PROP'),
+        price: parseFloat(propertyForm.price),
+        bedrooms: parseInt(propertyForm.bedrooms),
+        bathrooms: parseInt(propertyForm.bathrooms),
+        area: parseFloat(propertyForm.area),
+        year_built: parseInt(propertyForm.year_built),
+        features: propertyForm.features.filter(f => f.trim() !== ''),
+        property_types: propertyForm.property_types.length > 0 ? propertyForm.property_types : null
+      };
+
+      if (editingProperty) {
+        const { error } = await supabase
+          .from('properties')
+          .update(propertyData)
+          .eq('id', editingProperty.id);
+        
+        if (error) throw error;
       } else {
-        setPropertyLeads(data || []);
+        const { error } = await supabase
+          .from('properties')
+          .insert([propertyData]);
+        
+        if (error) throw error;
       }
+
+      resetPropertyForm();
+      fetchData();
+      alert(editingProperty ? 'Propriedade atualizada!' : 'Propriedade criada!');
     } catch (error) {
-      console.error('Erro ao carregar leads:', error);
-      setPropertyLeads([]);
+      console.error('Erro ao salvar propriedade:', error);
+      alert('Erro ao salvar propriedade');
     }
   };
 
-  const handleDeleteLead = async (id: string) => {
-    if (!confirm('Tem a certeza que deseja eliminar este lead?')) {
-      return;
-    }
-
+  const handleBlogSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
     try {
+      const blogData = {
+        ...blogForm,
+        ref: editingPost?.ref || generateRef('BLOG'),
+        date: editingPost?.date || new Date().toISOString().split('T')[0]
+      };
+
+      if (editingPost) {
+        const { error } = await supabase
+          .from('blog_posts')
+          .update(blogData)
+          .eq('id', editingPost.id);
+        
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from('blog_posts')
+          .insert([blogData]);
+        
+        if (error) throw error;
+      }
+
+      resetBlogForm();
+      fetchData();
+      alert(editingPost ? 'Post atualizado!' : 'Post criado!');
+    } catch (error) {
+      console.error('Erro ao salvar post:', error);
+      alert('Erro ao salvar post');
+    }
+  };
+
+  const deleteProperty = async (id: string) => {
+    if (confirm('Tem certeza que deseja excluir esta propriedade?')) {
+      const { error } = await supabase
+        .from('properties')
+        .delete()
+        .eq('id', id);
+      
+      if (!error) {
+        fetchData();
+        alert('Propriedade excluída!');
+      }
+    }
+  };
+
+  const deleteBlogPost = async (id: string) => {
+    if (confirm('Tem certeza que deseja excluir este post?')) {
+      const { error } = await supabase
+        .from('blog_posts')
+        .delete()
+        .eq('id', id);
+      
+      if (!error) {
+        fetchData();
+        alert('Post excluído!');
+      }
+    }
+  };
+
+  const deletePropertyLead = async (id: string) => {
+    if (confirm('Tem certeza que deseja excluir este lead?')) {
       const { error } = await supabase
         .from('property_leads')
         .delete()
         .eq('id', id);
       
-      if (error) {
-        console.error('Erro ao eliminar lead:', error);
-        alert('Erro ao eliminar lead');
-      } else {
-        alert('Lead eliminado com sucesso!');
-        await fetchPropertyLeads();
+      if (!error) {
+        fetchData();
+        alert('Lead excluído!');
       }
-    } catch (error) {
-      console.error('Erro ao eliminar lead:', error);
-      alert('Erro ao eliminar lead');
     }
   };
 
   const resetPropertyForm = () => {
-    setNewProperty({
+    setPropertyForm({
       title: '',
       description: '',
-      price: 0,
-      bedrooms: 0,
-      bathrooms: 0,
-      area: 0,
+      price: '',
+      bedrooms: '',
+      bathrooms: '',
+      area: '',
       location: '',
-      type: 'apartamento',
-      energy_class: 'B',
-      year_built: new Date().getFullYear(),
+      type: '',
+      energy_class: '',
+      year_built: '',
       features: [],
       images: [],
-      floor_plans: [],
-      property_types: [],
-      state: '',
-      parking: 0,
-      reference: '',
-      videos: ''
+      property_types: []
     });
+    setEditingProperty(null);
+    setShowForm(false);
   };
 
-  const handleAddProperty = async () => {
-    if (!newProperty.title || !newProperty.price) {
-      alert('Por favor, preencha pelo menos o título e o preço');
-      return;
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from('properties')
-        .insert([{
-          title: newProperty.title,
-          description: newProperty.description,
-          price: newProperty.price,
-          bedrooms: newProperty.bedrooms,
-          bathrooms: newProperty.bathrooms,
-          area: newProperty.area,
-          location: newProperty.location,
-          type: newProperty.type,
-          energy_class: newProperty.energy_class,
-          year_built: newProperty.year_built,
-          state: newProperty.state,
-          parking: newProperty.parking,
-          reference: newProperty.reference,
-          features: newProperty.features || [],
-          images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
-          videos: newProperty.videos || '',
-          floor_plans: newProperty.floor_plans || [],
-          property_types: newProperty.property_types || []
-        }])
-        .select();
-      
-      if (error) {
-        console.error('Erro ao adicionar imóvel:', error);
-        alert('Erro ao adicionar imóvel');
-      } else {
-        alert('Imóvel adicionado com sucesso!');
-        await fetchData();
-        resetPropertyForm();
-        setIsEditing(false);
-      }
-    } catch (error) {
-      console.error('Erro ao adicionar imóvel:', error);
-      alert('Erro ao adicionar imóvel');
-    }
+  const resetBlogForm = () => {
+    setBlogForm({
+      title: '',
+      content: '',
+      excerpt: '',
+      category: '',
+      author: 'Globalead Portugal',
+      image: '',
+      read_time: '5 min'
+    });
+    setEditingPost(null);
+    setShowForm(false);
   };
 
-  const handleDeleteProperty = async (id: string) => {
-    if (!confirm('Tem a certeza que deseja eliminar este imóvel?')) {
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('properties')
-        .delete()
-        .eq('id', id);
-      
-      if (error) {
-        console.error('Erro ao eliminar imóvel:', error);
-        alert('Erro ao eliminar imóvel');
-      } else {
-        alert('Imóvel eliminado com sucesso!');
-        await fetchData();
-      }
-    } catch (error) {
-      console.error('Erro ao eliminar imóvel:', error);
-      alert('Erro ao eliminar imóvel');
-    }
-  };
-
-  const handleEditProperty = (property: any) => {
-    setEditingId(property.id);
-    setNewProperty({
+  const editProperty = (property: any) => {
+    setPropertyForm({
       title: property.title || '',
       description: property.description || '',
-      price: property.price || 0,
-      bedrooms: property.bedrooms || 0,
-      bathrooms: property.bathrooms || 0,
-      area: property.area || 0,
+      price: property.price?.toString() || '',
+      bedrooms: property.bedrooms?.toString() || '',
+      bathrooms: property.bathrooms?.toString() || '',
+      area: property.area?.toString() || '',
       location: property.location || '',
-      type: property.type || 'apartamento',
-      energy_class: property.energy_class || 'B',
-      year_built: property.year_built || new Date().getFullYear(),
-      state: property.state || '',
-      parking: property.parking || 0,
-      reference: property.reference || '',
+      type: property.type || '',
+      energy_class: property.energy_class || '',
+      year_built: property.year_built?.toString() || '',
       features: property.features || [],
       images: property.images || [],
-      videos: property.videos || '',
-      floor_plans: property.floor_plans || [],
       property_types: property.property_types || []
     });
-    setIsEditing(true);
-    setPreviewMode(null);
+    setEditingProperty(property);
+    setShowForm(true);
   };
 
-  const handleViewProperty = (property: any) => {
-    setPreviewMode(`property-${property.id}`);
-  };
-
-  const handleSaveProperty = async () => {
-    if (!newProperty.title || !newProperty.price) {
-      alert('Por favor, preencha pelo menos o título e o preço');
-      return;
-    }
-
-    if (editingId) {
-      // Update existing property
-      try {
-        const { error } = await supabase
-          .from('properties')
-          .update({
-            title: newProperty.title,
-            description: newProperty.description,
-            price: newProperty.price,
-            bedrooms: newProperty.bedrooms,
-            bathrooms: newProperty.bathrooms,
-            area: newProperty.area,
-            location: newProperty.location,
-            type: newProperty.type,
-            energy_class: newProperty.energy_class,
-            year_built: newProperty.year_built,
-            state: newProperty.state,
-            parking: newProperty.parking,
-            reference: newProperty.reference,
-            features: newProperty.features || [],
-            images: (newProperty.images || []).filter((img: string) => typeof img === 'string' && img.trim() !== ''),
-            videos: newProperty.videos || '',
-            floor_plans: newProperty.floor_plans || [],
-            property_types: newProperty.property_types || []
-          })
-          .eq('id', editingId);
-
-        if (error) {
-          console.error('Erro ao atualizar imóvel:', error);
-          alert('Erro ao atualizar imóvel');
-          return;
-        }
-
-        alert('Imóvel atualizado com sucesso!');
-        await fetchData();
-        resetPropertyForm();
-        setIsEditing(false);
-        setEditingId(null);
-      } catch (error) {
-        console.error('Erro ao atualizar imóvel:', error);
-        alert('Erro ao atualizar imóvel');
-      }
-    } else {
-      // Add new property
-      await handleAddProperty();
-    }
-  };
-
-  const handleAddBlogPost = async () => {
-    if (!newBlogPost.title || !newBlogPost.content) {
-      alert('Por favor, preencha pelo menos o título e o conteúdo');
-      return;
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .insert([{
-          title: newBlogPost.title,
-          content: newBlogPost.content,
-          excerpt: newBlogPost.excerpt,
-          category: newBlogPost.category,
-          date: newBlogPost.date,
-          author: newBlogPost.author,
-          image: newBlogPost.image,
-          read_time: newBlogPost.read_time
-        }])
-        .select();
-      
-      if (error) {
-        console.error('Erro ao adicionar artigo:', error);
-        alert('Erro ao adicionar artigo');
-      } else {
-        alert('Artigo adicionado com sucesso!');
-        await fetchData();
-        setNewBlogPost({
-          title: '',
-          content: '',
-          excerpt: '',
-          category: 'imobiliario',
-          author: 'Globalead Portugal',
-          image: '',
-          read_time: '5 min',
-          date: new Date().toISOString().slice(0, 10)
-        });
-        setIsEditing(false);
-      }
-    } catch (error) {
-      console.error('Erro ao adicionar artigo:', error);
-      alert('Erro ao adicionar artigo');
-    }
-  };
-
-  const handleDeleteBlogPost = async (id: string) => {
-    if (!confirm('Tem a certeza que deseja eliminar este artigo?')) {
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('blog_posts')
-        .delete()
-        .eq('id', id);
-      
-      if (error) {
-        console.error('Erro ao eliminar artigo:', error);
-        alert('Erro ao eliminar artigo');
-      } else {
-        alert('Artigo eliminado com sucesso!');
-        await fetchData();
-      }
-    } catch (error) {
-      console.error('Erro ao eliminar artigo:', error);
-      alert('Erro ao eliminar artigo');
-    }
-  };
-
-  const handleEditBlogPost = (post: any) => {
-    setEditingId(post.id);
-    setNewBlogPost({
-      title: post.title,
-      content: post.content,
-      excerpt: post.excerpt,
-      category: post.category,
-      date: post.date,
-      author: post.author,
-      image: post.image,
-      read_time: post.read_time
+  const editBlogPost = (post: any) => {
+    setBlogForm({
+      title: post.title || '',
+      content: post.content || '',
+      excerpt: post.excerpt || '',
+      category: post.category || '',
+      author: post.author || 'Globalead Portugal',
+      image: post.image || '',
+      read_time: post.read_time || '5 min'
     });
-    setIsEditing(true);
-    setPreviewMode(null);
+    setEditingPost(post);
+    setShowForm(true);
   };
 
-  const handleViewBlogPost = (post: any) => {
-    setPreviewMode(`blog-${post.id}`);
+  const addFeature = () => {
+    setPropertyForm(prev => ({
+      ...prev,
+      features: [...prev.features, '']
+    }));
   };
 
-  const handleUpdateBlogPost = async () => {
-    if (!editingId) return;
-
-    if (!newBlogPost.title || !newBlogPost.content) {
-      alert('Por favor, preencha pelo menos o título e o conteúdo');
-      return;
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .update({
-          title: newBlogPost.title,
-          content: newBlogPost.content,
-          excerpt: newBlogPost.excerpt,
-          category: newBlogPost.category,
-          author: newBlogPost.author,
-          image: newBlogPost.image,
-          read_time: newBlogPost.read_time
-        })
-        .eq('id', editingId)
-        .select();
-
-      if (error) {
-        console.error('Erro ao atualizar artigo:', error);
-        alert('Erro ao atualizar artigo');
-      } else {
-        alert('Artigo atualizado com sucesso!');
-        await fetchData();
-        setNewBlogPost({
-          title: '',
-          content: '',
-          excerpt: '',
-          category: 'imobiliario',
-          author: 'Globalead Portugal',
-          image: '',
-          read_time: '5 min',
-          date: new Date().toISOString().slice(0, 10)
-        });
-        setIsEditing(false);
-        setEditingId(null);
-      }
-    } catch (error) {
-      console.error('Erro ao atualizar artigo:', error);
-      alert('Erro ao atualizar artigo');
-    }
+  const updateFeature = (index: number, value: string) => {
+    setPropertyForm(prev => ({
+      ...prev,
+      features: prev.features.map((f, i) => i === index ? value : f)
+    }));
   };
 
-  const handleUpdateSettings = async () => {
-    try {
-      const { error } = await supabase
-        .from('site_settings')
-        .upsert({
-          id: siteSettings.id || 1,
-          admin_password: settingsForm.admin_password,
-          founder_video_url: settingsForm.founder_video_url
-        });
-
-      if (error) {
-        console.error('Erro ao atualizar configurações:', error);
-        alert('Erro ao atualizar configurações');
-      } else {
-        alert('Configurações atualizadas com sucesso!');
-        await fetchData();
-      }
-    } catch (error) {
-      console.error('Erro ao atualizar configurações:', error);
-      alert('Erro ao atualizar configurações');
-    }
+  const removeFeature = (index: number) => {
+    setPropertyForm(prev => ({
+      ...prev,
+      features: prev.features.filter((_, i) => i !== index)
+    }));
   };
 
-  // Login Screen
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
-          <div className="text-center mb-8">
-            <Lock className="h-12 w-12 text-[#0d2233] mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-gray-900">Painel de Administração</h1>
-            <p className="text-gray-600">Introduza a senha para aceder</p>
-          </div>
+  const addPropertyType = () => {
+    setPropertyForm(prev => ({
+      ...prev,
+      property_types: [...prev.property_types, { name: '', area: '', price: '', garage: '', floor_plan: '' }]
+    }));
+  };
 
-          <form onSubmit={handleLogin}>
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Senha
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Introduza a senha"
-                required
-              />
-            </div>
+  const updatePropertyType = (index: number, field: string, value: string) => {
+    setPropertyForm(prev => ({
+      ...prev,
+      property_types: prev.property_types.map((pt, i) => 
+        i === index ? { ...pt, [field]: value } : pt
+      )
+    }));
+  };
 
-            {loginError && (
-              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                {loginError}
-              </div>
-            )}
+  const removePropertyType = (index: number) => {
+    setPropertyForm(prev => ({
+      ...prev,
+      property_types: prev.property_types.filter((_, i) => i !== index)
+    }));
+  };
 
-            <button
-              type="submit"
-              className="w-full bg-[#0d2233] text-white py-3 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors font-semibold"
-            >
-              Entrar
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('pt-PT');
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('pt-PT', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">A carregar dados...</div>
+        <div className="text-xl text-gray-600">A carregar...</div>
       </div>
     );
   }
 
-  // Preview Modal
-  const renderPreview = () => {
-    if (!previewMode) return null;
-
-    const [type, id] = previewMode.split('-');
-    let item = null;
-
-    if (type === 'property') {
-      item = properties.find(p => p.id === id);
-      if (!item) return null;
-
-      return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-4xl max-h-[90vh] overflow-auto p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-2xl font-bold">Pré-visualização: {item.title}</h3>
-              <button
-                onClick={() => setPreviewMode(null)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            <div className="space-y-4">
-              <div><strong>Preço:</strong> €{item.price?.toLocaleString()}</div>
-              <div><strong>Localização:</strong> {item.location}</div>
-              <div><strong>Características:</strong> {item.bedrooms}Q • {item.bathrooms}WC • {item.area}m²</div>
-              <div><strong>Descrição:</strong></div>
-              <ContentRenderer content={item.description || ''} className="bg-gray-50 p-4 rounded-lg" />
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    if (type === 'blog') {
-      item = blogPosts.find(p => p.id === id);
-      if (!item) return null;
-
-      return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-4xl max-h-[90vh] overflow-auto p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-2xl font-bold">Pré-visualização: {item.title}</h3>
-              <button
-                onClick={() => setPreviewMode(null)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            <div className="space-y-4">
-              <div><strong>Categoria:</strong> {item.category}</div>
-              <div><strong>Autor:</strong> {item.author}</div>
-              <div><strong>Data:</strong> {item.date}</div>
-              <div><strong>Resumo:</strong></div>
-              <ContentRenderer content={item.excerpt || ''} className="bg-gray-50 p-4 rounded-lg" />
-              <div><strong>Conteúdo:</strong></div>
-              <ContentRenderer content={item.content || ''} className="bg-gray-50 p-4 rounded-lg" />
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header do Admin */}
-      <div className="bg-white shadow-sm mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-6 flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
-              <p className="text-gray-600">Gerir conteúdos do website</p>
-            </div>
-            <button
-              onClick={() => setIsAuthenticated(false)}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Sair
-            </button>
-          </div>
+    <div className="min-h-screen bg-gray-50 pt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
+          <p className="text-gray-600">Gerir propriedades, blog e dados de contacto</p>
         </div>
-      </div>
 
-      {/* Tabs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="border-b border-gray-200">
+        {/* Tabs */}
+        <div className="border-b border-gray-200 mb-8">
           <nav className="-mb-px flex space-x-8">
-            <button
-              onClick={() => setActiveTab('properties')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'properties'
-                  ? 'border-blue-500 text-[#0d2233]'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              Imóveis
-            </button>
-            <button
-              onClick={() => setActiveTab('blog')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'blog'
-                  ? 'border-blue-500 text-[#0d2233]'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              Blog & Notícias
-            </button>
-            <button
-              onClick={() => setActiveTab('settings')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'settings'
-                  ? 'border-blue-500 text-[#0d2233]'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              Configurações
-            </button>
-            <button
-              onClick={() => setActiveTab('leads')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'leads'
-                  ? 'border-blue-500 text-[#0d2233]'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              Dados
-            </button>
+            {[
+              { id: 'properties', name: 'Propriedades', icon: Home },
+              { id: 'blog', name: 'Blog', icon: Edit },
+              { id: 'dados', name: 'Dados', icon: Users }
+            ].map(tab => {
+              const IconComponent = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    setShowForm(false);
+                    resetPropertyForm();
+                    resetBlogForm();
+                  }}
+                  className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === tab.id
+                      ? 'border-[#0d2233] text-[#0d2233]'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <IconComponent className="h-5 w-5 mr-2" />
+                  {tab.name}
+                </button>
+              );
+            })}
           </nav>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         {/* Properties Tab */}
         {activeTab === 'properties' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Gestão de Imóveis</h2>
-              <button
-                onClick={() => {
-                  resetPropertyForm();
-                  setIsEditing(true);
-                  setEditingId(null);
-                }}
-                className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                Adicionar Imóvel
-              </button>
-            </div>
-
-            {/* Add/Edit Property Form */}
-            {isEditing && (
-              <div className="bg-white p-6 rounded-xl shadow-lg mb-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold">
-                    {editingId ? 'Editar Imóvel' : 'Adicionar Novo Imóvel'}
-                  </h3>
+            {!showForm ? (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Propriedades</h2>
                   <button
-                    onClick={() => {
-                      setIsEditing(false);
-                      setEditingId(null);
-                      resetPropertyForm();
-                    }}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex flex-col">
-                    <label className="mb-2">Título do imóvel:</label>
-                    <input
-                      type="text"
-                      placeholder="Título do imóvel"
-                      value={newProperty.title}
-                      onChange={(e) => setNewProperty({ ...newProperty, title: e.target.value })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Preço:</label>
-                    <input
-                      type="number"
-                      placeholder="Preço"
-                      value={newProperty.price}
-                      onChange={(e) => setNewProperty({ ...newProperty, price: Number(e.target.value) })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Localização:</label>
-                    <input
-                      type="text"
-                      placeholder="Localização"
-                      value={newProperty.location}
-                      onChange={(e) => setNewProperty({ ...newProperty, location: e.target.value })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Tipo:</label>
-                    <select
-                      value={newProperty.type}
-                      onChange={(e) => setNewProperty({ ...newProperty, type: e.target.value })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="apartamento">Apartamento</option>
-                      <option value="moradia">Moradia</option>
-                      <option value="terreno">Terreno</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Quartos:</label>
-                    <input
-                      type="number"
-                      placeholder="Quartos"
-                      value={newProperty.bedrooms}
-                      onChange={(e) => setNewProperty({ ...newProperty, bedrooms: Number(e.target.value) })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Casas de banho:</label>
-                    <input
-                      type="number"
-                      placeholder="Casas de banho"
-                      value={newProperty.bathrooms}
-                      onChange={(e) => setNewProperty({ ...newProperty, bathrooms: Number(e.target.value) })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Área (m²):</label>
-                    <input
-                      type="number"
-                      placeholder="Área (m²)"
-                      value={newProperty.area}
-                      onChange={(e) => setNewProperty({ ...newProperty, area: Number(e.target.value) })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Estado:</label>
-                    <input
-                      type="text"
-                      placeholder="Estado"
-                      value={newProperty.state}
-                      onChange={(e) => setNewProperty({ ...newProperty, state: e.target.value })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Certificado energético:</label>
-                    <select
-                      value={newProperty.energy_class}
-                      onChange={(e) => setNewProperty({ ...newProperty, energy_class: e.target.value })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="A+">A+</option>
-                      <option value="A">A</option>
-                      <option value="B">B</option>
-                      <option value="B-">B-</option>
-                      <option value="C">C</option>
-                      <option value="D">D</option>
-                      <option value="E">E</option>
-                      <option value="F">F</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Ano de Construção:</label>
-                    <input
-                      type="number"
-                      placeholder="Ano de Construção"
-                      value={newProperty.year_built}
-                      onChange={(e) => setNewProperty({ ...newProperty, year_built: Number(e.target.value) })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Lugares de Estacionamento:</label>
-                    <input
-                      type="number"
-                      placeholder="Número de lugares"
-                      value={newProperty.parking}
-                      onChange={(e) => setNewProperty({ ...newProperty, parking: Number(e.target.value) })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Referência:</label>
-                    <input
-                      type="text"
-                      placeholder="Referência"
-                      value={newProperty.reference}
-                      onChange={(e) => setNewProperty({ ...newProperty, reference: e.target.value })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  {/* Features */}
-                  <div className="flex flex-col col-span-1 md:col-span-2">
-                    <label className="mb-2">Features:</label>
-                    <textarea
-                      placeholder="Features (separadas por vírgula)"
-                      value={(newProperty.features || []).join(', ')}
-                      onChange={(e) =>
-                        setNewProperty({ ...newProperty, features: e.target.value.split(',').map(f => f.trim()) })
-                      }
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col col-span-1 md:col-span-2">
-                    <label className="mb-2">URL do vídeo:</label>
-                    <input
-                      type="url"
-                      placeholder="URL do vídeo"
-                      value={newProperty.videos}
-                      onChange={(e) => setNewProperty({ ...newProperty, videos: e.target.value })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  {/* Imagens */}
-                  <div className="flex flex-col col-span-1 md:col-span-2">
-                    <label className="mb-2">Imagens:</label>
-                    <MultiFileUploader
-                      folder="imagens"
-                      files={newProperty.images}
-                      accept="image/*"
-                      onUpload={(urls) => setNewProperty({ ...newProperty, images: urls })}
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  <label htmlFor="content" className="mb-2 block font-medium">Descrição do imóvel:</label>
-                  <RichTextEditor
-                    id="content" 
-                    value={newProperty.description}
-                    onChange={(value) => setNewProperty({ ...newProperty, description: value })}
-                    placeholder="Escreva uma descrição detalhada do imóvel..."
-                    height="300px"
-                  />
-                </div>
-
-                <div className="flex justify-end space-x-4 mt-6">
-                  <button
-                    onClick={() => {
-                      setIsEditing(false);
-                      setEditingId(null);
-                      resetPropertyForm();
-                    }}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={handleSaveProperty}
+                    onClick={() => setShowForm(true)}
                     className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
                   >
-                    <Save className="mr-2 h-4 w-4" />
-                    {editingId ? 'Atualizar' : 'Guardar'}
+                    <Plus className="h-5 w-5 mr-2" />
+                    Nova Propriedade
                   </button>
                 </div>
-              </div>
-            )}
 
-            {/* Properties List */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Imóvel
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Preço
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Localização
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Tipo
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Ações
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {properties.map((property) => (
-                      <tr key={property.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">{property.title}</div>
-                          <div className="text-sm text-gray-500">
-                            {property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²
-                            {property.reference && ` • Ref: ${property.reference}`}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          €{property.price?.toLocaleString()}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {property.location}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                            {property.type}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <div className="flex space-x-2">
+                <div className="bg-white rounded-lg shadow overflow-hidden">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Propriedade</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Localização</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {properties.map((property) => (
+                        <tr key={property.id}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <img className="h-10 w-10 rounded-lg object-cover" src={property.images?.[0] || '/placeholder.jpg'} alt="" />
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900">{property.title}</div>
+                                <div className="text-sm text-gray-500">{property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {formatCurrency(property.price)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {property.location}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
-                              className="text-[#0d2233] hover:text-blue-900"
-                              onClick={() => handleViewProperty(property)}
-                              title="Ver pré-visualização"
-                            >
-                              <Eye className="h-4 w-4" />
-                            </button>
-                            <button
-                              className="text-indigo-600 hover:text-indigo-900"
-                              onClick={() => handleEditProperty(property)}
-                              title="Editar imóvel"
+                              onClick={() => editProperty(property)}
+                              className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
                             >
                               <Edit className="h-4 w-4" />
                             </button>
                             <button
-                              onClick={() => handleDeleteProperty(property.id)}
+                              onClick={() => deleteProperty(property.id)}
                               className="text-red-600 hover:text-red-900"
-                              title="Eliminar imóvel"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {editingProperty ? 'Editar Propriedade' : 'Nova Propriedade'}
+                  </h2>
+                  <button
+                    onClick={resetPropertyForm}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+
+                <form onSubmit={handlePropertySubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input
+                      type="text"
+                      placeholder="Título"
+                      value={propertyForm.title}
+                      onChange={(e) => setPropertyForm({...propertyForm, title: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                    <input
+                      type="number"
+                      placeholder="Preço"
+                      value={propertyForm.price}
+                      onChange={(e) => setPropertyForm({...propertyForm, price: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                    <input
+                      type="number"
+                      placeholder="Quartos"
+                      value={propertyForm.bedrooms}
+                      onChange={(e) => setPropertyForm({...propertyForm, bedrooms: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                    <input
+                      type="number"
+                      placeholder="Casas de banho"
+                      value={propertyForm.bathrooms}
+                      onChange={(e) => setPropertyForm({...propertyForm, bathrooms: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                    <input
+                      type="number"
+                      placeholder="Área (m²)"
+                      value={propertyForm.area}
+                      onChange={(e) => setPropertyForm({...propertyForm, area: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                    <input
+                      type="text"
+                      placeholder="Localização"
+                      value={propertyForm.location}
+                      onChange={(e) => setPropertyForm({...propertyForm, location: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                    <select
+                      value={propertyForm.type}
+                      onChange={(e) => setPropertyForm({...propertyForm, type: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    >
+                      <option value="">Tipo de Imóvel</option>
+                      <option value="apartamento">Apartamento</option>
+                      <option value="moradia">Moradia</option>
+                      <option value="terreno">Terreno</option>
+                      <option value="empreendimento">Empreendimento</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Classe Energética"
+                      value={propertyForm.energy_class}
+                      onChange={(e) => setPropertyForm({...propertyForm, energy_class: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Ano de Construção"
+                      value={propertyForm.year_built}
+                      onChange={(e) => setPropertyForm({...propertyForm, year_built: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+                    <RichTextEditor
+                      value={propertyForm.description}
+                      onChange={(value) => setPropertyForm({...propertyForm, description: value})}
+                      placeholder="Descrição detalhada da propriedade..."
+                      height="200px"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Características</label>
+                    {propertyForm.features.map((feature, index) => (
+                      <div key={index} className="flex items-center space-x-2 mb-2">
+                        <input
+                          type="text"
+                          value={feature}
+                          onChange={(e) => updateFeature(index, e.target.value)}
+                          placeholder="Característica"
+                          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeFeature(index)}
+                          className="text-red-600 hover:text-red-800"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={addFeature}
+                      className="text-[#0d2233] hover:text-[#79b2e9] inline-flex items-center"
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Adicionar Característica
+                    </button>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Imagens</label>
+                    <MultiFileUploader
+                      folder="properties"
+                      files={propertyForm.images}
+                      onUpload={(urls) => setPropertyForm({...propertyForm, images: urls})}
+                      accept="image/*"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Tipologias (Opcional)</label>
+                    {propertyForm.property_types.map((type, index) => (
+                      <div key={index} className="border border-gray-300 rounded-lg p-4 mb-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <input
+                            type="text"
+                            placeholder="Nome (ex: T1, T2)"
+                            value={type.name}
+                            onChange={(e) => updatePropertyType(index, 'name', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <input
+                            type="number"
+                            placeholder="Área (m²)"
+                            value={type.area}
+                            onChange={(e) => updatePropertyType(index, 'area', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <input
+                            type="number"
+                            placeholder="Preço"
+                            value={type.price}
+                            onChange={(e) => updatePropertyType(index, 'price', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Garagem"
+                            value={type.garage}
+                            onChange={(e) => updatePropertyType(index, 'garage', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Planta</label>
+                          <ImageUploader
+                            folder="floor-plans"
+                            onUpload={(url) => updatePropertyType(index, 'floor_plan', url)}
+                            value={type.floor_plan}
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removePropertyType(index)}
+                          className="text-red-600 hover:text-red-800 inline-flex items-center"
+                        >
+                          <Trash2 className="h-4 w-4 mr-1" />
+                          Remover Tipologia
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={addPropertyType}
+                      className="text-[#0d2233] hover:text-[#79b2e9] inline-flex items-center"
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Adicionar Tipologia
+                    </button>
+                  </div>
+
+                  <div className="flex space-x-4">
+                    <button
+                      type="submit"
+                      className="bg-[#0d2233] text-white px-6 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
+                    >
+                      <Save className="h-4 w-4 mr-2" />
+                      {editingProperty ? 'Atualizar' : 'Criar'} Propriedade
+                    </button>
+                    <button
+                      type="button"
+                      onClick={resetPropertyForm}
+                      className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
           </div>
         )}
 
         {/* Blog Tab */}
         {activeTab === 'blog' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Gestão de Blog & Notícias</h2>
-              <button
-                onClick={() => {
-                  setIsEditing(true);
-                  setEditingId(null);
-                  setNewBlogPost({
-                    title: '',
-                    content: '',
-                    excerpt: '',
-                    category: 'imobiliario',
-                    author: 'Globalead Portugal',
-                    image: '',
-                    read_time: '5 min',
-                    date: new Date().toISOString().slice(0, 10)
-                  });
-                }}
-                className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                Adicionar Artigo
-              </button>
-            </div>
-
-            {/* Add/Edit Blog Post Form */}
-            {isEditing && (
-              <div className="bg-white p-6 rounded-xl shadow-lg mb-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold">
-                    {editingId ? 'Editar Artigo' : 'Adicionar Novo Artigo'}
-                  </h3>
+            {!showForm ? (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Posts do Blog</h2>
                   <button
-                    onClick={() => {
-                      setIsEditing(false);
-                      setEditingId(null);
-                    }}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div className="flex flex-col">
-                    <label className="mb-2">Título do artigo:</label>
-                    <input
-                      type="text"
-                      placeholder="Título do artigo"
-                      value={newBlogPost.title}
-                      onChange={(e) => setNewBlogPost({...newBlogPost, title: e.target.value})}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Data do artigo:</label>
-                    <input
-                      type="date"
-                      value={newBlogPost.date}
-                      onChange={(e) => setNewBlogPost({...newBlogPost, date: e.target.value})}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="mb-2">Categoria:</label>
-                    <select
-                      value={newBlogPost.category}
-                      onChange={(e) => setNewBlogPost({ ...newBlogPost, category: e.target.value })}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="imobiliario">Imobiliário</option>
-                      <option value="financas">Finanças</option>
-                      <option value="seguros">Seguros</option>
-                      <option value="energia">Energia</option>
-                      <option value="telecomunicacoes">Telecomunicações</option>
-                      <option value="alarmes">Alarmes</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="mb-4 flex flex-col">
-                  <label className="mb-2">Imagem do artigo:</label>
-                  <ImageUploader
-                    folder="blog"
-                    value={newBlogPost.image}
-                    onUpload={(url) => setNewBlogPost({...newBlogPost, image: url})}
-                  />
-                </div>
-
-                {/* Alternar entre resumo e conteúdo */}
-                <div className="flex gap-4 mb-4">
-                  <button
-                    type="button"
-                    onClick={() => { setShowExcerpt(true); setShowContent(false); }}
-                    className={`px-3 py-1 rounded ${showExcerpt ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                  >
-                    Resumo
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { setShowExcerpt(false); setShowContent(true); }}
-                    className={`px-3 py-1 rounded ${showContent ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                  >
-                    Conteúdo
-                  </button>
-                </div>
-
-                {showExcerpt && (
-                  <div className="mb-4 flex flex-col">
-                    <label htmlFor="excerpt" className="mb-2 font-medium">Resumo do artigo:</label>
-                    <RichTextEditor
-                      id="excerpt"
-                      value={newBlogPost.excerpt}
-                      onChange={(value) => setNewBlogPost({...newBlogPost, excerpt: value})}
-                      placeholder="Escreva um resumo atrativo do artigo..."
-                      height="150px"
-                    />
-                  </div>
-                )}
-
-                {showContent && (
-                  <div className="mb-4 flex flex-col">
-                    <label htmlFor="content" className="mb-2 font-medium">Conteúdo completo do artigo:</label>
-                    <RichTextEditor
-                      id="content"
-                      value={newBlogPost.content}
-                      onChange={(value) => setNewBlogPost({...newBlogPost, content: value})}
-                      placeholder="Escreva o conteúdo completo do artigo..."
-                      height="400px"
-                    />
-                  </div>
-                )}
-
-                <div className="flex justify-end space-x-4">
-                  <button
-                    onClick={() => {
-                      setIsEditing(false);
-                      setEditingId(null);
-                    }}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={editingId ? handleUpdateBlogPost : handleAddBlogPost}
+                    onClick={() => setShowForm(true)}
                     className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
                   >
-                    <Save className="mr-2 h-4 w-4" />
-                    {editingId ? 'Atualizar' : 'Guardar'}
+                    <Plus className="h-5 w-5 mr-2" />
+                    Novo Post
                   </button>
                 </div>
-              </div>
-            )}
 
-            {/* Blog Posts List */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Artigo
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Categoria
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Data
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Ações
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {blogPosts.map((post) => (
-                      <tr key={post.id}>
-                        <td className="px-6 py-4">
-                          <div className="text-sm font-medium text-gray-900">{post.title}</div>
-                          <div className="text-sm text-gray-500 line-clamp-2">
-                            <ContentRenderer content={post.excerpt} />
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              post.category === 'imobiliario'
-                                ? 'bg-blue-100 text-blue-800'
-                                : post.category === 'financas'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : post.category === 'seguros'
-                                ? 'bg-green-100 text-green-800'
-                                : post.category === 'energia'
-                                ? 'bg-purple-100 text-purple-800'
-                                : post.category === 'telecomunicacoes'
-                                ? 'bg-indigo-100 text-indigo-800'
-                                : 'bg-red-100 text-red-800'
-                            }`}
-                          >
-                            {post.category === 'imobiliario'
-                              ? 'Imobiliário'
-                              : post.category === 'financas'
-                              ? 'Finanças'
-                              : post.category === 'seguros'
-                              ? 'Seguros'
-                              : post.category === 'energia'
-                              ? 'Energia'
-                              : post.category === 'telecomunicacoes'
-                              ? 'Telecomunicações'
-                              : 'Alarmes'}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{post.date}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <div className="flex space-x-2">
+                <div className="bg-white rounded-lg shadow overflow-hidden">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {blogPosts.map((post) => (
+                        <tr key={post.id}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <img className="h-10 w-10 rounded-lg object-cover" src={post.image || '/placeholder.jpg'} alt="" />
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900">{post.title}</div>
+                                <div className="text-sm text-gray-500">{post.read_time}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {post.category}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {formatDate(post.date)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
-                              className="text-[#0d2233] hover:text-blue-900"
-                              onClick={() => handleViewBlogPost(post)}
-                              title="Ver pré-visualização"
-                            >
-                              <Eye className="h-4 w-4" />
-                            </button>
-                            <button
-                              className="text-indigo-600 hover:text-indigo-900"
-                              onClick={() => handleEditBlogPost(post)}
-                              title="Editar artigo"
+                              onClick={() => editBlogPost(post)}
+                              className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
                             >
                               <Edit className="h-4 w-4" />
                             </button>
                             <button
-                              onClick={() => handleDeleteBlogPost(post.id)}
+                              onClick={() => deleteBlogPost(post.id)}
                               className="text-red-600 hover:text-red-900"
-                              title="Eliminar artigo"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {editingPost ? 'Editar Post' : 'Novo Post'}
+                  </h2>
+                  <button
+                    onClick={resetBlogForm}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+
+                <form onSubmit={handleBlogSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input
+                      type="text"
+                      placeholder="Título"
+                      value={blogForm.title}
+                      onChange={(e) => setBlogForm({...blogForm, title: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                    <select
+                      value={blogForm.category}
+                      onChange={(e) => setBlogForm({...blogForm, category: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    >
+                      <option value="">Categoria</option>
+                      <option value="imobiliario">Imobiliário</option>
+                      <option value="financas">Finanças</option>
+                      <option value="seguros">Seguros</option>
+                      <option value="energia">Energia</option>
+                      <option value="telecom">Telecomunicações</option>
+                      <option value="alarmes">Alarmes</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Autor"
+                      value={blogForm.author}
+                      onChange={(e) => setBlogForm({...blogForm, author: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                    <input
+                      type="text"
+                      placeholder="Tempo de leitura"
+                      value={blogForm.read_time}
+                      onChange={(e) => setBlogForm({...blogForm, read_time: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Resumo</label>
+                    <RichTextEditor
+                      value={blogForm.excerpt}
+                      onChange={(value) => setBlogForm({...blogForm, excerpt: value})}
+                      placeholder="Resumo do artigo..."
+                      height="150px"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Conteúdo</label>
+                    <RichTextEditor
+                      value={blogForm.content}
+                      onChange={(value) => setBlogForm({...blogForm, content: value})}
+                      placeholder="Conteúdo completo do artigo..."
+                      height="400px"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Imagem de Destaque</label>
+                    <ImageUploader
+                      folder="blog"
+                      onUpload={(url) => setBlogForm({...blogForm, image: url})}
+                      value={blogForm.image}
+                    />
+                  </div>
+
+                  <div className="flex space-x-4">
+                    <button
+                      type="submit"
+                      className="bg-[#0d2233] text-white px-6 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
+                    >
+                      <Save className="h-4 w-4 mr-2" />
+                      {editingPost ? 'Atualizar' : 'Criar'} Post
+                    </button>
+                    <button
+                      type="button"
+                      onClick={resetBlogForm}
+                      className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Dados Tab */}
+        {activeTab === 'dados' && (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Dados de Contacto</h2>
+              <div className="text-sm text-gray-500">
+                Total: {propertyLeads.length} registos
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center">
+                          <User className="h-4 w-4 mr-1" />
+                          Cliente
+                        </div>
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center">
+                          <Phone className="h-4 w-4 mr-1" />
+                          Contacto
+                        </div>
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center">
+                          <Home className="h-4 w-4 mr-1" />
+                          Tipo/Localização
+                        </div>
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center">
+                          <Euro className="h-4 w-4 mr-1" />
+                          Preço/Área
+                        </div>
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center">
+                          <Calendar className="h-4 w-4 mr-1" />
+                          Data
+                        </div>
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {propertyLeads.map((lead) => (
+                      <tr key={lead.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">
+                              {lead.nome} {lead.apelido}
+                            </div>
+                            <div className="text-sm text-gray-500 flex items-center">
+                              <Mail className="h-3 w-3 mr-1" />
+                              {lead.email}
+                            </div>
                           </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">{lead.telemovel}</div>
+                          <div className="text-sm text-gray-500">{lead.meio_contacto}</div>
+                          {lead.horario && (
+                            <div className="text-xs text-gray-400 flex items-center">
+                              <Clock className="h-3 w-3 mr-1" />
+                              {lead.horario}
+                            </div>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">
+                              {lead.tipo_imovel}
+                            </div>
+                            <div className="text-sm text-gray-500 flex items-center">
+                              <MapPin className="h-3 w-3 mr-1" />
+                              {lead.localizacao}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            {lead.type === 'venda' ? (
+                              <>
+                                <div className="text-sm font-medium text-green-600">
+                                  {lead.preco_pretendido && `${lead.preco_pretendido}€`}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {lead.area && `${lead.area}m²`}
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="text-sm font-medium text-blue-600">
+                                  {lead.preco_max && `Máx: ${lead.preco_max}€`}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {lead.area_min && lead.area_max ? 
+                                    `${lead.area_min}-${lead.area_max}m²` : 
+                                    (lead.area_min && `Min: ${lead.area_min}m²`)
+                                  }
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm text-gray-900">
+                              {formatDate(lead.created_at)}
+                            </div>
+                            <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              lead.type === 'venda' 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-blue-100 text-blue-800'
+                            }`}>
+                              {lead.type === 'venda' ? 'Venda' : 'Compra'}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <button
+                            onClick={() => deletePropertyLead(lead.id)}
+                            className="text-red-600 hover:text-red-900"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
-        )}
 
-        {/* Leads Tab */}
-        {activeTab === 'leads' && (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Gestão de Leads de Propriedades</h2>
-              <p className="text-gray-600">Propostas de venda e compra recebidas</p>
-            </div>
-
-            {/* Leads Statistics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                <div className="text-3xl font-bold text-[#0d2233] mb-2">
-                  {propertyLeads.filter(lead => lead.type === 'venda').length}
-                </div>
-                <div className="text-gray-600">Propostas de Venda</div>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                <div className="text-3xl font-bold text-[#79b2e9] mb-2">
-                  {propertyLeads.filter(lead => lead.type === 'compra').length}
-                </div>
-                <div className="text-gray-600">Pedidos de Compra</div>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                <div className="text-3xl font-bold text-green-600 mb-2">
-                  {propertyLeads.length}
-                </div>
-                <div className="text-gray-600">Total de Leads</div>
-              </div>
-            </div>
-
-            {/* Leads Tabs */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="border-b border-gray-200">
-                <nav className="flex">
-                  <button
-                    onClick={() => setActiveTab('leads-venda')}
-                    className={`py-4 px-6 font-medium text-sm ${
-                      activeTab === 'leads-venda' || activeTab === 'leads'
-                        ? 'border-b-2 border-blue-500 text-[#0d2233] bg-blue-50'
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    Propostas de Venda ({propertyLeads.filter(lead => lead.type === 'venda').length})
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('leads-compra')}
-                    className={`py-4 px-6 font-medium text-sm ${
-                      activeTab === 'leads-compra'
-                        ? 'border-b-2 border-blue-500 text-[#0d2233] bg-blue-50'
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    Pedidos de Compra ({propertyLeads.filter(lead => lead.type === 'compra').length})
-                  </button>
-                </nav>
-              </div>
-
-              {/* Venda Leads */}
-              {(activeTab === 'leads' || activeTab === 'leads-venda') && (
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Propostas de Venda</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Imóvel</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Localização</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Preço</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200">
-                        {propertyLeads.filter(lead => lead.type === 'venda').map((lead) => (
-                          <tr key={lead.id}>
-                            <td className="px-4 py-4">
-                              <div className="text-sm font-medium text-gray-900">{lead.nome} {lead.apelido}</div>
-                              <div className="text-sm text-gray-500">{lead.email}</div>
-                              <div className="text-sm text-gray-500">{lead.telemovel}</div>
-                            </td>
-                            <td className="px-4 py-4">
-                              <div className="text-sm text-gray-900">{lead.tipo_imovel}</div>
-                              <div className="text-sm text-gray-500">{lead.area}m² • {lead.quartos}Q • {lead.casas_banho}WC</div>
-                            </td>
-                            <td className="px-4 py-4 text-sm text-gray-900">{lead.localizacao}</td>
-                            <td className="px-4 py-4 text-sm text-gray-900">
-                              {lead.preco_pretendido ? `€${Number(lead.preco_pretendido).toLocaleString()}` : 'N/A'}
-                            </td>
-                            <td className="px-4 py-4 text-sm text-gray-900">
-                              {new Date(lead.created_at).toLocaleDateString('pt-PT')}
-                            </td>
-                            <td className="px-4 py-4">
-                              <button
-                                onClick={() => handleDeleteLead(lead.id)}
-                                className="text-red-600 hover:text-red-900"
-                                title="Eliminar lead"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+              {propertyLeads.length === 0 && (
+                <div className="text-center py-12">
+                  <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-500">Nenhum dado de contacto encontrado</p>
                 </div>
               )}
-
-              {/* Compra Leads */}
-              {activeTab === 'leads-compra' && (
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Pedidos de Compra</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Procura</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Localização</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Orçamento</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200">
-                        {propertyLeads.filter(lead => lead.type === 'compra').map((lead) => (
-                          <tr key={lead.id}>
-                            <td className="px-4 py-4">
-                              <div className="text-sm font-medium text-gray-900">{lead.nome} {lead.apelido}</div>
-                              <div className="text-sm text-gray-500">{lead.email}</div>
-                              <div className="text-sm text-gray-500">{lead.telemovel}</div>
-                            </td>
-                            <td className="px-4 py-4">
-                              <div className="text-sm text-gray-900">{lead.tipo_imovel}</div>
-                              <div className="text-sm text-gray-500">
-                                {lead.area_min && lead.area_max ? `${lead.area_min}-${lead.area_max}m²` : 'Área flexível'} • 
-                                {lead.quartos ? ` ${lead.quartos}Q` : ' Quartos flexível'} • 
-                                {lead.casas_banho ? ` ${lead.casas_banho}WC` : ' WC flexível'}
-                              </div>
-                            </td>
-                            <td className="px-4 py-4 text-sm text-gray-900">{lead.localizacao}</td>
-                            <td className="px-4 py-4 text-sm text-gray-900">
-                              {lead.preco_max ? `€${Number(lead.preco_max).toLocaleString()}` : 'N/A'}
-                            </td>
-                            <td className="px-4 py-4 text-sm text-gray-900">
-                              {new Date(lead.created_at).toLocaleDateString('pt-PT')}
-                            </td>
-                            <td className="px-4 py-4">
-                              <button
-                                onClick={() => handleDeleteLead(lead.id)}
-                                className="text-red-600 hover:text-red-900"
-                                title="Eliminar lead"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Settings Tab */}
-        {activeTab === 'settings' && (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Configurações do Site</h2>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Senha do Admin
-                  </label>
-                  <input
-                    type="password"
-                    value={settingsForm.admin_password}
-                    onChange={(e) => setSettingsForm({...settingsForm, admin_password: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Nova senha do admin"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    URL do Vídeo do Fundador
-                  </label>
-                  <input
-                    type="url"
-                    value={settingsForm.founder_video_url}
-                    onChange={(e) => setSettingsForm({...settingsForm, founder_video_url: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/video1.mp4"
-                  />
-                </div>
-
-                <div>
-                  <button
-                    onClick={handleCleanUnusedImages}
-                    className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors inline-flex items-center"
-                  >
-                    🗑️ Limpar Fotos Não Usadas
-                  </button>
-                </div>
-
-                <div className="flex justify-end">
-                  <button
-                    onClick={handleUpdateSettings}
-                    className="bg-[#0d2233] text-white px-6 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors inline-flex items-center"
-                  >
-                    <Save className="mr-2 h-4 w-4" />
-                    Guardar Configurações
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         )}
       </div>
-
-      {renderPreview()}
     </div>
   );
 };
