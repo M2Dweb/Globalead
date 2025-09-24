@@ -106,8 +106,8 @@ const CreditCalculator: React.FC = () => {
     return new Intl.NumberFormat('pt-PT', {
       style: 'currency',
       currency: 'EUR',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
     }).format(amount);
   };
 

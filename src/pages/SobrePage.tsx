@@ -68,16 +68,19 @@ const SobrePage: React.FC = () => {
   const testimonials = [
     {
       name: "Daniel Gomes",
+      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
       platform: "Facebook",
       review: "Estou extremamente satisfeito com a experiência que tive. Foram bastante profissionais e prestaram um serviço de excelência. Todo o processo de compra e venda da minha casa foi tranquilo e cumpriram com todos os prazos que me apresentaram na reunião inicial. Recomendo a Globalead."
     },
     {
       name: "Pedro Tavares",
+      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
       platform: "Google",
       review: "Consegui vender o meu imóvel em menos de 1 mês e adquirir a minha moradia de sonho com a ajuda da Globalead. Um atendimento de excelência, com atenção aos detalhes e as minhas necessidades, os imóveis apresentados, enquadravam-se naquilo que procurava. Já recomendei!"
     },
     {
       name: "Ana Torres",
+      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
       platform: "Livro de Elogios",
       review: "Valorizo a clareza na forma como a Globalead me apresentou todas as soluções de seguros para a minha viatura. As informações sobre a cobertura e os detalhes da apólice foram apresentadas de maneira compreensível, o que facilitou a tomar uma decisão informada. Fui acompanhada desde o primeiro minuto."
     }
@@ -286,6 +289,10 @@ return (
                 key={index}
                 className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
               >
+                <div className="flex justify-center mb-4">
+                  <img src={testimonial.image} alt="testimonial" className="w-full h-auto" />
+                </div>
+
                 {/* estrelas */}
                 <div className="flex justify-center mb-4">
                   <div className="flex text-yellow-400">

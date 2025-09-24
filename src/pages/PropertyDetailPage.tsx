@@ -301,11 +301,11 @@ const PropertyDetailPage: React.FC = () => {
           <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
             <div className="flex items-center">
               <Bed className="h-6 w-6 mr-2" />
-              <span>{property.bedrooms} quartos</span>
+              <span>{property.bedrooms}</span>
             </div>
             <div className="flex items-center">
               <Bath className="h-6 w-6 mr-2" />
-              <span>{property.bathrooms} casas de banho</span>
+              <span>{property.bathrooms}</span>
             </div>
             <div className="flex items-center">
               <Square className="h-6 w-6 mr-2" />

@@ -20,6 +20,7 @@ export interface FormData {
   num_proponentes?: string;
   rendimento_agregado?: string;
   area_min?: string;
+  area_max?: string;
   num_quartos?: string;
   num_casas_banho?: string;
 }
@@ -45,6 +46,7 @@ export const sendEmail = async (formData: FormData): Promise<boolean> => {
       property_choice: formData.escolha_imovel || '',
       price: formData.preço || '',
       area_min: formData.area_min || '',
+      area_max: formData.area_max || '',
       bedrooms: formData.num_quartos || '',
       bathrooms: formData.num_casas_banho || '',
       loan_amount: formData.valor_emprestimo || '',

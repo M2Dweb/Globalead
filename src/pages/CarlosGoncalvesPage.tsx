@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSpring, animated, config, useTrail } from '@react-spring/web';
-import { Award, Users, TrendingUp, MapPin, Phone, Mail, Star, Building, Compass, Hammer, Palette, Scale, Camera, Globe, Paintbrush, Share2, Tag, Video, Euro } from 'lucide-react';
+import { Award, Users, TrendingUp, MapPin, Phone, Mail, Star, Building, Compass, Hammer, Palette, Scale, Camera, Globe, Paintbrush, Share2, Tag, Video, Euro, Clock } from 'lucide-react';
 import AnimatedSectionSpring from '../components/Parallax/AnimatedSectionSpring';
-import ParallaxPhotoSection from '../components/Parallax/ParallaxPhotoSection';
-import ParallaxTestimonials from '../components/Parallax/ParallaxTestimonials';
 import FounderVideoSection from '../components/FounderVideoSection';
 import PropertyValuationForm from '../components/PropertyValuationForm';
+import PropertySaleForm from '../components/PropertySaleForm';
+import PropertyBuyForm from '../components/PropertyBuyForm';
 import Footer from '../components/Footer';
-
-
 
 const CarlosGoncalvesPage: React.FC = () => {
   const achievements = [
@@ -72,64 +70,64 @@ const CarlosGoncalvesPage: React.FC = () => {
       icon: <Paintbrush className="h-12 w-12 text-[#79b2e9]" />
     }
   ];
-  
-  const services = [
-      {
-        icon: <Hammer className="h-12 w-12 text-[#0d2233]" />,
-        title: "Obras e Remodelações",
-        description: "Realizamos obras e remodelações de forma profissional, desde pequenas melhorias a renovações completas.",
-        image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600"
-      },
-      {
-        icon: <Palette className="h-12 w-12 text-[#0d2233]" />,
-        title: "Design e Decoração",
-        description: "Criamos ambientes funcionais e elegantes, acompanhando desde o planeamento até à escolha do mobiliário e decoração.",
-        image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600"
-      },
-      {
-        icon: <Building className="h-12 w-12 text-[#0d2233]" />,
-        title: "Promotora Imobiliária",
-        description: "Desenvolvemos projetos imobiliários inovadores, com design, funcionalidade e elevado potencial de valorização.",
-        image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600"
-      },
-      {
-        icon: <Users className="h-12 w-12 text-[#0d2233]" />,
-        title: "Relocation",
-        description: "Apoiamos a sua mudança para Portugal com procura de imóvel, gestão documental e integração local.",
-        image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600"
-      },
-      {
-        icon: <Compass className="h-12 w-12 text-[#0d2233]" />,
-        title: "Arquitetura",
-        description: "Projetamos espaços intemporais e autênticos, que refletem identidade e resistem ao tempo.",
-        image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=600"
-      },
-      {
-        icon: <Scale className="h-12 w-12 text-[#0d2233]" />,
-        title: "Apoio Jurídico",
-        description: "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo.",
-        image: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=600"
-      }
-  ];
     
   const testimonials = [
     {
-      name: "Maria Silva",
-      role: "Cliente Residencial",
-      content: "O Carlos ajudou-nos a encontrar a casa dos nossos sonhos e ainda conseguiu negociar um excelente preço. Profissionalismo exemplar!",
-      rating: 5
+      name: "Daniel Gomes",
+      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+      platform: "Facebook",
+      review: "Estou extremamente satisfeito com a experiência que tive. Foram bastante profissionais e prestaram um serviço de excelência. Todo o processo de compra e venda da minha casa foi tranquilo e cumpriram com todos os prazos que me apresentaram na reunião inicial. Recomendo a Globalead."
     },
     {
-      name: "João Santos",
-      role: "Empresário",
-      content: "Graças ao Carlos, conseguimos reduzir significativamente os custos energéticos da nossa empresa. Recomendo vivamente!",
-      rating: 5
+      name: "Pedro Tavares",
+      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+      platform: "Google",
+      review: "Consegui vender o meu imóvel em menos de 1 mês e adquirir a minha moradia de sonho com a ajuda da Globalead. Um atendimento de excelência, com atenção aos detalhes e as minhas necessidades, os imóveis apresentados, enquadravam-se naquilo que procurava. Já recomendei!"
     },
     {
-      name: "Ana Costa",
-      role: "Proprietária",
-      content: "Vendeu o meu apartamento em tempo recorde e pelo melhor preço do mercado. Excelente acompanhamento durante todo o processo.",
-      rating: 5
+      name: "Ana Torres",
+      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+      platform: "Livro de Elogios",
+      review: "Valorizo a clareza na forma como a Globalead me apresentou todas as soluções de seguros para a minha viatura. As informações sobre a cobertura e os detalhes da apólice foram apresentadas de maneira compreensível, o que facilitou a tomar uma decisão informada. Fui acompanhada desde o primeiro minuto."
+    }
+  ];
+  
+  const services = [
+    {
+      icon: <Hammer className="h-12 w-12 text-[#0d2233]" />,
+      title: "Obras e Remodelações",
+      description: "Realizamos obras e remodelações de forma profissional, desde pequenas melhorias a renovações completas.",
+      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      icon: <Palette className="h-12 w-12 text-[#0d2233]" />,
+      title: "Design e Decoração",
+      description: "Criamos ambientes funcionais e elegantes, acompanhando desde o planeamento até à escolha do mobiliário e decoração.",
+      image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      icon: <Building className="h-12 w-12 text-[#0d2233]" />,
+      title: "Promotora Imobiliária",
+      description: "Desenvolvemos projetos imobiliários inovadores, com design, funcionalidade e elevado potencial de valorização.",
+      image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      icon: <Users className="h-12 w-12 text-[#0d2233]" />,
+      title: "Relocation",
+      description: "Apoiamos a sua mudança para Portugal com procura de imóvel, gestão documental e integração local.",
+      image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      icon: <Compass className="h-12 w-12 text-[#0d2233]" />,
+      title: "Arquitetura",
+      description: "Projetamos espaços intemporais e autênticos, que refletem identidade e resistem ao tempo.",
+      image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      icon: <Scale className="h-12 w-12 text-[#0d2233]" />,
+      title: "Apoio Jurídico",
+      description: "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo.",
+      image: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=600"
     }
   ];
 
@@ -166,43 +164,39 @@ const CarlosGoncalvesPage: React.FC = () => {
           <div className="text-center text-white px-4 max-w-4xl mx-auto">
             <animated.div style={heroTextSpring}>
               <div className="mb-8">
-                <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight tracking-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 leading-tight tracking-tight">
                   Carlos Gonçalves
                 </h1>
-                <div className="w-24 h-1 bg-white mx-auto mb-6"></div>
-                <p className="text-xl md:text-2xl font-light mb-6 text-blue-100">
+                <div className="w-16 sm:w-20 md:w-24 h-1 bg-white mx-auto mb-4 sm:mb-6"></div>
+                <p className="text-lg sm:text-xl md:text-2xl font-light mb-4 sm:mb-6 text-blue-100">
                   Especialista em Mercado Imobiliário e Energético
                 </p>
-                <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
                   15+ anos de experiência ajudando famílias e empresas
                 </p>
               </div>
-              
-              
-        
             </animated.div>
           </div>
         </div>
-        {/* Scroll Indicator */}
-        <div className="relative z-10 h-full flex items-right j"></div>
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
-            </div>
-          </div>
         
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
       </section>
 
       {/* About Section */}
       <AnimatedSectionSpring>
-        <section className="relative py-20 bg-white z-20">
+        <section className="relative py-16 sm:py-20 bg-white z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                   A Visão por Trás da Globalead
                 </h2>
-                <div className="space-y-6 text-lg text-gray-600">
+                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-600">
                   <p>
                     Com mais de 15 anos de experiência no mercado imobiliário e energético, 
                     Carlos Gonçalves fundou a Globalead Portugal com uma missão clara: 
@@ -220,18 +214,33 @@ const CarlosGoncalvesPage: React.FC = () => {
                   </p>
                 </div>
                 
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <div className="flex items-center text-[#0d2233]">
-                    <MapPin className="h-5 w-5 mr-2" />
-                    <span>Porto, Portugal</span>
+                {/* Contact Methods */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-10 mb-8 sm:mb-16">
+                  {/* Porto, Portugal */}
+                  <div className="text-center">
+                    <div className="bg-blue-50 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                      <MapPin className="h-6 w-6 sm:h-8 sm:w-8 text-[#0d2233]" />
+                    </div>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">Localização</h3>
+                    <p className="text-sm sm:text-base text-gray-600">Porto, Portugal</p>
                   </div>
-                  <div className="flex items-center text-[#0d2233]">
-                    <Phone className="h-5 w-5 mr-2" />
-                    <span>+351 915 482 365</span>
+
+                  {/* Telefone */}
+                  <div className="text-center">
+                    <div className="bg-blue-50 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                      <Phone className="h-6 w-6 sm:h-8 sm:w-8 text-[#0d2233]" />
+                    </div>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">Telefone</h3>
+                    <p className="text-sm sm:text-base text-gray-600">+351 915 482 365</p>
                   </div>
-                  <div className="flex items-center text-[#0d2233]">
-                    <Mail className="h-5 w-5 mr-2" />
-                    <span>geral@globalead.pt</span>
+
+                  {/* Email */}
+                  <div className="text-center">
+                    <div className="bg-blue-50 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                      <Mail className="h-6 w-6 sm:h-8 sm:w-8 text-[#0d2233]" />
+                    </div>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">Email</h3>
+                    <p className="text-sm sm:text-base text-gray-600">geral@globalead.pt</p>
                   </div>
                 </div>
               </div>
@@ -241,25 +250,15 @@ const CarlosGoncalvesPage: React.FC = () => {
                 <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-xl aspect-[3/4]">
                   <img
                     src="/carlos-goncalves-hero.png"
-                    alt="Placeholder para foto principal do Carlos Gonçalves"
+                    alt="Carlos Gonçalves"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                  
-                  {/* Photo indicator */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3">
-                      <div className="flex items-center text-[#0d2233]">
-                        <Award className="h-5 w-5 mr-2" />
-                        <span className="font-medium">Foto Principal - Carlos Gonçalves</span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Decorative elements */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-[#0d2233] rounded-full opacity-10"></div>
-                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-200 rounded-full opacity-20"></div>
+                <div className="absolute -top-4 -right-4 w-16 h-16 sm:w-24 sm:h-24 bg-[#0d2233] rounded-full opacity-10"></div>
+                <div className="absolute -bottom-4 -left-4 w-20 h-20 sm:w-32 sm:h-32 bg-blue-200 rounded-full opacity-20"></div>
               </div>
             </div>
           </div>
@@ -268,34 +267,34 @@ const CarlosGoncalvesPage: React.FC = () => {
       
       {/* Achievements Section */}
       <AnimatedSectionSpring>
-        <section className="py-20 bg-white">
+        <section className="py-16 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Resultados que Falam por Si
               </h2>
-              <p className="text-xl text-gray-600">
+              <p className="text-lg sm:text-xl text-gray-600">
                 Números que refletem o compromisso com a excelência
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               {achievementTrail.map((style, index) => (
                 <animated.div
                   key={index}
                   style={style}
-                  className="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow duration-300"
+                  className="text-center p-4 sm:p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow duration-300"
                 >
-                  <div className="mb-4 flex justify-center">
+                  <div className="mb-3 sm:mb-4 flex justify-center">
                     {achievements[index].icon}
                   </div>
-                  <div className="text-3xl font-bold text-[#0d2233] mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold text-[#0d2233] mb-1 sm:mb-2">
                     {achievements[index].number}
                   </div>
-                  <div className="text-lg font-semibold text-gray-900 mb-2">
+                  <div className="text-sm sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">
                     {achievements[index].label}
                   </div>
-                  <div className="text-sm text-gray-600">
+                  <div className="text-xs sm:text-sm text-gray-600">
                     {achievements[index].description}
                   </div>
                 </animated.div>
@@ -308,94 +307,146 @@ const CarlosGoncalvesPage: React.FC = () => {
       <AnimatedSectionSpring>
         <FounderVideoSection />
       </AnimatedSectionSpring>
+
+      {/* Property Buy Form Section */}
+      <AnimatedSectionSpring>
+        <section className="py-16 sm:py-20 bg-gray-50">
+          <PropertyBuyForm />
+        </section>
+      </AnimatedSectionSpring>
+
       {/* Selling Process Section */}
       <AnimatedSectionSpring>
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Simplificamos a venda do seu imóvel
-            </h2>
-          </div>
+        <section className="py-16 sm:py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                Simplificamos a venda do seu imóvel
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {sellingSteps.map((step, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-xl flex items-start">
-                <div className=" text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">
-                  {step.icon}
-                </div>
-                <p className="text-gray-700 leading-relaxed">
-                  {step.text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      </AnimatedSectionSpring>
-
-      <AnimatedSectionSpring>
-      {/* Services Grid */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              A burocracia é nossa, o futuro é seu
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
-              >
-                {/* Imagem apenas no desktop */}
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="hidden md:block w-full h-48 object-cover"
-                />
-
-                <div className="p-6 flex flex-col flex-grow">
-                  {/* Ícone sempre visível */}
-                  <div className="flex items-center mb-4">
-                    <div className="flex items-center justify-center w-14 h-14 text-white rounded-xl">
-                      {service.icon}
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 ml-3">
-                      {service.title}
-                    </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+              {sellingSteps.map((step, index) => (
+                <div key={index} className="bg-gray-50 p-4 sm:p-6 rounded-xl flex items-start">
+                  <div className="text-white w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold mr-3 sm:mr-4 flex-shrink-0">
+                    {step.icon}
                   </div>
-
-                  {/* Texto curto no mobile, completo no desktop */}
-                  <p className="text-gray-600 mb-6 line-clamp-3 md:line-clamp-none">
-                    {service.description}
+                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {step.text}
                   </p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       </AnimatedSectionSpring>
 
-      {/* Photo Gallery Section */}
       <AnimatedSectionSpring>
-        <ParallaxPhotoSection 
-          title="Galeria Profissional" 
-          subtitle="Espaços dedicados para as diferentes fotografias profissionais do Carlos Gonçalves"
-        />
+        {/* Services Grid */}
+        <section className="py-16 sm:py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                A burocracia é nossa, o futuro é seu
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {services.map((service, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
+                >
+                  {/* Imagem apenas no desktop */}
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="hidden md:block w-full h-48 object-cover"
+                  />
+
+                  <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                    {/* Ícone sempre visível */}
+                    <div className="flex items-center mb-3 sm:mb-4">
+                      <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 text-white rounded-xl">
+                        {service.icon}
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-semibold text-gray-900 ml-3">
+                        {service.title}
+                      </h3>
+                    </div>
+
+                    {/* Texto curto no mobile, completo no desktop */}
+                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 line-clamp-3 md:line-clamp-none">
+                      {service.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </AnimatedSectionSpring>
 
-      {/* Testimonials Section */}
-      <ParallaxTestimonials testimonials={testimonials} />
+      {/* Testimonials */}
+      <AnimatedSectionSpring>
+        <section className="py-16 sm:py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                O que dizem os clientes sobre nós
+              </h2>
+            </div>
 
+            {/* Centraliza a grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
+                >
+                  <div className="flex justify-center mb-3 sm:mb-4">
+                    <img src={testimonial.image} alt="testimonial" className="w-full h-auto" />
+                  </div>
 
+                  {/* estrelas */}
+                  <div className="flex justify-center mb-3 sm:mb-4">
+                    <div className="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* review no centro */}
+                  <div className="flex-grow flex items-center justify-center">
+                    <p className="text-sm sm:text-base text-gray-600 italic">
+                      "{testimonial.review}"
+                    </p>
+                  </div>
+
+                  {/* nome + plataforma sempre no fundo */}
+                  <div className="border-t pt-3 sm:pt-4 mt-4 sm:mt-6">
+                    <p className="text-sm sm:text-base font-semibold text-gray-900">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-xs sm:text-sm text-gray-500">
+                      Review: {testimonial.platform}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </AnimatedSectionSpring>
+
+    
+
+      
 
       {/* Property Valuation Section */}
       <AnimatedSectionSpring>
-        <section className="bg-white">
+        <section className="py-16 sm:py-20 bg-white">
           <PropertyValuationForm />
         </section>
       </AnimatedSectionSpring>
@@ -404,10 +455,7 @@ const CarlosGoncalvesPage: React.FC = () => {
         <Footer />
       </AnimatedSectionSpring>
     </div>
-
   );
 };
 
 export default CarlosGoncalvesPage;
-
-

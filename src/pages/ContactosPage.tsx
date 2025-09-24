@@ -97,28 +97,7 @@ const ContactosPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Quick Contact */}
-          <div className="bg-blue-50 p-8 rounded-xl mb-16">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Como posso obter uma resposta mais rápida?
-              </h2>
-              <h3 className="text-2xl font-semibold text-[#0d2233] mb-6">
-                Entre em contacto:
-              </h3>
-              <div className="flex items-center justify-center mb-6">
-                <Phone className="h-8 w-8 text-[#0d2233] mr-3" />
-                <span className="text-2xl font-bold text-gray-900">915 482 365</span>
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg">
-              <p className="text-gray-700 text-center leading-relaxed">
-                Estamos disponíveis 24 horas por dia, através de e-mail, WhatsApp, Telegram ou Messenger. 
-                Caso pretenda uma resposta mais imediata, poderá contactar-nos entre as <strong>10h00 e as 21h00</strong>, em dias úteis.
-              </p>
-            </div>
-          </div>
+          
 
           {/* Contact Methods */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">

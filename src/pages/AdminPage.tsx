@@ -20,6 +20,7 @@ const AdminPage: React.FC = () => {
   const [previewMode, setPreviewMode] = useState<string | null>(null);
   const [showExcerpt, setShowExcerpt] = useState(true);
   const [showContent, setShowContent] = useState(true);
+  const [propertyLeads, setPropertyLeads] = useState<any[]>([]);
 
   const [newProperty, setNewProperty] = useState<any>({
     title: '',
@@ -131,6 +132,7 @@ const AdminPage: React.FC = () => {
   useEffect(() => {
     if (isAuthenticated) {
       fetchData();
+      fetchPropertyLeads();
     }
   }, [isAuthenticated]);
 
@@ -211,6 +213,49 @@ const AdminPage: React.FC = () => {
       setSiteSettings({});
     }
     setLoading(false);
+  };
+
+  const fetchPropertyLeads = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('property_leads')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Erro ao carregar leads:', error);
+        setPropertyLeads([]);
+      } else {
+        setPropertyLeads(data || []);
+      }
+    } catch (error) {
+      console.error('Erro ao carregar leads:', error);
+      setPropertyLeads([]);
+    }
+  };
+
+  const handleDeleteLead = async (id: string) => {
+    if (!confirm('Tem a certeza que deseja eliminar este lead?')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('property_leads')
+        .delete()
+        .eq('id', id);
+      
+      if (error) {
+        console.error('Erro ao eliminar lead:', error);
+        alert('Erro ao eliminar lead');
+      } else {
+        alert('Lead eliminado com sucesso!');
+        await fetchPropertyLeads();
+      }
+    } catch (error) {
+      console.error('Erro ao eliminar lead:', error);
+      alert('Erro ao eliminar lead');
+    }
   };
 
   const resetPropertyForm = () => {
@@ -723,6 +768,16 @@ const AdminPage: React.FC = () => {
               }`}
             >
               Configurações
+            </button>
+            <button
+              onClick={() => setActiveTab('leads')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'leads'
+                  ? 'border-blue-500 text-[#0d2233]'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Dados
             </button>
           </nav>
         </div>
@@ -1303,6 +1358,174 @@ const AdminPage: React.FC = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Leads Tab */}
+        {activeTab === 'leads' && (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Gestão de Leads de Propriedades</h2>
+              <p className="text-gray-600">Propostas de venda e compra recebidas</p>
+            </div>
+
+            {/* Leads Statistics */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white p-6 rounded-xl shadow-lg text-center">
+                <div className="text-3xl font-bold text-[#0d2233] mb-2">
+                  {propertyLeads.filter(lead => lead.type === 'venda').length}
+                </div>
+                <div className="text-gray-600">Propostas de Venda</div>
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-lg text-center">
+                <div className="text-3xl font-bold text-[#79b2e9] mb-2">
+                  {propertyLeads.filter(lead => lead.type === 'compra').length}
+                </div>
+                <div className="text-gray-600">Pedidos de Compra</div>
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-lg text-center">
+                <div className="text-3xl font-bold text-green-600 mb-2">
+                  {propertyLeads.length}
+                </div>
+                <div className="text-gray-600">Total de Leads</div>
+              </div>
+            </div>
+
+            {/* Leads Tabs */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+              <div className="border-b border-gray-200">
+                <nav className="flex">
+                  <button
+                    onClick={() => setActiveTab('leads-venda')}
+                    className={`py-4 px-6 font-medium text-sm ${
+                      activeTab === 'leads-venda' || activeTab === 'leads'
+                        ? 'border-b-2 border-blue-500 text-[#0d2233] bg-blue-50'
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    Propostas de Venda ({propertyLeads.filter(lead => lead.type === 'venda').length})
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('leads-compra')}
+                    className={`py-4 px-6 font-medium text-sm ${
+                      activeTab === 'leads-compra'
+                        ? 'border-b-2 border-blue-500 text-[#0d2233] bg-blue-50'
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    Pedidos de Compra ({propertyLeads.filter(lead => lead.type === 'compra').length})
+                  </button>
+                </nav>
+              </div>
+
+              {/* Venda Leads */}
+              {(activeTab === 'leads' || activeTab === 'leads-venda') && (
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold mb-4">Propostas de Venda</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Imóvel</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Localização</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Preço</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200">
+                        {propertyLeads.filter(lead => lead.type === 'venda').map((lead) => (
+                          <tr key={lead.id}>
+                            <td className="px-4 py-4">
+                              <div className="text-sm font-medium text-gray-900">{lead.nome} {lead.apelido}</div>
+                              <div className="text-sm text-gray-500">{lead.email}</div>
+                              <div className="text-sm text-gray-500">{lead.telemovel}</div>
+                            </td>
+                            <td className="px-4 py-4">
+                              <div className="text-sm text-gray-900">{lead.tipo_imovel}</div>
+                              <div className="text-sm text-gray-500">{lead.area}m² • {lead.quartos}Q • {lead.casas_banho}WC</div>
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-900">{lead.localizacao}</td>
+                            <td className="px-4 py-4 text-sm text-gray-900">
+                              {lead.preco_pretendido ? `€${Number(lead.preco_pretendido).toLocaleString()}` : 'N/A'}
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-900">
+                              {new Date(lead.created_at).toLocaleDateString('pt-PT')}
+                            </td>
+                            <td className="px-4 py-4">
+                              <button
+                                onClick={() => handleDeleteLead(lead.id)}
+                                className="text-red-600 hover:text-red-900"
+                                title="Eliminar lead"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* Compra Leads */}
+              {activeTab === 'leads-compra' && (
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold mb-4">Pedidos de Compra</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Procura</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Localização</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Orçamento</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200">
+                        {propertyLeads.filter(lead => lead.type === 'compra').map((lead) => (
+                          <tr key={lead.id}>
+                            <td className="px-4 py-4">
+                              <div className="text-sm font-medium text-gray-900">{lead.nome} {lead.apelido}</div>
+                              <div className="text-sm text-gray-500">{lead.email}</div>
+                              <div className="text-sm text-gray-500">{lead.telemovel}</div>
+                            </td>
+                            <td className="px-4 py-4">
+                              <div className="text-sm text-gray-900">{lead.tipo_imovel}</div>
+                              <div className="text-sm text-gray-500">
+                                {lead.area_min && lead.area_max ? `${lead.area_min}-${lead.area_max}m²` : 'Área flexível'} • 
+                                {lead.quartos ? ` ${lead.quartos}Q` : ' Quartos flexível'} • 
+                                {lead.casas_banho ? ` ${lead.casas_banho}WC` : ' WC flexível'}
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-900">{lead.localizacao}</td>
+                            <td className="px-4 py-4 text-sm text-gray-900">
+                              {lead.preco_max ? `€${Number(lead.preco_max).toLocaleString()}` : 'N/A'}
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-900">
+                              {new Date(lead.created_at).toLocaleDateString('pt-PT')}
+                            </td>
+                            <td className="px-4 py-4">
+                              <button
+                                onClick={() => handleDeleteLead(lead.id)}
+                                className="text-red-600 hover:text-red-900"
+                                title="Eliminar lead"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
