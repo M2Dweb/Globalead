@@ -249,7 +249,7 @@ const CarlosGoncalvesPage: React.FC = () => {
                 {/* Placeholder for main professional photo */}
                 <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-xl aspect-[3/4]">
                   <img
-                    src="/carlos-goncalves-hero.png"
+                    src="/carlos/sentado-tele.jpg"
                     alt="Carlos Gonçalves"
                     className="w-full h-full object-cover"
                   />
