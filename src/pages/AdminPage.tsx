@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Plus, Edit, Trash2, Eye, EyeOff, Save, X, Upload, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, Save, X, Upload, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare, FileText } from 'lucide-react';
 import RichTextEditor from '../components/RichTextEditor';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
@@ -14,6 +14,8 @@ const AdminPage: React.FC = () => {
   const [editingProperty, setEditingProperty] = useState<any>(null);
   const [editingPost, setEditingPost] = useState<any>(null);
   const [showForm, setShowForm] = useState(false);
+  const [showLeadDetails, setShowLeadDetails] = useState(false);
+  const [selectedLead, setSelectedLead] = useState<any>(null);
 
   // Form states
   const [propertyForm, setPropertyForm] = useState({
@@ -233,6 +235,16 @@ const AdminPage: React.FC = () => {
     });
     setEditingPost(null);
     setShowForm(false);
+  };
+
+  const viewLeadDetails = (lead: any) => {
+    setSelectedLead(lead);
+    setShowLeadDetails(true);
+  };
+
+  const closeLeadDetails = () => {
+    setShowLeadDetails(false);
+    setSelectedLead(null);
   };
 
   const editProperty = (property: any) => {
@@ -963,8 +975,16 @@ const AdminPage: React.FC = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <button
+                            onClick={() => viewLeadDetails(lead)}
+                            className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
+                            title="Ver detalhes"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </button>
+                          <button
                             onClick={() => deletePropertyLead(lead.id)}
                             className="text-red-600 hover:text-red-900"
+                            title="Eliminar"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -981,6 +1001,191 @@ const AdminPage: React.FC = () => {
                   <p className="text-gray-500">Nenhum dado de contacto encontrado</p>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Lead Details Modal */}
+        {showLeadDetails && selectedLead && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center p-6 border-b">
+                <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+                  <FileText className="h-6 w-6 mr-2 text-[#0d2233]" />
+                  Detalhes do Contacto
+                </h2>
+                <button
+                  onClick={closeLeadDetails}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Dados Pessoais */}
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                      <User className="h-5 w-5 mr-2 text-[#79b2e9]" />
+                      Dados Pessoais
+                    </h3>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Nome:</span>
+                        <p className="text-gray-900">{selectedLead.nome} {selectedLead.apelido}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Email:</span>
+                        <p className="text-gray-900">{selectedLead.email}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Telemóvel:</span>
+                        <p className="text-gray-900">{selectedLead.telemovel || 'Não fornecido'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Meio de Contacto:</span>
+                        <p className="text-gray-900">{selectedLead.meio_contacto || 'Não especificado'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Horário:</span>
+                        <p className="text-gray-900">{selectedLead.horario || 'Não especificado'}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Dados do Imóvel */}
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                      <Home className="h-5 w-5 mr-2 text-[#79b2e9]" />
+                      Dados do Imóvel
+                    </h3>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Tipo:</span>
+                        <p className="text-gray-900">{selectedLead.tipo_imovel || 'Não especificado'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Localização:</span>
+                        <p className="text-gray-900">{selectedLead.localizacao || 'Não especificada'}</p>
+                      </div>
+                      {selectedLead.type === 'venda' ? (
+                        <>
+                          <div>
+                            <span className="text-sm font-medium text-gray-600">Área:</span>
+                            <p className="text-gray-900">{selectedLead.area ? `${selectedLead.area}m²` : 'Não especificada'}</p>
+                          </div>
+                          <div>
+                            <span className="text-sm font-medium text-gray-600">Preço Pretendido:</span>
+                            <p className="text-gray-900">{selectedLead.preco_pretendido ? `${selectedLead.preco_pretendido}€` : 'Não especificado'}</p>
+                          </div>
+                          <div>
+                            <span className="text-sm font-medium text-gray-600">Estado do Imóvel:</span>
+                            <p className="text-gray-900">{selectedLead.estado_imovel || 'Não especificado'}</p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <span className="text-sm font-medium text-gray-600">Área Mínima:</span>
+                            <p className="text-gray-900">{selectedLead.area_min ? `${selectedLead.area_min}m²` : 'Não especificada'}</p>
+                          </div>
+                          <div>
+                            <span className="text-sm font-medium text-gray-600">Área Máxima:</span>
+                            <p className="text-gray-900">{selectedLead.area_max ? `${selectedLead.area_max}m²` : 'Não especificada'}</p>
+                          </div>
+                          <div>
+                            <span className="text-sm font-medium text-gray-600">Orçamento Máximo:</span>
+                            <p className="text-gray-900">{selectedLead.preco_max ? `${selectedLead.preco_max}€` : 'Não especificado'}</p>
+                          </div>
+                          <div>
+                            <span className="text-sm font-medium text-gray-600">Finalidade:</span>
+                            <p className="text-gray-900">{selectedLead.finalidade || 'Não especificada'}</p>
+                          </div>
+                        </>
+                      )}
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Quartos:</span>
+                        <p className="text-gray-900">{selectedLead.quartos || 'Não especificado'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Casas de Banho:</span>
+                        <p className="text-gray-900">{selectedLead.casas_banho || 'Não especificado'}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Informações Adicionais */}
+                  <div className="md:col-span-2 bg-gray-50 p-4 rounded-lg">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                      <MessageSquare className="h-5 w-5 mr-2 text-[#79b2e9]" />
+                      Informações Adicionais
+                    </h3>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Tipo de Operação:</span>
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ml-2 ${
+                          selectedLead.type === 'venda' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-blue-100 text-blue-800'
+                        }`}>
+                          {selectedLead.type === 'venda' ? 'Venda' : 'Compra'}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Urgência:</span>
+                        <p className="text-gray-900">{selectedLead.urgencia || 'Não especificada'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Data de Contacto:</span>
+                        <p className="text-gray-900">{formatDate(selectedLead.created_at)}</p>
+                      </div>
+                      {selectedLead.type === 'venda' && selectedLead.descricao && (
+                        <div>
+                          <span className="text-sm font-medium text-gray-600">Descrição:</span>
+                          <p className="text-gray-900 mt-1">{selectedLead.descricao}</p>
+                        </div>
+                      )}
+                      {selectedLead.type === 'compra' && selectedLead.observacoes && (
+                        <div>
+                          <span className="text-sm font-medium text-gray-600">Observações:</span>
+                          <p className="text-gray-900 mt-1">{selectedLead.observacoes}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-end space-x-4 mt-6 pt-6 border-t">
+                  <button
+                    onClick={() => {
+                      const mailtoLink = `mailto:${selectedLead.email}?subject=Resposta ao seu pedido de ${selectedLead.type}&body=Caro(a) ${selectedLead.nome},`;
+                      window.open(mailtoLink, '_self');
+                    }}
+                    className="bg-[#79b2e9] text-white px-4 py-2 rounded-lg hover:bg-[#0d2233] transition-colors inline-flex items-center"
+                  >
+                    <Mail className="h-4 w-4 mr-2" />
+                    Responder por Email
+                  </button>
+                  <button
+                    onClick={() => {
+                      window.open(`tel:${selectedLead.telemovel}`, '_self');
+                    }}
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors inline-flex items-center"
+                    disabled={!selectedLead.telemovel}
+                  >
+                    <Phone className="h-4 w-4 mr-2" />
+                    Ligar
+                  </button>
+                  <button
+                    onClick={closeLeadDetails}
+                    className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                  >
+                    Fechar
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}

@@ -1,6 +1,25 @@
 import React, { useState } from 'react';
 import { Home, MapPin, ChevronRight, Plus, Minus, ArrowLeft, User, Phone, Mail, Building, Car, Euro, TreePine, Store, Warehouse, FileText, Shield, Zap } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import { sendEmail } from '../utils/emailService';
+
+interface PropertyValuationData {
+  nome: string;
+  apelido: string;
+  email: string;
+  telemovel: string;
+  tipo_imovel: string;
+  localizacao: string;
+  area: string;
+  quartos: string;
+  casas_banho: string;
+  preco_pretendido: string;
+  estado_imovel: string;
+  descricao: string;
+  urgencia: string;
+  meio_contacto: string;
+  horario: string;
+}
 
 interface PropertyData {
   finalidade: 'vender' | 'arrendar' | 'trespasse' | null;
@@ -26,13 +45,17 @@ interface PropertyData {
   codigoPostal: string;
   motivoVenda: 'vender-rapidamente' | 'melhor-preco' | 'avaliar-opcoes' | null;
   nome: string;
+  apelido: string;
   email: string;
   telemovel: string;
+  meio_contacto: string;
+  horario: string;
 }
 
 const PropertyValuationForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [data, setData] = useState<PropertyData>({
     finalidade: null,
     tipoImovel: null,
@@ -57,8 +80,11 @@ const PropertyValuationForm: React.FC = () => {
     codigoPostal: '',
     motivoVenda: null,
     nome: '',
+    apelido: '',
     email: '',
-    telemovel: ''
+    telemovel: '',
+    meio_contacto: '',
+    horario: ''
   });
 
   const handleFinalidadeSelect = (finalidade: PropertyData['finalidade']) => {
@@ -103,20 +129,18 @@ const PropertyValuationForm: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    
-    const emailData = {
-      nome: data.nome,
-      email: data.email,
-      telemovel: data.telemovel,
-      page: 'Avaliação de Imóvel - Carlos Gonçalves',
-      mensagem: `
+    setSubmitStatus('idle');
+
+    try {
+      // Prepare detailed description for database
+      const detailedDescription = `
         Finalidade: ${getFinalidadeLabel(data.finalidade)}
         Tipo de Imóvel: ${getTipoImovelLabel(data.tipoImovel)}
         ${data.tipologia ? `Tipologia: ${data.tipologia}` : ''}
         ${data.areaUtil > 0 ? `Área Útil: ${data.areaUtil}m²` : ''}
         ${data.areaBruta > 0 ? `Área Bruta: ${data.areaBruta}m²` : ''}
         ${data.areaTerreno > 0 ? `Área do Terreno: ${data.areaTerreno}m²` : ''}
-        Ano de Construção: ${data.anoConstucao}
+        ${data.tipoImovel !== 'terreno' ? `Ano de Construção: ${data.anoConstucao}` : ''}
         ${needsRoomsAndBathrooms() ? `Quartos: ${data.quartos}` : ''}
         ${needsRoomsAndBathrooms() ? `Casas de Banho: ${data.casasBanho}` : ''}
         Características:
@@ -128,18 +152,54 @@ const PropertyValuationForm: React.FC = () => {
         Estado de Conservação: ${getEstadoLabel(data.estadoConservacao)}
         ${data.certificadoEnergetico ? `Certificado Energético: ${data.certificadoEnergetico}` : ''}
         ${data.estacionamento ? `Estacionamento: ${data.estacionamento}` : ''}
+        ${data.rua ? `Rua: ${data.rua}` : ''}
+        ${data.codigoPostal ? `Código Postal: ${data.codigoPostal}` : ''}
         ${data.outrasCaracteristicas ? `Outras Características: ${data.outrasCaracteristicas}` : ''}
-        Localização: ${data.localizacao}
-        Rua: ${data.rua}
-        Código Postal: ${data.codigoPostal}
-        Motivo da ${data.finalidade === 'vender' ? 'Venda' : data.finalidade === 'arrendar' ? 'Arrendamento' : 'Trespasse'}: ${getMotivoLabel(data.motivoVenda)}
-      `.trim()
-    };
+        Motivo: ${getMotivoLabel(data.motivoVenda)}
+      `.trim();
 
-    const success = await sendEmail(emailData);
-    
-    if (success) {
-      alert('Pedido de avaliação enviado com sucesso! O Carlos Gonçalves entrará em contacto consigo brevemente.');
+      // Save to database
+      const propertyLeadData = {
+        type: 'venda',
+        nome: data.nome,
+        apelido: data.apelido,
+        email: data.email,
+        telemovel: data.telemovel,
+        tipo_imovel: getTipoImovelLabel(data.tipoImovel),
+        localizacao: data.localizacao,
+        area: data.areaUtil > 0 ? data.areaUtil.toString() : '',
+        quartos: needsRoomsAndBathrooms() ? data.quartos.toString() : '',
+        casas_banho: needsRoomsAndBathrooms() ? data.casasBanho.toString() : '',
+        preco_pretendido: '', // Will be determined by evaluation
+        estado_imovel: getEstadoLabel(data.estadoConservacao),
+        descricao: detailedDescription,
+        urgencia: getMotivoLabel(data.motivoVenda),
+        meio_contacto: data.meio_contacto,
+        horario: data.horario,
+        created_at: new Date().toISOString()
+      };
+
+      const { error } = await supabase
+        .from('property_leads')
+        .insert([propertyLeadData]);
+
+      if (error) {
+        console.error('Erro ao guardar dados:', error);
+        setSubmitStatus('error');
+        return;
+      }
+
+      // Send notification email
+      const emailData = {
+        nome: 'Globalead Admin',
+        email: 'globaleadgroup@gmail.com',
+        page: 'Notificação - Nova Avaliação de Imóvel',
+        mensagem: `Nova solicitação de avaliação de imóvel recebida de ${data.nome} ${data.apelido}. Verifique o painel de administração para mais detalhes.`
+      };
+
+      await sendEmail(emailData);
+
+      setSubmitStatus('success');
       // Reset form
       setData({
         finalidade: null,
@@ -165,15 +225,19 @@ const PropertyValuationForm: React.FC = () => {
         codigoPostal: '',
         motivoVenda: null,
         nome: '',
+        apelido: '',
         email: '',
-        telemovel: ''
+        telemovel: '',
+        meio_contacto: '',
+        horario: ''
       });
       setCurrentStep(1);
-    } else {
-      alert('Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.');
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setIsSubmitting(false);
   };
 
   const getFinalidadeLabel = (finalidade: PropertyData['finalidade']) => {
@@ -286,7 +350,6 @@ const PropertyValuationForm: React.FC = () => {
           </div>
         </div>
       </div>
-
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -893,7 +956,7 @@ const PropertyValuationForm: React.FC = () => {
                   <div className="space-y-6">
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Nome completo *
+                        Nome *
                       </label>
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -902,7 +965,24 @@ const PropertyValuationForm: React.FC = () => {
                           value={data.nome}
                           onChange={(e) => setData({ ...data, nome: e.target.value })}
                           className="w-full pl-12 p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
-                          placeholder="O seu nome completo"
+                          placeholder="O seu nome"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                        Apelido *
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                        <input
+                          type="text"
+                          value={data.apelido}
+                          onChange={(e) => setData({ ...data, apelido: e.target.value })}
+                          className="w-full pl-12 p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
+                          placeholder="O seu apelido"
                           required
                         />
                       </div>
@@ -942,6 +1022,38 @@ const PropertyValuationForm: React.FC = () => {
                       </div>
                     </div>
 
+                    <div>
+                      <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                        Meio de Contacto Preferido
+                      </label>
+                      <select
+                        value={data.meio_contacto}
+                        onChange={(e) => setData({ ...data, meio_contacto: e.target.value })}
+                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
+                      >
+                        <option value="">Selecione o meio de contacto</option>
+                        <option value="Telefone">Telefone</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Email">Email</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-[#0d2233] mb-2">
+                        Horário Preferido
+                      </label>
+                      <select
+                        value={data.horario}
+                        onChange={(e) => setData({ ...data, horario: e.target.value })}
+                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
+                      >
+                        <option value="">Selecione o horário</option>
+                        <option value="9h-12h30">9h-12h30</option>
+                        <option value="12h30-16h">12h30-16h</option>
+                        <option value="16h-19h30">16h-19h30</option>
+                      </select>
+                    </div>
+
                     <div className="bg-blue-50 p-6 rounded-2xl">
                       <h4 className="font-semibold text-[#0d2233] mb-2">O que acontece a seguir?</h4>
                       <ul className="text-sm text-gray-600 space-y-1">
@@ -952,13 +1064,36 @@ const PropertyValuationForm: React.FC = () => {
                       </ul>
                     </div>
 
-                    <button
-                      onClick={handleSubmit}
-                      disabled={isSubmitting}
-                      className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? 'A enviar...' : 'Solicitar Avaliação Gratuita'}
-                    </button>
+                    {/* Terms and Conditions */}
+                    <div className="border-t pt-6">
+                      <label className="flex items-start text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">
+                        <input type="checkbox" className="mt-1 mr-2" required />
+                        Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                      </label>
+                      <p className="text-xs text-gray-600 mb-3 sm:mb-4">
+                        Os dados submetidos através deste formulário serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
+                      </p>
+                      
+                      {submitStatus === 'success' && (
+                        <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-green-100 border border-green-400 text-green-700 rounded text-xs sm:text-sm">
+                          Pedido de avaliação enviado com sucesso! O Carlos Gonçalves entrará em contacto consigo brevemente.
+                        </div>
+                      )}
+                      
+                      {submitStatus === 'error' && (
+                        <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-red-100 border border-red-400 text-red-700 rounded text-xs sm:text-sm">
+                          Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.
+                        </div>
+                      )}
+
+                      <button
+                        onClick={handleSubmit}
+                        disabled={isSubmitting}
+                        className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isSubmitting ? 'A enviar...' : 'Solicitar Avaliação Gratuita'}
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -1039,37 +1174,51 @@ const PropertyValuationForm: React.FC = () => {
                 )}
 
                 {data.certificadoEnergetico && (
-                  <div className="p-3 bg-[#f8fbff] rounded-xl">
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
                     <span className="text-sm text-gray-600 block mb-1">Cert. Energético</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.certificadoEnergetico}</span>
                   </div>
                 )}
 
                 {data.estacionamento && (
-                  <div className="p-3 bg-[#f8fbff] rounded-xl">
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
                     <span className="text-sm text-gray-600 block mb-1">Estacionamento</span>
                     <span className="font-medium text-[#0d2233] text-xs">{data.estacionamento}</span>
                   </div>
                 )}
 
                 {data.estadoConservacao && (
-                  <div className="p-3 bg-[#f8fbff] rounded-xl">
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
                     <span className="text-sm text-gray-600 block mb-1">Estado</span>
                     <span className="font-medium text-[#0d2233] text-xs">{getEstadoLabel(data.estadoConservacao)}</span>
                   </div>
                 )}
 
                 {data.localizacao && (
-                  <div className="p-3 bg-[#f8fbff] rounded-xl">
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
                     <span className="text-sm text-gray-600 block mb-1">Localização</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.localizacao}</span>
                   </div>
                 )}
 
                 {data.motivoVenda && (
-                  <div className="p-3 bg-[#f8fbff] rounded-xl">
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
                     <span className="text-sm text-gray-600 block mb-1">Objetivo</span>
                     <span className="font-medium text-[#0d2233] text-xs">{getMotivoLabel(data.motivoVenda)}</span>
+                  </div>
+                )}
+
+                {data.meio_contacto && (
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
+                    <span className="text-sm text-gray-600 block mb-1">Contacto</span>
+                    <span className="font-medium text-[#0d2233] text-xs">{data.meio_contacto}</span>
+                  </div>
+                )}
+
+                {data.horario && (
+                  <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
+                    <span className="text-sm text-gray-600 block mb-1">Horário</span>
+                    <span className="font-medium text-[#0d2233] text-xs">{data.horario}</span>
                   </div>
                 )}
               </div>
@@ -1084,7 +1233,6 @@ const PropertyValuationForm: React.FC = () => {
           </div>
         </div>
       </div>
-      
     </div>
   );
 };
