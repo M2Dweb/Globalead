@@ -405,7 +405,7 @@ const CarlosGoncalvesPage: React.FC = () => {
                   className="bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
                 >
                   <div className="flex justify-center mb-3 sm:mb-4">
-                    <img src={testimonial.image} alt="testimonial" className="w-full h-auto" />
+                    <img src={testimonial.image} alt="testimonial" className=" rounded-xl w-full h-auto" />
                   </div>
 
                   {/* estrelas */}
