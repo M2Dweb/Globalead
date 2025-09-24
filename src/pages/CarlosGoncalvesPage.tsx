@@ -152,9 +152,9 @@ const CarlosGoncalvesPage: React.FC = () => {
       <section className="relative h-screen overflow-hidden">
         {/* Fixed Background Image */}
         <div 
-          className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+          className="fixed inset-0 w-full h-full bg-stretch bg-center  bg-no-repeat"
           style={{
-            backgroundImage: `linear-gradient(rgba(13, 34, 51, 0.4), rgba(13, 34, 51, 0.6)), url('/carlos-goncalves-hero.png')`,
+            backgroundImage: `linear-gradient(rgba(13, 34, 51, 0.4), rgba(13, 34, 51, 0.6)), url('/carlos/sentado-tele-h.jpg')`,
             backgroundAttachment: 'fixed'
           }}
         />
@@ -249,7 +249,7 @@ const CarlosGoncalvesPage: React.FC = () => {
                 {/* Placeholder for main professional photo */}
                 <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-xl aspect-[3/4]">
                   <img
-                    src="/carlos/sentado-tele.jpg"
+                    src="/carlos/pe-fato-meio4.jpg"
                     alt="Carlos Gonçalves"
                     className="w-full h-full object-cover"
                   />
