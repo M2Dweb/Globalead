@@ -274,55 +274,56 @@ return (
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              O que dizem os clientes sobre nós
-            </h2>
-          </div>
+      <section className="py-16 sm:py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                O que dizem os clientes sobre nós
+              </h2>
+            </div>
 
-          {/* Centraliza a grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
-              >
-                <div className="flex justify-center mb-4">
-                  <img src={testimonial.image} alt="testimonial" className="rounded-xl w-full h-auto" />
-                </div>
+            {/* Centraliza a grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="bg-whiterounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
+                >
+                  <div className="flex justify-center mb-3 sm:mb-4">
+                    <img src={testimonial.image} alt="testimonial" className=" rounded-xl w-full h-auto" />
+                  </div>
+                    <div className="p-6">
+                    {/* estrelas */}
+                    <div className="flex justify-center mb-3 sm:mb-4">
+                      <div className="flex text-yellow-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
+                        ))}
+                      </div>
+                    </div>
 
-                {/* estrelas */}
-                <div className="flex justify-center mb-4">
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-current" />
-                    ))}
+                    {/* review no centro */}
+                    <div className="flex-grow flex items-center justify-center">
+                      <p className="text-sm sm:text-base text-gray-600 italic">
+                        "{testimonial.review}"
+                      </p>
+                    </div>
+
+                    {/* nome + plataforma sempre no fundo */}
+                    <div className="border-t pt-3 sm:pt-4 mt-4 sm:mt-6">
+                      <p className="text-sm sm:text-base font-semibold text-gray-900">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-500">
+                        Review: {testimonial.platform}
+                      </p>
+                    </div>
                   </div>
                 </div>
-
-                {/* review no centro */}
-                <div className="flex-grow flex items-center justify-center">
-                  <p className="text-gray-600 italic">
-                    "{testimonial.review}"
-                  </p>
-                </div>
-
-                {/* nome + plataforma sempre no fundo */}
-                <div className="border-t pt-4 mt-6">
-                  <p className="font-semibold text-gray-900">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Review: {testimonial.platform}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
 
 

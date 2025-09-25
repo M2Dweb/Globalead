@@ -314,7 +314,7 @@ const AlarmesPage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Nome:"
                   required
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border  border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
@@ -322,7 +322,7 @@ const AlarmesPage: React.FC = () => {
                   value={formData.apelido}
                   onChange={handleInputChange}
                   placeholder="Apelido:"
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="tel"
@@ -330,7 +330,7 @@ const AlarmesPage: React.FC = () => {
                   value={formData.telemovel}
                   onChange={handleInputChange}
                   placeholder="Telemóvel:"
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="email"
@@ -339,13 +339,13 @@ const AlarmesPage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Email:"
                   required
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <select 
                   name="meio_contacto"
                   value={formData.meio_contacto}
                   onChange={handleInputChange}
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Meio de Contacto:</option>
                   <option>Email</option>
@@ -358,7 +358,7 @@ const AlarmesPage: React.FC = () => {
                   value={formData.assunto}
                   onChange={handleInputChange}
                   placeholder="Assunto:"
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
@@ -366,7 +366,7 @@ const AlarmesPage: React.FC = () => {
                   value={formData.horario}
                   onChange={handleInputChange}
                   placeholder="Horário:"
-                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 
                 <div className="md:col-span-2">

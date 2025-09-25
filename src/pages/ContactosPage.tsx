@@ -158,7 +158,7 @@ const ContactosPage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Nome:"
                   required
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
                 <input
                   type="text"
@@ -166,7 +166,7 @@ const ContactosPage: React.FC = () => {
                   value={formData.apelido}
                   onChange={handleInputChange}
                   placeholder="Apelido:"
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
                 <input
                   type="tel"
@@ -174,7 +174,7 @@ const ContactosPage: React.FC = () => {
                   value={formData.telemovel}
                   onChange={handleInputChange}
                   placeholder="Telemóvel:"
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
                 <input
                   type="email"
@@ -183,13 +183,13 @@ const ContactosPage: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Email:"
                   required
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
                 <select 
                   name="assunto"
                   value={formData.assunto}
                   onChange={handleInputChange}
-                  className="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Assunto:</option>
                   <option>Esclarecimento de Dúvidas</option>
@@ -208,7 +208,7 @@ const ContactosPage: React.FC = () => {
                   name="meio_contacto"
                   value={formData.meio_contacto}
                   onChange={handleInputChange}
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 >
                   <option value="">Meio de Contacto:</option>
                   <option>Email</option>
@@ -223,7 +223,7 @@ const ContactosPage: React.FC = () => {
                   value={formData.horario}
                   onChange={handleInputChange}
                   placeholder="Horário:"
-                  className="md:col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
 
                 <div className="md:col-span-2">
@@ -252,7 +252,7 @@ const ContactosPage: React.FC = () => {
                     disabled={isSubmitting}
                     className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
                   >
-                    {isSubmitting ? 'Enviando...' : 'Enviar Pedido'}
+                    {isSubmitting ? 'Enviando...' : 'Entrar em contacto'}
                   </button>
                 </div>
               </form>
