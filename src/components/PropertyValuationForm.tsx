@@ -327,7 +327,7 @@ segura e sem complicações!
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center h-16">
-            <div className="flex items-center justify-start space-x-8 w-full overflow-x-auto whitespace-nowrap">
+            <div className="flex items-center justify-center space-x-8 w-full overflow-x-auto whitespace-nowrap">
               <button 
                 onClick={() => setCurrentStep(Math.max(currentStep - 1, 1))}
                 className="flex items-center text-[#0d2233] hover:text-[#79b2e9] transition-colors"
