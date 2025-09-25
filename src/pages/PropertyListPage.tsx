@@ -180,11 +180,9 @@ const PropertyListPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative text-center z-10">
             <h1 className="text-4xl md:text-5xl font-bold mt-12 ">
-              Catálogo de Imóveis
-            </h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
               Encontre o imóvel perfeito para si
-            </p>
+            </h1>
+            
           </div>
         </div>
       </section>
