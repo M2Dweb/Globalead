@@ -505,16 +505,15 @@ const PropertyDetailPage: React.FC = () => {
               <div className="bg-white p-6 rounded-xl shadow-lg sticky top-32">
                 <div className="flex items-center space-x-4 mb-6">
                   <img
-                    src="/fotos/globalead-icon.png" // ajusta o caminho conforme necessário
-                    alt="Paulo Paredes"
-                    className="w-16 h-16 rounded-full border-4 border-[#79b2e9] object-cover"
+                    src="/carlos/pe-fato-meio3-fundo.jpg" 
+                    className="w-20 h-20 rounded-full  border-2 border-[#79b2e9] object-top object-cover"
                   />
                   <div>
                     <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
                     <div className="flex items-center text-gray-800 text-base">
                       <Phone className="h-4 w-4 mr-1" />
                       <a href="tel:+351915482365" className="hover:underline">
-                        +351 915482365
+                        +351 915 482 365
                       </a>
                     </div>
                     <p className="text-sm text-gray-500">Chamada para a rede móvel nacional</p>
