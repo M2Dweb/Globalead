@@ -211,6 +211,35 @@ const CreditoPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Doutor Finanças Form Section */}
+      <section className="py-20 bg-white px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Formulário de Contacto Especializado
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Utilize o nosso formulário especializado para obter uma consulta personalizada sobre o seu crédito habitação.
+            </p>
+          </div>
+
+          <div className="text-center">
+            <a
+              href="https://www.doutorfinancas.pt/rede-loja-monte-crasto-gondomar/?ref=68d6a89d886b7&src=icdf.ch.lacerdakiala.Modular.GlobaLead#form-fale-connosco"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-8 py-4 bg-[#79b2e9] hover:bg-blue-600 text-white font-semibold text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            >
+              <Calculator className="w-6 h-6 mr-3" />
+              Preencher Formulário Especializado
+            </a>
+            <p className="text-sm text-gray-500 mt-4">
+              Será redirecionado para o formulário do Doutor Finanças numa nova janela
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="py-20 bg-gray-900 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">

@@ -43,7 +43,7 @@ const HeaderEnergia: React.FC<HeaderProps> = ({ formData, handleInputChange }) =
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-32 items-start">
           {/* Coluna da esquerda - Texto */}
           <div className="flex flex-col justify-center h-full lg:pr-20">
             <h1 className="text-3xl lg:text-4xl font-bold text-[#0d2233] mb-8 leading-tight">
