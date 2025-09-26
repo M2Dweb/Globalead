@@ -11,6 +11,7 @@ import { supabase } from '../lib/supabase';
 
 
 
+
 const EnergiaPage: React.FC = () => {
   const [activeProcessStep, setActiveProcessStep] = useState(0);
   const [latestPosts, setLatestPosts] = useState<any[]>([]);
@@ -307,17 +308,18 @@ const EnergiaPage: React.FC = () => {
               </div>
 
               {/* Right side - Image (Desktop only) */}
-              <div className="hidden lg:block relative mt-8 lg:mt-0 lg:ml-8">
-                <img
-                  src="https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  alt="Instalação de painéis solares"
-                  className="w-full lg:full h-auto rounded-2xl shadow-lg" 
-                />
-                <div className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-6 rounded-xl shadow-lg">
-                  <div className="text-center">
-                    <div className="text-lg sm:text-2xl font-bold text-[#79b2e9]">300€+</div>
-                    <div className="text-xs sm:text-sm text-gray-600">Poupança anual</div>
-                  </div>
+              <div className="hidden lg:block mt-8 lg:mt-0 lg:ml-8">
+                <div className="space-y-4">
+                  <img
+                    src="/PAINEIS-PREMIUM_002.png"
+                    alt="Solução 2 Painéis - Gama Quality - 23,90€/mês"
+                    className="w-full max-w-md rounded-lg "
+                  />
+                  <img
+                    src="/PAINEIS-QUALITY_002.png"
+                    alt="Solução 4 Painéis - Gama Premium - 38,71€/mês"
+                    className="w-full max-w-md rounded-lg "
+                  />
                 </div>
               </div>
             </div>

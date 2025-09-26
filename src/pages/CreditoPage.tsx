@@ -63,7 +63,7 @@ const CreditoPage: React.FC = () => {
         const logoUrls = data.map(file => {
           const { data: urlData } = supabase.storage
             .from('imagens')
-            .getPublicUrl(`patrocinios/${file.name}`);
+            .getPublicUrl(`bancos/${file.name}`);
           return urlData.publicUrl;
         });
         setPartnerLogos(logoUrls);
@@ -169,19 +169,20 @@ const CreditoPage: React.FC = () => {
             <div className="overflow-hidden">
               <div
                 className="flex transition-transform duration-1000 ease-in-out"
-                style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
+                style={{
+                  transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)`
+                }}
               >
                 {partnerLogos.map((logo, index) => (
                   <div
                     key={index}
-                    // 2 logos por vez no mobile, 5 no desktop, menos padding para mobile
-                    className={`flex-shrink-0 w-1/2 sm:w-1/5 px-2`}
+                    className="flex-shrink-0 w-1/2 sm:w-1/5 px-2"
                   >
-                    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center justify-center h-32">
                       <img
                         src={logo}
                         alt={`Parceiro ${index + 1}`}
-                        className="w-full h-30 object-contain"
+                        className="max-h-20 object-contain"
                       />
                     </div>
                   </div>
@@ -191,6 +192,7 @@ const CreditoPage: React.FC = () => {
           )}
         </div>
       </section>
+
 
       {/* Contact Form */}
       <section className="py-20 bg-gray-900 text-white px-4 sm:px-6 lg:px-8">
