@@ -278,7 +278,7 @@ const CreditCalculator: React.FC = () => {
               
         {/* Resultados + Gráfico */}
         <div className="space-y-4 order-1 lg:order-2">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
               <div className="flex items-center mb-2">
                 <Home className="h-5 w-5 text-[#0d2233] mr-2" />
@@ -319,6 +319,7 @@ const CreditCalculator: React.FC = () => {
               </div>
             </div>
           </div>
+
 
           {/* Gráfico Doughnut (apenas desktop) */}
           <div className="hidden lg:block bg-white p-4 rounded-xl border border-gray-200 h-96">
