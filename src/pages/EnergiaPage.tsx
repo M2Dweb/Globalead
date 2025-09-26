@@ -236,23 +236,23 @@ const EnergiaPage: React.FC = () => {
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Instalação de Painéis Solares
                 </h2>
-                <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">
+                <p className="text-lg sm:text-xl text-gray-600 mb-4 sm:mb-8">
                   Produza a sua própria energia limpa e sustentável com os nossos sistemas solares fotovoltaicos.
                 </p>
 
                 {/* Image (Only on mobile, placed between the title and the topics) */}
-                <div className="lg:hidden relative mb-8">
+                <div className="lg:hidden relative ml-10 mb-6">
                   <img
-                    src="https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Instalação de painéis solares"
-                    className="w-full h-auto rounded-2xl shadow-lg"
+                    src="/PAINEIS-QUALITY_002.png"
+                    alt="Solução 4 Painéis - Gama Premium - 38,71€/mês"
+                    className="w-full max-w-md rounded-lg "
                   />
-                  <div className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-6 rounded-xl shadow-lg">
-                    <div className="text-center">
-                      <div className="text-lg sm:text-2xl font-bold text-[#79b2e9]">300€+</div>
-                      <div className="text-xs sm:text-sm text-gray-600">Poupança anual</div>
-                    </div>
-                  </div>
+                  <img
+                    src="/PAINEIS-PREMIUM_002.png"
+                    alt="Solução 2 Painéis - Gama Quality - 23,90€/mês"
+                    className="w-full max-w-md rounded-lg "
+                  />
+                  
                 </div>
 
                 {/* Benefits List */}
@@ -311,13 +311,13 @@ const EnergiaPage: React.FC = () => {
               <div className="hidden lg:block mt-8 lg:mt-0 lg:ml-8">
                 <div className="space-y-4">
                   <img
-                    src="/PAINEIS-PREMIUM_002.png"
-                    alt="Solução 2 Painéis - Gama Quality - 23,90€/mês"
+                    src="/PAINEIS-QUALITY_002.png"
+                    alt="Solução 4 Painéis - Gama Premium - 38,71€/mês"
                     className="w-full max-w-md rounded-lg "
                   />
                   <img
-                    src="/PAINEIS-QUALITY_002.png"
-                    alt="Solução 4 Painéis - Gama Premium - 38,71€/mês"
+                    src="/PAINEIS-PREMIUM_002.png"
+                    alt="Solução 2 Painéis - Gama Quality - 23,90€/mês"
                     className="w-full max-w-md rounded-lg "
                   />
                 </div>
