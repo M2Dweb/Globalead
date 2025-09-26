@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Calculator, CreditCard, FileText } from 'lucide-react';
-
 import CreditCalculator from '../components/CreditCalculator';
 import ContactForm from '../components/ContactForm';
 import { supabase } from '../lib/supabase';
@@ -74,23 +72,7 @@ const CreditoPage: React.FC = () => {
     }
   };
 
-  const services = [
-    {
-      icon: <CreditCard className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Intermediação de Crédito",
-      description: "Ajudamos a encontrar as melhores condições de financiamento, trabalhando com as principais instituições financeiras para garantir acesso a taxas competitivas e soluções personalizadas."
-    },
-    {
-      icon: <Calculator className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Planeamento Personalizado",
-      description: "Oferecemos simulações claras e rápidas do crédito habitação, permitindo-lhe perceber o impacto das prestações no seu orçamento para tomar decisões informadas."
-    },
-    {
-      icon: <FileText className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Burocracia Simplificada",
-      description: "A nossa equipa acompanha-o em todo o processo, desde a análise inicial até à aprovação do empréstimo, negociando diretamente com os bancos para poupar-lhe tempo e esforço."
-    }
-  ];
+  
 
   return (
     <div className="min-h-screen bg-white">
@@ -100,16 +82,15 @@ const CreditoPage: React.FC = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
           style={{
-            backgroundImage: 'url("https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")'
+            backgroundImage: 'url("https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/fundo2.jpg")'
           }}
         ></div>
         
         {/* Overlay for better text readability */}
         <div className="absolute inset-0 bg-black opacity-30"></div>
-        
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl font-bold mt-9">
+            <h1 className="text-4xl md:text-5xl font-bold mt-14">
               Ajudamos na compra da sua casa
             </h1>
           </div>
@@ -227,7 +208,7 @@ const CreditoPage: React.FC = () => {
           </div>
 
           {/* Call to Action */}
-          <div className="text-center mt-12">
+          <div className="text-center hidden sm:block mt-12">
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 max-w-2xl mx-auto">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 Pronto para otimizar o seu orçamento familiar?
