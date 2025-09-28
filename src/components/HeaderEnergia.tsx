@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Zap, Flame, Check, FileText, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -30,15 +29,15 @@ const HeaderEnergia: React.FC<HeaderProps> = ({ formData, handleInputChange }) =
       <div className="absolute inset-0 bg-black/5 z-10"></div>
 
       {/* Businessman image with contrast effect */}
-      <div className="absolute inset-0 flex items-center justify-center z-15">
+      <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center z-20">
         {/* Contrast background effect */}
         <div className="absolute w-80 h-80 bg-blue-200/30 rounded-full blur-3xl"></div>
         
         {/* Businessman image - Hidden on mobile */}
         <img
-          src="/fotos/aaaaaa.png"
+          src="/carlos/pe-fato-meio-sorrir2.jpg"
           alt="Professional businessman"
-          className="relative w-96 h-auto object-contain drop-shadow-2xl z-10 hidden lg:block" // This will hide the image on mobile (below lg breakpoint)
+          className="relative w-96 h-auto object-contain drop-shadow-2xl z-10 hidden lg:block"
         />
       </div>
 

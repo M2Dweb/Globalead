@@ -225,14 +225,13 @@ const EnergiaPage: React.FC = () => {
         </section>
       </AnimatedSection>
 
-      {/* 4. Solar Panel Installation Section */}
       <AnimatedSection>
         <section className="py-12 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start lg:items-center">
               
               {/* Left side - Content */}
-              <div>
+              <div className="lg:px-10"> {/* Ajuste de padding à esquerda */}
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Instalação de Painéis Solares
                 </h2>
@@ -240,19 +239,18 @@ const EnergiaPage: React.FC = () => {
                   Produza a sua própria energia limpa e sustentável com os nossos sistemas solares fotovoltaicos.
                 </p>
 
-                {/* Image (Only on mobile, placed between the title and the topics) */}
-                <div className="lg:hidden relative ml-10 mb-6">
+                {/* Imagem (Only on mobile, placed between the title and the topics) */}
+                <div className="lg:hidden relative lg:ml-2 mb-6">
                   <img
                     src="/PAINEIS-QUALITY_002.png"
                     alt="Solução 4 Painéis - Gama Premium - 38,71€/mês"
-                    className="w-full max-w-md rounded-lg "
+                    className="w-full max-w-md rounded-lg"
                   />
                   <img
                     src="/PAINEIS-PREMIUM_002.png"
                     alt="Solução 2 Painéis - Gama Quality - 23,90€/mês"
-                    className="w-full max-w-md rounded-lg "
+                    className="w-full max-w-md rounded-lg"
                   />
-                  
                 </div>
 
                 {/* Benefits List */}
@@ -300,7 +298,10 @@ const EnergiaPage: React.FC = () => {
 
                 {/* Button */}
                 <div className="flex justify-center">
-                  <button className="bg-[#0d2233] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base">
+                  <button 
+                    onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="bg-[#0d2233] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-medium inline-flex items-center text-sm sm:text-base"
+                  >
                     <Sun className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
                     Pedir Orçamento Gratuito
                   </button>
@@ -308,17 +309,17 @@ const EnergiaPage: React.FC = () => {
               </div>
 
               {/* Right side - Image (Desktop only) */}
-              <div className="hidden lg:block mt-8 lg:mt-0 lg:ml-8">
+              <div className="hidden lg:block mt-8 lg:mt-0 lg:ml-10">
                 <div className="space-y-4">
                   <img
                     src="/PAINEIS-QUALITY_002.png"
                     alt="Solução 4 Painéis - Gama Premium - 38,71€/mês"
-                    className="w-full max-w-md rounded-lg "
+                    className="w-300 max-w-md rounded-lg"
                   />
                   <img
                     src="/PAINEIS-PREMIUM_002.png"
                     alt="Solução 2 Painéis - Gama Quality - 23,90€/mês"
-                    className="w-full max-w-md rounded-lg "
+                    className="w-300 max-w-md rounded-lg"
                   />
                 </div>
               </div>
@@ -326,6 +327,7 @@ const EnergiaPage: React.FC = () => {
           </div>
         </section>
       </AnimatedSection>
+
 
 
       {/* 6. Contract Analysis Section */}
@@ -424,7 +426,7 @@ const EnergiaPage: React.FC = () => {
       </AnimatedSection>
 
       {/* 8. Contact Form Section */}
-      <section className="py-12 sm:py-20 bg-gray-900 text-white">
+      <section id="contact-form" className="py-12 sm:py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             <div className="text-center mb-6 sm:mb-8 max-w-3xl">

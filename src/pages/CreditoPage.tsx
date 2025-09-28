@@ -89,10 +89,12 @@ const CreditoPage: React.FC = () => {
         {/* Overlay for better text readability */}
         <div className="absolute inset-0 bg-black opacity-30"></div>
 
-        {/* Text in the top-right corner */}
-        <div className="absolute mt-3 right-6 text-xs font-semibold z-20">
+
+        <div className="absolute mt-3 right-6 text-xs font-semibold z-20 bg-white px-3 py-1 rounded-lg text-black">
           Intermediário de crédito N.º 0007977
         </div>
+
+
 
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
@@ -214,23 +216,8 @@ const CreditoPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Call to Action */}
-          <div className="text-center hidden sm:block mt-12">
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 max-w-2xl mx-auto">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Pronto para otimizar o seu orçamento familiar?
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Contacte-nos hoje mesmo para uma consulta gratuita e descubra como podemos ajudá-lo a conseguir as melhores condições de crédito habitação.
-              </p>
-              <a 
-                href="#contact-form"
-                className="inline-block scroll-behavior:smooth bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
-              >
-                Falar com um especialista
-              </a>
-            </div>
-          </div>
+          
+          
         </div>
       </section>
 
@@ -311,6 +298,10 @@ const CreditoPage: React.FC = () => {
 
           <div>
             <FAQ category="credito" />
+          </div>
+
+          <div className="bg-gray-900 shadow-sm text-gray-500 text-xs py-12 text-justify">
+              No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a SEGUP – Corretores de Seguros, S.A., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços prestados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica e ao sólido percurso da SEGUP no setor da mediação de seguros. Em conjunto, disponibilizamos um portefólio completo de soluções nos ramos Vida e Não Vida, com acesso às principais seguradoras do mercado. Através desta parceria, garantimos condições competitivas, acompanhamento especializado e um serviço de excelência, focado nas reais necessidades dos nossos clientes. Importa referir que a SEGUP – Corretores de Seguros, S.A., sociedade anónima com o número de pessoa coletiva 510670300, matriculada na Conservatória do Registo Comercial de Braga, encontra-se inscrita, desde 05/03/2024, na ASF – Autoridade de Supervisão de Seguros e Fundos de Pensões, como corretor de seguros, sob o n.º 624584421, com autorização para o exercício da atividade de mediação de seguros nos ramos Vida e Não Vida. O seu registo pode ser consultado em www.asf.com.pt, nos termos do artigo 32.º do Decreto-Lei n.º 144/2006, de 31 de julho.
           </div>
         </div>
       </section>
