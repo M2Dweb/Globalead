@@ -235,28 +235,27 @@ const ImoveisPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {businessServices.map((service, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
+              <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
                 <div className="flex justify-center mb-6">
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-6 text-sm">
+                <p className="flex justify-center text-gray-600 mb-3 text-sm flex-grow">
                   {service.description}
                 </p>
                 
-                  <button
-                    onClick={() => navigate(service.link)} 
-                  >
-                  <div className="w-full bg-[#79b2e9] text-white py-2 px-12 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
-                    Saber mais
-                  </div>
-                  </button>
-
+                <button
+                  onClick={() => navigate(service.link)} 
+                  className="w-full bg-[#79b2e9] text-white py-2 px-12 rounded-lg hover:bg-[#0d2233] transition-colors"
+                >
+                  Saber mais
+                </button>
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
