@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Linkedin, Twitter, Phone } from 'lucide-react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase, getPropertyByRef } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
+import PropertyBuyForm from '../components/PropertyBuyForm';
 
 const PropertyDetailPage: React.FC = () => {
   const { ref } = useParams<{ ref: string }>();
@@ -11,6 +12,7 @@ const PropertyDetailPage: React.FC = () => {
   const [property, setProperty] = useState<any | null>(null);
   const [similarProperties, setSimilarProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [selectedPropertyType, setSelectedPropertyType] = useState<any>(null);
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
@@ -410,46 +412,46 @@ const PropertyDetailPage: React.FC = () => {
               {/* Details */}
               <div className="bg-gray-50 p-6 rounded-xl mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">Detalhes</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Preço:</span>
-                    <div className="font-semibold">{formatPrice(selectedPropertyType?.price || property.price)}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{formatPrice(selectedPropertyType?.price || property.price)}</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Estado:</span>
-                    <div className="font-semibold">{property.state || 'Novo'}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.state || 'Novo'}</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Área útil:</span>
-                    <div className="font-semibold">{selectedPropertyType?.area || property.area}m²</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{selectedPropertyType?.area || property.area}m²</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Área bruta:</span>
-                    <div className="font-semibold">{selectedPropertyType?.area || property.area}m²</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{selectedPropertyType?.area || property.area}m²</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Quartos:</span>
-                    <div className="font-semibold">{property.bedrooms}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.bedrooms}</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Casas de banho:</span>
-                    <div className="font-semibold">{property.bathrooms}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.bathrooms}</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Ano de Construção:</span>
-                    <div className="font-semibold">{property.year_built}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.year_built}</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Estacionamento:</span>
-                    <div className="font-semibold">{property.parking || 'N/A'}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.parking || 'N/A'}</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Certificado energético:</span>
-                    <div className="font-semibold">{property.energy_class}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.energy_class}</div>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Referência:</span>
-                    <div className="font-semibold">{property.reference || 'N/A'}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.reference || 'N/A'}</div>
                   </div>
                 </div>
               </div>
@@ -463,9 +465,9 @@ const PropertyDetailPage: React.FC = () => {
               </div>
 
               {/* Share Content */}
-              <div className="bg-gray-50 p-6 rounded-xl">
+              <div className="bg-gray-50 p-6 rounded-xl text-center">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Partilha este conteúdo</h3>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex justify-center gap-4 flex-wrap">
                   <button
                     onClick={() => shareContent('facebook')}
                     className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
@@ -500,6 +502,9 @@ const PropertyDetailPage: React.FC = () => {
               </div>
             </div>
 
+
+
+
             {/* Visit Form */}
             <div className="lg:col-span-1">
               <div className="bg-white p-6 rounded-xl shadow-lg sticky top-32">
@@ -509,7 +514,12 @@ const PropertyDetailPage: React.FC = () => {
                     className="w-20 h-20 rounded-full  border-2 border-[#79b2e9] object-top object-cover"
                   />
                   <div>
+                    <a
+                    href="/carlos-goncalves" // alterar rota
+                    className="hover:underline cursor-pointer "
+                  >
                     <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
+                  </a>
                     <div className="flex items-center text-gray-800 text-base">
                       <Phone className="h-4 w-4 mr-1" />
                       <a href="tel:+351915482365" className="hover:underline">
@@ -654,16 +664,40 @@ const PropertyDetailPage: React.FC = () => {
                   
                   </div>
                   </div>
-                  <div className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  <div className="text-gray-600 text-sm line-clamp-3">
                   <ContentRenderer content={property.description || ''} />
                   </div>
                   
+                </div>
+                <div className="p-3">
+                <button
+                    className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition"
+                   onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
+                  >
+                    Ver Detalhes
+                  </button>
                 </div>
               </Link>
             ))}
           </div>
         </div>
       </section>
+      {/* Property Buy Form Section */}
+      
+        <section className="py-16 sm:py-20 bg-gray-900">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="flex justify-center mb-4 sm:mb-6">
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+              Encontre o seu imóvel ideal
+            </h2>
+            <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
+              Diga-nos o que procura e encontraremos as melhores opções para si
+            </p>
+          </div>
+          <PropertyBuyForm />
+        </section>
+      
     </div>
   );
 };

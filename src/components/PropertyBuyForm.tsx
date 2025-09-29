@@ -113,19 +113,7 @@ const PropertyBuyForm: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-8 sm:mb-12">
-        <div className="flex justify-center mb-4 sm:mb-6">
-          <div className="bg-[#79b2e9] p-3 sm:p-4 rounded-full">
-            <Search className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
-          </div>
-        </div>
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-          Encontre o seu imóvel ideal
-        </h2>
-        <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-          Diga-nos o que procura e encontraremos as melhores opções para si
-        </p>
-      </div>
+      
 
       <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100">
         <form onSubmit={handleSubmit} className="space-y-8">

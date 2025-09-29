@@ -121,25 +121,6 @@ const FeaturedProperties: React.FC = () => {
 
         {/* Paginação + Ver todos */}
         <div className="flex justify-center items-center mt-12 flex-col md:flex-row gap-6">
-          <div className="flex items-center space-x-2">
-            <button className="p-2 border rounded-lg disabled:opacity-50" onClick={handlePrevPage} disabled={currentPage === 1}>
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`px-4 py-2 rounded-lg ${
-                  currentPage === i + 1 ? "bg-[#79b2e9] text-white" : "border"
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-            <button className="p-2 border rounded-lg disabled:opacity-50" onClick={handleNextPage} disabled={currentPage === totalPages}>
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
           <button
             onClick={() => navigate("/imoveis/lista")}
             className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition font-semibold inline-flex items-center"

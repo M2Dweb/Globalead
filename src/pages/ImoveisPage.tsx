@@ -261,24 +261,18 @@ const ImoveisPage: React.FC = () => {
       </section>
 
       {/* Exemplo de foto na vertical */}
-      {/* Exemplo de foto na vertical */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             
             {/* Foto ou Vídeo Vertical */}
             <div className="flex justify-center">
-              <video
+              <img
                 className="rounded-2xl shadow-lg object-cover"
                 style={{ aspectRatio: "9/16", width: "100%", maxWidth: "350px" }}
-                autoPlay
-                loop
-                muted
-                playsInline
-                poster="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
+                src='/carlos/pe-fato-meio3.jpg'
               >
-                <source src="https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/video4.mp4" type="video/mp4" />
-              </video>
+              </img>
             </div>
 
             {/* Texto */}

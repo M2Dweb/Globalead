@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSpring, animated, config, useTrail } from '@react-spring/web';
-import { Award, Users, TrendingUp, MapPin, Phone, Mail, Star, Building, Compass, Hammer, Palette, Scale, Camera, Globe, Paintbrush, Share2, Tag, Video, Euro, Clock } from 'lucide-react';
+import { Award, Users, TrendingUp, MapPin, Phone, Mail, Star, Building, Compass, Hammer, Palette, Scale, Camera, Globe, Paintbrush, Share2, Tag, Video, Euro, Clock, Search } from 'lucide-react';
 import AnimatedSectionSpring from '../components/Parallax/AnimatedSectionSpring';
 import FounderVideoSection from '../components/FounderVideoSection';
 import PropertyValuationForm from '../components/PropertyValuationForm';
@@ -311,6 +311,19 @@ const CarlosGoncalvesPage: React.FC = () => {
       {/* Property Buy Form Section */}
       <AnimatedSectionSpring>
         <section className="py-16 sm:py-20 bg-gray-50">
+          <div className="text-center mb-8 sm:mb-12">
+                  <div className="flex justify-center mb-4 sm:mb-6">
+                    <div className="bg-[#79b2e9] p-3 sm:p-4 rounded-full">
+                      <Search className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+                    </div>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                    Encontre o seu imóvel ideal
+                  </h2>
+                  <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+                    Diga-nos o que procura e encontraremos as melhores opções para si
+                  </p>
+                </div>
           <PropertyBuyForm />
         </section>
       </AnimatedSectionSpring>
