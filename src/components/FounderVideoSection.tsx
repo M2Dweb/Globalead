@@ -71,14 +71,6 @@ const FounderVideoSection: React.FC = () => {
               </>
             )}
           </div>
-          <div className="p-8 text-center">
-            <Link to="/carlos-goncalves" className="text-2xl font-bold text-gray-900 mb-12 hover:underline">
-              Carlos Gonçalves - Fundador & CEO
-            </Link>
-            <p className="text-gray-600 mt-2">
-              "Na Globalead, acreditamos que cada cliente merece um atendimento personalizado e de excelência. A nossa missão é tornar simples processos complexos, assegurando que encontra sempre a melhor solução, de forma eficaz e eficiente."
-            </p>
-          </div>
         </div>
       </div>
     </section>
