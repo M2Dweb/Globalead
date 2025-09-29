@@ -4,7 +4,10 @@ import { supabase } from '../lib/supabase';
 import { Link } from 'react-router-dom';
 
 const FounderVideoSection: React.FC = () => {
-  const [founderVideoUrl, setFounderVideoUrl] = useState<string | null>(null);
+  // Set the default video URL
+  const [founderVideoUrl, setFounderVideoUrl] = useState<string | null>(
+    'https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/video4.mp4'
+  );
 
   useEffect(() => {
     const fetchSiteSettings = async () => {
@@ -49,14 +52,14 @@ const FounderVideoSection: React.FC = () => {
                 playsInline
                 muted
                 className="w-full h-full object-fill"
-                poster="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800"
+                poster="/carlos/pe-fato-meio-sorrir3.jpg"
               >
                 <source src={founderVideoUrl} type="video/mp4" />
               </video>
             ) : (
               <>
                 <img
-                  src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="/carlos/pe-fato-meio-sorrir3.jpg"
                   alt="Fundador da Globalead"
                   className="w-full h-64 object-cover"
                 />
