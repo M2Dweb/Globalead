@@ -26,6 +26,7 @@ import BlogPostPage from './pages/BlogPostPage';
 import SimulacaoEnergia from './components/SimulacaoEnergia';
 import CarlosGoncalvesPage from './pages/CarlosGoncalvesPage';
 import SimulacaoTvNetVoz from './components/SimulacaoTvNetVoz';
+import WaitingPage from './pages/WaitingPage';
 
 // Scroll to top component
 const ScrollToTop: React.FC = () => {
@@ -122,7 +123,8 @@ const AppLayout: React.FC = () => {
       
       <main className={isScrolled && breadcrumbs.length > 0 ? 'pt-16' : ''}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<WaitingPage />} />
+          <Route path="/HomePage" element={<HomePage />} />
           <Route path="/sobre" element={<SobrePage />} />
           <Route path="/imoveis" element={<ImoveisPage />} />
           <Route path="/imoveis/lista" element={<PropertyListPage />} />
