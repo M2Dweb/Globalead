@@ -89,9 +89,7 @@ const WaitingPage: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Logo/Brand */}
           <div className="mb-8">
-            <div className="mx-auto w-20 h-20 bg-gradient-to-r from-[#0d2233] to-[#79b2e9] rounded-full flex items-center justify-center mb-6">
-              <Star className="h-10 w-10 text-white" />
-            </div>
+            
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
               Em Breve
             </h1>

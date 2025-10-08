@@ -105,7 +105,7 @@ const AppLayout: React.FC = () => {
 
   const breadcrumbs = getBreadcrumbs();
 
-  // Verifica se a página atual é a "Carlos Goncalves", para não renderizar o footer
+ 
   const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
   const isAdminPage = location.pathname === '/admin';
   const isWaitingPage = location.pathname === '/';
