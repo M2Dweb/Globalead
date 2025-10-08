@@ -115,7 +115,7 @@ const AppLayout: React.FC = () => {
       <SEOHead />
       <ScrollToTop />
       
-      <Header />
+      {!(isWaitingPage) && <Header />}
       
       <Breadcrumbs 
         items={breadcrumbs} 
@@ -148,7 +148,7 @@ const AppLayout: React.FC = () => {
       
       
       {!(isCarlosGoncalvesPage || isAdminPage || isWaitingPage) && <Footer />}
-      {!(isWaitingPage) && <Header />}
+       
 
 
       <StickyCtaButton />
