@@ -89,8 +89,7 @@ const WaitingPage: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Logo/Brand */}
           <div className="mb-8">
-            
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
+            <h1 className="text-5xl md:text-7xl font-bold mt-8 text-white mb-4">
               Em Breve
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
