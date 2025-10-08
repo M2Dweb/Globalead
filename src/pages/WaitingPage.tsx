@@ -17,7 +17,7 @@ const WaitingPage: React.FC = () => {
   });
 
   // Set your launch date here
-  const launchDate = new Date('2025-03-01T00:00:00Z');
+  const launchDate = new Date('2025-10-17T00:00:00Z');
 
   useEffect(() => {
     const timer = setInterval(() => {
