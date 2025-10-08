@@ -78,7 +78,7 @@ const WaitingPage: React.FC = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url("https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1280&fit=crop")'
+          backgroundImage: 'url("/carlos/sentado-tele-h.jpg")'
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>

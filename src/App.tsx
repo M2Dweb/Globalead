@@ -108,6 +108,7 @@ const AppLayout: React.FC = () => {
   // Verifica se a página atual é a "Carlos Goncalves", para não renderizar o footer
   const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
   const isAdminPage = location.pathname === '/admin';
+  const isWaitingPage = location.pathname === '/';
 
   return (
     <div className="min-h-screen bg-white">
@@ -146,7 +147,8 @@ const AppLayout: React.FC = () => {
       </main>
       
       
-      {!(isCarlosGoncalvesPage || isAdminPage) && <Footer />}
+      {!(isCarlosGoncalvesPage || isAdminPage || isWaitingPage) && <Footer />}
+      {!(isWaitingPage) && <Header />}
 
 
       <StickyCtaButton />
