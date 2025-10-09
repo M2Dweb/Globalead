@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Linkedin, Twitter, Phone } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Phone } from 'lucide-react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase, getPropertyByRef } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
