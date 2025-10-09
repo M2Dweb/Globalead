@@ -1,2 +1,5 @@
-/*    /index.html   200
-!/*.*   200
+# Serve ficheiros estáticos normalmente
+/assets/*   /assets/:splat   200
+
+# Redireciona todas as outras rotas SPA para index.html
+/*   /index.html   200
