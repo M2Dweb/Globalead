@@ -59,15 +59,15 @@ const AdminPage: React.FC = () => {
     try {
       // Check password in database - replace 'x' with your table name and 'y' with your column name
       const { data, error } = await supabase
-        .from('x') // Replace with your table name
-        .select('y') // Replace with your password column name
+        .from('site_settings') // Replace with your table name
+        .select('admin_password') // Replace with your password column name
         .single();
 
       if (error) {
         throw error;
       }
 
-      if (data && data.y === password) { // Replace 'y' with your column name
+      if (data && data.admin_password === password) { // Replace 'y' with your column name
         setIsAuthenticated(true);
         setShowPasswordPopup(false);
         fetchData();
