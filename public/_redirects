@@ -1,5 +1,14 @@
-# Serve ficheiros estáticos normalmente
-/assets/*   /assets/:splat   200
+# Serve os ficheiros estáticos da pasta assets corretamente
+/assets/*    /assets/:splat   200
 
-# Redireciona todas as outras rotas SPA para index.html
-/*   /index.html   200
+# Serve outros ficheiros estáticos, caso haja
+/*.css      /:splat   200
+/*.js       /:splat   200
+/*.png      /:splat   200
+/*.jpg      /:splat   200
+/*.svg      /:splat   200
+/*.woff     /:splat   200
+/*.woff2    /:splat   200
+
+# Qualquer outra rota (SPA) → index.html
+/*           /index.html   200
