@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Plus, Edit, Trash2, Eye, EyeOff, Save, X, Upload, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare, FileText } from 'lucide-react';
+import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Upload, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare, FileText, Lock } from 'lucide-react';
 import RichTextEditor from '../components/RichTextEditor';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
 
 const AdminPage: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showPasswordPopup, setShowPasswordPopup] = useState(true);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  
   const [activeTab, setActiveTab] = useState('properties');
   const [properties, setProperties] = useState<any[]>([]);
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
@@ -44,9 +51,43 @@ const AdminPage: React.FC = () => {
     read_time: '5 min'
   });
 
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setPasswordError('');
+
+    try {
+      // Check password in database - replace 'x' with your table name and 'y' with your column name
+      const { data, error } = await supabase
+        .from('x') // Replace with your table name
+        .select('y') // Replace with your password column name
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      if (data && data.y === password) { // Replace 'y' with your column name
+        setIsAuthenticated(true);
+        setShowPasswordPopup(false);
+        fetchData();
+      } else {
+        setPasswordError('Password incorreta. Tente novamente.');
+      }
+    } catch (error) {
+      console.error('Erro ao verificar password:', error);
+      setPasswordError('Erro ao verificar password. Tente novamente.');
+    }
+
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    // Only fetch data if authenticated
+    if (isAuthenticated) {
+      fetchData();
+    }
+  }, [isAuthenticated]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -337,7 +378,83 @@ const AdminPage: React.FC = () => {
     }).format(amount);
   };
 
-  if (loading) {
+  // Password popup
+  if (showPasswordPopup && !isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+            <div className="text-center mb-6">
+              <div className="mx-auto w-16 h-16 bg-[#0d2233] rounded-full flex items-center justify-center mb-4">
+                <Lock className="h-8 w-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Acesso Restrito</h2>
+              <p className="text-gray-600">Introduza a palavra-passe para aceder ao painel de administração</p>
+            </div>
+
+            <form onSubmit={handlePasswordSubmit}>
+              <div className="mb-6">
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setPasswordError('');
+                    }}
+                    placeholder="Palavra-passe"
+                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9] focus:border-transparent"
+                    required
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    disabled={isLoading}
+                  >
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </button>
+                </div>
+                {passwordError && (
+                  <p className="mt-2 text-sm text-red-600 flex items-center">
+                    <X className="h-4 w-4 mr-1" />
+                    {passwordError}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-[#0d2233] text-white py-3 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    A verificar...
+                  </>
+                ) : (
+                  <>
+                    <Lock className="h-5 w-5 mr-2" />
+                    Entrar
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-xs text-gray-500">
+                Este painel é de acesso restrito. Se não tem permissão, contacte o administrador.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading && isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl text-gray-600">A carregar...</div>
@@ -1180,7 +1297,7 @@ const AdminPage: React.FC = () => {
                   </button>
                   <button
                     onClick={closeLeadDetails}
-                    className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                    className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors"
                   >
                     Fechar
                   </button>

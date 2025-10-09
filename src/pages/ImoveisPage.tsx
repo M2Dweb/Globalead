@@ -4,7 +4,7 @@ import {
   FileText, Shield, MapPin, Camera, Globe, Paintbrush,
   Share2, Tag, Video} from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
+
 import { sendEmail, FormData } from '../utils/emailService';
 import FeaturedProperties from '../components/FeaturedProperties';
 

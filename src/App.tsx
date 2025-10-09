@@ -26,6 +26,7 @@ import BlogPostPage from './pages/BlogPostPage';
 import SimulacaoEnergia from './components/SimulacaoEnergia';
 import CarlosGoncalvesPage from './pages/CarlosGoncalvesPage';
 import SimulacaoTvNetVoz from './components/SimulacaoTvNetVoz';
+import WaitingPage from './pages/WaitingPage';
 
 // Scroll to top component
 const ScrollToTop: React.FC = () => {
@@ -104,16 +105,17 @@ const AppLayout: React.FC = () => {
 
   const breadcrumbs = getBreadcrumbs();
 
-  // Verifica se a página atual é a "Carlos Goncalves", para não renderizar o footer
+ 
   const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
   const isAdminPage = location.pathname === '/admin';
+  const isWaitingPage = location.pathname === '/';
 
   return (
     <div className="min-h-screen bg-white">
       <SEOHead />
       <ScrollToTop />
       
-      <Header />
+      {!(isWaitingPage) && <Header />}
       
       <Breadcrumbs 
         items={breadcrumbs} 
@@ -122,7 +124,8 @@ const AppLayout: React.FC = () => {
       
       <main className={isScrolled && breadcrumbs.length > 0 ? 'pt-16' : ''}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<WaitingPage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/sobre" element={<SobrePage />} />
           <Route path="/imoveis" element={<ImoveisPage />} />
           <Route path="/imoveis/lista" element={<PropertyListPage />} />
@@ -144,7 +147,8 @@ const AppLayout: React.FC = () => {
       </main>
       
       
-      {!(isCarlosGoncalvesPage || isAdminPage) && <Footer />}
+      {!(isCarlosGoncalvesPage || isAdminPage || isWaitingPage) && <Footer />}
+       
 
 
       <StickyCtaButton />
