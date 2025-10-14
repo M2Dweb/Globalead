@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabase';
 
 import { sendEmail, FormData } from '../utils/emailService';
 import FeaturedProperties from '../components/FeaturedProperties';
+import { useNavigate } from 'react-router-dom';
 
 const ImoveisPage: React.FC = () => {
 

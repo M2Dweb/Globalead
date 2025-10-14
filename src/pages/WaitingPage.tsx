@@ -79,7 +79,7 @@ const WaitingPage: React.FC = () => {
       </div>
 
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Em Breve</h1>
+        <h1 className="text-5xl md:text-7xl font-bold text-white mt-6 mb-4">Em Breve</h1>
         <p className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl text-center">
           Estamos a preparar algo extraordinário. O nosso novo website está quase pronto para revolucionar a sua experiência digital.
         </p>
