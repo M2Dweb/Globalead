@@ -89,12 +89,10 @@ const CreditoPage: React.FC = () => {
         {/* Overlay for better text readability */}
         <div className="absolute inset-0 bg-black opacity-30"></div>
 
-
-        <div className="absolute mt-3 right-6 text-xs font-semibold z-20 bg-white px-3 py-1 rounded-lg text-black">
+        {/* Número do intermediário - centralizado */}
+        <div className="absolute top-20 left-1/2  font-semibold transform -translate-x-1/2 text-xs z-20 bg-white px-1 py-2 rounded-lg text-black text-center">
           Intermediário de crédito N.º 0007977
         </div>
-
-
 
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
@@ -104,6 +102,7 @@ const CreditoPage: React.FC = () => {
           </div>
         </div>
       </section>
+
 
 
       {/* About Section */}
@@ -301,7 +300,7 @@ const CreditoPage: React.FC = () => {
           </div>
 
           <div className="bg-gray-900 shadow-sm text-gray-500 text-xs py-12 text-justify">
-              No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a SEGUP – Corretores de Seguros, S.A., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços prestados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica e ao sólido percurso da SEGUP no setor da mediação de seguros. Em conjunto, disponibilizamos um portefólio completo de soluções nos ramos Vida e Não Vida, com acesso às principais seguradoras do mercado. Através desta parceria, garantimos condições competitivas, acompanhamento especializado e um serviço de excelência, focado nas reais necessidades dos nossos clientes. Importa referir que a SEGUP – Corretores de Seguros, S.A., sociedade anónima com o número de pessoa coletiva 510670300, matriculada na Conservatória do Registo Comercial de Braga, encontra-se inscrita, desde 05/03/2024, na ASF – Autoridade de Supervisão de Seguros e Fundos de Pensões, como corretor de seguros, sob o n.º 624584421, com autorização para o exercício da atividade de mediação de seguros nos ramos Vida e Não Vida. O seu registo pode ser consultado em www.asf.com.pt, nos termos do artigo 32.º do Decreto-Lei n.º 144/2006, de 31 de julho.
+             No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a Lacerda & Kiala Lda., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços financeiros disponibilizados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica da Lacerda & Kiala Lda. no setor da intermediação de crédito. A Lacerda & Kiala Lda. encontra-se registada no Banco de Portugal, sob o n.º 0007977, como intermediário de crédito vinculado, sem regime de exclusividade, dispondo de contratos celebrados com as seguintes instituições: Banco Santander Totta, S.A., Banco BPI, S.A., Caixa Geral de Depósitos, S.A., Banco CTT, S.A., Union de Créditos Inmobiliários, S.A. – Establecimiento Financiero de Crédito (Sociedad Unipersonal) – Sucursal em Portugal, Bankinter, S.A. – Sucursal em Portugal, Abanca Corporación Bancaria, S.A. – Sucursal em Portugal, Banco BIC Português, S.A., Novo Banco, S.A., e Sicam – Caixa Central e Caixas de Crédito Agrícola Mútuo.No âmbito da sua autorização, a Lacerda & Kiala Lda. está habilitada a: Apresentar ou propor contratos de crédito a consumidores; Prestar assistência a consumidores através da realização de atos preparatórios ou de gestão pré-contratual relativamente a contratos de crédito não apresentados por si; Celebrar contratos de crédito com consumidores em nome das instituições mutuantes; Prestar serviços de consultoria especializada. Importa referir que a marca Lacerda & Kiala Lda. é detida pela Doutor Finanças Unipessoal Lda. O registo da Lacerda & Kiala Lda. pode ser consultado no site oficial do Banco de Portugal, nos termos do Regime Jurídico dos Intermediários de Crédito.
           </div>
         </div>
       </section>

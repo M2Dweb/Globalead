@@ -102,7 +102,7 @@ const SeguroPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1 className="text-5xl font-bold mb-6">Seguramos o seu futuro!</h1>
           <p className="text-xl text-blue-100 max-w-4xl mx-auto mb-8">
-            Na Globalead, oferecemos soluções de seguros completas e personalizadas, para clientes pessoais e empresariais.
+            Na Globalead oferecemos soluções de seguros completas e personalizadas, para clientes pessoais e empresariais.
           </p>
           {/* Botão alterado */}
           

@@ -100,19 +100,19 @@ const EnergiaPage: React.FC = () => {
     {
       icon: <Zap className="h-12 w-12 text-[#79b2e9]" />,
       title: "Eletricidade",
-      description: "Encontramos as melhores tarifas de eletricidade para a sua casa ou empresa, garantindo poupança na sua fatura mensal.",
+      description: "Otimizamos a sua fatura de eletricidade com base no seu perfil de consumo comparando as principais ofertas do mercado e sugerimos a tarifa mais vantajosa. Tratamos de toda a mudança de comercializador e disponibilizamos acompanhamento contínuo para garantir que continua a pagar menos ao longo do tempo.",
       link: "#eletricidade"
     },
     {
       icon: <Flame className="h-12 w-12 text-[#79b2e9]" />,
       title: "Gás Natural",
-      description: "Comparamos os preços do gás natural de todos os fornecedores para encontrar a opção mais económica para si.",
+      description: "Reduzimos os seus custos em gás natural através da comparação de propostas e do ajuste do escalão de consumo quando aplicável. Cuidamos da formalização do contrato e damos recomendações simples de eficiência para diminuir consumos sem perder conforto.",
       link: "#gas"
     },
     {
       icon: <Sun className="h-12 w-12 text-[#79b2e9]" />,
       title: "Painéis Solares",
-      description: "Instalação de sistemas solares fotovoltaicos para produzir a sua própria energia limpa e sustentável.",
+      description: "Realizamos o estudo de viabilidade do sistema fotovoltaico, estimamos poupanças e prazo de retorno e coordenamos a instalação com parceiros certificados. Após a entrada em funcionamento, asseguramos a monitorização e o suporte, incluindo opções de compensação de excedentes quando disponíveis.",
       link: "#paineis-solares"
     }
   ];
@@ -171,27 +171,38 @@ const EnergiaPage: React.FC = () => {
                 Os Nossos Serviços de Energia
               </h2>
               <p className="text-lg sm:text-xl text-gray-600 px-4">
-                Descubra as soluções energéticas que temos para si
+               Descubra as soluções energéticas que temos para si
               </p>
             </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {energyServices.map((service, index) => (
-                <div key={index} className="bg-white p-4 sm:p-6 lg:p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
-                  <div className="text-center">
-                    <div className="mb-4 sm:mb-6 flex justify-center">
-                      {service.icon}
+                <div 
+                  key={index} 
+                  className="bg-white p-4 sm:p-6 lg:p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 flex flex-col justify-between h-full"
+                >
+                  {/* Conteúdo do card */}
+                  <div className="text-center flex flex-col flex-grow">
+                    <div>
+                      <div className="flex justify-center mb-6">
+                        {service.icon}
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-600 mb-6 text-sm flex-grow">
+                        {service.description}
+                      </p>
                     </div>
-                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
-                      {service.description}
-                    </p>
-                    <button className="bg-[#79b2e9] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-medium text-sm sm:text-base">
-                      Saber Mais
-                    </button>
                   </div>
+
+                  {/* Botão fixado no final */}
+                  
+                    <button onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}>
+                      <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
+                        Saber mais
+                      </div>
+                    </button>
+                  
                 </div>
               ))}
             </div>
@@ -238,20 +249,6 @@ const EnergiaPage: React.FC = () => {
                 <p className="text-lg sm:text-xl text-gray-600 mb-4 sm:mb-8">
                   Produza a sua própria energia limpa e sustentável com os nossos sistemas solares fotovoltaicos.
                 </p>
-
-                {/* Imagem (Only on mobile, placed between the title and the topics) */}
-                <div className="lg:hidden relative lg:ml-2 mb-6">
-                  <img
-                    src="/PAINEIS-QUALITY_002.png"
-                    alt="Solução 4 Painéis - Gama Premium - 38,71€/mês"
-                    className="w-full max-w-md rounded-lg"
-                  />
-                  <img
-                    src="/PAINEIS-PREMIUM_002.png"
-                    alt="Solução 2 Painéis - Gama Quality - 23,90€/mês"
-                    className="w-full max-w-md rounded-lg"
-                  />
-                </div>
 
                 {/* Benefits List */}
                 <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
@@ -430,9 +427,14 @@ const EnergiaPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             <div className="text-center mb-6 sm:mb-8 max-w-3xl">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4 px-4">
-                Tem dúvidas? Entre em contacto.
-              </h2>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Tem dúvidas?
+                </h2>
+                <p className="text-xl text-blue-100">
+                  Entre em contacto!
+                </p>
+              </div>
             </div>
 
             <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">

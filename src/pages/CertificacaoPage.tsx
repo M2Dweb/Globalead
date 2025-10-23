@@ -53,13 +53,19 @@ const CertificacaoPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mt-12">
-              O que é o certificado energético?
+      <section className="relative bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-16 sm:py-20 px-4 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{
+            backgroundImage: 'url("https://cdn.pixabay.com/photo/2016/11/29/03/50/light-bulb-1867166_960_720.jpg")'
+          }}
+        ></div>
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div className="text-center relative z-10">
+            <h1 className="text-4xl md:text-5xl font-bold mt-14">
+              Ajudamos na obtenção do certificado energético
             </h1>
-            
           </div>
         </div>
       </section>
@@ -69,12 +75,12 @@ const CertificacaoPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none text-gray-700">
             <p className="leading-relaxed mb-6">
-              Na Globalead Portugal, compreendemos que a venda ou arrendamento de um imóvel pode ser um processo complexo, repleto de detalhes que exigem atenção. Um dos passos indispensáveis para garantir a conformidade legal e valorizar o seu imóvel é a obtenção do Certificado Energético.
+             Na Globalead Portugal compreendemos que a venda ou arrendamento de um imóvel pode ser um processo complexo, repleto de detalhes que exigem atenção. Um dos passos indispensáveis para garantir a conformidade legal e valorizar o seu imóvel é a obtenção do certificado energético.
             </p>
             <p className="leading-relaxed mb-6">
-              O certificado energético é um documento oficial que avalia a eficiência energética de um imóvel, indicando a classe energética (A+ a F) e recomendações para melhorias, com poupanças estimadas. Este certificado, emitido por peritos qualificados da ADENE no âmbito do Sistema de Certificação dos Edifícios (SCE), regulado pelo Decreto-Lei n.º 101-D/2020.
+              O certificado energético é um documento oficial que avalia a eficiência energética de um imóvel, indicando a classe energética (A+ a F) e recomendações para melhorias, com poupanças estimadas. Este certificado é emitido por peritos qualificados da ADENE no âmbito do Sistema de Certificação dos Edifícios (SCE) e regulado pelo Decreto-Lei n.º 101-D/2020.
             </p>
-            <p className="leading-relaxed">
+            <p className="leading-relaxed ">
               Oferecemos suporte completo, desde o início do processo até à emissão do certificado, assegurando rapidez, simplicidade e tranquilidade para si. Confie na nossa experiência e concentre-se no que realmente importa: concretizar o negócio com sucesso.
             </p>
           </div>

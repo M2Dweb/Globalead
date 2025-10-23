@@ -138,7 +138,7 @@ const BlogPage: React.FC = () => {
               Últimas notícias 
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-              Mantenha-se atualizado com as últimas novidades sobre os vários setores de atividade da Globalead Portugal
+              Mantenha-se atualizado das últimas novidades sobre os vários setores de atividade da Globalead Portugal
             </p>
           </div>
         </div>

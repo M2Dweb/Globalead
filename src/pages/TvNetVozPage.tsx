@@ -95,19 +95,19 @@ const TvNetVozPage: React.FC = () => {
     {
       icon: <Tv className="h-12 w-12 text-[#79b2e9]" />,
       title: "Televisão",
-      description: "Acesso aos melhores canais premium, desporto e entretenimento para toda a família com qualidade HD e 4K.",
+      description: "Ajudamos a escolher o pacote de TV certo para o seu dia a dia: número de canais adequado, qualidade HD/4K, gravação automática, multiroom e integração com apps de streaming. Comparamos ofertas, otimizamos custos e tratamos da mudança de operador e da instalação sem complicações.",
       link: "#televisao"
     },
     {
       icon: <Wifi className="h-12 w-12 text-[#79b2e9]" />,
       title: "Internet",
-      description: "Velocidades ultra-rápidas de fibra ótica para trabalho, streaming e gaming sem interrupções.",
+      description: "Garantimos uma ligação estável e rápida em casa ou no escritório. Verificamos cobertura e recomendamos a tecnologia ideal para a sua área de residência, dimensionamos a velocidade à sua utilização e otimizamos o Wi‑Fi para garantir a melhor cobertura para as suas necessidades.",
       link: "#internet"
     },
     {
       icon: <Phone className="h-12 w-12 text-[#79b2e9]" />,
       title: "Telefone",
-      description: "Chamadas ilimitadas nacionais e internacionais com qualidade cristalina e tarifas competitivas.",
+      description: "Escolhemos consigo o plano de telefone certo seja fixo ou móvel conforme o seu perfil de chamadas e dados. Cuidamos da portabilidade do número, ativamos eSIM quando disponível e configuramos opções de roaming e controlo de gastos garantindo-lhe sempre o melhor acompanhamento.",
       link: "#telefone"
     }
   ];
@@ -185,7 +185,7 @@ const TvNetVozPage: React.FC = () => {
 
       {/* 2. TV Net Voz Services Section */}
       <AnimatedSection>
-        <section className="py-12 sm:py-20 bg-white">
+        <section className="py-12 sm:py-20  bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8 sm:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
@@ -195,24 +195,29 @@ const TvNetVozPage: React.FC = () => {
                 Soluções completas de entretenimento e conectividade
               </p>
             </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {tvNetVozServices.map((service, index) => (
-                <div key={index} className="bg-white p-4 sm:p-6 lg:p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
-                  <div className="text-center">
+                <div 
+                  key={index}
+                  className="bg-white p-4 sm:p-6 lg:p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 flex flex-col justify-between h-full"
+                >
+                  <div className="text-center flex flex-col flex-grow">
                     <div className="mb-4 sm:mb-6 flex justify-center">
                       {service.icon}
                     </div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
                       {service.title}
                     </h3>
-                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
+                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 text-center flex-grow">
                       {service.description}
                     </p>
-                    <button className="bg-[#79b2e9] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 font-medium text-sm sm:text-base">
-                      Saber Mais
-                    </button>
                   </div>
+
+                  <Link to="/simulacao-tv-net-voz" className="mt-auto">
+                    <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
+                      Saber mais
+                    </div>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -222,7 +227,7 @@ const TvNetVozPage: React.FC = () => {
 
       {/* 3. How to Contract TV Net Voz */}
       <AnimatedSection>
-        <section className="py-12 sm:py-20 bg-gray-50">
+        <section className="py-12 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8 sm:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4 px-4">
@@ -246,53 +251,7 @@ const TvNetVozPage: React.FC = () => {
         </section>
       </AnimatedSection>
 
-      {/* 4. Providers Section */}
-      <AnimatedSection>
-        <section className="py-12 sm:py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
-                Principais Operadores
-              </h2>
-              <p className="text-lg sm:text-xl text-gray-600 px-4">
-                Comparamos as melhores ofertas do mercado português
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-              {providers.map((provider, index) => (
-                <div key={index} className="bg-white p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
-                  <div className="flex items-center mb-4 sm:mb-6">
-                    <img
-                      src={provider.logo}
-                      alt={provider.name}
-                      className="w-12 h-12 sm:w-16 sm:h-16 object-contain rounded-lg mr-4"
-                    />
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      {provider.name}
-                    </h3>
-                  </div>
-                  <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
-                    {provider.description}
-                  </p>
-                  <div className="space-y-2 mb-4 sm:mb-6">
-                    {provider.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center text-sm">
-                        <div className="w-2 h-2 bg-[#79b2e9] rounded-full mr-3"></div>
-                        <span className="text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <button className="bg-[#0d2233] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 inline-flex items-center text-sm sm:text-base">
-                    Saber mais
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
+      
 
       {/* 5. Benefits Section */}
       <AnimatedSection>
@@ -312,7 +271,7 @@ const TvNetVozPage: React.FC = () => {
                 {/* Image (Only on mobile, placed between the title and the topics) */}
                 <div className="lg:hidden relative mb-8">
                   <img
-                    src="https://images.pexels.com/photos/4792509/pexels-photo-4792509.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    src="https://images.pexels.com/photos/1040160/pexels-photo-1040160.jpeg"
                     alt="Família a usar serviços TV Net Voz"
                     className="w-full h-auto rounded-2xl shadow-lg"
                   />
@@ -381,7 +340,7 @@ const TvNetVozPage: React.FC = () => {
               {/* Right side - Image (Desktop only) */}
               <div className="hidden lg:block relative mt-8 lg:mt-0 lg:ml-8">
                 <img
-                  src="https://images.pexels.com/photos/4792509/pexels-photo-4792509.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  src="https://images.pexels.com/photos/1040160/pexels-photo-1040160.jpeg"
                   alt="Família a usar serviços TV Net Voz"
                   className="w-full lg:full h-auto rounded-2xl shadow-lg" 
                 />
@@ -492,9 +451,14 @@ const TvNetVozPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             <div className="text-center mb-6 sm:mb-8 max-w-3xl">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4 px-4">
-                Tem dúvidas? Entre em contacto.
-              </h2>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Tem dúvidas?
+                </h2>
+                <p className="text-xl text-blue-100">
+                  Entre em contacto!
+                </p>
+              </div>
             </div>
 
             <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">

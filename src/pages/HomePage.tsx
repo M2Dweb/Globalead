@@ -123,13 +123,13 @@ const HomePage: React.FC = () => {
     {
       icon: <Cctv className="h-12 w-12 text-[#79b2e9]" />,
       title: "Alarmes",
-      description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade etc. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar",
+      description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade, etc. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar",
       link: "/alarmes"
     },
     {
       icon: <Zap className="h-12 w-12 text-[#79b2e9]" />,
       title: "Energia",
-      description: "A eletricidade e o gás natural desempenham papéis essenciais na vida moderna, indispensáveis para diversas atividades realizadas diariamente. É crucial atender a todos os clientes com a melhor oferta energética de forma a facilitar a sua decisão",
+      description: "A eletricidade e o gás natural desempenham papéis essenciais na vida moderna, indispensáveis para diversas atividades realizadas diariamente. É fundamental atender a todos os clientes com a melhor oferta energética de forma a facilitar a sua decisão",
       link: "/energia"
     },
     {
@@ -141,7 +141,7 @@ const HomePage: React.FC = () => {
     {
       icon: <Tv className="h-12 w-12 text-[#79b2e9]" />,
       title: "TV, Net, Voz",
-      description: "As telecomunicações são essenciais para a conectividade e desempenham um papel crucial na propagação de informações em muitas áreas da sociedade. A Globalead apresenta várias soluções e pretende atender às reais necessidades de cada cliente",
+      description: "As telecomunicações são essenciais para a conectividade e desempenham um papel crucial na propagação de informações na sociedade. A Globalead apresenta várias soluções e pretende atender às reais necessidades de cada cliente",
       link: "/tv-net-voz"
     }
   ];
@@ -256,25 +256,24 @@ const HomePage: React.FC = () => {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center"
+                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center flex flex-col justify-between"
               >
-                <div className="flex justify-center mb-6">
-                  {service.icon}
+                <div>
+                  <div className="flex justify-center mb-6">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 mb-6 text-sm">
+                    {service.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 mb-6 text-sm">
-                  {service.description}
-                </p>
-                <Link
-                  to={service.link}
-                >
-                 
+
+                <Link to={service.link}>
                   <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
                     Saber mais
                   </div>
-                  
                 </Link>
               </motion.div>
             ))}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tv, Wifi, Phone, ChevronRight, Plus, Minus, MapPin, Clock, ArrowLeft, Home, Mail, User, Euro, Smartphone } from 'lucide-react';
 import { sendEmail } from '../utils/emailService';
+import { Link } from 'react-router-dom';
 
 interface SimulacaoData {
   servicos: 'tv-internet-telefone' | 'tv-internet' | 'internet' | null;
@@ -152,13 +153,14 @@ const SimulacaoTvNetVoz: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-8">
+              <Link to="/tv-net-voz">
               <button 
-                onClick={() => setCurrentStep(Math.max(currentStep - 1, 1))}
                 className="flex items-center text-[#79b2e9] hover:text-[#0d2233] transition-colors"
               >
                 <ArrowLeft className="h-5 w-5 mr-2" />
-                Voltar
+                Voltar à página TV Net Voz
               </button>
+              </Link>
               
               <div className="flex items-center space-x-6 text-sm">
                 <div className="flex items-center text-[#79b2e9] font-medium">
@@ -187,6 +189,13 @@ const SimulacaoTvNetVoz: React.FC = () => {
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm font-medium text-[#79b2e9]">Passo {currentStep} de 6</span>
                   <span className="text-sm text-gray-500">{Math.round(getProgressPercentage())}% concluído</span>
+                    <button 
+                      onClick={() => setCurrentStep(Math.max(currentStep - 1, 1))}
+                      className="flex items-center text-[#79b2e9] hover:text-[#0d2233] transition-colors"
+                    >
+                      <ArrowLeft className="h-5 w-5 mr-2" />
+                      Voltar
+                    </button>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div 

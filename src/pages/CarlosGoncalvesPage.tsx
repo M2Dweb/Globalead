@@ -12,19 +12,19 @@ const CarlosGoncalvesPage: React.FC = () => {
   const achievements = [
     {
       icon: <Award className="h-8 w-8 text-[#0d2233]" />,
-      number: "15+",
+      number: "10+",
       label: "Anos de Experiência",
       description: "No mercado imobiliário e energético"
     },
     {
       icon: <Users className="h-8 w-8 text-[#0d2233]" />,
-      number: "5000+",
+      number: "500+",
       label: "Clientes Satisfeitos",
       description: "Famílias e empresas servidas"
     },
     {
       icon: <TrendingUp className="h-8 w-8 text-[#0d2233]" />,
-      number: "€50M+",
+      number: "€2M+",
       label: "Volume de Negócios",
       description: "Em transações realizadas"
     },
@@ -165,14 +165,11 @@ const CarlosGoncalvesPage: React.FC = () => {
             <animated.div style={heroTextSpring}>
               <div className="mb-8">
                 <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 leading-tight tracking-tight">
-                  Carlos Gonçalves
+                  Quem é o Carlos Gonçalves?
                 </h1>
                 <div className="w-16 sm:w-20 md:w-24 h-1 bg-white mx-auto mb-4 sm:mb-6"></div>
-                <p className="text-lg sm:text-xl md:text-2xl font-light mb-4 sm:mb-6 text-blue-100">
-                  Especialista em Mercado Imobiliário e Energético
-                </p>
                 <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
-                  15+ anos de experiência ajudando famílias e empresas
+                  +10 anos de experiencia na area comercial
                 </p>
               </div>
             </animated.div>
@@ -196,60 +193,29 @@ const CarlosGoncalvesPage: React.FC = () => {
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                   A Visão por Trás da Globalead
                 </h2>
-                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-600">
+                <div className="space-y-4 sm:space-y-6 text-base mt-12 sm:text-lg text-gray-600">
                   <p>
-                    Com mais de 15 anos de experiência no mercado imobiliário e energético, 
-                    Carlos Gonçalves fundou a Globalead Portugal com uma missão clara: 
-                    democratizar o acesso a soluções energéticas eficientes e facilitar 
-                    o processo de compra e venda de imóveis.
-                  </p>
-                  <p>
-                    A sua paixão pela inovação e pelo atendimento personalizado transformou 
-                    a Globalead numa referência no setor, ajudando milhares de famílias e 
-                    empresas a alcançar os seus objetivos.
-                  </p>
-                  <p>
-                    "Acredito que cada cliente merece uma solução única, adaptada às suas 
-                    necessidades específicas. É essa filosofia que nos diferencia no mercado."
+                    Olá, o meu nome é Carlos Gonçalves e sou o CEO da Globalead Portugal. Aos 19
+anos iniciei o meu percurso no setor comercial, onde tive a oportunidade de aprender, crescer e
+consolidar competências necessárias para atuar em diversas areas e perceber o que realmente
+move as pessoas. 
+ <p></p>Durante quase uma década estive ligado a diferentes setores que hoje servem
+de alicerce à Globalead Portugal.<p></p> A minha missão sempre foi ajudar os clientes a encontrarem
+soluções reais para as suas necessidades. <p></p>Acredito que, ao tomar decisões sobre serviços
+importantes é essencial contar com o apoio de um profissional especializado permitindo
+encontrar as melhores soluções, poupando tempo e dinheiro. <p></p>Serei a ponte principal entre as
+marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                   </p>
                 </div>
                 
-                {/* Contact Methods */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-10 mb-8 sm:mb-16">
-                  {/* Porto, Portugal */}
-                  <div className="text-center">
-                    <div className="bg-blue-50 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                      <MapPin className="h-6 w-6 sm:h-8 sm:w-8 text-[#0d2233]" />
-                    </div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">Localização</h3>
-                    <p className="text-sm sm:text-base text-gray-600">Porto, Portugal</p>
-                  </div>
-
-                  {/* Telefone */}
-                  <div className="text-center">
-                    <div className="bg-blue-50 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                      <Phone className="h-6 w-6 sm:h-8 sm:w-8 text-[#0d2233]" />
-                    </div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">Telefone</h3>
-                    <p className="text-sm sm:text-base text-gray-600">+351 915 482 365</p>
-                  </div>
-
-                  {/* Email */}
-                  <div className="text-center">
-                    <div className="bg-blue-50 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                      <Mail className="h-6 w-6 sm:h-8 sm:w-8 text-[#0d2233]" />
-                    </div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">Email</h3>
-                    <p className="text-sm sm:text-base text-gray-600">geral@globalead.pt</p>
-                  </div>
-                </div>
+                
               </div>
 
               <div className="relative">
                 {/* Placeholder for main professional photo */}
                 <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-xl aspect-[3/4]">
                   <img
-                    src="/carlos/pe-fato-meio4.jpg"
+                    src="/carlos/pe-fato-serio.jpg"
                     alt="Carlos Gonçalves"
                     className="w-full h-full object-cover"
                   />

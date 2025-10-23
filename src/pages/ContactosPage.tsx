@@ -78,7 +78,7 @@ const ContactosPage: React.FC = () => {
               Contactos
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-              Na Globalead Portugal, colocamos sempre o cliente no centro de tudo o que fazemos. Estamos inteiramente disponíveis para lhe prestar o apoio que necessita.
+             Na Globalead Portugal colocamos sempre o cliente no centro. Estamos inteiramente disponíveis para lhe prestar o apoio que necessita.
             </p>
           </div>
         </div>
@@ -89,18 +89,21 @@ const ContactosPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              Caso tenha dúvidas sobre os nossos serviços, precise de assistência técnica, pretenda informações adicionais ou procure uma solução totalmente personalizada, a nossa equipa está preparada para encontrar a resposta certa para si.
+             Caso tenha dúvidas sobre os nossos serviços, precise de assistência técnica, pretenda
+informações adicionais ou procure uma solução totalmente personalizada, a nossa equipa está
+preparada para encontrar a resposta certa para si.
             </p>
             <br />
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              Entre em contacto connosco através do formulário abaixo, envie-nos um e-mail ou ligue para os contactos indicados. Em alternativa, poderá também visitar-nos no nosso escritório, onde teremos todo o gosto em recebê-lo. A nossa prioridade é prestar-lhe um atendimento célere e eficaz, garantindo a sua máxima satisfação.
+              Entre em contacto connosco através do formulário abaixo, envie-nos um e-mail ou ligue para os
+contactos indicados. A nossa prioridade é prestar-lhe um atendimento célere e eficaz,
+garantindo a sua máxima satisfação.
             </p>
           </div>
 
           
 
-          {/* Contact Methods */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Phone className="h-8 w-8 text-[#0d2233]" />
@@ -119,14 +122,6 @@ const ContactosPage: React.FC = () => {
 
             <div className="text-center">
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageCircle className="h-8 w-8 text-[#0d2233]" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">WhatsApp</h3>
-              <p className="text-gray-600">Mensagem direta</p>
-            </div>
-
-            <div className="text-center">
-              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Clock className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Horário</h3>
@@ -134,21 +129,23 @@ const ContactosPage: React.FC = () => {
             </div>
           </div>
         </div>
+
       </section>
 
       {/* Contact Form */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Tem dúvidas?
+            </h2>
+            <p className="text-xl text-blue-100">
+              Entre em contacto!
+            </p>
+          </div>
           <div className="flex flex-col items-center">
             <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 w-full max-w-2xl">
-              <div className="mb-8 text-center">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Formulário de Contacto
-                </h2>
-                <p className="text-gray-600">
-                  Preencha o formulário abaixo e entraremos em contacto consigo
-                </p>
-              </div>
+              
 
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input

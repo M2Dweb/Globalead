@@ -373,7 +373,7 @@ const PropertyBuyForm: React.FC = () => {
               className="w-full bg-[#79b2e9] text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg hover:bg-[#0d2233] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base inline-flex items-center justify-center"
             >
               <Search className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              {isSubmitting ? 'Enviando...' : 'Enviar Pedido de Compra'}
+              {isSubmitting ? 'Encontrando...' : 'Quero encontrar um imóvel'}
             </button>
           </div>
         </form>

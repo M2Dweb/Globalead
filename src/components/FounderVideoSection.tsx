@@ -1,35 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { Play } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
 
 const FounderVideoSection: React.FC = () => {
-  // Set the default video URL
-  const [founderVideoUrl, setFounderVideoUrl] = useState<string | null>(
-    'https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/video4.mp4'
-  );
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    const fetchSiteSettings = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('site_settings')
-          .select('founder_video_url')
-          .single();
+    const script = document.createElement('script');
+    script.src = 'https://player.vimeo.com/api/player.js';
+    script.async = true;
+    script.onload = () => {
+      if (iframeRef.current) {
+        const player = new (window as any).Vimeo.Player(iframeRef.current);
 
-        if (error) {
-          console.error('Erro ao carregar configurações:', error);
-        }
-
-        if (data && data.founder_video_url) {
-          setFounderVideoUrl(data.founder_video_url);
-        }
-      } catch (error) {
-        console.error('Erro inesperado ao carregar configurações:', error);
+        player.on('ended', () => {
+          player.setCurrentTime(0).then(() => {
+            player.play();
+          });
+        });
       }
     };
-
-    fetchSiteSettings();
+    document.body.appendChild(script);
   }, []);
 
   return (
@@ -37,7 +26,7 @@ const FounderVideoSection: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Porquê a Globalead Portugal ?
+            Porquê a Globalead Portugal?
           </h2>
           <p className="text-xl text-gray-600">
             Na Globalead, acreditamos que a chave para o sucesso está na proximidade com o cliente.
@@ -45,31 +34,16 @@ const FounderVideoSection: React.FC = () => {
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="relative">
-            {founderVideoUrl ? (
-              <video
-                controls
-                playsInline
-                muted
-                className="w-full h-full object-fill"
-                poster="/carlos/pe-fato-meio-sorrir3.jpg"
-              >
-                <source src={founderVideoUrl} type="video/mp4" />
-              </video>
-            ) : (
-              <>
-                <img
-                  src="/carlos/pe-fato-meio-sorrir3.jpg"
-                  alt="Fundador da Globalead"
-                  className="w-full h-64 object-cover"
-                />
-                <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-60 transition-all duration-300 group">
-                  <div className="bg-white rounded-full p-6 group-hover:scale-110 transition-transform duration-300">
-                    <Play className="h-12 w-12 text-[#0d2233] ml-1" />
-                  </div>
-                </button>
-              </>
-            )}
+          <div className="relative" style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+            <iframe
+              ref={iframeRef}
+              src="https://player.vimeo.com/video/1129541624?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+              frameBorder="0"
+              allow="fullscreen; picture-in-picture"
+              allowFullScreen
+              title="Vídeo Globalead"
+            ></iframe>
           </div>
         </div>
       </div>

@@ -148,7 +148,7 @@ const ImoveisPage: React.FC = () => {
     {
       icon: <FileText className="h-12 w-12 text-[#79b2e9]" />,
       title: "Certificação Energética",
-      description: "O desempenho energético de um imóvel é classificado de A+ a G e deve ser indicado através de um certificado energético, obrigatório na venda. Com a Globalead, tratamos de todo o processo, garantindo todas as condições para a venda do seu imóvel.",
+      description: "O desempenho energético de um imóvel é classificado de A+ a F e deve ser indicado através de um certificado energético, obrigatório na venda. Com a Globalead, tratamos de todo o processo, garantindo todas as condições para a venda do seu imóvel.",
       link: "/certificacao"
     },
     {
@@ -215,7 +215,7 @@ const ImoveisPage: React.FC = () => {
               O lugar a que<br />chamamos casa
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-              Vamos criar uma relação próxima e escutar com atenção todos os seus desejos e as suas expectativas e garantir sempre que está acompanhado, e que estamos consigo sempre
+             Vamos criar uma relação próxima e escutar com atenção todos os seus desejos e expectativas, garantindo que está acompanhado e que estamos consigo sempre
             </p>
           </div>
         </div>
@@ -270,7 +270,7 @@ const ImoveisPage: React.FC = () => {
               <img
                 className="rounded-2xl shadow-lg object-cover"
                 style={{ aspectRatio: "9/16", width: "100%", maxWidth: "350px" }}
-                src='/carlos/pe-fato-meio3.jpg'
+                src='/carlos/sentado-sorrir2.jpg'
               >
               </img>
             </div>
@@ -287,20 +287,17 @@ const ImoveisPage: React.FC = () => {
                   </a>
                 </h2>
                 <h3 className="text-xl text-[#79b2e9] font-medium">
-                  A confiança constrói o amanhã
+                  A confiança que constrói o amanhã
                 </h3>
               </div>
               <p className="text-gray-700 leading-relaxed text-lg">
-                Sou um profissional apaixonado pelo setor imobiliário, com foco em
-                ajudar famílias e investidores a encontrar o imóvel perfeito.
-                Acredito que cada propriedade tem uma história para contar e um
-                potencial único para transformar vidas. Com anos de experiência no
-                mercado, valorizo a transparência, a confiança e o acompanhamento
-                próximo em cada etapa do processo. Para mim, o sucesso não é apenas
-                fechar negócios, mas sim construir relações duradouras. Se procura
-                orientação, apoio e alguém que trate o seu projeto como único, estou
-                pronto para fazer parte desta jornada ao seu lado, garantindo que o
-                futuro da sua casa comece com segurança e visão.
+                Sou um profissional apaixonado pelo setor imobiliário, dedicado a acompanhar
+                clientes, famílias e investidores na procura do imóvel certo. Acredito que cada propriedade tem
+                uma história e um potencial único para transformar vidas. Com anos de experiência, trabalho
+                com transparência, confiança e acompanhamento próximo em todas as etapas, pilares que
+                estão na base do sucesso. Se procura orientação e apoio e alguém que trate o seu projeto como
+                verdadeiramente único, conte comigo. Estou pronto para caminhar ao seu lado e garantir que o
+                futuro da sua casa começa com segurança, visão e tranquilidade.
               </p>
             </div>
 

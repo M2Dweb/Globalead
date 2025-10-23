@@ -302,9 +302,14 @@ const AlarmesPage: React.FC = () => {
 
             {/* Formulário Centralizado */}
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                Tem dúvidas? Entre em contacto
-              </h3>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Tem dúvidas?
+                </h2>
+                <p className="text-xl text-blue-100">
+                  Entre em contacto!
+                </p>
+              </div>
               
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input
