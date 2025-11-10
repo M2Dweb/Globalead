@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tv, Wifi, Phone, ChevronRight, Plus, Minus, MapPin, Clock, ArrowLeft, Home, Mail, User, Euro, Smartphone } from 'lucide-react';
+import { Tv, Wifi, Phone, ChevronRight, Plus, Minus, MapPin, ArrowLeft, Home, Mail, User, Euro, Smartphone } from 'lucide-react';
 import { sendEmail } from '../utils/emailService';
 import { Link } from 'react-router-dom';
 

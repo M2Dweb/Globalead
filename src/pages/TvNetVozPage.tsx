@@ -10,7 +10,7 @@ import ContentRenderer from '../components/ContentRenderer';
 import { supabase } from '../lib/supabase';
 
 const TvNetVozPage: React.FC = () => {
-  const [activeProcessStep, setActiveProcessStep] = useState(0);
+  const [, setActiveProcessStep] = useState(0);
   const [latestPosts, setLatestPosts] = useState<any[]>([]);
   
   useEffect(() => {
@@ -151,32 +151,7 @@ const TvNetVozPage: React.FC = () => {
     }
   ];
 
-  const providers = [
-    {
-      name: "MEO",
-      description: "Líder em fibra ótica com cobertura nacional. Oferece pacotes completos com TV, Internet e Telefone, incluindo conteúdos premium e velocidades até 1Gbps.",
-      logo: "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/patrocinios/LOGOS_AZUL_ESCURO-09.png",
-      features: ["Fibra até 1Gbps", "200+ Canais TV", "Chamadas ilimitadas"]
-    },
-    {
-      name: "NOS",
-      description: "Rede híbrida fibra-coaxial com excelente cobertura. Destaca-se pelos conteúdos desportivos e plataformas de streaming integradas.",
-      logo: "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/patrocinios/LOGOS_AZUL_ESCURO-19.png",
-      features: ["Internet até 500Mbps", "Conteúdos Sport TV", "Netflix incluído"]
-    },
-    {
-      name: "Vodafone",
-      description: "Forte presença no mercado móvel e fixo. Oferece soluções convergentes com benefícios para clientes móveis e pacotes flexíveis.",
-      logo: "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/patrocinios/LOGOS_AZUL_ESCURO-24.png",
-      features: ["Convergência móvel-fixo", "TV Cine e Séries", "Roaming internacional"]
-    },
-    {
-      name: "NOWO",
-      description: "Operador com foco na relação qualidade-preço. Oferece pacotes simples e transparentes com boa cobertura em fibra ótica.",
-      logo: "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/patrocinios/LOGOS_AZUL_ESCURO-14.png",
-      features: ["Preços competitivos", "Sem permanências", "Instalação gratuita"]
-    }
-  ];
+  
 
   return (
     <div className="min-h-screen bg-white">

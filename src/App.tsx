@@ -18,7 +18,7 @@ import PropertyDetailPage from './pages/PropertyDetailPage';
 import AdminPage from './pages/AdminPage';
 import CreditoPage from './pages/CreditoPage';
 import CertificacaoPage from './pages/CertificacaoPage';
-import AlarmesPage from './pages/AlarmesPage';
+
 import EnergiaPage from './pages/EnergiaPage';
 import TvNetVozPage from './pages/TvNetVozPage';
 import BlogPage from './pages/BlogPage';
@@ -134,7 +134,7 @@ const AppLayout: React.FC = () => {
           <Route path="/credito" element={<CreditoPage />} />
           <Route path="/certificacao" element={<CertificacaoPage />} />
           <Route path="/carlos-goncalves" element={<CarlosGoncalvesPage />} />
-          <Route path="/alarmes" element={<AlarmesPage />} />
+          
           <Route path="/energia" element={<EnergiaPage />} />
           <Route path="/simulacao" element={<SimulacaoEnergia />} />
           <Route path="/tv-net-voz" element={<TvNetVozPage />} />

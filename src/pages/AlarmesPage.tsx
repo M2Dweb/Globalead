@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Eye, Clock, Users, Lock, Camera, Smartphone, Key, Phone, Mail } from 'lucide-react';
+import { Shield, Eye, Clock, Users, Lock, Camera, Smartphone, Key, Phone } from 'lucide-react';
 import FAQ from '../components/FAQ';
 import AnimatedSection from '../components/AnimatedSection';
 import { sendEmail, FormData } from '../utils/emailService';

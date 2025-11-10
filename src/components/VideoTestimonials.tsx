@@ -8,7 +8,7 @@ const VideoTestimonials: React.FC = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Maria Silva",
+      name: "Gonçalo Vinhas",
       role: "Proprietária",
       location: "Porto",
       rating: 5,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Calendar, MapPin, TrendingUp, Users, Clock } from 'lucide-react';
+import { ArrowRight, MapPin, TrendingUp, Users, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LazyImage from './LazyImage';
 

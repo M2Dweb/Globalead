@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSpring, animated, config, useTrail } from '@react-spring/web';
-import { Award, Users, TrendingUp, MapPin, Phone, Mail, Star, Building, Compass, Hammer, Palette, Scale, Camera, Globe, Paintbrush, Share2, Tag, Video, Euro, Clock, Search } from 'lucide-react';
+import { Award, Users, TrendingUp, MapPin, Star, Building, Compass, Hammer, Palette, Scale, Camera, Globe, Paintbrush, Share2, Tag, Video, Search } from 'lucide-react';
 import AnimatedSectionSpring from '../components/Parallax/AnimatedSectionSpring';
 import FounderVideoSection from '../components/FounderVideoSection';
 import PropertyValuationForm from '../components/PropertyValuationForm';
-import PropertySaleForm from '../components/PropertySaleForm';
 import PropertyBuyForm from '../components/PropertyBuyForm';
 import Footer from '../components/Footer';
 

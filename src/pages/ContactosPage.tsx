@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, Clock, MapPin, MessageCircle } from 'lucide-react';
+import { Phone, Mail, Clock } from 'lucide-react';
 import { sendEmail, FormData } from '../utils/emailService';
 
 const ContactosPage: React.FC = () => {

@@ -7,7 +7,7 @@ interface HeaderProps {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-const HeaderTvNetVoz: React.FC<HeaderProps> = ({ formData, handleInputChange }) => {
+const HeaderTvNetVoz: React.FC<HeaderProps> = ({  }) => {
   const navigate = useNavigate();
 
   const handleNavigateToSimulacao = () => {

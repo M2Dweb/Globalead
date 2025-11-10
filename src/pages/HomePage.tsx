@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Zap, Tv, Calendar, Siren, Cctv } from 'lucide-react';
+import { Shield, Zap, Tv, Calendar, Cctv } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
@@ -120,12 +120,6 @@ const HomePage: React.FC = () => {
   }, []);
 
   const services = [
-    {
-      icon: <Cctv className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Alarmes",
-      description: "Os alarmes são dispositivos de segurança projetados para alertar sobre eventos específicos, relacionados à segurança pessoal, propriedade, etc. Desempenham um papel crucial na prevenção de incidentes indesejados e na proteção do seu lar",
-      link: "/alarmes"
-    },
     {
       icon: <Zap className="h-12 w-12 text-[#79b2e9]" />,
       title: "Energia",
@@ -249,7 +243,7 @@ const HomePage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <motion.div
                 key={index}

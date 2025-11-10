@@ -10,27 +10,28 @@ const CertificacaoPage: React.FC = () => {
       number: "1",
       title: "Agendamento",
       description: "Após o seu contacto, ligamos em menos de 24h para agendar a visita do técnico.",
-      icon: <Clock className="h-8 w-8 text-[#79b2e9]" />
+      icon: <Clock className="h-8 w-8 text-white" />
     },
     {
       number: "2",
       title: "Documentação",
       description: "Antes da visita deverão ser reunidos os documentos necessários.",
-      icon: <FileText className="h-8 w-8 text-[#79b2e9]" />
+      icon: <FileText className="h-8 w-8 text-white" />
     },
     {
       number: "3",
       title: "Visita Técnica",
-      description: "Um técnico especializado, irá recolher toda a informação necessária.",
-      icon: <CheckCircle className="h-8 w-8 text-[#79b2e9]" />
+      description: "Um técnico especializado irá recolher toda a informação necessária.",
+      icon: <CheckCircle className="h-8 w-8 text-white" />
     },
     {
       number: "4",
       title: "Emissão do Certificado",
       description: "Entregamos o teu certificado entre 48h a 72h após a visita.",
-      icon: <FileText className="h-8 w-8 text-[#79b2e9] " />
+      icon: <FileText className="h-8 w-8 text-white" />
     }
   ];
+
 
   const certificateTypes = [
     {
@@ -87,33 +88,45 @@ const CertificacaoPage: React.FC = () => {
         </div>
       </section>
 
-      {/* How it Works */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      {/* Process Section */}
+      <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Como funciona a emissão do certificado energético?
+              Como funciona a <span className="text-[#79b2e9]">emissão do certificado energético?</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {step.icon}
+              <div key={index} className="text-center group">
+                <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col">
+                  
+                  <div className="flex justify-center mb-6 relative">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#79b2e9] to-blue-600 rounded-full flex items-center justify-center mx-auto">
+                      {step.icon}
+                    </div>
+
+                    {/* Número do passo (opcional, pequeno detalhe visual) */}
+                    <div className="absolute -top-3 -right-3 bg-white border-2 border-[#79b2e9] text-[#79b2e9] font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">
+                      {step.number}
+                    </div>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed flex-grow">
+                    {step.description}
+                  </p>
                 </div>
-                
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600">
-                  {step.description}
-                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* Certificate Types */}
       <section className="py-20">

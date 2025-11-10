@@ -7,7 +7,7 @@ interface HeaderProps {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-const HeaderEnergia: React.FC<HeaderProps> = ({ formData, handleInputChange }) => {
+const HeaderEnergia: React.FC<HeaderProps> = ({  }) => {
   const navigate = useNavigate();
 
   const handleNavigateToSimulacao = () => {

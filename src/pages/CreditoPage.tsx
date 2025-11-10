@@ -91,7 +91,7 @@ const CreditoPage: React.FC = () => {
 
         {/* Número do intermediário - centralizado */}
         <div className="absolute top-20 left-1/2  font-semibold transform -translate-x-1/2 text-xs z-20 bg-white px-1 py-2 rounded-lg text-black text-center">
-          Intermediário de crédito N.º 0007977
+          Crédito N.º 0007977
         </div>
 
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -220,7 +220,7 @@ const CreditoPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Credit Calculator */}
+      {/* Credit Calculator 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <CreditCalculator />
@@ -228,7 +228,7 @@ const CreditoPage: React.FC = () => {
             
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* Partners Section */}
       <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">

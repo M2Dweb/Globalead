@@ -13,7 +13,7 @@ import { supabase } from '../lib/supabase';
 
 
 const EnergiaPage: React.FC = () => {
-  const [activeProcessStep, setActiveProcessStep] = useState(0);
+  const [, setActiveProcessStep] = useState(0);
   const [latestPosts, setLatestPosts] = useState<any[]>([]);
   
     useEffect(() => {
@@ -168,11 +168,8 @@ const EnergiaPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8 sm:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
-                Os Nossos Serviços de Energia
+                Descubra as soluções energéticas que temos para si
               </h2>
-              <p className="text-lg sm:text-xl text-gray-600 px-4">
-               Descubra as soluções energéticas que temos para si
-              </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {energyServices.map((service, index) => (
@@ -237,18 +234,33 @@ const EnergiaPage: React.FC = () => {
       </AnimatedSection>
 
       <AnimatedSection>
-        <section className="py-12 sm:py-20 bg-white">
+        <section className="py-12 sm:py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start lg:items-center">
               
               {/* Left side - Content */}
-              <div className="lg:px-10"> {/* Ajuste de padding à esquerda */}
+              <div>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Instalação de Painéis Solares
                 </h2>
-                <p className="text-lg sm:text-xl text-gray-600 mb-4 sm:mb-8">
+                <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">
                   Produza a sua própria energia limpa e sustentável com os nossos sistemas solares fotovoltaicos.
                 </p>
+
+                {/* Image (Only on mobile, placed between the title and the topics) */}
+                <div className="lg:hidden relative mb-8">
+                  <img
+                    src="https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?_gl=1*8hwsl0*_ga*MjgxNDkwNTc1LjE3NjA3ODcxMTY.*_ga_8JE65Q40S6*czE3NjI3ODA2OTIkbzQkZzEkdDE3NjI3ODA3OTUkajU3JGwwJGgw" // Aqui está a imagem que será exibida no mobile
+                    alt="Família a usar serviços TV Net Voz"
+                    className="w-full h-auto rounded-2xl shadow-lg"
+                  />
+                  <div className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-6 rounded-xl shadow-lg">
+                    <div className="text-center">
+                      <div className="text-lg sm:text-2xl font-bold text-[#79b2e9]">80%</div>
+                      <div className="text-xs sm:text-sm text-gray-600">Poupança mensal</div>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Benefits List */}
                 <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
@@ -261,7 +273,7 @@ const EnergiaPage: React.FC = () => {
                       <p className="text-gray-600 text-sm sm:text-base">Os painéis solares produzem eletricidade de forma sustentável. Contribuem para a proteção do meio ambiente através da produção sustentável de eletricidade.</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-3 sm:mr-4 mt-1">
                       <span className="text-white font-bold text-xs sm:text-sm">2</span>
@@ -271,7 +283,7 @@ const EnergiaPage: React.FC = () => {
                       <p className="text-gray-600 text-sm sm:text-base">A instalação de um sistema fotovoltaico pode aumentar a classe de eficiência energética da tua casa e o respetivo valor de mercado. Torna o imóvel mais atraente para compradores com uma maior consciência ambiental.</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#79b2e9] rounded-full flex items-center justify-center mr-3 sm:mr-4 mt-1">
                       <span className="text-white font-bold text-xs sm:text-sm">3</span>
@@ -306,24 +318,24 @@ const EnergiaPage: React.FC = () => {
               </div>
 
               {/* Right side - Image (Desktop only) */}
-              <div className="hidden lg:block mt-8 lg:mt-0 lg:ml-10">
-                <div className="space-y-4">
-                  <img
-                    src="/PAINEIS-QUALITY_002.png"
-                    alt="Solução 4 Painéis - Gama Premium - 38,71€/mês"
-                    className="w-300 max-w-md rounded-lg"
-                  />
-                  <img
-                    src="/PAINEIS-PREMIUM_002.png"
-                    alt="Solução 2 Painéis - Gama Quality - 23,90€/mês"
-                    className="w-300 max-w-md rounded-lg"
-                  />
+              <div className="hidden lg:block relative mt-8 lg:mt-0 lg:ml-8">
+                <img
+                  src="https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?_gl=1*8hwsl0*_ga*MjgxNDkwNTc1LjE3NjA3ODcxMTY.*_ga_8JE65Q40S6*czE3NjI3ODA2OTIkbzQkZzEkdDE3NjI3ODA3OTUkajU3JGwwJGgw" // A mesma imagem, mas agora para o desktop
+                  alt="Família a usar serviços TV Net Voz"
+                  className="w-full lg:full h-auto rounded-2xl shadow-lg" 
+                />
+                <div className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-6 rounded-xl shadow-lg">
+                  <div className="text-center">
+                    <div className="text-lg sm:text-2xl font-bold text-[#79b2e9]">80%</div>
+                    <div className="text-xs sm:text-sm text-gray-600">Poupança mensal</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
       </AnimatedSection>
+
 
 
 

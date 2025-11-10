@@ -1,24 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const FounderVideoSection: React.FC = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [videoId, setVideoId] = useState('1129541624'); // horizontal (desktop)
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://player.vimeo.com/api/player.js';
-    script.async = true;
-    script.onload = () => {
-      if (iframeRef.current) {
-        const player = new (window as any).Vimeo.Player(iframeRef.current);
-
-        player.on('ended', () => {
-          player.setCurrentTime(0).then(() => {
-            player.play();
-          });
-        });
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        // 👉 usa vídeo vertical
+        setVideoId('1135324442'); 
+      } else {
+        // 👉 usa vídeo horizontal
+        setVideoId('1129541624');
       }
     };
-    document.body.appendChild(script);
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
@@ -34,17 +33,19 @@ const FounderVideoSection: React.FC = () => {
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="relative" style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+          <div className="relative aspect-[9/16] md:aspect-[16/9] overflow-hidden">
             <iframe
               ref={iframeRef}
-              src="https://player.vimeo.com/video/1129541624?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+              src={`https://player.vimeo.com/video/${videoId}?autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0&badge=0&controls=1`}
+              className="absolute top-0 left-0 w-full h-full"
               frameBorder="0"
               allow="fullscreen; picture-in-picture"
               allowFullScreen
               title="Vídeo Globalead"
             ></iframe>
           </div>
+
+
         </div>
       </div>
     </section>
