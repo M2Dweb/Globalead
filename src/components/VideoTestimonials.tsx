@@ -14,7 +14,7 @@ const VideoTestimonials: React.FC = () => {
       rating: 5,
       thumbnail: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=400",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Placeholder
-      quote: "A Globalead vendeu a minha casa em apenas 2 meses. Profissionalismo exemplar!",
+      quote: "Contactei a Globalead para encontrar soluções de seguro automóvel e fui atendido pelo Carlos Gonçalves. Desde o primeiro contacto, o Carlos mostrou-se extremamente profissional e prestável! Apresentou-me as melhores opções conforme as minhas necessidades, explicou-me detalhadamente cada proposta e tratou de todo o processo com grande eficiência. Em menos de 24 horas, o meu seguro já estava ativo. Fiquei muito satisfeito com o serviço e recomendo vivamente a Globalead pela rapidez, clareza e qualidade no atendimento.",
       service: "Venda de Imóvel"
     },
     {

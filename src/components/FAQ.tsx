@@ -41,6 +41,94 @@ const FAQ: React.FC<FAQProps> = ({ category = 'geral' }) => {
         answer: "Precisa da caderneta predial, certidão permanente, certificado energético e licença de habitação (quando aplicável)."
       }
     ],
+
+    tvNetVozFAQ: [
+      {
+        question: "Qual é a melhor operadora de telemóvel?",
+        answer: "Não existe uma melhor operadora para todos. A escolha depende das tuas necessidades: mais internet, chamadas/SMS ilimitados, apps incluídas ou o tarifário mais económico. A Globalead ajuda-te a comparar as opções e a escolher o tarifário ideal sempre sem custos para ti."
+      },
+      {
+        question: "O que significam 2P, 3P, 4P e 5P nos pacotes das operadoras?",
+        answer: "Estes termos indicam o número de serviços incluídos no pacote: 2P – TV + Internet; 3P – TV + Internet + Telefone fixo; 4P – TV + Internet + Telefone fixo + Telemóvel; 5P – TV + Internet + Telefone fixo + Telemóvel + Internet móvel. Quanto maior o número, mais completo é o pacote. A Globalead ajuda-te a escolher o que realmente faz sentido para ti."
+      },
+      {
+        question: "Vale a pena juntar todos os serviços numa só operadora?",
+        answer: "Sim. Muitos clientes têm internet, TV, telemóvel e telefone fixo contratados em operadoras diferentes e acabam por pagar mais. Ao escolher um pacote que agregue todos os serviços, consegues valores mais competitivos e ficas com tudo numa única fatura, tornando a gestão mais simples."
+      },
+      {
+        question: "Ainda vale a pena ter telefone fixo?",
+        answer: "Sim. Apesar de ser menos usado, o telefone fixo continua a ter vantagens. As operadoras oferecem chamadas nacionais e internacionais a preços muito mais baixos — muitas vezes com minutos incluídos. Além disso, adicionar telefone fixo ao pacote não tem custo extra e pode ajudar a poupar em chamadas para o estrangeiro."
+      },
+      {
+        question: "Quais são os custos ao cancelar o contrato antes do fim da fidelização?",
+        answer: "Se cancelares o contrato antes do término da fidelização, pagas apenas os encargos proporcionais às ofertas e benefícios que a operadora te deu. Esses valores têm de estar discriminados no contrato e não podem cobrar mais do que o previsto."
+      },
+      {
+        question: "Posso subscrever um pacote sem fidelização?",
+        answer: "Sim. Podes escolher contratos de 0, 6, 12 ou 24 meses. Optar por um pacote sem fidelização é vantajoso se pretendes mudar facilmente de operadora ou evitar compromissos longos."
+      },
+      {
+        question: "Quais são as vantagens dos serviços de TV das operadoras?",
+        answer: "A TV atual oferece mais de 200 canais, canais premium e funcionalidades como gravação, pausa, voltar atrás e multiscreen. Muitas operadoras incluem ainda videoclube. As funcionalidades variam por pacote e operadora, e também podes optar por TV sem fidelização."
+      },
+      {
+        question: "Como escolher a melhor operadora de Internet?",
+        answer: "Para escolher a melhor Internet, compara preço, velocidade e serviços incluídos. Pacotes 3P (Internet + TV + Telefone fixo) são competitivos e costumam ser mais económicos do que contratar serviços em separado. A Globalead ajuda-te a comparar todas as operadoras sem custos."
+      },
+      {
+        question: "E se a velocidade da Internet não corresponder ao contratado?",
+        answer: "No caso de Internet móvel, o contrato indica velocidades máxima e anunciada. Se a velocidade recebida for muito inferior ao contratado, pode ser incumprimento da operadora. Nesses casos, o cliente pode rescindir o contrato ou exigir solução. A Globalead ajuda-te a avaliar o teu caso."
+      },
+      {
+        question: "Quais são as velocidades que a operadora é obrigada a indicar no contrato?",
+        answer: "A operadora deve indicar: Velocidade mínima, máxima, anunciada e normalmente disponível. A velocidade real pode variar devido a distância ao router, paredes, equipamentos antigos, vírus, entre outros. A Globalead ajuda-te a encontrar a melhor solução para garantir a velocidade ideal."
+      },
+      {
+        question: "O que é a velocidade de upload e porque é importante?",
+        answer: "A velocidade de upload indica quantos dados consegues enviar por segundo. Afeta videochamadas, envio de ficheiros e publicação de conteúdos. O ideal é ter pelo menos 10 Mbps para garantir estabilidade."
+      },
+      {
+        question: "O que é a latência (ping) e porque é importante?",
+        answer: "A latência mede o tempo que os dados demoram a ir e voltar do servidor. Quanto mais baixa, melhor. A fibra ótica tem a menor latência. Valores típicos: até 20 ms (excelente) com cabo, até 30 ms (Wi-Fi), até 100 ms (móvel)."
+      },
+      {
+        question: "Porque é que os testes de velocidade da Internet podem variar?",
+        answer: "Vários fatores influenciam os resultados: navegador, dispositivo, servidor do teste e condições da rede da operadora. Por isso, os resultados podem variar e nem sempre refletem o desempenho real."
+      },
+      {
+        question: "Como posso verificar a cobertura 4G da NOS?",
+        answer: "Podes consultar a cobertura 4G da NOS no site da operadora, introduzindo a morada ou destino. Assim percebes a disponibilidade e velocidade possível da Internet móvel."
+      },
+      {
+        question: "O que é a app NOS TV?",
+        answer: "A app NOS TV permite ver canais da NOS no smartphone, tablet ou computador, funcionando como extensão da tua TV, dentro ou fora de casa."
+      },
+      {
+        question: "O que inclui o serviço de televisão da MEO?",
+        answer: "Inclui sempre uma Box e pode incluir 4K, MEO Videoclube, MEO Go, MEO Jogos, MEO Kanal, MEO Kids e apps interativas. A Globalead ajuda-te a comparar pacotes MEO."
+      },
+      {
+        question: "O que é o MEO Go e quais as vantagens?",
+        answer: "O MEO Go permite ver TV em qualquer lugar, com mais de 120 canais, videoclube e possibilidade de ver offline. Não gasta dados móveis na rede MEO. O MEO Go VR permite ver conteúdos em realidade virtual 360º."
+      },
+      {
+        question: "O que é o multiscreen da MEO?",
+        answer: "O multiscreen permite ver TV em até 3 dispositivos em simultâneo através do MEO Go, dentro ou fora de casa, em direto ou gravações."
+      },
+      {
+        question: "Quais são as vantagens da fibra Vodafone?",
+        answer: "A fibra da Vodafone destaca-se pela alta velocidade, estabilidade e qualidade de transmissão, garantindo uma experiência superior em Internet e TV."
+      },
+      {
+        question: "O que é o Clube Viva da Vodafone?",
+        answer: "O Clube Viva é o programa de pontos da Vodafone que permite trocar gastos por descontos em smartphones, smartwatches e outros equipamentos."
+      },
+      {
+        question: "Que apps e serviços oferece a Vodafone?",
+        answer: "A Vodafone disponibiliza apps como My Vodafone, Secure Net e Call+. Também oferece serviços adicionais em Música, TV, Desporto, Informação e Lazer, com alertas de jogos, golos em direto e conteúdos exclusivos."
+      }
+    ],  
+
     seguros: [
       {
         question: "O que é um seguro?",

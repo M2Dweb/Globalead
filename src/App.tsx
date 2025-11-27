@@ -8,6 +8,8 @@ import StickyCtaButton from './components/StickyCtaButton';
 import SEOHead from './components/SEOHead';
 
 // Pages
+{/* 
+  
 import HomePage from './pages/HomePage';
 import SobrePage from './pages/SobrePage';
 import ImoveisPage from './pages/ImoveisPage';
@@ -26,6 +28,9 @@ import BlogPostPage from './pages/BlogPostPage';
 import SimulacaoEnergia from './components/SimulacaoEnergia';
 import CarlosGoncalvesPage from './pages/CarlosGoncalvesPage';
 import SimulacaoTvNetVoz from './components/SimulacaoTvNetVoz';
+
+*/}
+ 
 import WaitingPage from './pages/WaitingPage';
 
 // Scroll to top component
@@ -123,8 +128,10 @@ const AppLayout: React.FC = () => {
       />
       
       <main className={isScrolled && breadcrumbs.length > 0 ? 'pt-16' : ''}>
+
         <Routes>
           <Route path="/" element={<WaitingPage />} />
+          {/*  
           <Route path="/home" element={<HomePage />} />
           <Route path="/sobre" element={<SobrePage />} />
           <Route path="/imoveis" element={<ImoveisPage />} />
@@ -143,9 +150,10 @@ const AppLayout: React.FC = () => {
           <Route path="/blog/:ref" element={<BlogPostPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/contactos" element={<ContactosPage />} />
+          */}
         </Routes>
       </main>
-      
+ 
       
       {!(isCarlosGoncalvesPage || isAdminPage || isWaitingPage) && <Footer />}
        
