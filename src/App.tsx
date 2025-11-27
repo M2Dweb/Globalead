@@ -8,28 +8,28 @@ import StickyCtaButton from './components/StickyCtaButton';
 import SEOHead from './components/SEOHead';
 
 // Pages
-{/* 
-  
-import HomePage from './pages/HomePage';
-import SobrePage from './pages/SobrePage';
-import ImoveisPage from './pages/ImoveisPage';
-import SeguroPage from './pages/SeguroPage';
-import ContactosPage from './pages/ContactosPage';
-import PropertyListPage from './pages/PropertyListPage';
-import PropertyDetailPage from './pages/PropertyDetailPage';
-import AdminPage from './pages/AdminPage';
-import CreditoPage from './pages/CreditoPage';
-import CertificacaoPage from './pages/CertificacaoPage';
 
-import EnergiaPage from './pages/EnergiaPage';
-import TvNetVozPage from './pages/TvNetVozPage';
-import BlogPage from './pages/BlogPage';
-import BlogPostPage from './pages/BlogPostPage';
-import SimulacaoEnergia from './components/SimulacaoEnergia';
-import CarlosGoncalvesPage from './pages/CarlosGoncalvesPage';
-import SimulacaoTvNetVoz from './components/SimulacaoTvNetVoz';
 
-*/}
+// import HomePage from './pages/HomePage';
+// import SobrePage from './pages/SobrePage';
+// import ImoveisPage from './pages/ImoveisPage';
+// import SeguroPage from './pages/SeguroPage';
+// import ContactosPage from './pages/ContactosPage';
+// import PropertyListPage from './pages/PropertyListPage';
+// import PropertyDetailPage from './pages/PropertyDetailPage';
+// import AdminPage from './pages/AdminPage';
+// import CreditoPage from './pages/CreditoPage';
+// import CertificacaoPage from './pages/CertificacaoPage';
+
+// import EnergiaPage from './pages/EnergiaPage';
+// import TvNetVozPage from './pages/TvNetVozPage';
+// import BlogPage from './pages/BlogPage';
+// import BlogPostPage from './pages/BlogPostPage';
+// import SimulacaoEnergia from './components/SimulacaoEnergia';
+// import CarlosGoncalvesPage from './pages/CarlosGoncalvesPage';
+// import SimulacaoTvNetVoz from './components/SimulacaoTvNetVoz';
+
+
  
 import WaitingPage from './pages/WaitingPage';
 
