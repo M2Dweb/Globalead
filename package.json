@@ -47,5 +47,18 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",
     "vite": "^5.4.2"
-  }
+  },
+  "description": "Globalead",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M2Dweb/Globalead.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/M2Dweb/Globalead/issues"
+  },
+  "homepage": "https://github.com/M2Dweb/Globalead#readme"
 }
