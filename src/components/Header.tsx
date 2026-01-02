@@ -20,7 +20,7 @@ const Header: React.FC = () => {
     { name: 'Sobre', path: '/sobre' },
     { name: 'Imóveis', path: '/imoveis' },
     { name: 'Seguros', path: '/seguros' },
-    { name: 'Credito', path: '/credito' },
+    { name: 'Crédito', path: '/credito' },
     { name: 'C. Energética', path: '/certificacao' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contactos', path: '/contactos' },
@@ -110,7 +110,7 @@ const Header: React.FC = () => {
                     : 'bg-[#0d2233] text-white border-[#0d2233] hover:bg-[#163a55]'
                 }`}
             >
-              Quando vale a minha casa?
+              Quanto vale a minha casa?
             </button>
           </div>
 
@@ -165,7 +165,7 @@ const Header: React.FC = () => {
                     : 'bg-[#0d2233] text-white hover:bg-[#163a55]'
                 }`}
               >
-                Quando vale a minha casa?
+                Quanto vale a minha casa?
               </button>
             </div>
           </div>
