@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -26,10 +26,37 @@ const Header: React.FC = () => {
     { name: 'Contactos', path: '/contactos' },
   ];
 
-  const isHeroPage = ['/', '/sobre', '/imoveis', '/seguros', '/blog', '/contactos'].includes(
-    location.pathname
-  );
+  const isHeroPage = ['/', '/sobre', '/imoveis', '/seguros', '/blog', '/contactos'].includes(location.pathname);
   const shouldBeTransparent = isHeroPage && !isScrolled;
+
+  // Função para scroll direto para o formulário
+  const scrollToForm = () => {
+    const element = document.getElementById('avaliacao-imovel');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  // Função para o botão CTA
+  const handleCTA = () => {
+    setIsMenuOpen(false); // fecha dropdown mobile se estiver aberto
+    if (location.pathname === '/carlos-goncalves') {
+      // já estamos na página → scroll direto
+      scrollToForm();
+    } else {
+      // navega para a página, e depois faz scroll
+      navigate('/carlos-goncalves', { state: { scrollToForm: true } });
+    }
+  };
+
+  // Efeito para scroll quando chegamos na página via state
+  useEffect(() => {
+    if (location.state?.scrollToForm) {
+      scrollToForm();
+      // opcional: limpar state para não repetir scroll
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   return (
     <header
@@ -39,7 +66,7 @@ const Header: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-2">
-          
+
           {/* LOGO */}
           <Link to="/" className="flex items-center shrink-0">
             <img
@@ -74,8 +101,8 @@ const Header: React.FC = () => {
 
           {/* BOTÃO CTA (DESKTOP) */}
           <div className="hidden lg:flex items-center">
-            <Link
-              to="/carlos-goncalves#avaliacao-imovel"
+            <button
+              onClick={handleCTA}
               className={`ml-6 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 border
                 ${
                   shouldBeTransparent
@@ -84,7 +111,7 @@ const Header: React.FC = () => {
                 }`}
             >
               Quando vale a minha casa?
-            </Link>
+            </button>
           </div>
 
           {/* MOBILE MENU BUTTON */}
@@ -130,9 +157,8 @@ const Header: React.FC = () => {
               ))}
 
               {/* MOBILE CTA */}
-              <Link
-                to="/carlos-goncalves#avaliacao-imovel"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={handleCTA}
                 className={`block w-full mt-4 px-4 py-3 text-center text-base font-semibold rounded-lg transition-all duration-200 ${
                   shouldBeTransparent
                     ? 'bg-white text-[#0d2233] hover:bg-blue-100'
@@ -140,7 +166,7 @@ const Header: React.FC = () => {
                 }`}
               >
                 Quando vale a minha casa?
-              </Link>
+              </button>
             </div>
           </div>
         )}
