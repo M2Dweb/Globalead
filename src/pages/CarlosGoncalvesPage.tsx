@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSpring, animated, config, useTrail } from '@react-spring/web';
 import { Award, Users, TrendingUp, MapPin, Star, Building, Compass, Hammer, Palette, Scale, Camera, Globe, Paintbrush, Share2, Tag, Video, Search } from 'lucide-react';
 import AnimatedSectionSpring from '../components/Parallax/AnimatedSectionSpring';
@@ -6,6 +6,9 @@ import FounderVideoSection from '../components/FounderVideoSection';
 import PropertyValuationForm from '../components/PropertyValuationForm';
 import PropertyBuyForm from '../components/PropertyBuyForm';
 import Footer from '../components/Footer';
+import goncalo from "../../public/testemonials/goncalo-vinhas.jpg"
+import fml from "../../public/testemonials/familia-gomes.jpg"
+import franc from "../../public/testemonials/francisco-gonçalves.jpg"
 
 const CarlosGoncalvesPage: React.FC = () => {
   const achievements = [
@@ -70,26 +73,36 @@ const CarlosGoncalvesPage: React.FC = () => {
     }
   ];
     
-  const testimonials = [
+ const testimonials = [
     {
-      name: "Daniel Gomes",
-      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+      name: "Gonçalo Vinhas",
+      image: goncalo ,
+      platform: "WhatsApp",
+      review: "Contactei a Globalead para encontrar soluções de seguro automóvel e fui atendido pelo Carlos Gonçalves. Desde o primeiro contacto, o Carlos mostrou-se extremamente profissional e prestável! Apresentou-me as melhores opções conforme as minhas necessidades, explicou-me detalhadamente cada proposta e tratou de todo o processo com grande eficiência. Em menos de 24 horas, o meu seguro já estava ativo. Fiquei muito satisfeito com o serviço e recomendo vivamente a Globalead pela rapidez, clareza e qualidade no atendimento."
+    },
+    {
+      name: "Francisco Gonçalves",
+      image: franc ,
       platform: "Facebook",
-      review: "Estou extremamente satisfeito com a experiência que tive. Foram bastante profissionais e prestaram um serviço de excelência. Todo o processo de compra e venda da minha casa foi tranquilo e cumpriram com todos os prazos que me apresentaram na reunião inicial. Recomendo a Globalead."
+      review: "Quando o Carlos, em representação da Globalead Portugal, entrou em contacto comigo, percebi de imediato a confiança e a dedicação com que se apresentou. Prometeu um trabalho rigoroso e empenhado na venda do meu imóvel e cumpriu cada palavra. Ao longo de todo o processo, o Carlos foi incansável, sempre disponível, prestável e atento a cada detalhe. Ajudou-me a reunir toda a documentação necessária e acompanhou-me passo a passo, transformando aquilo que poderia ser um desafio num percurso tranquilo e seguro. O resultado foi muito mais do que a concretização da venda: foi a certeza de que posso contar com alguém que coloca profissionalismo e humanidade lado a lado. Estou profundamente grato pelo trabalho desenvolvido e confiante de que, no futuro, o Carlos será sempre a minha primeira escolha."
     },
     {
-      name: "Pedro Tavares",
-      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+      name: "Família Gomes",
+      image: fml ,
       platform: "Google",
-      review: "Consegui vender o meu imóvel em menos de 1 mês e adquirir a minha moradia de sonho com a ajuda da Globalead. Um atendimento de excelência, com atenção aos detalhes e as minhas necessidades, os imóveis apresentados, enquadravam-se naquilo que procurava. Já recomendei!"
-    },
-    {
-      name: "Ana Torres",
-      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
-      platform: "Livro de Elogios",
-      review: "Valorizo a clareza na forma como a Globalead me apresentou todas as soluções de seguros para a minha viatura. As informações sobre a cobertura e os detalhes da apólice foram apresentadas de maneira compreensível, o que facilitou a tomar uma decisão informada. Fui acompanhada desde o primeiro minuto."
+      review: "Entrámos em contacto com a Globalead depois de vermos um anúncio nas redes sociais, numa altura em que procurávamos apoio para tratar de um processo de crédito. Graças ao acompanhamento da Globalead, conseguimos alcançar uma prestação justa, confortável e totalmente adequada ao nosso orçamento familiar. Para além disso, ainda nos ajudaram a renegociar o seguro da casa e o seguro de vida. Um agradecimento muito especial ao Carlos, que esteve sempre ao nosso lado com profissionalismo, dedicação e uma enorme disponibilidade. Tornou todo o processo simples e sereno, e deixou-nos com a certeza de que podemos contar com ele no futuro."
     }
   ];
+  
+  const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>([false, false, false]);
+
+  const toggleExpand = (index: number) => {
+    setExpandedTestimonials(prev => {
+      const copy = [...prev];
+      copy[index] = !copy[index];
+      return copy;
+    });
+  };
   
   const services = [
     {
@@ -367,56 +380,73 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
 
       {/* Testimonials */}
       <AnimatedSectionSpring>
-        <section className="py-16 sm:py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                O que dizem os clientes sobre nós
-              </h2>
-            </div>
-
-            {/* Centraliza a grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="bg-whiterounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
-                >
-                  <div className="flex justify-center mb-3 sm:mb-4">
-                    <img src={testimonial.image} alt="testimonial" className=" rounded-xl w-full h-auto" />
+        {/* Testimonials */}
+              <section className="py-16 sm:py-20 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <div className="text-center mb-12 sm:mb-16">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                      O que dizem os clientes sobre nós
+                    </h2>
                   </div>
-                    <div className="p-6">
-                    {/* estrelas */}
-                    <div className="flex justify-center mb-3 sm:mb-4">
-                      <div className="flex text-yellow-400">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* review no centro */}
-                    <div className="flex-grow flex items-center justify-center">
-                      <p className="text-sm sm:text-base text-gray-600 italic">
-                        "{testimonial.review}"
-                      </p>
-                    </div>
-
-                    {/* nome + plataforma sempre no fundo */}
-                    <div className="border-t pt-3 sm:pt-4 mt-4 sm:mt-6">
-                      <p className="text-sm sm:text-base font-semibold text-gray-900">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-xs sm:text-sm text-gray-500">
-                        Review: {testimonial.platform}
-                      </p>
-                    </div>
+        
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
+                    {testimonials.map((testimonial, index) => {
+                      const words = testimonial.review.split(' ');
+                      const isExpanded = expandedTestimonials[index];
+                      const maxWords = 35;
+                      const displayText = isExpanded || words.length <= maxWords 
+                        ? testimonial.review 
+                        : words.slice(0, maxWords).join(' ') + '...';
+        
+                      return (
+                        <div
+                          key={index}
+                          className="bg-white rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
+                        >
+                          <div className="flex justify-center mb-3 sm:mb-4">
+                            <img src={testimonial.image} alt="testimonial" className="rounded-xl w-full h-auto" />
+                          </div>
+                          <div className="p-6 flex flex-col flex-grow">
+                            {/* estrelas */}
+                            <div className="flex justify-center mb-3 sm:mb-4">
+                              <div className="flex text-yellow-400">
+                                {[...Array(5)].map((_, i) => (
+                                  <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
+                                ))}
+                              </div>
+                            </div>
+        
+                            {/* review com ler mais */}
+                            <div className="flex-grow flex items-center justify-center mb-4">
+                              <p className="text-sm sm:text-base text-gray-600 italic">
+                                "{displayText}"
+                                {words.length > maxWords && !isExpanded && (
+                                  <span 
+                                    className="ml-1 font-bold text-blue-400 cursor-pointer"
+                                    onClick={() => toggleExpand(index)}
+                                  >
+                                    ler mais
+                                  </span>
+                                )}
+                              </p>
+                            </div>
+        
+                            {/* nome + plataforma */}
+                            <div className="border-t pt-3 sm:pt-4 mt-4 sm:mt-6">
+                              <p className="text-sm sm:text-base font-semibold text-gray-900">
+                                {testimonial.name}
+                              </p>
+                              <p className="text-xs sm:text-sm text-gray-500">
+                                Review: {testimonial.platform}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              </section>
       </AnimatedSectionSpring>
 
     
