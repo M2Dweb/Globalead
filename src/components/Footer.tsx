@@ -209,7 +209,7 @@ const Footer: React.FC = () => {
             <span 
               onClick={() => window.location.href = '/admin'}
             >
-            © 2025 Globalead Portugal
+            © 2026 Globalead Portugal
             </span>
             . Todos os direitos reservados.
           </p>

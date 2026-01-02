@@ -52,7 +52,7 @@ const PropertyDetailPage: React.FC = () => {
             location: "Vila Nova de Gaia",
             type: "empreendimento",
             energy_class: "NA",
-            year_built: 2025,
+            year_built: 2026,
             parking: 3,
             reference: "T3NPVNG",
             state: "Novo",

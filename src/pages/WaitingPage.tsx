@@ -15,7 +15,7 @@ const WaitingPage: React.FC = () => {
     seconds: 0
   });
 
-  const launchDate = new Date('2025-12-12T00:00:00Z');
+  const launchDate = new Date('2025-1-6T00:00:00Z');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -181,7 +181,7 @@ const WaitingPage: React.FC = () => {
         </div>
 
         <footer className="text-gray-400 text-sm text-center">
-          © 2025 - Todos os direitos reservados.
+          © 2026 - Todos os direitos reservados.
         </footer>
       </div>
     </div>

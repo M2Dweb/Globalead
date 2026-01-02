@@ -2,61 +2,61 @@ import React, { useState, useEffect } from 'react';
 import { Star, Cpu, Search, ShieldCheck } from 'lucide-react';
 import { sendEmail , FormData } from '../utils/emailService';
 import FounderVideoSection from '../components/FounderVideoSection';
+import goncalo from "../../public/testemonials/goncalo-vinhas.jpg"
+import fml from "../../public/testemonials/familia-gomes.jpg"
+import franc from "../../public/testemonials/francisco-gonçalves.jpg"
 
 const SobrePage: React.FC = () => {
   const [currentReview, setCurrentReview] = useState(0);
   const [formData, setFormData] = useState<Partial<FormData>>({
-      nome: '',
-      apelido: '',
-      telemovel: '',
-      email: '',
-      assunto: '',
-      meio_contacto: '',
-      horario: '',
-      page: 'home'
-    });
+    nome: '',
+    apelido: '',
+    telemovel: '',
+    email: '',
+    assunto: '',
+    meio_contacto: '',
+    horario: '',
+    page: 'home'
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    };
-  
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setIsSubmitting(true);
-      setSubmitStatus('idle');
-  
-      try {
-        console.log('Dados do formulário HomePage:', formData);
-        const success = await sendEmail(formData as FormData);
-        if (success) {
-          setSubmitStatus('success');
-          setFormData({
-            nome: '',
-            apelido: '',
-            telemovel: '',
-            email: '',
-            assunto: '',
-            meio_contacto: '',
-            horario: '',
-            page: 'home'
-          });
-        } else {
-          setSubmitStatus('error');
-        }
-      } catch (error) {
-        console.error('Erro ao enviar formulário:', error);
-        setSubmitStatus('error');
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
 
+  const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>([false, false, false]); // controlar "ler mais" por testimonial
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const success = await sendEmail(formData as FormData);
+      if (success) {
+        setSubmitStatus('success');
+        setFormData({
+          nome: '',
+          apelido: '',
+          telemovel: '',
+          email: '',
+          assunto: '',
+          meio_contacto: '',
+          horario: '',
+          page: 'home'
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -68,80 +68,46 @@ const SobrePage: React.FC = () => {
   const testimonials = [
     {
       name: "Gonçalo Vinhas",
-      image: "",
+      image: goncalo ,
       platform: "WhatsApp",
       review: "Contactei a Globalead para encontrar soluções de seguro automóvel e fui atendido pelo Carlos Gonçalves. Desde o primeiro contacto, o Carlos mostrou-se extremamente profissional e prestável! Apresentou-me as melhores opções conforme as minhas necessidades, explicou-me detalhadamente cada proposta e tratou de todo o processo com grande eficiência. Em menos de 24 horas, o meu seguro já estava ativo. Fiquei muito satisfeito com o serviço e recomendo vivamente a Globalead pela rapidez, clareza e qualidade no atendimento."
     },
     {
       name: "Francisco Gonçalves",
-      image: "public/testimonials/francisco-gonçalves.jpg",
+      image: franc ,
       platform: "Facebook",
-      review: "Quando o Carlos, em representação da Globalead Portugal, entrou em contacto comigo, percebi de imediato a confiança e a dedicação com que se apresentou. Prometeu um trabalho rigoroso e empenhado na venda do meu imóvel e cumpriu cada palavra.Ao longo de todo o processo, o Carlos foi incansável, sempre disponível, prestável e atento a cada detalhe. Ajudou-me a reunir toda a documentação necessária e acompanhou-me passo a passo, transformando aquilo que poderia ser um desafio num percurso tranquilo e seguro.O resultado foi muito mais do que a concretização da venda: foi a certeza de que posso contar com alguém que coloca profissionalismo e humanidade lado a lado. Estou profundamente grato pelo trabalho desenvolvido e confiante de que, no futuro, o Carlos será sempre a minha primeira escolha."
+      review: "Quando o Carlos, em representação da Globalead Portugal, entrou em contacto comigo, percebi de imediato a confiança e a dedicação com que se apresentou. Prometeu um trabalho rigoroso e empenhado na venda do meu imóvel e cumpriu cada palavra. Ao longo de todo o processo, o Carlos foi incansável, sempre disponível, prestável e atento a cada detalhe. Ajudou-me a reunir toda a documentação necessária e acompanhou-me passo a passo, transformando aquilo que poderia ser um desafio num percurso tranquilo e seguro. O resultado foi muito mais do que a concretização da venda: foi a certeza de que posso contar com alguém que coloca profissionalismo e humanidade lado a lado. Estou profundamente grato pelo trabalho desenvolvido e confiante de que, no futuro, o Carlos será sempre a minha primeira escolha."
     },
     {
       name: "Família Gomes",
-      image: "",
+      image: fml ,
       platform: "Google",
       review: "Entrámos em contacto com a Globalead depois de vermos um anúncio nas redes sociais, numa altura em que procurávamos apoio para tratar de um processo de crédito. Graças ao acompanhamento da Globalead, conseguimos alcançar uma prestação justa, confortável e totalmente adequada ao nosso orçamento familiar. Para além disso, ainda nos ajudaram a renegociar o seguro da casa e o seguro de vida. Um agradecimento muito especial ao Carlos, que esteve sempre ao nosso lado com profissionalismo, dedicação e uma enorme disponibilidade. Tornou todo o processo simples e sereno, e deixou-nos com a certeza de que podemos contar com ele no futuro."
     }
   ];
 
+  const toggleExpand = (index: number) => {
+    setExpandedTestimonials(prev => {
+      const copy = [...prev];
+      copy[index] = !copy[index];
+      return copy;
+    });
+  };
+
   const reasons = [
-  {
-    number: "1",
-    title: "Soluções avançadas",
-    description:
-      "Garantimos acesso a soluções avançadas, fiáveis e eficazes, personalizadas para as suas reais necessidades.",
-    icon: <Cpu className="w-7 h-7"/>
-  },
-  {
-    number: "2",
-    title: "Estudamos o mercado",
-    description:
-      "Analisamos as suas exigências e recomendamos a solução ideal, sempre com a qualidade e garantia das marcas que representamos.",
-    icon: <Search className="w-7 h-7" />
-  },
-  {
-    number: "3",
-    title: "Soluções de excelência",
-    description:
-      "Escolher a Globalead significa optar por uma experiência personalizada com acesso às melhores soluções do mercado.",
-    icon: <Star className="w-7 h-7" />
-  },
-  {
-    number: "4",
-    title: "Selo de confiança",
-    description:
-      "Representamos a qualidade, a inovação e a confiança que as empresas oferecem para garantir que recebe o melhor suporte.",
-    icon: <ShieldCheck className="w-7 h-7" />
-  },
-];
+    { number: "1", title: "Soluções avançadas", description: "Garantimos acesso a soluções avançadas, fiáveis e eficazes, personalizadas para as suas reais necessidades.", icon: <Cpu className="w-7 h-7"/> },
+    { number: "2", title: "Estudamos o mercado", description: "Analisamos as suas exigências e recomendamos a solução ideal, sempre com a qualidade e garantia das marcas que representamos.", icon: <Search className="w-7 h-7" /> },
+    { number: "3", title: "Soluções de excelência", description: "Escolher a Globalead significa optar por uma experiência personalizada com acesso às melhores soluções do mercado.", icon: <Star className="w-7 h-7" /> },
+    { number: "4", title: "Selo de confiança", description: "Representamos a qualidade, a inovação e a confiança que as empresas oferecem para garantir que recebe o melhor suporte.", icon: <ShieldCheck className="w-7 h-7" /> },
+  ];
 
   const objectives = [
-    {
-      number: "1",
-      description: "Oferecer soluções personalizadas e integradas, adaptadas às necessidades específicas de cada cliente, com ênfase no setor imobiliário."
-    },
-    {
-      number: "2",
-      description: "Atuar como intermediária, comparando créditos, telecomunicações, energia e seguros para apresentar as melhores opções aos clientes."
-    },
-    {
-      number: "3",
-      description: "Simplificar e otimizar processos, oferecendo um acompanhamento personalizado, ágil, simples e gratuito."
-    },
-    {
-      number: "4",
-      description: "Garantir conforto, segurança e eficiência através de uma gestão rigorosa, apoiada por uma equipa especializada e empenhada em obter os melhores resultados para cada cliente."
-    },
-    {
-      number: "5",
-      description: "Estabelecer relações de confiança duradouras, fidelizando clientes através da qualidade do serviço, proximidade e transparência em todas as etapas do processo."
-    },
-    {
-      number: "6",
-      description: "Acompanhar o cliente em todas as etapas da sua jornada, desde o primeiro contacto até à conclusão do processo, proporcionando uma experiência simples e centralizada num único ponto de contacto."
-    }
+    { number: "1", description: "Oferecer soluções personalizadas e integradas, adaptadas às necessidades específicas de cada cliente, com ênfase no setor imobiliário." },
+    { number: "2", description: "Atuar como intermediária, comparando créditos, telecomunicações, energia e seguros para apresentar as melhores opções aos clientes." },
+    { number: "3", description: "Simplificar e otimizar processos, oferecendo um acompanhamento personalizado, ágil, simples e gratuito." },
+    { number: "4", description: "Garantir conforto, segurança e eficiência através de uma gestão rigorosa, apoiada por uma equipa especializada e empenhada em obter os melhores resultados para cada cliente." },
+    { number: "5", description: "Estabelecer relações de confiança duradouras, fidelizando clientes através da qualidade do serviço, proximidade e transparência em todas as etapas do processo." },
+    { number: "6", description: "Acompanhar o cliente em todas as etapas da sua jornada, desde o primeiro contacto até à conclusão do processo, proporcionando uma experiência simples e centralizada num único ponto de contacto." }
   ];
 
 return (
@@ -267,24 +233,31 @@ reputação como uma rede de intermediação e gestão de excelência.
 
       {/* Testimonials */}
       <section className="py-16 sm:py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                O que dizem os clientes sobre nós
-              </h2>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+              O que dizem os clientes sobre nós
+            </h2>
+          </div>
 
-            {/* Centraliza a grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
-              {testimonials.map((testimonial, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
+            {testimonials.map((testimonial, index) => {
+              const words = testimonial.review.split(' ');
+              const isExpanded = expandedTestimonials[index];
+              const maxWords = 35;
+              const displayText = isExpanded || words.length <= maxWords 
+                ? testimonial.review 
+                : words.slice(0, maxWords).join(' ') + '...';
+
+              return (
                 <div
                   key={index}
-                  className="bg-whiterounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
+                  className="bg-white rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
                 >
                   <div className="flex justify-center mb-3 sm:mb-4">
-                    <img src={testimonial.image} alt="testimonial" className=" rounded-xl w-full h-auto" />
+                    <img src={testimonial.image} alt="testimonial" className="rounded-xl w-full h-auto" />
                   </div>
-                    <div className="p-6">
+                  <div className="p-6 flex flex-col flex-grow">
                     {/* estrelas */}
                     <div className="flex justify-center mb-3 sm:mb-4">
                       <div className="flex text-yellow-400">
@@ -294,14 +267,22 @@ reputação como uma rede de intermediação e gestão de excelência.
                       </div>
                     </div>
 
-                    {/* review no centro */}
-                    <div className="flex-grow flex items-center justify-center">
+                    {/* review com ler mais */}
+                    <div className="flex-grow flex items-center justify-center mb-4">
                       <p className="text-sm sm:text-base text-gray-600 italic">
-                        "{testimonial.review}"
+                        "{displayText}"
+                        {words.length > maxWords && !isExpanded && (
+                          <span 
+                            className="ml-1 font-bold text-blue-400 cursor-pointer"
+                            onClick={() => toggleExpand(index)}
+                          >
+                            ler mais
+                          </span>
+                        )}
                       </p>
                     </div>
 
-                    {/* nome + plataforma sempre no fundo */}
+                    {/* nome + plataforma */}
                     <div className="border-t pt-3 sm:pt-4 mt-4 sm:mt-6">
                       <p className="text-sm sm:text-base font-semibold text-gray-900">
                         {testimonial.name}
@@ -312,10 +293,11 @@ reputação como uma rede de intermediação e gestão de excelência.
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        </section>
+        </div>
+      </section>
 
 
 
