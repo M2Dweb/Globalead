@@ -425,7 +425,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
 
       {/* Property Valuation Section */}
       <AnimatedSectionSpring>
-        <section className="py-16 sm:py-20 bg-white">
+        <section id="avaliacao-imovel" className="py-16 sm:py-20 bg-white">
           <PropertyValuationForm />
         </section>
       </AnimatedSectionSpring>

@@ -38,9 +38,10 @@ const Header: React.FC = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-2">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
+        <div className="flex items-center justify-between py-2">
+          
+          {/* LOGO */}
+          <Link to="/" className="flex items-center shrink-0">
             <img
               src="/logo.png"
               alt="Globalead Portugal"
@@ -48,8 +49,8 @@ const Header: React.FC = () => {
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          {/* NAV + BOTÃO (DESKTOP) */}
+          <div className="hidden lg:flex items-center flex-1 justify-center">
             <nav className="flex space-x-8">
               {menuItems.map((item) => (
                 <Link
@@ -69,10 +70,12 @@ const Header: React.FC = () => {
                 </Link>
               ))}
             </nav>
+          </div>
 
-            {/* Desktop CTA Button */}
+          {/* BOTÃO CTA (DESKTOP) */}
+          <div className="hidden lg:flex items-center">
             <Link
-              to="/carlos-goncalves"
+              to="/carlos-goncalves#avaliacao-imovel"
               className={`ml-6 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 border
                 ${
                   shouldBeTransparent
@@ -84,7 +87,7 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
+          {/* MOBILE MENU BUTTON */}
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -99,7 +102,7 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* MOBILE NAVIGATION */}
         {isMenuOpen && (
           <div className="lg:hidden">
             <div
@@ -112,7 +115,7 @@ const Header: React.FC = () => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ${
+                  className={`block px-3 py-2 text-base font-medium transition-colors duration-200 ${
                     location.pathname === item.path
                       ? shouldBeTransparent
                         ? 'text-white bg-white bg-opacity-20'
@@ -126,9 +129,9 @@ const Header: React.FC = () => {
                 </Link>
               ))}
 
-              {/* Mobile CTA Button */}
+              {/* MOBILE CTA */}
               <Link
-                to="/carlos-goncalves"
+                to="/carlos-goncalves#avaliacao-imovel"
                 onClick={() => setIsMenuOpen(false)}
                 className={`block w-full mt-4 px-4 py-3 text-center text-base font-semibold rounded-lg transition-all duration-200 ${
                   shouldBeTransparent
