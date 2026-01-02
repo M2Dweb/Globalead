@@ -26,7 +26,9 @@ const Header: React.FC = () => {
     { name: 'Contactos', path: '/contactos' },
   ];
 
-  const isHeroPage = ['/', '/sobre', '/imoveis', '/seguros', '/blog', '/contactos'].includes(location.pathname);
+  const isHeroPage = ['/', '/sobre', '/imoveis', '/seguros', '/blog', '/contactos'].includes(
+    location.pathname
+  );
   const shouldBeTransparent = isHeroPage && !isScrolled;
 
   return (
@@ -47,25 +49,40 @@ const Header: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex space-x-8">
-            {menuItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  location.pathname === item.path
-                    ? shouldBeTransparent
-                      ? 'text-white border-b-2 border-white'
-                      : 'text-[#0d2233] border-b-2 border-[#0d2233]'
-                    : shouldBeTransparent
-                    ? 'text-white hover:text-blue-200'
-                    : 'text-gray-700 hover:text-[#0d2233]'
+          <div className="hidden lg:flex items-center space-x-8">
+            <nav className="flex space-x-8">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`text-sm font-medium transition-colors duration-200 ${
+                    location.pathname === item.path
+                      ? shouldBeTransparent
+                        ? 'text-white border-b-2 border-white'
+                        : 'text-[#0d2233] border-b-2 border-[#0d2233]'
+                      : shouldBeTransparent
+                      ? 'text-white hover:text-blue-200'
+                      : 'text-gray-700 hover:text-[#0d2233]'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Desktop CTA Button */}
+            <Link
+              to="/carlos-goncalves"
+              className={`ml-6 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 border
+                ${
+                  shouldBeTransparent
+                    ? 'text-white border-white hover:bg-white hover:text-[#0d2233]'
+                    : 'bg-[#0d2233] text-white border-[#0d2233] hover:bg-[#163a55]'
                 }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+            >
+              Quando vale a minha casa?
+            </Link>
+          </div>
 
           {/* Mobile menu button */}
           <div className="lg:hidden">
@@ -109,7 +126,7 @@ const Header: React.FC = () => {
                 </Link>
               ))}
 
-              {/* CTA Button - Mobile */}
+              {/* Mobile CTA Button */}
               <Link
                 to="/carlos-goncalves"
                 onClick={() => setIsMenuOpen(false)}
