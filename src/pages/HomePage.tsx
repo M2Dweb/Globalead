@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Zap, Tv, Calendar, Cctv } from 'lucide-react';
+import { Shield, Zap, Tv, Calendar, Cctv, FileText, CreditCard } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
         const { data, error } = await supabase.storage
           .from('imagens')
           .list('patrocinios', {
-            limit: 20,
+            limit: 30,
             offset: 0
           });
 
@@ -119,24 +119,24 @@ const HomePage: React.FC = () => {
     fetchPartnerLogos();
   }, []);
 
-  const services = [
+  const businessServices = [
     {
-      icon: <Zap className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Energia",
-      description: "A eletricidade e o gás natural desempenham papéis essenciais na vida moderna, indispensáveis para diversas atividades realizadas diariamente. É fundamental atender a todos os clientes com a melhor oferta energética de forma a facilitar a sua decisão",
-      link: "/energia"
+      icon: <CreditCard className="h-12 w-12 text-[#79b2e9]" />,
+      title: "Crédito Habitação",
+      description: "A Globalead é especializada em oferecer soluções de Crédito Habitação personalizadas, graças à sua relação privilegiada e poder negocial com as principais instituições bancárias em Portugal, garantindo as melhores opções para o seu agregado familiar.",
+      link: "/credito"
+    },
+    {
+      icon: <FileText className="h-12 w-12 text-[#79b2e9]" />,
+      title: "Certificação Energética",
+      description: "O desempenho energético de um imóvel é classificado de A+ a F e deve ser indicado através de um certificado energético, obrigatório na venda. Com a Globalead, tratamos de todo o processo, garantindo todas as condições para a venda do seu imóvel.",
+      link: "/certificacao"
     },
     {
       icon: <Shield className="h-12 w-12 text-[#79b2e9]" />,
       title: "Seguros",
-      description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme definido nas condições da apólice",
+      description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme condições da apólice.",
       link: "/seguros"
-    },
-    {
-      icon: <Tv className="h-12 w-12 text-[#79b2e9]" />,
-      title: "TV, Net, Voz",
-      description: "As telecomunicações são essenciais para a conectividade e desempenham um papel crucial na propagação de informações na sociedade. A Globalead apresenta várias soluções e pretende atender às reais necessidades de cada cliente",
-      link: "/tv-net-voz"
     }
   ];
 
@@ -235,43 +235,38 @@ const HomePage: React.FC = () => {
       <FeaturedProperties2 />
 
       {/* Services Section */}
+      {/* Business Services Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Compare e adira à melhor oferta
+              O melhor negócio para o seu imóvel começa aqui
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex justify-center mb-6">
-                    {service.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 mb-6 text-sm">
-                    {service.description}
-                  </p>
+            {businessServices.map((service, index) => (
+              <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
+                <div className="flex justify-center mb-6">
+                  {service.icon}
                 </div>
-
-                <Link to={service.link}>
-                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
-                    Saber mais
-                  </div>
-                </Link>
-              </motion.div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  {service.title}
+                </h3>
+                <p className="flex justify-center text-gray-600 mb-3 text-sm flex-grow">
+                  {service.description}
+                </p>
+                
+                <button
+                  onClick={() => navigate(service.link)} 
+                  className="w-full bg-[#79b2e9] text-white py-2 px-12 rounded-lg hover:bg-[#0d2233] transition-colors"
+                >
+                  Saber mais
+                </button>
+              </div>
             ))}
           </div>
+
         </div>
       </section>
 

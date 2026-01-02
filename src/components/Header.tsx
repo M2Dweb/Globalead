@@ -20,28 +20,28 @@ const Header: React.FC = () => {
     { name: 'Sobre', path: '/sobre' },
     { name: 'Imóveis', path: '/imoveis' },
     { name: 'Seguros', path: '/seguros' },
-    //{ name: 'Energia', path: '/energia' },
-    //{ name: 'TV Net Voz', path: '/tv-net-voz' },
-    
+    { name: 'Credito', path: '/credito' },
+    { name: 'C. Energética', path: '/certificacao' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contactos', path: '/contactos' },
-    
   ];
 
   const isHeroPage = ['/', '/sobre', '/imoveis', '/seguros', '/blog', '/contactos'].includes(location.pathname);
   const shouldBeTransparent = isHeroPage && !isScrolled;
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      shouldBeTransparent ? 'bg-transparent shadow-none' : 'bg-white shadow-lg'
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        shouldBeTransparent ? 'bg-transparent shadow-none' : 'bg-white shadow-lg'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img 
-              src="/logo.png" 
-              alt="Globalead Portugal" 
+            <img
+              src="/logo.png"
+              alt="Globalead Portugal"
               className="h-14 w-auto"
             />
           </Link>
@@ -54,8 +54,12 @@ const Header: React.FC = () => {
                 to={item.path}
                 className={`text-sm font-medium transition-colors duration-200 ${
                   location.pathname === item.path
-                    ? `${shouldBeTransparent ? 'text-white border-b-2 border-white' : 'text-[#0d2233] border-b-2 border-[#0d2233]'}`
-                    : `${shouldBeTransparent ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-[#0d2233]'}`
+                    ? shouldBeTransparent
+                      ? 'text-white border-b-2 border-white'
+                      : 'text-[#0d2233] border-b-2 border-[#0d2233]'
+                    : shouldBeTransparent
+                    ? 'text-white hover:text-blue-200'
+                    : 'text-gray-700 hover:text-[#0d2233]'
                 }`}
               >
                 {item.name}
@@ -67,7 +71,11 @@ const Header: React.FC = () => {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={shouldBeTransparent ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-[#0d2233]'}
+              className={
+                shouldBeTransparent
+                  ? 'text-white hover:text-blue-200'
+                  : 'text-gray-700 hover:text-[#0d2233]'
+              }
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -77,7 +85,11 @@ const Header: React.FC = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="lg:hidden">
-            <div className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 ${shouldBeTransparent ? 'bg-black bg-opacity-90' : 'bg-gray-50'}`}>
+            <div
+              className={`px-2 pt-2 pb-4 space-y-1 sm:px-3 ${
+                shouldBeTransparent ? 'bg-black bg-opacity-90' : 'bg-gray-50'
+              }`}
+            >
               {menuItems.map((item) => (
                 <Link
                   key={item.path}
@@ -85,13 +97,30 @@ const Header: React.FC = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ${
                     location.pathname === item.path
-                      ? `${shouldBeTransparent ? 'text-white bg-white bg-opacity-20' : 'text-[#0d2233] bg-blue-50'}`
-                      : `${shouldBeTransparent ? 'text-white hover:text-blue-200 hover:bg-white hover:bg-opacity-10' : 'text-gray-700 hover:text-[#0d2233] hover:bg-gray-100'}`
+                      ? shouldBeTransparent
+                        ? 'text-white bg-white bg-opacity-20'
+                        : 'text-[#0d2233] bg-blue-50'
+                      : shouldBeTransparent
+                      ? 'text-white hover:text-blue-200 hover:bg-white hover:bg-opacity-10'
+                      : 'text-gray-700 hover:text-[#0d2233] hover:bg-gray-100'
                   }`}
                 >
                   {item.name}
                 </Link>
               ))}
+
+              {/* CTA Button - Mobile */}
+              <Link
+                to="/carlos-goncalves"
+                onClick={() => setIsMenuOpen(false)}
+                className={`block w-full mt-4 px-4 py-3 text-center text-base font-semibold rounded-lg transition-all duration-200 ${
+                  shouldBeTransparent
+                    ? 'bg-white text-[#0d2233] hover:bg-blue-100'
+                    : 'bg-[#0d2233] text-white hover:bg-[#163a55]'
+                }`}
+              >
+                Quando vale a minha casa?
+              </Link>
             </div>
           </div>
         )}

@@ -7,25 +7,25 @@ import FAQ from '../components/FAQ';
 const CertificacaoPage: React.FC = () => {
   const steps = [
     {
-      number: "1",
+      
       title: "Agendamento",
       description: "Após o seu contacto, ligamos em menos de 24h para agendar a visita do técnico.",
       icon: <Clock className="h-8 w-8 text-white" />
     },
     {
-      number: "2",
+      
       title: "Documentação",
       description: "Antes da visita deverão ser reunidos os documentos necessários.",
       icon: <FileText className="h-8 w-8 text-white" />
     },
     {
-      number: "3",
+      
       title: "Visita Técnica",
       description: "Um técnico especializado irá recolher toda a informação necessária.",
       icon: <CheckCircle className="h-8 w-8 text-white" />
     },
     {
-      number: "4",
+      
       title: "Emissão do Certificado",
       description: "Entregamos o teu certificado entre 48h a 72h após a visita.",
       icon: <FileText className="h-8 w-8 text-white" />
@@ -106,11 +106,6 @@ const CertificacaoPage: React.FC = () => {
                   <div className="flex justify-center mb-6 relative">
                     <div className="w-16 h-16 bg-gradient-to-br from-[#79b2e9] to-blue-600 rounded-full flex items-center justify-center mx-auto">
                       {step.icon}
-                    </div>
-
-                    {/* Número do passo (opcional, pequeno detalhe visual) */}
-                    <div className="absolute -top-3 -right-3 bg-white border-2 border-[#79b2e9] text-[#79b2e9] font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">
-                      {step.number}
                     </div>
                   </div>
 

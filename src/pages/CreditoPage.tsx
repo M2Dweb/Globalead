@@ -85,15 +85,6 @@ const CreditoPage: React.FC = () => {
             backgroundImage: 'url("https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/fundo2.jpg")'
           }}
         ></div>
-
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-black opacity-30"></div>
-
-        {/* Número do intermediário - centralizado */}
-        <div className="absolute top-20 left-1/2  font-semibold transform -translate-x-1/2 text-xs z-20 bg-white px-1 py-2 rounded-lg text-black text-center">
-          Crédito N.º 0007977
-        </div>
-
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold mt-14">
