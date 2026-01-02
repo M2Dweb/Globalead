@@ -894,9 +894,10 @@ const AdminPage: React.FC = () => {
                       <option value="imobiliario">Imobiliário</option>
                       <option value="financas">Finanças</option>
                       <option value="seguros">Seguros</option>
-                      <option value="energia">Energia</option>
+                      <option value="ce">Certificação energetica</option>
+                    {/*<option value="energia">Energia</option>
                       <option value="telecom">Telecomunicações</option>
-                      <option value="alarmes">Alarmes</option>
+                      <option value="alarmes">Alarmes</option> */}
                     </select>
                     <input
                       type="text"

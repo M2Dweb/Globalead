@@ -15,9 +15,10 @@ const BlogPage: React.FC = () => {
     { id: 'imobiliario', name: 'Imobiliário', count: 0 },
     { id: 'financas', name: 'Finanças', count: 0 },
     { id: 'seguros', name: 'Seguros', count: 0 },
-    { id: 'energia', name: 'Energia', count: 0 },
-    { id: 'telecom', name: 'Telecomunicações', count: 0 },
-    { id: 'alarmes', name: 'Alarmes', count: 0 },
+    { id: 'ce', name: 'Certificação energetica', count: 0 },
+    //{ id: 'energia', name: 'Energia', count: 0 },
+    //{ id: 'telecom', name: 'Telecomunicações', count: 0 },
+    //{ id: 'alarmes', name: 'Alarmes', count: 0 },
   ];
 
   useEffect(() => {

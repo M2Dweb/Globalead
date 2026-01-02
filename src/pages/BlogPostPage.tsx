@@ -9,9 +9,10 @@ const categories = [
   { id: 'imobiliario', name: 'Imobiliário' },
   { id: 'financas', name: 'Finanças' },
   { id: 'seguros', name: 'Seguros' },
-  { id: 'energia', name: 'Energia' },
-  { id: 'telecom', name: 'Telecomunicações' },
-  { id: 'alarmes', name: 'Alarmes' },
+  { id: 'ce', name: 'Certificação energetica'},
+  //{ id: 'energia', name: 'Energia' },
+  //{ id: 'telecom', name: 'Telecomunicações' },
+  //{ id: 'alarmes', name: 'Alarmes' },
 ];
 
 const BlogPostPage: React.FC = () => {
