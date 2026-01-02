@@ -19,9 +19,9 @@ const Header: React.FC = () => {
   const menuItems = [
     { name: 'Sobre', path: '/sobre' },
     { name: 'Imóveis', path: '/imoveis' },
-    { name: 'Seguros', path: '/seguros' },
     { name: 'Crédito', path: '/credito' },
-    { name: 'C. Energética', path: '/certificacao' },
+    { name: 'CE', path: '/certificacao' },
+    { name: 'Seguros', path: '/seguros' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contactos', path: '/contactos' },
   ];
