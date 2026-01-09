@@ -32,7 +32,6 @@ const FounderVideoSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="relative aspect-[9/16] md:aspect-[16/9] overflow-hidden">
             <iframe
               ref={iframeRef}
@@ -43,10 +42,7 @@ const FounderVideoSection: React.FC = () => {
               allowFullScreen
               title="Vídeo Globalead"
             ></iframe>
-          </div>
-
-
-        </div>
+          </div> 
       </div>
     </section>
   );

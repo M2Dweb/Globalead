@@ -12,7 +12,7 @@ interface SEOHeadProps {
 
 const SEOHead: React.FC<SEOHeadProps> = ({
   title = "Globalead Portugal",
-  description = "Especialistas em mediação imobiliária, seguros, energia e sistemas de alarme em Portugal. Encontre a sua casa de sonho ou proteja o seu património com a Globalead.",
+  description = "Especialistas em imobiliário, crédito habitação, certificação energética e seguros. Apoiamos todo o processo para comprar ou vender a sua casa em segurança.",
   keywords = "imóveis, mediação imobiliária, seguros, energia, alarmes, Portugal, Porto, Lisboa, casa, apartamento, moradia",
   image = "/logo.png",
   url = "https://globalead.pt",
