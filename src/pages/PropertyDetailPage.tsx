@@ -451,7 +451,7 @@ const PropertyDetailPage: React.FC = () => {
                   </div>
                   <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Referência:</span>
-                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.reference || 'N/A'}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.ref || 'N/A'}</div>
                   </div>
                 </div>
               </div>
