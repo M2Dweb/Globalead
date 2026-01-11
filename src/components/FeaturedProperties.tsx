@@ -92,11 +92,11 @@ const FeaturedProperties: React.FC = () => {
             {currentProperties.map((property) => (
               <div
                 key={property.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer"
-               onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
-              >
-                <img src={property.images[0]} alt={property.title} className="w-full h-48 object-cover" />
-                <div className="p-6">
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full"
+                onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
+                >
+                <img src={property.images[0]} alt={property.title} className="w-full h-48 object-cover"/>
+                <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{property.title}</h3>
                   <div className="flex items-center space-x-4 text-gray-600 mb-4">
                     <div className="flex items-center"><Bed className="h-4 w-4 mr-1" />{property.bedrooms}</div>
@@ -104,7 +104,8 @@ const FeaturedProperties: React.FC = () => {
                     <div className="flex items-center"><Square className="h-4 w-4 mr-1" />{property.area}m²</div>
                     <div className="flex items-center"><MapPin className="h-4 w-4 mr-1" />{property.location}</div>
                   </div>
-                  <div className="text-gray-600 mb-6 text-sm line-clamp-3">
+
+                  <div className="text-gray-600 mb-6 text-sm line-clamp-3 flex-grow">
                     <ContentRenderer content={property.description || ''} />
                   </div>
                   <button
