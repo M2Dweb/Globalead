@@ -31,9 +31,12 @@ const AdminPage: React.FC = () => {
     price: '',
     bedrooms: '',
     bathrooms: '',
+    ref: '',
     area: '',
     location: '',
+    garage: '',
     type: '',
+    cover_image: '',
     energy_class: '',
     year_built: '',
     features: [] as string[],
@@ -134,12 +137,15 @@ const AdminPage: React.FC = () => {
     try {
       const propertyData = {
         ...propertyForm,
-        ref: editingProperty?.ref || generateRef('PROP'),
+        ref: propertyForm.ref || editingProperty?.ref || generateRef('PROP'),
         price: parseFloat(propertyForm.price),
         bedrooms: parseInt(propertyForm.bedrooms),
         bathrooms: parseInt(propertyForm.bathrooms),
         area: parseFloat(propertyForm.area),
-        year_built: parseInt(propertyForm.year_built),
+        year_built: propertyForm.year_built
+        ? parseInt(propertyForm.year_built)
+        : null,
+
         features: propertyForm.features.filter(f => f.trim() !== ''),
         property_types: propertyForm.property_types.length > 0 ? propertyForm.property_types : null
       };
@@ -251,18 +257,23 @@ const AdminPage: React.FC = () => {
       price: '',
       bedrooms: '',
       bathrooms: '',
+      ref: '',
       area: '',
       location: '',
+      garage: '',
       type: '',
+      cover_image: '',
       energy_class: '',
       year_built: '',
       features: [],
       images: [],
       property_types: []
     });
+
     setEditingProperty(null);
     setShowForm(false);
   };
+
 
   const resetBlogForm = () => {
     setBlogForm({
@@ -295,18 +306,23 @@ const AdminPage: React.FC = () => {
       price: property.price?.toString() || '',
       bedrooms: property.bedrooms?.toString() || '',
       bathrooms: property.bathrooms?.toString() || '',
+      ref: property.ref || '',
       area: property.area?.toString() || '',
       location: property.location || '',
+      garage: property.garage || '',
       type: property.type || '',
+      cover_image: property.cover_image || '',
       energy_class: property.energy_class || '',
       year_built: property.year_built?.toString() || '',
       features: property.features || [],
       images: property.images || [],
       property_types: property.property_types || []
     });
+
     setEditingProperty(property);
     setShowForm(true);
   };
+
 
   const editBlogPost = (post: any) => {
     setBlogForm({
@@ -534,7 +550,7 @@ const AdminPage: React.FC = () => {
                         <tr key={property.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
-                              <img className="h-10 w-10 rounded-lg object-cover" src={property.images?.[0] || '/placeholder.jpg'} alt="" />
+                              <img src={property.cover_image || property.images?.[0] || '/placeholder.jpg'} className="h-10 w-10 rounded-lg object-cover"/>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-gray-900">{property.title}</div>
                                 <div className="text-sm text-gray-500">{property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²</div>
@@ -658,6 +674,24 @@ const AdminPage: React.FC = () => {
                       onChange={(e) => setPropertyForm({...propertyForm, year_built: e.target.value})}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
+                    <input
+                      type="text"
+                      placeholder="Referência do Imóvel (ex: GL-1023)"
+                      value={propertyForm.ref}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, ref: e.target.value })}
+                      className="px-4 py-2 border border-gray-300 rounded-lg"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Estacionamento (ex: 1 lugar, Box, Não tem)"
+                      value={propertyForm.garage}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, garage: e.target.value })}
+                      className="px-4 py-2 border border-gray-300 rounded-lg"
+                    />
+
+
+
+
                   </div>
 
                   <div>
@@ -699,8 +733,20 @@ const AdminPage: React.FC = () => {
                       Adicionar Característica
                     </button>
                   </div>
+                  
 
                   <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Foto de Capa (Imagem Principal)
+                    </label>
+
+                    <ImageUploader
+                      folder="properties/covers"
+                      value={propertyForm.cover_image}
+                      onUpload={(url) =>
+                        setPropertyForm({ ...propertyForm, cover_image: url })
+                      }
+                    />
                     <label className="block text-sm font-medium text-gray-700 mb-2">Imagens</label>
                     <MultiFileUploader
                       folder="properties"
