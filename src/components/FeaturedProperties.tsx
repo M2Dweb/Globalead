@@ -105,7 +105,7 @@ const FeaturedProperties: React.FC = () => {
                     <div className="flex items-center"><MapPin className="h-4 w-4 mr-1" />{property.location}</div>
                   </div>
 
-                  <div className="text-gray-600 mb-6 text-sm line-clamp-3 flex-grow">
+                  <div className="text-gray-600 mb-6 text-sm flex-grow min-h-[4.5rem] break-words">
                     <ContentRenderer content={property.description || ''} />
                   </div>
                   <button
