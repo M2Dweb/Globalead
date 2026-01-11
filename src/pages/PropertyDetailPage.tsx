@@ -53,7 +53,7 @@ const PropertyDetailPage: React.FC = () => {
             type: "empreendimento",
             energy_class: "NA",
             year_built: 2026,
-            parking: 3,
+            garage: 3,
             reference: "T3NPVNG",
             state: "Novo",
             features: ["Garagem para 3 carros", "Jardim privativo", "Cozinha equipada"],
@@ -443,7 +443,7 @@ const PropertyDetailPage: React.FC = () => {
                   </div>
                   <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Estacionamento:</span>
-                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.parking || 'N/A'}</div>
+                    <div className="font-semibold mt-2 sm:mt-0 sm:ml-2">{property.garage || 'N/A'}</div>
                   </div>
                   <div className="flex flex-col sm:flex-row items-start">
                     <span className="text-gray-600">Certificado energético:</span>
