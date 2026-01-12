@@ -95,12 +95,23 @@ const Footer: React.FC = () => {
           <div className="flex flex-col items-center">
             <div className="w-full max-w-xs"> 
               <iframe
-                src="https://www.instagram.com/reel/DTYtm_tDASk/embed"
-                className="w-full max-w-xs h-[480px] rounded-lg border-0"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                allowFullScreen
+                src="https://elfsight.com/embed/06f87a61-4ad1-4889-82e4-c1e868e1eb70"
+                className="w-full max-w-xs h-[520px] border-0 rounded-lg"
                 loading="lazy"
+                title="Instagram Feed"
               />
+              
+              <iframe
+                src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/globalead.pt&tabs=timeline&width=340&height=500"
+                className="w-full h-[500px] border-0 rounded-lg"
+                scrolling="no"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                loading="lazy"
+                title="Facebook Page"
+              />
+
+
+
             </div>
 
             <div className="mt-6">
