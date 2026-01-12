@@ -94,15 +94,21 @@ const Footer: React.FC = () => {
           {/* Social + Facebook */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-xs"> 
-              <iframe
-                src="https://www.facebook.com/plugins/follow.php?href=https://www.facebook.com/globalead.pt&layout=standard&size=small&show_faces=false"
-                className="border-0 overflow-hidden"
-                scrolling="no"
-                width="200"
-                height="35"
-                title="Facebook Follow"
-              />
+               <div className="bg-gray-900 rounded-lg overflow-hidden" style={{ height: '130px' }}>
+                <iframe
+                  className="focus:outline-none"
+                  title="Globalead Facebook Page"
+                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fglobalead.pt&tabs=timeline&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                  width="100%"
+                  height="150"
+                  style={{ border: 'none', overflow: 'hidden' }}
+                  scrolling="no"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                />
+              </div>
             </div>
+
             <div className="mt-6">
               <div className="flex space-x-4 items-center justify-center">
                 <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noopener noreferrer">
