@@ -434,13 +434,6 @@ const PropertyDetailPage: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Área bruta:</span>
-                    <span className="font-semibold">
-                      {selectedPropertyType?.area || property.area}m²
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Quartos:</span>
                     <span className="font-semibold">{property.bedrooms}</span>
                   </div>
