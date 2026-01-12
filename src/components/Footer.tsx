@@ -46,15 +46,6 @@ const Footer: React.FC = () => {
     fetchLatestPosts();
   }, []);
 
-  // Script Elfsight
-  useEffect(() => {
-    if (!document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')) {
-      const script = document.createElement('script');
-      script.src = 'https://elfsightcdn.com/platform.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
 
   const handleNewsletterInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -103,10 +94,7 @@ const Footer: React.FC = () => {
           {/* Social + Facebook */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-xs">
-              <div
-                className="elfsight-app-06f87a61-4ad1-4889-82e4-c1e868e1eb70"
-                data-elfsight-app-lazy
-              />
+              <iframe src="https://widgets.sociablekit.com/instagram-feed/iframe/25642372" frameBorder="0" width="20%" height="20%"></iframe>
             </div>
 
             <div className="mt-6">
