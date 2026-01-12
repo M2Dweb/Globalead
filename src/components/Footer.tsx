@@ -94,7 +94,7 @@ const Footer: React.FC = () => {
           {/* Social + Facebook */}
           <div className="flex flex-col items-center">
             <div className="w-full max-w-xs">
-              <iframe src="https://widgets.sociablekit.com/instagram-feed/iframe/25642372" frameBorder="0" width="20%" height="20%"></iframe>
+              <iframe src="https://widgets.sociablekit.com/instagram-feed/iframe/25642372" frameBorder="0" width="100%" height="100%"></iframe>
             </div>
 
             <div className="mt-6">
