@@ -413,43 +413,43 @@ const PropertyDetailPage: React.FC = () => {
               <div className="bg-gray-50 p-6 rounded-xl mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">Detalhes</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Preço:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{formatPrice(selectedPropertyType?.price || property.price)}</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Estado:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.state || 'Novo'}</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Área útil:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{selectedPropertyType?.area || property.area}m²</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Área bruta:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{selectedPropertyType?.area || property.area}m²</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Quartos:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.bedrooms}</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Casas de banho:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.bathrooms}</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Ano de Construção:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.year_built}</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Estacionamento:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.garage || 'N/A'}</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Certificado energético:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.energy_class}</div>
                   </div>
-                  <div className="flex flex-col sm:flex-col items-start">
+                  <div className="flex flex-row sm:flex-row items-start">
                     <span className="text-gray-600">Referência:</span>
                     <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.ref || 'N/A'}</div>
                   </div>
