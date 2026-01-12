@@ -412,49 +412,66 @@ const PropertyDetailPage: React.FC = () => {
               {/* Details */}
               <div className="bg-gray-50 p-6 rounded-xl mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">Detalhes</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8">
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Preço:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{formatPrice(selectedPropertyType?.price || property.price)}</div>
+                    <span className="font-semibold">
+                      {formatPrice(selectedPropertyType?.price || property.price)}
+                    </span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Estado:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.state || 'Novo'}</div>
+                    <span className="font-semibold">{property.state || 'Novo'}</span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Área útil:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{selectedPropertyType?.area || property.area}m²</div>
+                    <span className="font-semibold">
+                      {selectedPropertyType?.area || property.area}m²
+                    </span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Área bruta:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{selectedPropertyType?.area || property.area}m²</div>
+                    <span className="font-semibold">
+                      {selectedPropertyType?.area || property.area}m²
+                    </span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Quartos:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.bedrooms}</div>
+                    <span className="font-semibold">{property.bedrooms}</span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Casas de banho:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.bathrooms}</div>
+                    <span className="font-semibold">{property.bathrooms}</span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Ano de Construção:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.year_built}</div>
+                    <span className="font-semibold">{property.year_built}</span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Estacionamento:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.garage || 'N/A'}</div>
+                    <span className="font-semibold">{property.garage || 'N/A'}</span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Certificado energético:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.energy_class}</div>
+                    <span className="font-semibold">{property.energy_class}</span>
                   </div>
-                  <div className="flex flex-row sm:flex-row items-start">
+
+                  <div className="flex items-center gap-2">
                     <span className="text-gray-600">Referência:</span>
-                    <div className="font-semibold ml-2 sm:ml-0 sm:mt-2">{property.ref || 'N/A'}</div>
+                    <span className="font-semibold">{property.ref || 'N/A'}</span>
                   </div>
                 </div>
               </div>
+
 
               {/* Description */}
               <div className="bg-gray-50 p-6 rounded-xl mb-8">
