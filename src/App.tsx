@@ -77,8 +77,8 @@ const AppLayout: React.FC = () => {
      if (path === '/carlos-goncalves') return [{ label: 'Carlos Gonçalves', current: true }];
      if (path === '/blog') return [{ label: 'Blog', current: true }];
      if (path === '/contactos') return [{ label: 'Contactos', current: true }];
-     if (path === '/termos-e-condicoes') return [{ label: 'Termos e Condições', current: true }];
-     if (path === '/politica-de-privacidade') return [{ label: 'Política de Privacidade', current: true }];
+     if (path === '/termos-condicoes') return [{ label: 'Termos e Condições', current: true }];
+     if (path === '/politica-privacidade') return [{ label: 'Política de Privacidade', current: true }];
      if (path === '/resolucao-litigios') return [{ label: 'Resolução de Litígios', current: true }];
      if (path === '/admin') return [{ label: 'Administração', current: true }];
      if (path.startsWith('/imoveis/') && path !== '/imoveis/lista') {
@@ -130,8 +130,8 @@ const AppLayout: React.FC = () => {
           {/*<Route path="/simulacao" element={<SimulacaoEnergia />} />*/}
           {/*<Route path="/tv-net-voz" element={<TvNetVozPage />} />*/}
           {/*<Route path="/simulacao-tv-net-voz" element={<SimulacaoTvNetVoz />} />  */}
-          <Route path="/termos-e-condicoes" element={<TermosCondicoes />} />
-          <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
+          <Route path="/termos-condicoes" element={<TermosCondicoes />} />
+          <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/resolucao-litigios" element={<ResolucaoLitigios />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:ref" element={<BlogPostPage />} />
