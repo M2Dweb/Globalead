@@ -23,6 +23,7 @@ import { useEffect } from 'react';
  import CarlosGoncalvesPage from './pages/CarlosGoncalvesPage';
  import PoliticaPrivacidade from './pages/PoliticaPrivacidade';
  import TermosCondicoes from './pages/TermosCondicoes';
+ import ResolucaoLitigios from './pages/ResolucaoLitigios';
 
 import WaitingPage from './pages/WaitingPage';
 
@@ -78,6 +79,7 @@ const AppLayout: React.FC = () => {
      if (path === '/contactos') return [{ label: 'Contactos', current: true }];
      if (path === '/termos-e-condicoes') return [{ label: 'Termos e Condições', current: true }];
      if (path === '/politica-de-privacidade') return [{ label: 'Política de Privacidade', current: true }];
+     if (path === '/resolucao-litigios') return [{ label: 'Resolução de Litígios', current: true }];
      if (path === '/admin') return [{ label: 'Administração', current: true }];
      if (path.startsWith('/imoveis/') && path !== '/imoveis/lista') {
        return [
@@ -130,6 +132,7 @@ const AppLayout: React.FC = () => {
           {/*<Route path="/simulacao-tv-net-voz" element={<SimulacaoTvNetVoz />} />  */}
           <Route path="/termos-e-condicoes" element={<TermosCondicoes />} />
           <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
+          <Route path="/resolucao-litigios" element={<ResolucaoLitigios />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:ref" element={<BlogPostPage />} />
           <Route path="/admin" element={<AdminPage />} />

@@ -216,6 +216,9 @@ const Footer: React.FC = () => {
             <Link to="/termos-condicoes" className="hover:text-white">
               Termos e Condições
             </Link>
+            <Link to="/resolucao-de-litigios" className="hover:text-white">
+              Resolução de Litígios
+            </Link>
             <a
               href="https://www.livroreclamacoes.pt/Inicio/"
               target="_blank"
