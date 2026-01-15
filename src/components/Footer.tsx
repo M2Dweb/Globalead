@@ -87,8 +87,7 @@ const Footer: React.FC = () => {
                 style={{ height: '130px' }}
               >
                 <img
-                  src="/public/G.png"
-                  alt="Globalead Logo"
+                  src="/G.png"
                   className="w-full h-full object-contain"
                   onClick={() => window.open('https://www.instagram.com/globalead.pt/', '_blank')}
                 />
