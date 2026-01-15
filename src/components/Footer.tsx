@@ -81,17 +81,12 @@ const Footer: React.FC = () => {
 
           {/* Redes sociais */}
           <div className="flex flex-col items-center">
-            <div className="w-full max-w-xs">
-              <div
-                className="bg-gray-900 rounded-lg overflow-hidden"
-                style={{ height: '130px' }}
-              >
+            <div className="w-full max-w-xs">       
                 <img
                   src="/G.png"
                   className="w-full h-full object-contain"
                   onClick={() => window.open('https://www.instagram.com/globalead.pt/', '_blank')}
                 />
-              </div>
             </div>
 
             <div className="flex space-x-4 mt-6">
