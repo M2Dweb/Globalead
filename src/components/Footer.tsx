@@ -86,12 +86,11 @@ const Footer: React.FC = () => {
                 className="bg-gray-900 rounded-lg overflow-hidden"
                 style={{ height: '130px' }}
               >
-                <iframe
-                  title="Globalead Facebook"
-                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fglobalead.pt&tabs=timeline&height=130"
-                  width="100%"
-                  height="130"
-                  style={{ border: 'none', overflow: 'hidden' }}
+                <img
+                  src="/public/G.png"
+                  alt="Globalead Logo"
+                  className="w-full h-full object-contain"
+                  onClick={() => window.open('https://www.instagram.com/globalead.pt/', '_blank')}
                 />
               </div>
             </div>
@@ -216,7 +215,7 @@ const Footer: React.FC = () => {
             <Link to="/termos-condicoes" className="hover:text-white">
               Termos e Condições
             </Link>
-            <Link to="/resolucao-de-litigios" className="hover:text-white">
+            <Link to="/resolucao-litigios" className="hover:text-white">
               Resolução de Litígios
             </Link>
             <a
