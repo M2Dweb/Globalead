@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useSpring, animated, config, useTrail } from '@react-spring/web';
 import { Award, Users, TrendingUp, MapPin, Star, Building, Compass, Hammer, Palette, Scale, Camera, Globe, Paintbrush, Share2, Tag, Video, Search } from 'lucide-react';
 import AnimatedSectionSpring from '../components/Parallax/AnimatedSectionSpring';
-import FounderVideoSection from '../components/FounderVideoSection';
 import PropertyValuationForm from '../components/PropertyValuationForm';
 import PropertyBuyForm from '../components/PropertyBuyForm';
 import Footer from '../components/Footer';
 import goncalo from "../../public/testemonials/goncalo-vinhas.jpg"
 import fml from "../../public/testemonials/familia-gomes.jpg"
 import franc from "../../public/testemonials/francisco-gonçalves.jpg"
+import FounderVideoSection2 from '../components/FounderVideoSection2';
 
 const CarlosGoncalvesPage: React.FC = () => {
   const achievements = [
@@ -283,7 +283,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
       </AnimatedSectionSpring>
       
       <AnimatedSectionSpring>
-        <FounderVideoSection />
+        <FounderVideoSection2 />
       </AnimatedSectionSpring>
 
       {/* Property Buy Form Section */}

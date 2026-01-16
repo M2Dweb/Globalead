@@ -221,7 +221,7 @@ const Footer: React.FC = () => {
               Livro de Reclamações
             </a>
           </div>
-
+              
           <div>© 2026 Globalead Portugal · Todos os direitos reservados.</div>
         </div>
       </div>
