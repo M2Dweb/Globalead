@@ -35,7 +35,7 @@ const FounderVideoSection: React.FC = () => {
           <div className="relative aspect-[9/16] md:aspect-[16/9] overflow-hidden">
             <iframe
               ref={iframeRef}
-              src={`https://player.vimeo.com/video/1154853545?autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0&badge=0&controls=1`}
+              src={`https://player.vimeo.com/video/1154853599?autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0&badge=0&controls=1`}
               className="absolute top-0 left-0 w-full h-full"
               frameBorder="0"
               allow="fullscreen; picture-in-picture"
