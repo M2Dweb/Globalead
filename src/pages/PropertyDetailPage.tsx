@@ -55,7 +55,7 @@ const PropertyDetailPage: React.FC = () => {
             year_built: 2026,
             garage: 3,
             reference: "T3NPVNG",
-            estado_imovel: "Novo",
+            state: "Novo",
             features: ["Garagem para 3 carros", "Jardim privativo", "Cozinha equipada"],
             images: [
               "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200",
@@ -423,7 +423,7 @@ const PropertyDetailPage: React.FC = () => {
 
                   <div className="flex items-center gap-2">
                     <span className="text-gray-600">Estado:</span>
-                    <span className="font-semibold">{property.estado_imovel || 'Novo'}</span>
+                    <span className="font-semibold">{property.state || 'Novo'}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
