@@ -41,7 +41,8 @@ const AdminPage: React.FC = () => {
     year_built: '',
     features: [] as string[],
     images: [] as string[],
-    property_types: [] as any[]
+    property_types: [] as any[],
+    state: ''
   });
 
   const [blogForm, setBlogForm] = useState({
@@ -145,7 +146,7 @@ const AdminPage: React.FC = () => {
         year_built: propertyForm.year_built
         ? parseInt(propertyForm.year_built)
         : null,
-
+        state: propertyForm.state || null,
         features: propertyForm.features.filter(f => f.trim() !== ''),
         property_types: propertyForm.property_types.length > 0 ? propertyForm.property_types : null
       };
@@ -267,7 +268,8 @@ const AdminPage: React.FC = () => {
       year_built: '',
       features: [],
       images: [],
-      property_types: []
+      property_types: [],
+      state: ''
     });
 
     setEditingProperty(null);
@@ -316,7 +318,8 @@ const AdminPage: React.FC = () => {
       year_built: property.year_built?.toString() || '',
       features: property.features || [],
       images: property.images || [],
-      property_types: property.property_types || []
+      property_types: property.property_types || [],
+      state: property.state || ''
     });
 
     setEditingProperty(property);
@@ -674,6 +677,18 @@ const AdminPage: React.FC = () => {
                       onChange={(e) => setPropertyForm({...propertyForm, year_built: e.target.value})}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
+                    <select
+                      value={propertyForm.state || ''}
+                      onChange={(e) => setPropertyForm({...propertyForm, state: e.target.value})}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Estado do Imóvel</option>
+                      <option value="novo">Novo</option>
+                      <option value="usado">Usado</option>
+                      <option value="em_construcao">Em Construção</option>
+                      <option value="renovado">Renovado</option>
+                      <option value="requer_obras">Requer Obras</option>
+                    </select>
                     <input
                       type="text"
                       placeholder="Referência do Imóvel (ex: GL-1023)"

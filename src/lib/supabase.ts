@@ -21,6 +21,7 @@ export interface Property {
   year_built: number;
   features: string[];
   images: string[];
+  state?: string;
 }
 
 export interface BlogPost {
