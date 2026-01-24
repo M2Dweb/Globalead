@@ -2,23 +2,23 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const FounderVideoSection: React.FC = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
- /* const [videoId, setVideoId] = useState('1129541624'); // horizontal (desktop)
+  const [videoId, setVideoId] = useState('1154853599'); // horizontal (desktop)
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         // 👉 usa vídeo vertical
-        setVideoId(''); 
+        setVideoId('1155065424'); 
       } else {
         // 👉 usa vídeo horizontal
-        setVideoId('1154853545');
+        setVideoId('1154853599');
       }
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);*/
+  }, []);
 
   return (
     <section className="py-20 bg-gray-50">
@@ -35,7 +35,7 @@ const FounderVideoSection: React.FC = () => {
           <div className="relative aspect-[9/16] md:aspect-[16/9] overflow-hidden">
             <iframe
               ref={iframeRef}
-              src={`https://player.vimeo.com/video/1154853599?autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0&badge=0&controls=1`}
+              src={`https://player.vimeo.com/video/${videoId}?autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0&badge=0&controls=1`}
               className="absolute top-0 left-0 w-full h-full"
               frameBorder="0"
               allow="fullscreen; picture-in-picture"
