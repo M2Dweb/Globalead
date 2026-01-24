@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare, FileText, Lock } from 'lucide-react';
+import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare, FileText, Lock, Star, CheckCircle, StarOff } from 'lucide-react';
 import RichTextEditor from '../components/RichTextEditor';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
@@ -23,6 +23,11 @@ const AdminPage: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [showLeadDetails, setShowLeadDetails] = useState(false);
   const [selectedLead, setSelectedLead] = useState<any>(null);
+  
+  // Novos estados para gerenciar destaques
+  const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
+  const [featuredLoading, setFeaturedLoading] = useState(false);
+
 
   // Form states
   const [propertyForm, setPropertyForm] = useState({
@@ -44,6 +49,141 @@ const AdminPage: React.FC = () => {
     property_types: [] as any[],
     state: ''
   });
+
+
+
+
+  const toggleFeaturedProperty = async (property: any) => {
+    try {
+      const isFeatured = featuredProperties.some(fp => fp.property_id === property.id);
+      
+      if (isFeatured) {
+        // Remover dos destaques
+        const { error } = await supabase
+          .from('featured_properties')
+          .delete()
+          .eq('property_id', property.id);
+        
+        if (error) throw error;
+      } else {
+        // Adicionar aos destaques (verificar se já tem 3)
+        if (featuredProperties.length >= 3) {
+          alert('Já existem 3 propriedades em destaque. Remova uma antes de adicionar outra.');
+          return;
+        }
+        
+        // Encontrar a próxima posição disponível
+        const positions = featuredProperties.map(fp => fp.position);
+        const maxPosition = positions.length > 0 ? Math.max(...positions) : 0;
+        const nextPosition = maxPosition + 1;
+        
+        const { error } = await supabase
+          .from('featured_properties')
+          .insert([{
+            property_id: property.id,
+            property_ref: property.ref || property.id,
+            position: nextPosition,
+            created_at: new Date().toISOString()
+          }]);
+        
+        if (error) throw error;
+      }
+      
+      // Atualizar lista de destaques
+      fetchData();
+      
+    } catch (error) {
+      console.error('Erro ao atualizar destaques:', error);
+      alert('Erro ao atualizar propriedade em destaque');
+    }
+  };
+
+  // Função para reordenar destaques
+  const reorderFeaturedProperty = async (propertyId: string, newPosition: number) => {
+    try {
+      const oldPosition = featuredProperties.find(fp => fp.property_id === propertyId)?.position;
+      
+      if (oldPosition === undefined) return;
+      
+      // Reordenar todas as posições
+      const updatedFeatured = featuredProperties.map(fp => {
+        if (fp.property_id === propertyId) {
+          return { ...fp, position: newPosition };
+        }
+        
+        // Ajustar outras posições
+        if (oldPosition < newPosition) {
+          // Movendo para baixo
+          if (fp.position > oldPosition && fp.position <= newPosition) {
+            return { ...fp, position: fp.position - 1 };
+          }
+        } else {
+          // Movendo para cima
+          if (fp.position >= newPosition && fp.position < oldPosition) {
+            return { ...fp, position: fp.position + 1 };
+          }
+        }
+        
+        return fp;
+      }).sort((a, b) => a.position - b.position);
+
+      // Atualizar no banco de dados
+      const updates = updatedFeatured.map((fp, index) => ({
+        ...fp,
+        position: index + 1
+      }));
+
+      // Atualizar todas as posições
+      for (const fp of updates) {
+        const { error } = await supabase
+          .from('featured_properties')
+          .update({ position: fp.position })
+          .eq('property_id', fp.property_id);
+        
+        if (error) throw error;
+      }
+
+      fetchData();
+      
+    } catch (error) {
+      console.error('Erro ao reordenar destaques:', error);
+      alert('Erro ao reordenar propriedades');
+    }
+  };
+
+  // Função para remover dos destaques
+  const removeFromFeatured = async (propertyId: string) => {
+    if (confirm('Tem certeza que deseja remover esta propriedade dos destaques?')) {
+      try {
+        const { error } = await supabase
+          .from('featured_properties')
+          .delete()
+          .eq('property_id', propertyId);
+        
+        if (error) throw error;
+        
+        // Reordenar as posições restantes
+        const remaining = featuredProperties.filter(fp => fp.property_id !== propertyId);
+        const updates = remaining.map((fp, index) => ({
+          ...fp,
+          position: index + 1
+        }));
+
+        for (const fp of updates) {
+          await supabase
+            .from('featured_properties')
+            .update({ position: fp.position })
+            .eq('property_id', fp.property_id);
+        }
+
+        fetchData();
+        alert('Propriedade removida dos destaques!');
+      } catch (error) {
+        console.error('Erro ao remover dos destaques:', error);
+        alert('Erro ao remover propriedade dos destaques');
+      }
+    }
+  };
 
   const [blogForm, setBlogForm] = useState({
     title: '',
@@ -114,9 +254,16 @@ const AdminPage: React.FC = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
+      // Fetch featured properties
+      const { data: featuredData } = await supabase
+        .from('featured_properties')
+        .select('*')
+        .order('position', { ascending: true });
+
       setProperties(propertiesData || []);
       setBlogPosts(blogData || []);
       setPropertyLeads(leadsData || []);
+      setFeaturedProperties(featuredData || []);
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
     }
@@ -481,6 +628,8 @@ const AdminPage: React.FC = () => {
     );
   }
 
+  
+
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -494,6 +643,7 @@ const AdminPage: React.FC = () => {
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'properties', name: 'Propriedades', icon: Home },
+              { id: 'featured', name: 'Destaques', icon: Star },
               { id: 'blog', name: 'Blog', icon: Edit },
               { id: 'dados', name: 'Dados', icon: Users }
             ].map(tab => {
@@ -1026,6 +1176,184 @@ const AdminPage: React.FC = () => {
                 </form>
               </div>
             )}
+          </div>
+        )}
+        
+        {activeTab === 'featured' && (
+          <div>
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900">Propriedades em Destaque</h2>
+              <p className="text-gray-600 mt-2">
+                Selecione até 3 propriedades para aparecerem na página inicial. 
+                Arraste para reordenar (a primeira aparece na esquerda).
+              </p>
+              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                <div className="flex items-center">
+                  <Star className="h-5 w-5 text-blue-500 mr-2" />
+                  <p className="text-sm text-blue-700">
+                    <span className="font-semibold">{featuredProperties.length}/3</span> propriedades selecionadas
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Lista de propriedades em destaque */}
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Propriedades Selecionadas</h3>
+              
+              {featuredProperties.length === 0 ? (
+                <div className="text-center py-8 bg-gray-50 rounded-lg">
+                  <StarOff className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-500">Nenhuma propriedade em destaque</p>
+                  <p className="text-sm text-gray-400 mt-2">Selecione propriedades abaixo para adicionar aos destaques</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {featuredProperties
+                    .sort((a, b) => a.position - b.position)
+                    .map((featured, index) => {
+                      const property = properties.find(p => p.id === featured.property_id);
+                      if (!property) return null;
+                      
+                      return (
+                        <div key={featured.id} className="bg-white rounded-lg shadow border p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                              <div className="mr-4 flex items-center justify-center w-8 h-8 bg-[#0d2233] text-white rounded-full">
+                                {index + 1}
+                              </div>
+                              <img 
+                                src={property.cover_image || property.images?.[0] || '/placeholder.jpg'} 
+                                className="h-16 w-16 rounded-lg object-cover mr-4"
+                                alt={property.title}
+                              />
+                              <div>
+                                <h4 className="font-medium text-gray-900">{property.title}</h4>
+                                <div className="flex items-center text-sm text-gray-500">
+                                  <MapPin className="h-3 w-3 mr-1" />
+                                  {property.location}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-4">
+                              <div className="flex space-x-1">
+                                <button
+                                  onClick={() => reorderFeaturedProperty(property.id, Math.max(1, index))}
+                                  disabled={index === 0}
+                                  className={`p-2 rounded ${index === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-[#0d2233] hover:bg-gray-100'}`}
+                                  title="Mover para cima"
+                                >
+                                  ↑
+                                </button>
+                                <button
+                                  onClick={() => reorderFeaturedProperty(property.id, Math.min(3, index + 2))}
+                                  disabled={index === featuredProperties.length - 1}
+                                  className={`p-2 rounded ${index === featuredProperties.length - 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-[#0d2233] hover:bg-gray-100'}`}
+                                  title="Mover para baixo"
+                                >
+                                  ↓
+                                </button>
+                              </div>
+                              <button
+                                onClick={() => removeFromFeatured(property.id)}
+                                className="text-red-600 hover:text-red-800 p-2"
+                                title="Remover dos destaques"
+                              >
+                                <Trash2 className="h-5 w-5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+
+            {/* Lista de todas as propriedades para seleção */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Todas as Propriedades</h3>
+              <div className="bg-white rounded-lg shadow overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Propriedade
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Preço
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Localização
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Destaque
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {properties.map((property) => {
+                        const isFeatured = featuredProperties.some(fp => fp.property_id === property.id);
+                        return (
+                          <tr key={property.id} className="hover:bg-gray-50">
+                            <td className="px-6 py-4">
+                              <div className="flex items-center">
+                                <img 
+                                  src={property.cover_image || property.images?.[0] || '/placeholder.jpg'} 
+                                  className="h-10 w-10 rounded-lg object-cover"
+                                  alt={property.title}
+                                />
+                                <div className="ml-4">
+                                  <div className="text-sm font-medium text-gray-900">{property.title}</div>
+                                  <div className="text-sm text-gray-500">
+                                    {property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              {formatCurrency(property.price)}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {property.location}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                              <button
+                                onClick={() => toggleFeaturedProperty(property)}
+                                className={`inline-flex items-center px-4 py-2 rounded-lg ${
+                                  isFeatured
+                                    ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                                    : featuredProperties.length >= 3
+                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                    : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
+                                }`}
+                                disabled={!isFeatured && featuredProperties.length >= 3}
+                              >
+                                {isFeatured ? (
+                                  <>
+                                    <CheckCircle className="h-4 w-4 mr-2" />
+                                    Em Destaque
+                                  </>
+                                ) : (
+                                  <>
+                                    <Star className="h-4 w-4 mr-2" />
+                                    Adicionar
+                                  </>
+                                )}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

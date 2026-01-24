@@ -26,6 +26,7 @@ import { useEffect } from 'react';
  import ResolucaoLitigios from './pages/ResolucaoLitigios';
 
 import WaitingPage from './pages/WaitingPage';
+import { Home } from 'lucide-react';
 
  
 const ScrollToTop: React.FC = () => {
@@ -100,14 +101,14 @@ const AppLayout: React.FC = () => {
    const breadcrumbs = getBreadcrumbs();
    const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
    const isAdminPage = location.pathname === '/admin';
-  const isWaitingPage = location.pathname === '/';
+  
 
   return (
     <div className="min-h-screen bg-white">
        <SEOHead /> 
       <ScrollToTop />
       
-       {!(isWaitingPage) && <Header />} 
+        {!(isCarlosGoncalvesPage || isAdminPage ) && <Header />}
       
        <Breadcrumbs 
         items={breadcrumbs} 
@@ -116,8 +117,8 @@ const AppLayout: React.FC = () => {
       
       <main>
         <Routes>
-          <Route path="/" element={<WaitingPage />} />
-           <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/sobre" element={<SobrePage />} />
           <Route path="/imoveis" element={<ImoveisPage />} />
           <Route path="/imoveis/lista" element={<PropertyListPage />} />
@@ -140,7 +141,7 @@ const AppLayout: React.FC = () => {
         </Routes>
       </main>
       
-       {!(isCarlosGoncalvesPage || isAdminPage || isWaitingPage) && <Footer />} 
+       {!(isCarlosGoncalvesPage || isAdminPage ) && <Footer />} 
        <StickyCtaButton /> 
     </div>
   );
