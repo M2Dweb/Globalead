@@ -233,16 +233,6 @@ const HomePage: React.FC = () => {
       {/* Featured Properties */}
       <FeaturedProperties2 />
 
-      {/* Botão Ver Todos */}
-      <div className="flex justify-center items-center mt-12">
-        <button
-          onClick={() => navigate("/imoveis/lista")}
-          className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition font-semibold inline-flex items-center"
-        >
-          Ver Todos
-          <ArrowRight className="ml-2 h-5 w-5" />
-        </button>
-      </div>
 
       {/* Services Section */}
       {/* Business Services Section */}
