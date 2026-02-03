@@ -78,18 +78,19 @@ const Footer: React.FC = () => {
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-
-          {/* Redes sociais */}
-          <div className="flex flex-col items-center mt-4">
-            <div className="w-full max-w-xs">       
-                <img
-                  src="/G.png"
-                  className="w-full h-full object-contain cursor-pointer"
-                  onClick={() => window.open('https://www.instagram.com/globalead.pt/', '_blank')}
-                />
+          
+          {/* Redes sociais - SECÇÃO ESQUERDA */}
+          <div className="hidden md:flex flex-col justify-center items-start">
+            <div className="w-full max-w-xs mb-6">       
+              <img
+                src="/G.png"
+                className="w-full h-full object-contain cursor-pointer"
+                onClick={() => window.open('https://www.instagram.com/globalead.pt/', '_blank')}
+                alt="Globalead Logo"
+              />
             </div>
 
-            <div className="flex space-x-4 mt-6">
+            <div className="flex space-x-4">
               <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noreferrer">
                 <Facebook className="h-6 w-6 hover:text-[#79b2e9]" />
               </a>
@@ -114,8 +115,8 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Últimas notícias */}
-          <div className="text-center">
+          {/* Últimas notícias - CENTRALIZADO VERTICALMENTE */}
+          <div className="flex flex-col justify-center text-center">
             <h3 className="text-xl font-bold mb-5">Últimas Notícias</h3>
             <div className="space-y-3">
               {latestPosts.length ? (
@@ -134,8 +135,8 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Newsletter */}
-          <div className="text-center">
+          {/* Newsletter - CENTRALIZADO VERTICALMENTE */}
+          <div className="flex flex-col justify-center text-center">
             <h3 className="text-xl font-bold mb-6">
               Receba as últimas novidades
             </h3>
@@ -200,8 +201,46 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
+        {/* Redes Sociais - VISÍVEL APENAS NO MOBILE */}
+        <div className="md:hidden mt-8">
+          <div className="flex flex-col items-center">
+            <div className="w-48 mb-6">       
+              <img
+                src="/G.png"
+                className="w-full h-full object-contain cursor-pointer"
+                onClick={() => window.open('https://www.instagram.com/globalead.pt/', '_blank')}
+                alt="Globalead Logo"
+              />
+            </div>
+
+            <div className="flex space-x-4">
+              <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noreferrer">
+                <Facebook className="h-6 w-6 hover:text-[#79b2e9]" />
+              </a>
+              <a href="https://www.instagram.com/globalead.pt/" target="_blank" rel="noreferrer">
+                <Instagram className="h-6 w-6 hover:text-[#79b2e9]" />
+              </a>
+              <a href="https://www.linkedin.com/company/globalead/" target="_blank" rel="noreferrer">
+                <Linkedin className="h-6 w-6 hover:text-[#79b2e9]" />
+              </a>
+              <a href="https://www.tiktok.com/@globalead.pt" target="_blank" rel="noreferrer">
+                <FaTiktok className="h-6 w-6 hover:text-[#79b2e9]" />
+              </a>
+              <a href="https://www.youtube.com/channel/UCL2Dk6vnNF6HngFlc4enKDQ" target="_blank" rel="noreferrer">
+                <FaYoutube className="h-6 w-6 hover:text-[#79b2e9]" />
+              </a>
+              <a href="https://t.me/globaleadportugal" target="_blank" rel="noreferrer">
+                <FaTelegramPlane className="h-6 w-6 hover:text-[#79b2e9]" />
+              </a>
+              <a href="https://api.whatsapp.com/send?phone=351915482365" target="_blank" rel="noreferrer">
+                <FaWhatsapp className="h-6 w-6 hover:text-[#79b2e9]" />
+              </a>
+            </div>
+          </div>
+        </div>
+
         {/* Legal */}
-        <div className="border-t border-gray-800 mt-10 pt-6 text-center text-sm text-gray-400 space-y-2">
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400 space-y-6">
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/politica-privacidade" className="hover:text-white">
               Política de Privacidade

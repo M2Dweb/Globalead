@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Zap, Tv, Calendar, Cctv, FileText, CreditCard } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Shield, Zap, Tv, Calendar, Cctv, FileText, CreditCard, ArrowRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom'; 
 import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
@@ -23,6 +22,7 @@ const HomePage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [latestPosts, setLatestPosts] = useState<any[]>([]);
+  const navigate = useNavigate(); // Adicionei o hook navigate
 
   useEffect(() => {
     const fetchLatestPosts = async () => {
@@ -67,7 +67,7 @@ const HomePage: React.FC = () => {
         const { data, error } = await supabase
           .from('properties')
           .select('*')
-          .limit(3)
+          .limit(6) // Alterado de 3 para 6
           .order('created_at', { ascending: false });
         
         if (error) {
@@ -141,7 +141,6 @@ const HomePage: React.FC = () => {
   ];
 
   
-
   
 
   useEffect(() => {
@@ -233,6 +232,17 @@ const HomePage: React.FC = () => {
 
       {/* Featured Properties */}
       <FeaturedProperties2 />
+
+      {/* Botão Ver Todos */}
+      <div className="flex justify-center items-center mt-12">
+        <button
+          onClick={() => navigate("/imoveis/lista")}
+          className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition font-semibold inline-flex items-center"
+        >
+          Ver Todos
+          <ArrowRight className="ml-2 h-5 w-5" />
+        </button>
+      </div>
 
       {/* Services Section */}
       {/* Business Services Section */}
