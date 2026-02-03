@@ -19,7 +19,7 @@ const FeaturedProperties: React.FC = () => {
             properties (*)
           `)
           .order('position', { ascending: true })
-          .limit(3);
+          .limit(6);
 
         if (error) {
           console.error('Erro ao carregar propriedades:', error);
@@ -27,7 +27,7 @@ const FeaturedProperties: React.FC = () => {
           const { data: fallbackData, error: fallbackError } = await supabase
             .from('properties')
             .select('*')
-            .limit(3)
+            .limit(6)
             .order('created_at', { ascending: false });
           
           if (fallbackError) {
@@ -126,15 +126,26 @@ const FeaturedProperties: React.FC = () => {
                     }}
                   >
                     Ver Detalhes
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
-  );
-};
+                                      </button>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                    
+                            {/* Botão Ver Todos */}
+                            <div className="flex justify-center items-center mt-12">
+                              <button
+                                onClick={() => navigate("/imoveis/lista")}
+                                className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition font-semibold inline-flex items-center"
+                              >
+                                Ver Todos
+                                <ArrowRight className="ml-2 h-5 w-5" />
+                              </button>
+                            </div>
+                          </div>
+                        </section>
+                      );
+                    };
 
 export default FeaturedProperties;
