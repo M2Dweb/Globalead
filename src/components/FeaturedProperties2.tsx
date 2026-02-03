@@ -12,105 +12,205 @@ const FeaturedProperties: React.FC = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const { data, error } = await supabase
+        // Primeiro tenta buscar propriedades em destaque
+        const { data: featuredData, error: featuredError } = await supabase
           .from('featured_properties')
           .select(`
             property_id,
             properties (*)
           `)
           .order('position', { ascending: true })
-          .limit(6); // JÁ ESTÁ A BUSCAR 6
+          .limit(6);
 
-        if (error) {
-          console.error('Erro ao carregar propriedades:', error);
-          // fallback - buscar últimas 6 propriedades
-          const { data: fallbackData, error: fallbackError } = await supabase
+        let allProperties = [];
+
+        if (featuredError || !featuredData || featuredData.length === 0) {
+          console.log('Nenhuma propriedade em destaque encontrada, buscando propriedades regulares...');
+          // Se não houver propriedades em destaque, busca as últimas 6 propriedades
+          const { data: regularData, error: regularError } = await supabase
             .from('properties')
             .select('*')
-            .limit(6) // JÁ ESTÁ A BUSCAR 6
-            .order('created_at', { ascending: false });
+            .order('created_at', { ascending: false })
+            .limit(6);
           
-          if (fallbackError) {
-            console.error('Erro ao carregar fallback:', fallbackError);
-            // Usar dados estáticos - VOU AUMENTAR PARA 6
-            setProperties([
-              {
-                id: 1,
-                title: "Empreendimento Noval Park",
-                price: 432600,
-                bedrooms: 3,
-                bathrooms: 2,
-                area: 145,
-                location: "Vila Nova de Gaia",
-                images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              },
-              {
-                id: 2,
-                title: "Apartamento T2 Moderno",
-                price: 280000,
-                bedrooms: 2,
-                bathrooms: 1,
-                area: 85,
-                location: "Cedofeita, Porto",
-                images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              },
-              {
-                id: 3,
-                title: "Moradia T4 com Jardim",
-                price: 520000,
-                bedrooms: 4,
-                bathrooms: 3,
-                area: 200,
-                location: "Matosinhos, Porto",
-                images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              },
-              // ADICIONANDO MAIS 3 PROPRIEDADES
-              {
-                id: 4,
-                title: "Apartamento T1 Centro",
-                price: 185000,
-                bedrooms: 1,
-                bathrooms: 1,
-                area: 65,
-                location: "Baixa do Porto",
-                images: ["https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              },
-              {
-                id: 5,
-                title: "Moradia T3 com Piscina",
-                price: 650000,
-                bedrooms: 3,
-                bathrooms: 2,
-                area: 180,
-                location: "Foz do Douro",
-                images: ["https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              },
-              {
-                id: 6,
-                title: "Loft T1 Industrial",
-                price: 320000,
-                bedrooms: 1,
-                bathrooms: 1,
-                area: 95,
-                location: "Bonfim, Porto",
-                images: ["https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              }
-            ]);
-          } else {
-            setProperties(fallbackData || []);
+          if (regularError) {
+            throw new Error('Erro ao buscar propriedades regulares');
           }
-        } else {
-          // Extrair as propriedades do resultado
-          const featuredProperties = data
-            .map(item => item.properties)
-            .filter(Boolean); // Remove null/undefined
           
-          console.log('Propriedades carregadas:', featuredProperties.length); // DEBUG
-          setProperties(featuredProperties);
+          allProperties = regularData || [];
+        } else {
+          // Extrair as propriedades do resultado das destacadas
+          allProperties = featuredData
+            .map(item => item.properties)
+            .filter(Boolean);
+          
+          // Se tivermos menos de 6 propriedades destacadas, completar com propriedades regulares
+          if (allProperties.length < 6) {
+            console.log(`Apenas ${allProperties.length} propriedades em destaque, completando com regulares...`);
+            
+            // Buscar mais propriedades para completar até 6
+            const { data: additionalData, error: additionalError } = await supabase
+              .from('properties')
+              .select('*')
+              .not('id', 'in', `(${allProperties.map(p => p.id).join(',')})`)
+              .order('created_at', { ascending: false })
+              .limit(6 - allProperties.length);
+            
+            if (!additionalError && additionalData) {
+              allProperties = [...allProperties, ...additionalData];
+            }
+          }
         }
+
+        // Se ainda tivermos menos de 6 propriedades, usar dados estáticos
+        if (allProperties.length < 6) {
+          console.log(`Apenas ${allProperties.length} propriedades encontradas, usando dados estáticos para completar...`);
+          
+          const staticProperties = [
+            {
+              id: 1,
+              title: "Empreendimento Noval Park",
+              price: 432600,
+              bedrooms: 3,
+              bathrooms: 2,
+              area: 145,
+              location: "Vila Nova de Gaia",
+              images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            },
+            {
+              id: 2,
+              title: "Apartamento T2 Moderno",
+              price: 280000,
+              bedrooms: 2,
+              bathrooms: 1,
+              area: 85,
+              location: "Cedofeita, Porto",
+              images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            },
+            {
+              id: 3,
+              title: "Moradia T4 com Jardim",
+              price: 520000,
+              bedrooms: 4,
+              bathrooms: 3,
+              area: 200,
+              location: "Matosinhos, Porto",
+              images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            },
+            {
+              id: 4,
+              title: "Apartamento T1 Centro",
+              price: 185000,
+              bedrooms: 1,
+              bathrooms: 1,
+              area: 65,
+              location: "Baixa do Porto",
+              images: ["https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            },
+            {
+              id: 5,
+              title: "Moradia T3 com Piscina",
+              price: 650000,
+              bedrooms: 3,
+              bathrooms: 2,
+              area: 180,
+              location: "Foz do Douro",
+              images: ["https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            },
+            {
+              id: 6,
+              title: "Loft T1 Industrial",
+              price: 320000,
+              bedrooms: 1,
+              bathrooms: 1,
+              area: 95,
+              location: "Bonfim, Porto",
+              images: ["https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=800"]
+            }
+          ];
+
+          // Combinar propriedades reais com estáticas para ter sempre 6
+          const needed = 6 - allProperties.length;
+          allProperties = [
+            ...allProperties,
+            ...staticProperties.slice(0, needed).map((prop, index) => ({
+              ...prop,
+              id: prop.id + 1000 + index // IDs diferentes para evitar conflitos
+            }))
+          ];
+        }
+
+        // Limitar a 6 propriedades
+        allProperties = allProperties.slice(0, 6);
+        
+        console.log(`Total de propriedades carregadas: ${allProperties.length}`);
+        setProperties(allProperties);
+
       } catch (error) {
         console.error('Erro ao carregar propriedades:', error);
-        setProperties([]);
+        // Usar dados estáticos em caso de erro
+        setProperties([
+          {
+            id: 1,
+            title: "Empreendimento Noval Park",
+            price: 432600,
+            bedrooms: 3,
+            bathrooms: 2,
+            area: 145,
+            location: "Vila Nova de Gaia",
+            images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
+          },
+          {
+            id: 2,
+            title: "Apartamento T2 Moderno",
+            price: 280000,
+            bedrooms: 2,
+            bathrooms: 1,
+            area: 85,
+            location: "Cedofeita, Porto",
+            images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"]
+          },
+          {
+            id: 3,
+            title: "Moradia T4 com Jardim",
+            price: 520000,
+            bedrooms: 4,
+            bathrooms: 3,
+            area: 200,
+            location: "Matosinhos, Porto",
+            images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800"]
+          },
+          {
+            id: 4,
+            title: "Apartamento T1 Centro",
+            price: 185000,
+            bedrooms: 1,
+            bathrooms: 1,
+            area: 65,
+            location: "Baixa do Porto",
+            images: ["https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800"]
+          },
+          {
+            id: 5,
+            title: "Moradia T3 com Piscina",
+            price: 650000,
+            bedrooms: 3,
+            bathrooms: 2,
+            area: 180,
+            location: "Foz do Douro",
+            images: ["https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800"]
+          },
+          {
+            id: 6,
+            title: "Loft T1 Industrial",
+            price: 320000,
+            bedrooms: 1,
+            bathrooms: 1,
+            area: 95,
+            location: "Bonfim, Porto",
+            images: ["https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=800"]
+          }
+        ]);
       }
       setLoading(false);
     };
@@ -131,9 +231,8 @@ const FeaturedProperties: React.FC = () => {
           <div className="text-center py-12 text-xl text-gray-600">A carregar imóveis...</div>
         ) : (
           <>
-            {/* DEBUG: Mostrar quantas propriedades estão carregadas */}
             <div className="text-center mb-4 text-sm text-gray-500">
-              Mostrando {properties.length} de 6 imóveis
+              Mostrando {properties.length} imóveis
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
