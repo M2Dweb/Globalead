@@ -280,7 +280,7 @@ const ImoveisPage: React.FC = () => {
               <div className="mb-6 text-center md:text-left">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                   <a
-                    href="/carlos-goncalves" // alterar rota
+                    href="/carlos-goncalves" 
                     className="hover:underline cursor-pointer"
                   >
                     Carlos Gonçalves
@@ -290,7 +290,8 @@ const ImoveisPage: React.FC = () => {
                   A confiança que constrói o amanhã
                 </h3>
               </div>
-              <p className="text-gray-700 leading-relaxed text-lg">
+              
+              <p className="text-gray-700 leading-relaxed text-lg mb-8">
                 Sou um profissional apaixonado pelo setor imobiliário, dedicado a acompanhar
                 clientes, famílias e investidores na procura do imóvel certo. Acredito que cada propriedade tem
                 uma história e um potencial único para transformar vidas. Com anos de experiência, trabalho
@@ -299,6 +300,15 @@ const ImoveisPage: React.FC = () => {
                 verdadeiramente único, conte comigo. Estou pronto para caminhar ao seu lado e garantir que o
                 futuro da sua casa começa com segurança, visão e tranquilidade.
               </p>
+              
+              <div className="flex justify-center md:justify-start">
+                <a
+                  href="/carlos-goncalves"
+                  className="bg-[#79b2e9] text-white py-3 px-12 rounded-lg hover:bg-[#0d2233] transition-colors font-medium"
+                >
+                  Conhecer Carlos Gonçalves
+                </a>
+              </div>
             </div>
 
 

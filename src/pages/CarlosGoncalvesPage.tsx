@@ -207,7 +207,7 @@ const CarlosGoncalvesPage: React.FC = () => {
                 </h2>
                 <div className="space-y-4 sm:space-y-6 text-base mt-12 sm:text-lg text-gray-600">
                   <p>
-                    Olá, o meu nome é Carlos Gonçalves e sou o CEO da Globalead Portugal. Aos 19
+                    O meu nome é Carlos Gonçalves e sou o CEO da Globalead Portugal. Aos 19
 anos iniciei o meu percurso no setor comercial, onde tive a oportunidade de aprender, crescer e
 consolidar competências necessárias para atuar em diversas areas e perceber o que realmente
 move as pessoas. 
@@ -225,7 +225,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
 
               <div className="relative">
                 {/* Placeholder for main professional photo */}
-                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-xl aspect-[3/4]">
+                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-xl aspect-[3/4] pt-4">
                   <img
                     src="/carlos/pe-fato-serio.jpg"
                     alt="Carlos Gonçalves"
@@ -234,9 +234,6 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                 </div>
 
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -right-4 w-16 h-16 sm:w-24 sm:h-24 bg-[#0d2233] rounded-full opacity-10"></div>
-                <div className="absolute -bottom-4 -left-4 w-20 h-20 sm:w-32 sm:h-32 bg-blue-200 rounded-full opacity-20"></div>
               </div>
             </div>
           </div>

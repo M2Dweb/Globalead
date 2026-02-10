@@ -108,8 +108,6 @@ const AppLayout: React.FC = () => {
        <SEOHead /> 
       <ScrollToTop />
       
-        {!(isCarlosGoncalvesPage || isAdminPage ) && <Header />}
-      
        <Breadcrumbs 
         items={breadcrumbs} 
         isVisible={isScrolled && breadcrumbs.length > 0} 

@@ -8,7 +8,7 @@ const InsuranceComparator: React.FC = () => {
   // LOGOS
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
-  const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 2 : 5);
+  const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 2 : 4);
 
   // Seguros principais
   const mainInsurance = {
@@ -197,10 +197,6 @@ const scrollToForm = () => {
 
       {/* Call to Action */}
       <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600 mb-4">
-          Preços meramente indicativos. O valor final varia conforme o perfil de cada cliente e depende de uma
-          simulação baseada em necessidades reais.
-        </p>
         <button 
           onClick={scrollToForm}
           className="bg-[#79b2e9] text-white font-semibold py-3 px-8 rounded-lg hover:[#0d2233]"

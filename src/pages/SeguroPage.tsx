@@ -107,18 +107,20 @@ const SeguroPage: React.FC = () => {
     <div className="min-h-screen bg-white">
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30" poster="/fotos/SeguroPage-foto.png">
-          <source src="/videos/SeguroPage-video(1).mp4" type="video/mp4" />
-        </video>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h1 className="text-5xl font-bold mb-6">Seguramos o seu futuro!</h1>
-          <p className="text-xl text-blue-100 max-w-4xl mx-auto mb-8">
-            Na Globalead oferecemos soluções de seguros completas e personalizadas, para clientes pessoais e empresariais.
-          </p>
-          {/* Botão alterado */}
-          
+      <section className="relative bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-16 sm:py-20 px-4 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{
+            backgroundImage: 'url("/fotos/SeguroPage-foto.png")'
+          }}
+        ></div>
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div className="text-center relative z-10">
+            <h1 className="text-4xl md:text-5xl font-bold mt-14">
+              Seguramos o seu futuro!
+            </h1>
+          </div>
         </div>
       </section>
 

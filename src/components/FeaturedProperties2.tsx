@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from './ContentRenderer';
 
-const FeaturedProperties: React.FC = () => {
+const FeaturedProperties2: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -231,9 +231,6 @@ const FeaturedProperties: React.FC = () => {
           <div className="text-center py-12 text-xl text-gray-600">A carregar imóveis...</div>
         ) : (
           <>
-            <div className="text-center mb-4 text-sm text-gray-500">
-              Mostrando {properties.length} imóveis
-            </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {properties.map((property) => (
@@ -286,4 +283,4 @@ const FeaturedProperties: React.FC = () => {
   );
 };
 
-export default FeaturedProperties;
+export default FeaturedProperties2;

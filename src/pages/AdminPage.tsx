@@ -66,9 +66,9 @@ const AdminPage: React.FC = () => {
         
         if (error) throw error;
       } else {
-        // Adicionar aos destaques (verificar se já tem 3)
-        if (featuredProperties.length >= 3) {
-          alert('Já existem 3 propriedades em destaque. Remova uma antes de adicionar outra.');
+        
+        if (featuredProperties.length >= 6) {
+          alert('Já existem 6 propriedades em destaque. Remova uma antes de adicionar outra.');
           return;
         }
         
@@ -1184,14 +1184,14 @@ const AdminPage: React.FC = () => {
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900">Propriedades em Destaque</h2>
               <p className="text-gray-600 mt-2">
-                Selecione até 3 propriedades para aparecerem na página inicial. 
+                Selecione até 6 propriedades para aparecerem na página inicial. 
                 Arraste para reordenar (a primeira aparece na esquerda).
               </p>
               <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                 <div className="flex items-center">
                   <Star className="h-5 w-5 text-blue-500 mr-2" />
                   <p className="text-sm text-blue-700">
-                    <span className="font-semibold">{featuredProperties.length}/3</span> propriedades selecionadas
+                    <span className="font-semibold">{featuredProperties.length}/6</span> propriedades selecionadas
                   </p>
                 </div>
               </div>
@@ -1327,11 +1327,11 @@ const AdminPage: React.FC = () => {
                                 className={`inline-flex items-center px-4 py-2 rounded-lg ${
                                   isFeatured
                                     ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                                    : featuredProperties.length >= 3
+                                    : featuredProperties.length >= 6
                                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                     : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
                                 }`}
-                                disabled={!isFeatured && featuredProperties.length >= 3}
+                                disabled={!isFeatured && featuredProperties.length >= 6}
                               >
                                 {isFeatured ? (
                                   <>

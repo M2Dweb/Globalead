@@ -80,8 +80,8 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           
           {/* Redes sociais - SECÇÃO ESQUERDA */}
-          <div className="hidden md:flex flex-col justify-center items-start">
-            <div className="w-full max-w-xs mb-6">       
+          <div className="hidden md:flex flex-col justify-center items-center">
+            <div className="w-full max-w-xs mb-8">
               <img
                 src="/G.png"
                 className="w-full h-full object-contain cursor-pointer"
@@ -90,7 +90,8 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            <div className="flex space-x-4">
+            {/* ÍCONES CENTRADOS VERTICALMENTE EM RELAÇÃO À LOGO */}
+            <div className="flex space-x-4 mt-4">
               <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noreferrer">
                 <Facebook className="h-6 w-6 hover:text-[#79b2e9]" />
               </a>
@@ -201,10 +202,14 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
+        {/* LINHA DIVISÓRIA */}
+        <div className="border-t border-gray-800 mt-8 pt-8"></div>
+
         {/* Redes Sociais - VISÍVEL APENAS NO MOBILE */}
-        <div className="md:hidden mt-8">
-          <div className="flex flex-col items-center">
-            <div className="w-48 mb-6">       
+        <div className="md:hidden">
+          {/* LOGO MAIOR EM MOBILE */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="w-64 mb-8">
               <img
                 src="/G.png"
                 className="w-full h-full object-contain cursor-pointer"
@@ -213,34 +218,35 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            <div className="flex space-x-4">
+            {/* ÍCONES ABAIXO DA LINHA NO MOBILE */}
+            <div className="flex space-x-6 mt-6">
               <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noreferrer">
-                <Facebook className="h-6 w-6 hover:text-[#79b2e9]" />
+                <Facebook className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
               <a href="https://www.instagram.com/globalead.pt/" target="_blank" rel="noreferrer">
-                <Instagram className="h-6 w-6 hover:text-[#79b2e9]" />
+                <Instagram className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
               <a href="https://www.linkedin.com/company/globalead/" target="_blank" rel="noreferrer">
-                <Linkedin className="h-6 w-6 hover:text-[#79b2e9]" />
+                <Linkedin className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
               <a href="https://www.tiktok.com/@globalead.pt" target="_blank" rel="noreferrer">
-                <FaTiktok className="h-6 w-6 hover:text-[#79b2e9]" />
+                <FaTiktok className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
               <a href="https://www.youtube.com/channel/UCL2Dk6vnNF6HngFlc4enKDQ" target="_blank" rel="noreferrer">
-                <FaYoutube className="h-6 w-6 hover:text-[#79b2e9]" />
+                <FaYoutube className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
               <a href="https://t.me/globaleadportugal" target="_blank" rel="noreferrer">
-                <FaTelegramPlane className="h-6 w-6 hover:text-[#79b2e9]" />
+                <FaTelegramPlane className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
               <a href="https://api.whatsapp.com/send?phone=351915482365" target="_blank" rel="noreferrer">
-                <FaWhatsapp className="h-6 w-6 hover:text-[#79b2e9]" />
+                <FaWhatsapp className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
             </div>
           </div>
         </div>
 
         {/* Legal */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400 space-y-6">
+        <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400 space-y-6">
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/politica-privacidade" className="hover:text-white">
               Política de Privacidade
