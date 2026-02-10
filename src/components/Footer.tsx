@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           
-          {/* Redes sociais - SECÇÃO ESQUERDA */}
+          {/* Redes sociais - SECÇÃO ESQUERDA (VISÍVEL APENAS NO DESKTOP) */}
           <div className="hidden md:flex flex-col justify-center items-center">
             <div className="w-full max-w-xs mb-8">
               <img
@@ -202,14 +202,14 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* LINHA DIVISÓRIA */}
+        {/* LINHA DIVISÓRIA (APENAS UMA) */}
         <div className="border-t border-gray-800 mt-8 pt-8"></div>
 
         {/* Redes Sociais - VISÍVEL APENAS NO MOBILE */}
         <div className="md:hidden">
           {/* LOGO MAIOR EM MOBILE */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-64 mb-8">
+          <div className="flex flex-col items-center mb-6">
+            <div className="w-64 mb-6">
               <img
                 src="/G.png"
                 className="w-full h-full object-contain cursor-pointer"
@@ -219,7 +219,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* ÍCONES ABAIXO DA LINHA NO MOBILE */}
-            <div className="flex space-x-6 mt-6">
+            <div className="flex space-x-6">
               <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noreferrer">
                 <Facebook className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
@@ -246,7 +246,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Legal */}
-        <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400 space-y-6">
+        <div className="pt-8 text-center text-sm text-gray-400 space-y-6">
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/politica-privacidade" className="hover:text-white">
               Política de Privacidade

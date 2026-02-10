@@ -225,11 +225,11 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
 
               <div className="relative">
                 {/* Placeholder for main professional photo */}
-                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-xl aspect-[3/4] pt-4">
+                <div className="relative bg-gray-200 rounded-2xl overflow-hidden shadow-xl aspect-[3/4]">
                   <img
                     src="/carlos/pe-fato-serio.jpg"
                     alt="Carlos Gonçalves"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-bottom"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                 </div>
