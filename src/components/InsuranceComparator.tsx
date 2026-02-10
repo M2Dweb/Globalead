@@ -181,11 +181,11 @@ const scrollToForm = () => {
       {partnerLogos.length > 0 && (
         <div className="overflow-hidden mt-16 mb-16">
           <div
-            className="flex transition-transform duration-1000 ease-in-out"
+            className="flex transition-transform duration-1000 ease-in-out gap-6"
             style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
           >
             {partnerLogos.map((logo, index) => (
-              <div key={index} className="flex-shrink-0 w-1/2 sm:w-1/5 px-2">
+              <div key={index} className="flex-shrink-0 w-1/2 sm:w-1/5 px-4">
                 <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center justify-center h-32">
                   <img
                     src={logo}
