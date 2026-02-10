@@ -229,7 +229,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                   <img
                     src="/carlos/pe-fato-serio.jpg"
                     alt="Carlos Gonçalves"
-                    className="w-full h-full object-cover object-bottom"
+                    className="w-full h-full object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                 </div>
