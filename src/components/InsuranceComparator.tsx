@@ -185,9 +185,13 @@ const scrollToForm = () => {
             style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
           >
             {partnerLogos.map((logo, index) => (
-              <div key={index} className="flex-shrink-0" style={{ width: `${100 / logosPerPage}%` }}>
-                <div className="px-4 bg-white rounded-lg shadow-md hover:[#0d2233] transition-shadow duration-300">
-                  <img src={logo} alt={`Parceiro ${index + 1}`} className="w-full h-20 object-contain" />
+              <div key={index} className="flex-shrink-0 w-1/2 sm:w-1/5 px-2">
+                <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center justify-center h-32">
+                  <img
+                    src={logo}
+                    alt={`Parceiro ${index + 1}`}
+                    className="max-h-20 object-contain"
+                  />
                 </div>
               </div>
             ))}
