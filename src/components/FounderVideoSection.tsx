@@ -1,17 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const FounderVideoSection: React.FC = () => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [videoId, setVideoId] = useState('1154853545'); // horizontal (desktop)
+  const [videoId, setVideoId] = useState('u97sMqoz14c'); 
+
+  const youtubeParams = {
+    autoplay: 0,
+    modestbranding: 1,      
+    rel: 0,                 
+    controls: 1,
+    showinfo: 0,            
+    iv_load_policy: 3,      
+    disablekb: 0,
+    fs: 1,                  
+    playsinline: 1,
+    origin: window.location.origin
+  };
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        // 👉 usa vídeo vertical
-        setVideoId('1155064583'); 
+        // 👉 usa vídeo vertical para mobile
+        setVideoId('FWM_QQMqeAQ'); 
       } else {
-        // 👉 usa vídeo horizontal
-        setVideoId('1154853545');
+        // 👉 usa vídeo horizontal para desktop
+        setVideoId('u97sMqoz14c');
       }
     };
 
@@ -19,6 +31,12 @@ const FounderVideoSection: React.FC = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Constrói URL do YouTube
+  const getYouTubeUrl = () => {
+    const params = new URLSearchParams(youtubeParams as any).toString();
+    return `https://www.youtube.com/embed/${videoId}?${params}`;
+  };
 
   return (
     <section className="py-20 bg-gray-50">
@@ -32,17 +50,17 @@ const FounderVideoSection: React.FC = () => {
           </p>
         </div>
 
-          <div className="relative aspect-[9/16] md:aspect-[16/9] overflow-hidden">
-            <iframe
-              ref={iframeRef}
-              src={`https://player.vimeo.com/video/${videoId}?autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0&badge=0&controls=1`}
-              className="absolute top-0 left-0 w-full h-full"
-              frameBorder="0"
-              allow="fullscreen; picture-in-picture"
-              allowFullScreen
-              title="Vídeo Globalead"
-            ></iframe>
-          </div> 
+        <div className="relative aspect-[9/16] md:aspect-[16/9] overflow-hidden rounded-lg shadow-xl">
+          <iframe
+            src={getYouTubeUrl()}
+            className="absolute top-0 left-0 w-full h-full"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowFullScreen
+            title="Vídeo Globalead - Razões para escolher"
+            loading="lazy"
+          ></iframe>
+        </div>
       </div>
     </section>
   );
