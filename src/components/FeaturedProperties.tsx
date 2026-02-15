@@ -3,7 +3,7 @@ import { MapPin, Bed, Bath, Square, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from './ContentRenderer';
-import StatusBadge from './StatusBadge'; // Import do badge
+import StatusBadge from './StatusBadge';
 
 const FeaturedProperties: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
@@ -58,12 +58,20 @@ const FeaturedProperties: React.FC = () => {
     return types[type] || type;
   };
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('pt-PT', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0
+    }).format(price);
+  };
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Visite o seu próximo lar de sonho
+            Destaques
           </h2>
         </div>
 
@@ -77,19 +85,33 @@ const FeaturedProperties: React.FC = () => {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full"
                 onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
               >
-                <img 
-                  src={property.images?.[0] || '/placeholder.jpg'} 
-                  alt={property.title} 
-                  className="w-full h-48 object-cover"
-                />
+                <div className="relative">
+                  <img 
+                    src={property.images?.[0] || '/placeholder.jpg'} 
+                    alt={property.title} 
+                    className="w-full h-48 object-cover"
+                  />
+                  
+                  {/* Tag do tipo ou badge de status por cima da imagem */}
+                  <div className="absolute top-4 left-4">
+                    {property.availability_status === 'reservado' && (
+                      <StatusBadge status="reservado" />
+                    )}
+                    {property.availability_status === 'vendido' && (
+                      <StatusBadge status="vendido" />
+                    )}
+                    {(!property.availability_status || property.availability_status === 'disponivel') && (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                        {getPropertyTypeLabel(property.type)}
+                      </span>
+                    )}
+                  </div>
+                </div>
                 
                 <div className="p-6 flex flex-col flex-grow">
-                  {/* Linha com tipo e status - lado a lado */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                      {getPropertyTypeLabel(property.type)}
-                    </span>
-                    <StatusBadge status={property.availability_status || 'disponivel'} />
+                  {/* COM PREÇO */}
+                  <div className="text-2xl font-bold text-[#79b2e9] mb-2">
+                    {formatPrice(property.price)}
                   </div>
 
                   <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[3.5rem]">
@@ -115,12 +137,9 @@ const FeaturedProperties: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="text-2xl font-bold text-[#79b2e9] mb-4">
-                    {new Intl.NumberFormat('pt-PT', {
-                      style: 'currency',
-                      currency: 'EUR',
-                      maximumFractionDigits: 0
-                    }).format(property.price)}
+                  {/* Descrição */}
+                  <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow min-h-[4.5rem]">
+                    <ContentRenderer content={property.description || ''} />
                   </div>
 
                   <button

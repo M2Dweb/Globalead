@@ -777,13 +777,12 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                             <select
                               value={property.availability_status || 'disponivel'}
                               onChange={(e) => {
-                                if (confirm(`Tem certeza que deseja alterar o status para ${e.target.value}?`)) {
+                                if (confirm(`Tem certeza que deseja alterar o status para ${e.target.value === 'reservado' ? 'Reservado' : 'Vendido'}?`)) {
                                   updatePropertyStatus(property.id, e.target.value);
                                 }
                               }}
                               disabled={updatingStatus === property.id}
                               className={`px-2 py-1 rounded-lg text-sm font-medium border ${
-                                property.availability_status === 'disponivel' ? 'bg-green-100 text-green-800 border-green-300' :
                                 property.availability_status === 'reservado' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' :
                                 property.availability_status === 'vendido' ? 'bg-red-100 text-red-800 border-red-300' :
                                 'bg-gray-100 text-gray-800 border-gray-300'
@@ -792,7 +791,6 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                               <option value="disponivel">Disponível</option>
                               <option value="reservado">Reservado</option>
                               <option value="vendido">Vendido</option>
-                              <option value="indisponivel">Indisponível</option>
                             </select>
                           </td>
                         </tr>
