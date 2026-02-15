@@ -81,22 +81,20 @@ const FeaturedProperties2: React.FC = () => {
                   <img 
                     src={property.images?.[0] || '/placeholder.jpg'} 
                     alt={property.title} 
-                    className={`w-full h-48 object-cover ${
-                      property.availability_status === 'vendido' ? 'grayscale' : ''
-                    }`}
+                    className="w-full h-48 object-cover"
                   />
                   
-                  {/* Badge de estado - esquerda (só aparece se for reservado ou vendido) */}
-                  <div className="absolute top-4 left-4">
-                    <StatusBadge status={property.availability_status || 'disponivel'} />
-                  </div>
-
-                  {/* Tipo do imóvel - direita (só aparece se NÃO for reservado/vendido) */}
-                  {property.availability_status !== 'reservado' && property.availability_status !== 'vendido' && (
-                    <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {getPropertyTypeLabel(property.type)}
+                  {/* Badge de estado - esquerda (sempre visível se tiver status) */}
+                  {property.availability_status && (
+                    <div className="absolute top-4 left-4">
+                      <StatusBadge status={property.availability_status} />
                     </div>
                   )}
+
+                  {/* Tipo do imóvel - direita (sempre visível) */}
+                  <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {getPropertyTypeLabel(property.type)}
+                  </div>
                 </div>
                 
                 <div className="p-6 flex flex-col flex-grow">
