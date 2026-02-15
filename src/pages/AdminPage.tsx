@@ -23,7 +23,7 @@ const AdminPage: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [showLeadDetails, setShowLeadDetails] = useState(false);
   const [selectedLead, setSelectedLead] = useState<any>(null);
-  
+  const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   // Novos estados para gerenciar destaques
   const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
   const [featuredLoading, setFeaturedLoading] = useState(false);
@@ -97,6 +97,48 @@ const AdminPage: React.FC = () => {
       alert('Erro ao atualizar propriedade em destaque');
     }
   };
+
+const updatePropertyStatus = async (propertyId: string, newStatus: string, clientInfo?: any) => {
+  try {
+    setUpdatingStatus(propertyId);
+    
+    // Atualizar a propriedade
+    const { error: updateError } = await supabase
+      .from('properties')
+      .update({ availability_status: newStatus })
+      .eq('id', propertyId);
+
+    if (updateError) throw updateError;
+
+    // Registrar no histórico
+    const { error: historyError } = await supabase
+      .from('property_status_history')
+      .insert([{
+        property_id: propertyId,
+        status: newStatus,
+        client_name: clientInfo?.name,
+        client_email: clientInfo?.email,
+        client_phone: clientInfo?.phone,
+        reservation_date: newStatus === 'reservado' ? new Date().toISOString() : null,
+        sold_date: newStatus === 'vendido' ? new Date().toISOString() : null,
+        notes: clientInfo?.notes,
+        created_by: 'admin'
+      }]);
+
+    if (historyError) throw historyError;
+
+    fetchData(); // Recarregar dados
+    alert(`Status atualizado para ${newStatus}`);
+  } catch (error) {
+    console.error('Erro ao atualizar status:', error);
+    alert('Erro ao atualizar status');
+  } finally {
+    setUpdatingStatus(null);
+  }
+};
+
+
+
 
   // Função para reordenar destaques
   const reorderFeaturedProperty = async (propertyId: string, newPosition: number) => {
@@ -695,6 +737,7 @@ const AdminPage: React.FC = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Propriedade</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Localização</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                       </tr>
                     </thead>
@@ -729,6 +772,28 @@ const AdminPage: React.FC = () => {
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <select
+                              value={property.availability_status || 'disponivel'}
+                              onChange={(e) => {
+                                if (confirm(`Tem certeza que deseja alterar o status para ${e.target.value}?`)) {
+                                  updatePropertyStatus(property.id, e.target.value);
+                                }
+                              }}
+                              disabled={updatingStatus === property.id}
+                              className={`px-2 py-1 rounded-lg text-sm font-medium border ${
+                                property.availability_status === 'disponivel' ? 'bg-green-100 text-green-800 border-green-300' :
+                                property.availability_status === 'reservado' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' :
+                                property.availability_status === 'vendido' ? 'bg-red-100 text-red-800 border-red-300' :
+                                'bg-gray-100 text-gray-800 border-gray-300'
+                              }`}
+                            >
+                              <option value="disponivel">Disponível</option>
+                              <option value="reservado">Reservado</option>
+                              <option value="vendido">Vendido</option>
+                              <option value="indisponivel">Indisponível</option>
+                            </select>
                           </td>
                         </tr>
                       ))}

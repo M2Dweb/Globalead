@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
 import FilterDropdown from '../components/FilterDropdown';
+import StatusBadge from '../components/StatusBadge';
 
 const PropertyListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -248,8 +249,24 @@ const PropertyListPage: React.FC = () => {
                       <img
                         src={property.images[0]}
                         alt={property.title}
-                        className="w-full h-48 object-cover"
+                        className={`w-full h-48 object-cover ${
+                          property.availability_status === 'vendido' ? 'grayscale' : ''
+                        }`}
                       />
+                      
+                      {/* Overlay para reservado/vendido */}
+                      {property.availability_status === 'reservado' && (
+                        <div className="absolute inset-0 bg-yellow-500 bg-opacity-10"></div>
+                      )}
+                      {property.availability_status === 'vendido' && (
+                        <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
+                      )}
+                      
+                      {/* Badge de status */}
+                      <div className="absolute top-4 left-4">
+                        <StatusBadge status={property.availability_status || 'disponivel'} />
+                      </div>
+      
                       <div className="absolute top-4 left-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
                         {property.type === 'apartamento' ? 'Apartamento' : 
                          property.type === 'moradia' ? 'Moradia' : 

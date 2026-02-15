@@ -20,7 +20,7 @@ const FounderVideoSection: React.FC = () => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         // 👉 usa vídeo vertical para mobile
-        setVideoId('FWM_QQMqeAQ'); 
+        setVideoId('watch?v=FWM_QQMqeAQ'); 
       } else {
         // 👉 usa vídeo horizontal para desktop
         setVideoId('u97sMqoz14c');

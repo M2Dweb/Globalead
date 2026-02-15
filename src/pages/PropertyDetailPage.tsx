@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Phone } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Phone, Clock, Bell, Search, Heart, AlertCircle } from 'lucide-react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase, getPropertyByRef } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
 import PropertyBuyForm from '../components/PropertyBuyForm';
+import StatusBadge from '../components/StatusBadge';
 
 const PropertyDetailPage: React.FC = () => {
   const { ref } = useParams<{ ref: string }>();
@@ -294,10 +295,13 @@ const PropertyDetailPage: React.FC = () => {
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+          <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{property.title}</h1>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="flex justify-center mb-4">
+              <StatusBadge status={property.availability_status || 'disponivel'} size="lg" />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">{property.title}</h1>
           
           
           <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
@@ -539,6 +543,9 @@ const PropertyDetailPage: React.FC = () => {
                     <p className="text-sm text-gray-500">Chamada para a rede móvel nacional</p>
                   </div>
                 </div>
+                  {/* Conteúdo condicional baseado no status */}
+                  {property.availability_status === 'disponivel' && (
+                    <>
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
                   Agende a sua visita
                 </h3>
@@ -625,6 +632,112 @@ const PropertyDetailPage: React.FC = () => {
                     {isSubmitting ? 'Enviando...' : 'Agendar Visita'}
                   </button>
                 </form>
+                 </>
+                  )}
+
+                  {property.availability_status === 'reservado' && (
+                    <>
+                      <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg mb-6">
+                        <div className="flex">
+                          <Clock className="h-6 w-6 text-yellow-500 flex-shrink-0" />
+                          <div className="ml-3">
+                            <p className="text-yellow-700">
+                              Este imóvel está atualmente reservado. Se tiver interesse, podemos incluí-lo numa lista de espera.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                        Quer ser notificado?
+                      </h3>
+
+                      <div className="space-y-4">
+                        <button className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600 transition flex items-center justify-center gap-2">
+                          <Bell className="h-5 w-5" />
+                          Avise-me se ficar disponível
+                        </button>
+                        
+                        <button 
+                          onClick={() => navigate('/imoveis/lista')}
+                          className="w-full border-2 border-[#79b2e9] text-[#0d2233] py-3 rounded-lg hover:bg-blue-50 transition flex items-center justify-center gap-2"
+                        >
+                          <Search className="h-5 w-5" />
+                          Ver imóveis disponíveis
+                        </button>
+                      </div>
+                    </>
+                  )}
+
+                  {property.availability_status === 'vendido' && (
+                    <>
+                      <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mb-6">
+                        <div className="flex">
+                          <Heart className="h-6 w-6 text-red-500 flex-shrink-0" />
+                          <div className="ml-3">
+                            <p className="text-red-700">
+                              Este imóvel já foi vendido. Mas temos outras opções que podem interessar-lhe!
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                        Descubra alternativas
+                      </h3>
+
+                      <div className="space-y-4">
+                        <button 
+                          onClick={() => navigate('/imoveis/lista')}
+                          className="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2"
+                        >
+                          <Search className="h-5 w-5" />
+                          Ver imóveis disponíveis
+                        </button>
+                        
+                        <button 
+                          onClick={() => {
+                            // Filtrar por características similares
+                            navigate('/imoveis/lista?similares=true');
+                          }}
+                          className="w-full border-2 border-red-500 text-red-700 py-3 rounded-lg hover:bg-red-50 transition flex items-center justify-center gap-2"
+                        >
+                          <Heart className="h-5 w-5" />
+                          Imóveis similares
+                        </button>
+                      </div>
+                    </>
+                  )}
+
+                  {property.availability_status === 'indisponivel' && (
+                    <>
+                      <div className="bg-gray-50 border-l-4 border-gray-500 p-4 rounded-lg mb-6">
+                        <div className="flex">
+                          <AlertCircle className="h-6 w-6 text-gray-500 flex-shrink-0" />
+                          <div className="ml-3">
+                            <p className="text-gray-700">
+                              Este imóvel está temporariamente indisponível. Contacte-nos para mais informações.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <button 
+                        onClick={() => navigate('/imoveis/lista')}
+                        className="w-full bg-[#0d2233] text-white py-3 rounded-lg hover:bg-[#79b2e9] transition"
+                      >
+                        Ver outros imóveis
+                      </button>
+                    </>
+                  )}
+
+                  {/* Contacto direto sempre visível */}
+                  <p className="text-sm text-gray-500 text-center mt-6">
+                    Ou contacte-nos diretamente: <br />
+                    <a href="tel:+351915482365" className="text-[#0d2233] font-semibold">
+                      +351 915 482 365
+                    </a>
+                  </p>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { MapPin, Bed, Bath, Square, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from './ContentRenderer';
+import StatusBadge from './StatusBadge';
 
 const FeaturedProperties2: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
@@ -239,7 +240,20 @@ const FeaturedProperties2: React.FC = () => {
                   className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full"
                   onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
                 >
-                  <img src={property.images?.[0] || '/placeholder.jpg'} alt={property.title} className="w-full h-48 object-cover"/>
+                  <img src={property.images?.[0] || '/placeholder.jpg'} alt={property.title} className={`w-full h-48 object-cover ${property.availability_status === 'vendido' ? 'grayscale' : ''}`}/>
+                {/* Overlay para reservado/vendido */}
+                {property.availability_status === 'reservado' && (
+                  <div className="absolute inset-0 bg-yellow-500 bg-opacity-10"></div>
+                )}
+                {property.availability_status === 'vendido' && (
+                  <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
+                )}
+                
+                {/* Badge de status */}
+                <div className="absolute top-4 left-4">
+                  <StatusBadge status={property.availability_status || 'disponivel'} />
+                </div>
+                
                   <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{property.title}</h3>
                     <div className="flex items-center space-x-4 text-gray-600 mb-4">
