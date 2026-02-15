@@ -76,8 +76,10 @@ const CreditoPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-16 sm:py-20 px-4 overflow-hidden">
+        
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"

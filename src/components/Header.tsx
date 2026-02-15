@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     { name: 'Contactos', path: '/contactos' },
   ];
 
-  const isHeroPage = ['/', '/sobre', '/imoveis', '/seguros', '/blog', '/contactos'].includes(location.pathname);
+  const isHeroPage = ['/', '/sobre', '/imoveis', '/blog', '/contactos'].includes(location.pathname);
   const shouldBeTransparent = isHeroPage && !isScrolled;
 
   // Função para scroll direto para o formulário

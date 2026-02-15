@@ -7,8 +7,6 @@ const InsuranceComparator: React.FC = () => {
 
   // LOGOS
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
-  const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
-  const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 2 : 4);
 
   // Seguros principais
   const mainInsurance = {
@@ -66,42 +64,7 @@ const scrollToForm = () => {
   el?.scrollIntoView({ behavior: "smooth" });
 };
 
-
-
-
   const currentInsurance = mainInsurance[selectedInsurance as keyof typeof mainInsurance] || { providers: [] };
-
-  // Fetch logos
-  useEffect(() => {
-    const handleResize = () => setLogosPerPage(window.innerWidth < 640 ? 2 : 5);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => { fetchPartnerLogos(); }, []);
-
-  useEffect(() => {
-    if (partnerLogos.length > 0) {
-      const interval = setInterval(() => {
-        setCurrentPartnerIndex(prev => {
-          // Corrigido para evitar índice negativo
-          const maxIndex = Math.max(0, partnerLogos.length - logosPerPage);
-          return (prev + 1) % (maxIndex + 1);
-        });
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, [partnerLogos.length, logosPerPage]);
-
-  const fetchPartnerLogos = async () => {
-    try {
-      const { data, error } = await supabase.storage.from('imagens').list('seguros', { limit: 25, offset: 0 });
-      if (!error && data) {
-        const logoUrls = data.map(file => supabase.storage.from('imagens').getPublicUrl(`seguros/${file.name}`).data.publicUrl);
-        setPartnerLogos(logoUrls);
-      }
-    } catch { setPartnerLogos([]); }
-  };
 
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
@@ -176,28 +139,6 @@ const scrollToForm = () => {
           ))}
         </div>
       </div>
-
-      {/* LOGOS dos Parceiros */}
-      {partnerLogos.length > 0 && (
-        <div className="overflow-hidden mt-16 mb-16">
-          <div
-            className="flex transition-transform duration-1000 ease-in-out gap-6"
-            style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
-          >
-            {partnerLogos.map((logo, index) => (
-              <div key={index} className="flex-shrink-0 w-1/2 sm:w-1/5 px-4">
-                <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center justify-center h-32">
-                  <img
-                    src={logo}
-                    alt={`Parceiro ${index + 1}`}
-                    className="max-h-20 object-contain"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Call to Action */}
       <div className="mt-6 text-center">

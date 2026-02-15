@@ -8,7 +8,7 @@ import { sendEmail, FormData } from '../utils/emailService';
 
 const SeguroPage: React.FC = () => {
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
-  
+  const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
   const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 2 : 5);
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
@@ -108,6 +108,7 @@ const SeguroPage: React.FC = () => {
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-16 sm:py-20 px-4 overflow-hidden">
+
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
@@ -192,6 +193,43 @@ const SeguroPage: React.FC = () => {
           </div>
         </section>
       </AnimatedSection>
+
+      {/* Partners Section */}
+      <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Compare as várias instituições em Portugal
+            </h2>
+          </div>
+
+          {partnerLogos.length > 0 && (
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-1000 ease-in-out"
+                style={{
+                  transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)`
+                }}
+              >
+                {partnerLogos.map((logo, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-1/2 sm:w-1/5 px-2"
+                  >
+                    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center justify-center h-32">
+                      <img
+                        src={logo}
+                        alt={`Parceiro ${index + 1}`}
+                        className="max-h-20 object-contain"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section  id="form-section" className="py-20 bg-gray-900 text-white">

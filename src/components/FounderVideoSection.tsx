@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const FounderVideoSection: React.FC = () => {
-  const [videoId, setVideoId] = useState('u97sMqoz14c'); 
+  const [videoId, setVideoId] = useState('TCuHO91dFgc'); 
 
   const youtubeParams = {
     autoplay: 0,
@@ -20,10 +20,10 @@ const FounderVideoSection: React.FC = () => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         // 👉 usa vídeo vertical para mobile
-        setVideoId('watch?v=FWM_QQMqeAQ'); 
+        setVideoId('TCuHO91dFgc'); 
       } else {
         // 👉 usa vídeo horizontal para desktop
-        setVideoId('u97sMqoz14c');
+        setVideoId('TCuHO91dFgc');
       }
     };
 
