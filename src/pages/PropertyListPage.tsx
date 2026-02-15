@@ -262,18 +262,21 @@ const PropertyListPage: React.FC = () => {
                         <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
                       )}
                       
-                      {/* Badge de status */}
+                      {/* BADGE de status - esquerda */}
                       <div className="absolute top-4 left-4">
                         <StatusBadge status={property.availability_status || 'disponivel'} />
                       </div>
-      
-                      <div className="absolute top-4 left-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
+
+                      {/* TIPO do imóvel - direita */}
+                      <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
                         {property.type === 'apartamento' ? 'Apartamento' : 
-                         property.type === 'moradia' ? 'Moradia' : 
-                         property.type === 'empreendimento' ? 'Empreendimento' : 
-                         property.type}
+                        property.type === 'moradia' ? 'Moradia' : 
+                        property.type === 'empreendimento' ? 'Empreendimento' : 
+                        property.type}
                       </div>
-                      <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+
+                      {/* Número de fotos - canto inferior esquerdo */}
+                      <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
                         {property.images?.length || 1} fotos
                       </div>
                     </div>

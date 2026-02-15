@@ -3,9 +3,9 @@ import { MapPin, Bed, Bath, Square, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from './ContentRenderer';
-import StatusBadge from './StatusBadge';
+import StatusBadge from './StatusBadge'; // Import do badge
 
-const FeaturedProperties2: React.FC = () => {
+const FeaturedProperties: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -219,6 +219,16 @@ const FeaturedProperties2: React.FC = () => {
     fetchProperties();
   }, []);
 
+  const getPropertyTypeLabel = (type: string) => {
+    const types: Record<string, string> = {
+      apartamento: 'Apartamento',
+      moradia: 'Moradia',
+      terreno: 'Terreno',
+      empreendimento: 'Empreendimento'
+    };
+    return types[type] || type;
+  };
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -231,58 +241,74 @@ const FeaturedProperties2: React.FC = () => {
         {loading ? (
           <div className="text-center py-12 text-xl text-gray-600">A carregar imóveis...</div>
         ) : (
-          <>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {properties.map((property) => (
-                <div
-                  key={property.id}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full"
-                  onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
-                >
-                  <img src={property.images?.[0] || '/placeholder.jpg'} alt={property.title} className={`w-full h-48 object-cover ${property.availability_status === 'vendido' ? 'grayscale' : ''}`}/>
-                {/* Overlay para reservado/vendido */}
-                {property.availability_status === 'reservado' && (
-                  <div className="absolute inset-0 bg-yellow-500 bg-opacity-10"></div>
-                )}
-                {property.availability_status === 'vendido' && (
-                  <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
-                )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {properties.map((property) => (
+              <div
+                key={property.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full"
+                onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
+              >
+                <img 
+                  src={property.images?.[0] || '/placeholder.jpg'} 
+                  alt={property.title} 
+                  className="w-full h-48 object-cover"
+                />
                 
-                {/* Badge de status */}
-                <div className="absolute top-4 left-4">
-                  <StatusBadge status={property.availability_status || 'disponivel'} />
-                </div>
-                
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{property.title}</h3>
-                    <div className="flex items-center space-x-4 text-gray-600 mb-4">
-                      <div className="flex items-center"><Bed className="h-4 w-4 mr-1" />{property.bedrooms}</div>
-                      <div className="flex items-center"><Bath className="h-4 w-4 mr-1" />{property.bathrooms}</div>
-                      <div className="flex items-center"><Square className="h-4 w-4 mr-1" />{property.area}m²</div>
-                      <div className="flex items-center"><MapPin className="h-4 w-4 mr-1" />{property.location}</div>
-                    </div>
-
-                    <div className="text-gray-600 mb-6 text-sm line-clamp-3 flex-grow">
-                      <ContentRenderer content={property.description || ''} />
-                    </div>
-                    <button
-                      className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition mt-auto"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/imoveis/${property.ref || property.id}`);
-                      }}
-                    >
-                      Ver Detalhes
-                    </button>
+                <div className="p-6 flex flex-col flex-grow">
+                  {/* Linha com tipo e status - lado a lado */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      {getPropertyTypeLabel(property.type)}
+                    </span>
+                    <StatusBadge status={property.availability_status || 'disponivel'} />
                   </div>
+
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[3.5rem]">
+                    {property.title}
+                  </h3>
+
+                  <div className="flex flex-wrap items-center gap-3 text-gray-600 mb-4 text-sm">
+                    <div className="flex items-center">
+                      <Bed className="h-4 w-4 mr-1" />
+                      <span>{property.bedrooms}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Bath className="h-4 w-4 mr-1" />
+                      <span>{property.bathrooms}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Square className="h-4 w-4 mr-1" />
+                      <span>{property.area}m²</span>
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      <span className="truncate">{property.location}</span>
+                    </div>
+                  </div>
+
+                  <div className="text-2xl font-bold text-[#79b2e9] mb-4">
+                    {new Intl.NumberFormat('pt-PT', {
+                      style: 'currency',
+                      currency: 'EUR',
+                      maximumFractionDigits: 0
+                    }).format(property.price)}
+                  </div>
+
+                  <button
+                    className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition mt-auto"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/imoveis/${property.ref || property.id}`);
+                    }}
+                  >
+                    Ver Detalhes
+                  </button>
                 </div>
-              ))}
-            </div>
-          </>
+              </div>
+            ))}
+          </div>
         )}
-        
-        {/* Botão Ver Todos */}
+
         <div className="flex justify-center items-center mt-12">
           <button
             onClick={() => navigate("/imoveis/lista")}
@@ -297,4 +323,4 @@ const FeaturedProperties2: React.FC = () => {
   );
 };
 
-export default FeaturedProperties2;
+export default FeaturedProperties;

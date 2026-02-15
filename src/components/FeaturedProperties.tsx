@@ -3,7 +3,7 @@ import { MapPin, Bed, Bath, Square, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from './ContentRenderer';
-import StatusBadge from './StatusBadge';
+import StatusBadge from './StatusBadge'; // Import do badge
 
 const FeaturedProperties: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
@@ -13,7 +13,8 @@ const FeaturedProperties: React.FC = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const { data, error } = await supabase
+        // Buscar propriedades em destaque
+        const { data: featuredData, error: featuredError } = await supabase
           .from('featured_properties')
           .select(`
             property_id,
@@ -22,63 +23,23 @@ const FeaturedProperties: React.FC = () => {
           .order('position', { ascending: true })
           .limit(3);
 
-        if (error) {
-          console.error('Erro ao carregar propriedades:', error);
-          // fallback - buscar últimas 3 propriedades
-          const { data: fallbackData, error: fallbackError } = await supabase
+        if (featuredError || !featuredData || featuredData.length === 0) {
+          // Fallback para últimas propriedades
+          const { data: regularData } = await supabase
             .from('properties')
             .select('*')
             .limit(3)
             .order('created_at', { ascending: false });
           
-          if (fallbackError) {
-            console.error('Erro ao carregar fallback:', fallbackError);
-            // Usar dados estáticos
-            setProperties([
-              {
-                id: 1,
-                title: "Empreendimento Noval Park",
-                price: 432600,
-                bedrooms: 3,
-                bathrooms: 2,
-                area: 145,
-                location: "Vila Nova de Gaia",
-                images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              },
-              {
-                id: 2,
-                title: "Apartamento T2 Moderno",
-                price: 280000,
-                bedrooms: 2,
-                bathrooms: 1,
-                area: 85,
-                location: "Cedofeita, Porto",
-                images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              },
-              {
-                id: 3,
-                title: "Moradia T4 com Jardim",
-                price: 520000,
-                bedrooms: 4,
-                bathrooms: 3,
-                area: 200,
-                location: "Matosinhos, Porto",
-                images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=800"]
-              }
-            ]);
-          } else {
-            setProperties(fallbackData || []);
-          }
+          setProperties(regularData || []);
         } else {
-          // Extrair as propriedades do resultado
-          const featuredProperties = data
+          const featuredProperties = featuredData
             .map(item => item.properties)
-            .filter(Boolean); // Remove null/undefined
-          
+            .filter(Boolean);
           setProperties(featuredProperties);
         }
       } catch (error) {
-        console.error('Erro ao carregar propriedades:', error);
+        console.error('Erro:', error);
         setProperties([]);
       }
       setLoading(false);
@@ -86,6 +47,16 @@ const FeaturedProperties: React.FC = () => {
 
     fetchProperties();
   }, []);
+
+  const getPropertyTypeLabel = (type: string) => {
+    const types: Record<string, string> = {
+      apartamento: 'Apartamento',
+      moradia: 'Moradia',
+      terreno: 'Terreno',
+      empreendimento: 'Empreendimento'
+    };
+    return types[type] || type;
+  };
 
   return (
     <section className="py-20 bg-gray-50">
@@ -106,33 +77,52 @@ const FeaturedProperties: React.FC = () => {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full"
                 onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
               >
-                <img src={property.images?.[0] || '/placeholder.jpg'} alt={property.title} className={`w-full h-48 object-cover ${property.availability_status === 'vendido' ? 'grayscale' : ''}`}/>
-                {/* Overlay para reservado/vendido */}
-                {property.availability_status === 'reservado' && (
-                  <div className="absolute inset-0 bg-yellow-500 bg-opacity-10"></div>
-                )}
-                {property.availability_status === 'vendido' && (
-                  <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
-                )}
-                
-                {/* Badge de status */}
-                <div className="absolute top-4 left-4">
-                  <StatusBadge status={property.availability_status || 'disponivel'} />
-                </div>
-              
+                <img 
+                  src={property.images?.[0] || '/placeholder.jpg'} 
+                  alt={property.title} 
+                  className="w-full h-48 object-cover"
+                />
                 
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{property.title}</h3>
-                  <div className="flex items-center space-x-4 text-gray-600 mb-4">
-                    <div className="flex items-center"><Bed className="h-4 w-4 mr-1" />{property.bedrooms}</div>
-                    <div className="flex items-center"><Bath className="h-4 w-4 mr-1" />{property.bathrooms}</div>
-                    <div className="flex items-center"><Square className="h-4 w-4 mr-1" />{property.area}m²</div>
-                    <div className="flex items-center"><MapPin className="h-4 w-4 mr-1" />{property.location}</div>
+                  {/* Linha com tipo e status - lado a lado */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      {getPropertyTypeLabel(property.type)}
+                    </span>
+                    <StatusBadge status={property.availability_status || 'disponivel'} />
                   </div>
 
-                  <div className="text-gray-600 mb-6 text-sm line-clamp-3 flex-grow">
-                    <ContentRenderer content={property.description || ''} />
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[3.5rem]">
+                    {property.title}
+                  </h3>
+
+                  <div className="flex flex-wrap items-center gap-3 text-gray-600 mb-4 text-sm">
+                    <div className="flex items-center">
+                      <Bed className="h-4 w-4 mr-1" />
+                      <span>{property.bedrooms}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Bath className="h-4 w-4 mr-1" />
+                      <span>{property.bathrooms}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Square className="h-4 w-4 mr-1" />
+                      <span>{property.area}m²</span>
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      <span className="truncate">{property.location}</span>
+                    </div>
                   </div>
+
+                  <div className="text-2xl font-bold text-[#79b2e9] mb-4">
+                    {new Intl.NumberFormat('pt-PT', {
+                      style: 'currency',
+                      currency: 'EUR',
+                      maximumFractionDigits: 0
+                    }).format(property.price)}
+                  </div>
+
                   <button
                     className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition mt-auto"
                     onClick={(e) => {
@@ -148,7 +138,6 @@ const FeaturedProperties: React.FC = () => {
           </div>
         )}
 
-        {/* Botão Ver Todos */}
         <div className="flex justify-center items-center mt-12">
           <button
             onClick={() => navigate("/imoveis/lista")}
