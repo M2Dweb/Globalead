@@ -81,23 +81,30 @@ const FeaturedProperties2: React.FC = () => {
                   <img 
                     src={property.images?.[0] || '/placeholder.jpg'} 
                     alt={property.title} 
-                    className="w-full h-48 object-cover"
+                    className={`w-full h-48 object-cover ${
+                      property.availability_status === 'vendido' ? 'grayscale' : ''
+                    }`}
                   />
                   
-                  {/* Tag do tipo ou badge de status por cima da imagem */}
+                  {/* Overlay para reservado/vendido */}
+                  {property.availability_status === 'reservado' && (
+                    <div className="absolute inset-0 bg-yellow-500 bg-opacity-10"></div>
+                  )}
+                  {property.availability_status === 'vendido' && (
+                    <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
+                  )}
+                  
+                  {/* Badge de estado - esquerda (só aparece se for reservado ou vendido) */}
                   <div className="absolute top-4 left-4">
-                    {property.availability_status === 'reservado' && (
-                      <StatusBadge status="reservado" />
-                    )}
-                    {property.availability_status === 'vendido' && (
-                      <StatusBadge status="vendido" />
-                    )}
-                    {(!property.availability_status || property.availability_status === 'disponivel') && (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                        {getPropertyTypeLabel(property.type)}
-                      </span>
-                    )}
+                    <StatusBadge status={property.availability_status || 'disponivel'} />
                   </div>
+
+                  {/* Tipo do imóvel - direita (só aparece se não for reservado/vendido) */}
+                  {(!property.availability_status || property.availability_status === 'disponivel') && (
+                    <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
+                      {getPropertyTypeLabel(property.type)}
+                    </div>
+                  )}
                 </div>
                 
                 <div className="p-6 flex flex-col flex-grow">
