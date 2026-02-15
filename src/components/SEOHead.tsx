@@ -14,7 +14,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   title = "Globalead Portugal",
   description = "Especialistas em imobiliário, crédito habitação, certificação energética e seguros. Apoiamos todo o processo para comprar ou vender a sua casa em segurança.",
   keywords = "imóveis, mediação imobiliária, seguros, energia, alarmes, Portugal, Porto, Lisboa, casa, apartamento, moradia",
-  image = "/logo.png",
+  image = "/fotos/globalead-icon.png",
   url = "https://globalead.pt",
   type = "website"
 }) => {
@@ -23,7 +23,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
     "@type": "Organization",
     "name": "Globalead Portugal",
     "url": url,
-    "logo": `${url}/logo.png`,
+    "logo": `${url}/fotos/globalead-icon.png`,
     "description": description,
     "contactPoint": {
       "@type": "ContactPoint",
@@ -98,7 +98,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       <meta name="apple-mobile-web-app-title" content="Globalead" />
-      <link rel="apple-touch-icon" href="/logo.png" />
+      <link rel="apple-touch-icon" href="/fotos/globalead-icon.png" />
     </Helmet>
   );
 };

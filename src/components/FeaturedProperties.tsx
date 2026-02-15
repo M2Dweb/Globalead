@@ -111,11 +111,11 @@ const FeaturedProperties: React.FC = () => {
                     {formatPrice(property.price)}
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[3.5rem]">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1 line-clamp-2 min-h-[3.5rem]">
                     {property.title}
                   </h3>
 
-                  <div className="flex flex-wrap items-center gap-3 text-gray-600 mb-4 text-sm">
+                  <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-4 text-sm">
                     <div className="flex items-center">
                       <Bed className="h-4 w-4 mr-1" />
                       <span>{property.bedrooms}</span>
