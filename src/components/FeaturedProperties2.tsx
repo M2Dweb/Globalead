@@ -100,7 +100,7 @@ const FeaturedProperties2: React.FC = () => {
                 <div className="p-6 flex flex-col flex-grow">
                   {/* SEM PREÇO - estilo original */}
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-1 line-clamp-2 min-h-[3.5rem]">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1 text-center line-clamp-2 min-h-[3.5rem]">
                     {property.title}
                   </h3>
 
