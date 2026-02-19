@@ -107,9 +107,7 @@ const FeaturedProperties: React.FC = () => {
                 
                 <div className="p-6 flex flex-col flex-grow">
                   {/* COM PREÇO */}
-                  <div className="text-2xl font-bold text-[#79b2e9] mb-2">
-                    {formatPrice(property.price)}
-                  </div>
+                  
 
                   <h3 className="text-xl font-bold text-gray-900 text-center mb-1 line-clamp-2 min-h-[3.5rem]">
                     {property.title}
