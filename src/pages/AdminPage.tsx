@@ -820,7 +820,6 @@ const AdminPage: React.FC = () => {
                       value={propertyForm.title}
                       onChange={(e) => setPropertyForm({ ...propertyForm, title: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
                     />
                     <input
                       type="number"
@@ -828,7 +827,6 @@ const AdminPage: React.FC = () => {
                       value={propertyForm.price}
                       onChange={(e) => setPropertyForm({ ...propertyForm, price: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
                     />
                     <input
                       type="number"
@@ -836,7 +834,6 @@ const AdminPage: React.FC = () => {
                       value={propertyForm.bedrooms}
                       onChange={(e) => setPropertyForm({ ...propertyForm, bedrooms: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
                     />
                     <input
                       type="number"
@@ -844,7 +841,6 @@ const AdminPage: React.FC = () => {
                       value={propertyForm.bathrooms}
                       onChange={(e) => setPropertyForm({ ...propertyForm, bathrooms: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
                     />
                     <input
                       type="number"
@@ -852,7 +848,6 @@ const AdminPage: React.FC = () => {
                       value={propertyForm.area}
                       onChange={(e) => setPropertyForm({ ...propertyForm, area: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
                     />
                     <input
                       type="text"
@@ -860,13 +855,11 @@ const AdminPage: React.FC = () => {
                       value={propertyForm.location}
                       onChange={(e) => setPropertyForm({ ...propertyForm, location: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
                     />
                     <select
                       value={propertyForm.type}
                       onChange={(e) => setPropertyForm({ ...propertyForm, type: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
                     >
                       <option value="">Tipo de Imóvel</option>
                       <option value="apartamento">Apartamento</option>

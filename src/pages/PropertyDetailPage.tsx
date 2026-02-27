@@ -394,6 +394,7 @@ const PropertyDetailPage: React.FC = () => {
                     <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Área</th>
                     <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Garagem</th>
                     <th className="px-5 py-4 text-right text-sm font-semibold tracking-wider">Preço desde</th>
+                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Planta</th>
                     <th className="px-5 py-4"></th>
                   </tr>
                 </thead>
@@ -420,6 +421,15 @@ const PropertyDetailPage: React.FC = () => {
                       </td>
                       <td className="px-5 py-4 text-right">
                         <span className="font-bold text-[#0d2233]">{formatPrice(type.price)}</span>
+                      </td>
+                      <td className="px-5 py-4 text-center">
+                        {type.floor_plan ? (
+                          <a href={type.floor_plan} target="_blank" rel="noopener noreferrer">
+                            <img src={type.floor_plan} alt="Planta" className="w-12 h-12 object-cover rounded-lg mx-auto hover:scale-150 transition-transform duration-200 cursor-zoom-in" />
+                          </a>
+                        ) : (
+                          <span className="text-gray-300 text-xs">—</span>
+                        )}
                       </td>
                       <td className="px-5 py-4 text-center">
                         <button
@@ -449,12 +459,17 @@ const PropertyDetailPage: React.FC = () => {
                     </div>
                     <span className="font-bold text-[#0d2233]">{formatPrice(type.price)}</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-500 mb-3">
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-500 mb-2">
                     {type.bedrooms && <span>{type.bedrooms} Quartos</span>}
                     {type.bathrooms && <span>{type.bathrooms} WC</span>}
                     <span>{type.area} m²</span>
                     <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
                   </div>
+                  {type.floor_plan && (
+                    <a href={type.floor_plan} target="_blank" rel="noopener noreferrer" className="block mb-3">
+                      <img src={type.floor_plan} alt="Planta" className="w-full h-32 object-cover rounded-lg" />
+                    </a>
+                  )}
                   <button
                     onClick={() => {
                       setSelectedPropertyType(type);
@@ -534,14 +549,12 @@ const PropertyDetailPage: React.FC = () => {
                 </div>
               )}
 
-              {property.type !== 'empreendimento' && (
-                <div className="bg-gray-50 p-6 rounded-xl mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Descrição do Imóvel</h3>
-                  <div className="text-gray-700 leading-relaxed">
-                    <ContentRenderer content={property.description || ''} />
-                  </div>
+              <div className="bg-gray-50 p-6 rounded-xl mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Descrição do Imóvel</h3>
+                <div className="text-gray-700 leading-relaxed">
+                  <ContentRenderer content={property.description || ''} />
                 </div>
-              )}
+              </div>
 
               {property.type !== 'empreendimento' && (
                 <div className="bg-gray-50 p-6 rounded-xl text-center">
