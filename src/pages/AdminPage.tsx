@@ -12,7 +12,7 @@ const AdminPage: React.FC = () => {
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const [activeTab, setActiveTab] = useState('properties');
   const [properties, setProperties] = useState<any[]>([]);
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
@@ -56,27 +56,27 @@ const AdminPage: React.FC = () => {
   const toggleFeaturedProperty = async (property: any) => {
     try {
       const isFeatured = featuredProperties.some(fp => fp.property_id === property.id);
-      
+
       if (isFeatured) {
         // Remover dos destaques
         const { error } = await supabase
           .from('featured_properties')
           .delete()
           .eq('property_id', property.id);
-        
+
         if (error) throw error;
       } else {
-        
+
         if (featuredProperties.length >= 6) {
           alert('Já existem 6 propriedades em destaque. Remova uma antes de adicionar outra.');
           return;
         }
-        
+
         // Encontrar a próxima posição disponível
         const positions = featuredProperties.map(fp => fp.position);
         const maxPosition = positions.length > 0 ? Math.max(...positions) : 0;
         const nextPosition = maxPosition + 1;
-        
+
         const { error } = await supabase
           .from('featured_properties')
           .insert([{
@@ -85,57 +85,57 @@ const AdminPage: React.FC = () => {
             position: nextPosition,
             created_at: new Date().toISOString()
           }]);
-        
+
         if (error) throw error;
       }
-      
+
       // Atualizar lista de destaques
       fetchData();
-      
+
     } catch (error) {
       console.error('Erro ao atualizar destaques:', error);
       alert('Erro ao atualizar propriedade em destaque');
     }
   };
 
-const updatePropertyStatus = async (propertyId: string, newStatus: string, clientInfo?: any) => {
-  try {
-    setUpdatingStatus(propertyId);
-    
-    // Atualizar a propriedade
-    const { error: updateError } = await supabase
-      .from('properties')
-      .update({ availability_status: newStatus })
-      .eq('id', propertyId);
+  const updatePropertyStatus = async (propertyId: string, newStatus: string, clientInfo?: any) => {
+    try {
+      setUpdatingStatus(propertyId);
 
-    if (updateError) throw updateError;
+      // Atualizar a propriedade
+      const { error: updateError } = await supabase
+        .from('properties')
+        .update({ availability_status: newStatus })
+        .eq('id', propertyId);
 
-    // Registrar no histórico
-    const { error: historyError } = await supabase
-      .from('property_status_history')
-      .insert([{
-        property_id: propertyId,
-        status: newStatus,
-        client_name: clientInfo?.name,
-        client_email: clientInfo?.email,
-        client_phone: clientInfo?.phone,
-        reservation_date: newStatus === 'reservado' ? new Date().toISOString() : null,
-        sold_date: newStatus === 'vendido' ? new Date().toISOString() : null,
-        notes: clientInfo?.notes,
-        created_by: 'admin'
-      }]);
+      if (updateError) throw updateError;
 
-    if (historyError) throw historyError;
+      // Registrar no histórico
+      const { error: historyError } = await supabase
+        .from('property_status_history')
+        .insert([{
+          property_id: propertyId,
+          status: newStatus,
+          client_name: clientInfo?.name,
+          client_email: clientInfo?.email,
+          client_phone: clientInfo?.phone,
+          reservation_date: newStatus === 'reservado' ? new Date().toISOString() : null,
+          sold_date: newStatus === 'vendido' ? new Date().toISOString() : null,
+          notes: clientInfo?.notes,
+          created_by: 'admin'
+        }]);
 
-    fetchData(); // Recarregar dados
-    alert(`Status atualizado para ${newStatus}`);
-  } catch (error) {
-    console.error('Erro ao atualizar status:', error);
-    alert('Erro ao atualizar status');
-  } finally {
-    setUpdatingStatus(null);
-  }
-};
+      if (historyError) throw historyError;
+
+      fetchData(); // Recarregar dados
+      alert(`Status atualizado para ${newStatus}`);
+    } catch (error) {
+      console.error('Erro ao atualizar status:', error);
+      alert('Erro ao atualizar status');
+    } finally {
+      setUpdatingStatus(null);
+    }
+  };
 
 
 
@@ -144,15 +144,15 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
   const reorderFeaturedProperty = async (propertyId: string, newPosition: number) => {
     try {
       const oldPosition = featuredProperties.find(fp => fp.property_id === propertyId)?.position;
-      
+
       if (oldPosition === undefined) return;
-      
+
       // Reordenar todas as posições
       const updatedFeatured = featuredProperties.map(fp => {
         if (fp.property_id === propertyId) {
           return { ...fp, position: newPosition };
         }
-        
+
         // Ajustar outras posições
         if (oldPosition < newPosition) {
           // Movendo para baixo
@@ -165,7 +165,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
             return { ...fp, position: fp.position + 1 };
           }
         }
-        
+
         return fp;
       }).sort((a, b) => a.position - b.position);
 
@@ -181,12 +181,12 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
           .from('featured_properties')
           .update({ position: fp.position })
           .eq('property_id', fp.property_id);
-        
+
         if (error) throw error;
       }
 
       fetchData();
-      
+
     } catch (error) {
       console.error('Erro ao reordenar destaques:', error);
       alert('Erro ao reordenar propriedades');
@@ -201,9 +201,9 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
           .from('featured_properties')
           .delete()
           .eq('property_id', propertyId);
-        
+
         if (error) throw error;
-        
+
         // Reordenar as posições restantes
         const remaining = featuredProperties.filter(fp => fp.property_id !== propertyId);
         const updates = remaining.map((fp, index) => ({
@@ -323,7 +323,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
 
   const handlePropertySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const propertyData = {
         ...propertyForm,
@@ -333,8 +333,8 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
         bathrooms: parseInt(propertyForm.bathrooms),
         area: parseFloat(propertyForm.area),
         year_built: propertyForm.year_built
-        ? parseInt(propertyForm.year_built)
-        : null,
+          ? parseInt(propertyForm.year_built)
+          : null,
         state: propertyForm.state || null,
         features: propertyForm.features.filter(f => f.trim() !== ''),
         property_types: propertyForm.property_types.length > 0 ? propertyForm.property_types : null
@@ -345,13 +345,13 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
           .from('properties')
           .update(propertyData)
           .eq('id', editingProperty.id);
-        
+
         if (error) throw error;
       } else {
         const { error } = await supabase
           .from('properties')
           .insert([propertyData]);
-        
+
         if (error) throw error;
       }
 
@@ -366,7 +366,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
 
   const handleBlogSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const blogData = {
         ...blogForm,
@@ -379,13 +379,13 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
           .from('blog_posts')
           .update(blogData)
           .eq('id', editingPost.id);
-        
+
         if (error) throw error;
       } else {
         const { error } = await supabase
           .from('blog_posts')
           .insert([blogData]);
-        
+
         if (error) throw error;
       }
 
@@ -404,7 +404,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
         .from('properties')
         .delete()
         .eq('id', id);
-      
+
       if (!error) {
         fetchData();
         alert('Propriedade excluída!');
@@ -418,7 +418,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
         .from('blog_posts')
         .delete()
         .eq('id', id);
-      
+
       if (!error) {
         fetchData();
         alert('Post excluído!');
@@ -432,7 +432,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
         .from('property_leads')
         .delete()
         .eq('id', id);
-      
+
       if (!error) {
         fetchData();
         alert('Lead excluído!');
@@ -554,14 +554,14 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
   const addPropertyType = () => {
     setPropertyForm(prev => ({
       ...prev,
-      property_types: [...prev.property_types, { name: '', area: '', price: '', garage: '', floor_plan: '' }]
+      property_types: [...prev.property_types, { fracao: '', name: '', bedrooms: '', bathrooms: '', area: '', garage: 'nao', price: '', floor_plan: '' }]
     }));
   };
 
   const updatePropertyType = (index: number, field: string, value: string) => {
     setPropertyForm(prev => ({
       ...prev,
-      property_types: prev.property_types.map((pt, i) => 
+      property_types: prev.property_types.map((pt, i) =>
         i === index ? { ...pt, [field]: value } : pt
       )
     }));
@@ -670,7 +670,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
     );
   }
 
-  
+
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
@@ -699,11 +699,10 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     resetPropertyForm();
                     resetBlogForm();
                   }}
-                  className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
-                    activeTab === tab.id
-                      ? 'border-[#0d2233] text-[#0d2233]'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
+                  className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab.id
+                    ? 'border-[#0d2233] text-[#0d2233]'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }`}
                 >
                   <IconComponent className="h-5 w-5 mr-2" />
                   {tab.name}
@@ -731,72 +730,71 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
 
                 <div className="bg-white rounded-lg shadow overflow-hidden">
                   <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Propriedade</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Localização</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {properties.map((property) => (
-                        <tr key={property.id}>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <img src={property.cover_image || property.images?.[0] || '/placeholder.jpg'} className="h-10 w-10 rounded-lg object-cover"/>
-                              <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{property.title}</div>
-                                <div className="text-sm text-gray-500">{property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²</div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {formatCurrency(property.price)}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {property.location}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                              onClick={() => editProperty(property)}
-                              className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </button>
-                            <button
-                              onClick={() => deleteProperty(property.id)}
-                              className="text-red-600 hover:text-red-900"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <select
-                              value={property.availability_status || 'disponivel'}
-                              onChange={(e) => {
-                                if (confirm(`Tem certeza que deseja alterar o status para ${e.target.value === 'reservado' ? 'Reservado' : 'Vendido'}?`)) {
-                                  updatePropertyStatus(property.id, e.target.value);
-                                }
-                              }}
-                              disabled={updatingStatus === property.id}
-                              className={`px-2 py-1 rounded-lg text-sm font-medium border ${
-                                property.availability_status === 'reservado' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' :
-                                property.availability_status === 'vendido' ? 'bg-red-100 text-red-800 border-red-300' :
-                                'bg-gray-100 text-gray-800 border-gray-300'
-                              }`}
-                            >
-                              <option value="disponivel">Disponível</option>
-                              <option value="reservado">Reservado</option>
-                              <option value="vendido">Vendido</option>
-                            </select>
-                          </td>
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Propriedade</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Localização</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {properties.map((property) => (
+                          <tr key={property.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <img src={property.cover_image || property.images?.[0] || '/placeholder.jpg'} className="h-10 w-10 rounded-lg object-cover" />
+                                <div className="ml-4">
+                                  <div className="text-sm font-medium text-gray-900">{property.title}</div>
+                                  <div className="text-sm text-gray-500">{property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              {formatCurrency(property.price)}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {property.location}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button
+                                onClick={() => editProperty(property)}
+                                className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </button>
+                              <button
+                                onClick={() => deleteProperty(property.id)}
+                                className="text-red-600 hover:text-red-900"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <select
+                                value={property.availability_status || 'disponivel'}
+                                onChange={(e) => {
+                                  if (confirm(`Tem certeza que deseja alterar o status para ${e.target.value === 'reservado' ? 'Reservado' : 'Vendido'}?`)) {
+                                    updatePropertyStatus(property.id, e.target.value);
+                                  }
+                                }}
+                                disabled={updatingStatus === property.id}
+                                className={`px-2 py-1 rounded-lg text-sm font-medium border ${property.availability_status === 'reservado' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' :
+                                  property.availability_status === 'vendido' ? 'bg-red-100 text-red-800 border-red-300' :
+                                    'bg-gray-100 text-gray-800 border-gray-300'
+                                  }`}
+                              >
+                                <option value="disponivel">Disponível</option>
+                                <option value="reservado">Reservado</option>
+                                <option value="vendido">Vendido</option>
+                              </select>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -820,7 +818,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="text"
                       placeholder="Título"
                       value={propertyForm.title}
-                      onChange={(e) => setPropertyForm({...propertyForm, title: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, title: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
@@ -828,7 +826,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="number"
                       placeholder="Preço"
                       value={propertyForm.price}
-                      onChange={(e) => setPropertyForm({...propertyForm, price: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, price: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
@@ -836,7 +834,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="number"
                       placeholder="Quartos"
                       value={propertyForm.bedrooms}
-                      onChange={(e) => setPropertyForm({...propertyForm, bedrooms: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, bedrooms: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
@@ -844,7 +842,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="number"
                       placeholder="Casas de banho"
                       value={propertyForm.bathrooms}
-                      onChange={(e) => setPropertyForm({...propertyForm, bathrooms: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, bathrooms: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
@@ -852,7 +850,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="number"
                       placeholder="Área (m²)"
                       value={propertyForm.area}
-                      onChange={(e) => setPropertyForm({...propertyForm, area: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, area: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
@@ -860,13 +858,13 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="text"
                       placeholder="Localização"
                       value={propertyForm.location}
-                      onChange={(e) => setPropertyForm({...propertyForm, location: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, location: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
                     <select
                       value={propertyForm.type}
-                      onChange={(e) => setPropertyForm({...propertyForm, type: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, type: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     >
@@ -880,19 +878,19 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="text"
                       placeholder="Classe Energética"
                       value={propertyForm.energy_class}
-                      onChange={(e) => setPropertyForm({...propertyForm, energy_class: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, energy_class: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <input
                       type="number"
                       placeholder="Ano de Construção"
                       value={propertyForm.year_built}
-                      onChange={(e) => setPropertyForm({...propertyForm, year_built: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, year_built: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <select
                       value={propertyForm.state || ''}
-                      onChange={(e) => setPropertyForm({...propertyForm, state: e.target.value})}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, state: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="">Estado do Imóvel</option>
@@ -926,7 +924,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     <label className="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
                     <RichTextEditor
                       value={propertyForm.description}
-                      onChange={(value) => setPropertyForm({...propertyForm, description: value})}
+                      onChange={(value) => setPropertyForm({ ...propertyForm, description: value })}
                       placeholder="Descrição detalhada da propriedade..."
                       height="200px"
                     />
@@ -961,7 +959,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       Adicionar Característica
                     </button>
                   </div>
-                  
+
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -979,7 +977,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     <MultiFileUploader
                       folder="properties"
                       files={propertyForm.images}
-                      onUpload={(urls) => setPropertyForm({...propertyForm, images: urls})}
+                      onUpload={(urls) => setPropertyForm({ ...propertyForm, images: urls })}
                       accept="image/*"
                     />
                   </div>
@@ -988,12 +986,33 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     <label className="block text-sm font-medium text-gray-700 mb-2">Tipologias (Opcional)</label>
                     {propertyForm.property_types.map((type, index) => (
                       <div key={index} className="border border-gray-300 rounded-lg p-4 mb-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                           <input
                             type="text"
-                            placeholder="Nome (ex: T1, T2)"
+                            placeholder="Fração (ex: A, B, C)"
+                            value={type.fracao || ''}
+                            onChange={(e) => updatePropertyType(index, 'fracao', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Tipologia (ex: T1, T2)"
                             value={type.name}
                             onChange={(e) => updatePropertyType(index, 'name', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <input
+                            type="number"
+                            placeholder="Quartos"
+                            value={type.bedrooms || ''}
+                            onChange={(e) => updatePropertyType(index, 'bedrooms', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <input
+                            type="number"
+                            placeholder="Casas de Banho"
+                            value={type.bathrooms || ''}
+                            onChange={(e) => updatePropertyType(index, 'bathrooms', e.target.value)}
                             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                           <input
@@ -1003,18 +1022,19 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                             onChange={(e) => updatePropertyType(index, 'area', e.target.value)}
                             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
+                          <select
+                            value={type.garage || 'nao'}
+                            onChange={(e) => updatePropertyType(index, 'garage', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="nao">Garagem: Não</option>
+                            <option value="sim">Garagem: Sim</option>
+                          </select>
                           <input
                             type="number"
                             placeholder="Preço"
                             value={type.price}
                             onChange={(e) => updatePropertyType(index, 'price', e.target.value)}
-                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Garagem"
-                            value={type.garage}
-                            onChange={(e) => updatePropertyType(index, 'garage', e.target.value)}
                             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         </div>
@@ -1086,51 +1106,51 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
 
                 <div className="bg-white rounded-lg shadow overflow-hidden">
                   <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {blogPosts.map((post) => (
-                        <tr key={post.id}>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <img className="h-10 w-10 rounded-lg object-cover" src={post.image || '/placeholder.jpg'} alt="" />
-                              <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{post.title}</div>
-                                <div className="text-sm text-gray-500">{post.read_time}</div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {post.category}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {formatDate(post.date)}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                              onClick={() => editBlogPost(post)}
-                              className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </button>
-                            <button
-                              onClick={() => deleteBlogPost(post.id)}
-                              className="text-red-600 hover:text-red-900"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </button>
-                          </td>
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {blogPosts.map((post) => (
+                          <tr key={post.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <img className="h-10 w-10 rounded-lg object-cover" src={post.image || '/placeholder.jpg'} alt="" />
+                                <div className="ml-4">
+                                  <div className="text-sm font-medium text-gray-900">{post.title}</div>
+                                  <div className="text-sm text-gray-500">{post.read_time}</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {post.category}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {formatDate(post.date)}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button
+                                onClick={() => editBlogPost(post)}
+                                className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </button>
+                              <button
+                                onClick={() => deleteBlogPost(post.id)}
+                                className="text-red-600 hover:text-red-900"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -1154,13 +1174,13 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="text"
                       placeholder="Título"
                       value={blogForm.title}
-                      onChange={(e) => setBlogForm({...blogForm, title: e.target.value})}
+                      onChange={(e) => setBlogForm({ ...blogForm, title: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
                     <select
                       value={blogForm.category}
-                      onChange={(e) => setBlogForm({...blogForm, category: e.target.value})}
+                      onChange={(e) => setBlogForm({ ...blogForm, category: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     >
@@ -1169,7 +1189,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       <option value="financas">Finanças</option>
                       <option value="seguros">Seguros</option>
                       <option value="ce">Certificação energetica</option>
-                    {/*<option value="energia">Energia</option>
+                      {/*<option value="energia">Energia</option>
                       <option value="telecom">Telecomunicações</option>
                       <option value="alarmes">Alarmes</option> */}
                     </select>
@@ -1177,7 +1197,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="text"
                       placeholder="Autor"
                       value={blogForm.author}
-                      onChange={(e) => setBlogForm({...blogForm, author: e.target.value})}
+                      onChange={(e) => setBlogForm({ ...blogForm, author: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
@@ -1185,7 +1205,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                       type="text"
                       placeholder="Tempo de leitura"
                       value={blogForm.read_time}
-                      onChange={(e) => setBlogForm({...blogForm, read_time: e.target.value})}
+                      onChange={(e) => setBlogForm({ ...blogForm, read_time: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
@@ -1195,7 +1215,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     <label className="block text-sm font-medium text-gray-700 mb-2">Resumo</label>
                     <RichTextEditor
                       value={blogForm.excerpt}
-                      onChange={(value) => setBlogForm({...blogForm, excerpt: value})}
+                      onChange={(value) => setBlogForm({ ...blogForm, excerpt: value })}
                       placeholder="Resumo do artigo..."
                       height="150px"
                     />
@@ -1205,7 +1225,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     <label className="block text-sm font-medium text-gray-700 mb-2">Conteúdo</label>
                     <RichTextEditor
                       value={blogForm.content}
-                      onChange={(value) => setBlogForm({...blogForm, content: value})}
+                      onChange={(value) => setBlogForm({ ...blogForm, content: value })}
                       placeholder="Conteúdo completo do artigo..."
                       height="400px"
                     />
@@ -1215,7 +1235,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     <label className="block text-sm font-medium text-gray-700 mb-2">Imagem de Destaque</label>
                     <ImageUploader
                       folder="blog"
-                      onUpload={(url) => setBlogForm({...blogForm, image: url})}
+                      onUpload={(url) => setBlogForm({ ...blogForm, image: url })}
                       value={blogForm.image}
                     />
                   </div>
@@ -1241,13 +1261,13 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
             )}
           </div>
         )}
-        
+
         {activeTab === 'featured' && (
           <div>
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900">Propriedades em Destaque</h2>
               <p className="text-gray-600 mt-2">
-                Selecione até 6 propriedades para aparecerem na página inicial. 
+                Selecione até 6 propriedades para aparecerem na página inicial.
                 Arraste para reordenar (a primeira aparece na esquerda).
               </p>
               <div className="mt-4 p-4 bg-blue-50 rounded-lg">
@@ -1263,7 +1283,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
             {/* Lista de propriedades em destaque */}
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Propriedades Selecionadas</h3>
-              
+
               {featuredProperties.length === 0 ? (
                 <div className="text-center py-8 bg-gray-50 rounded-lg">
                   <StarOff className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -1277,7 +1297,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     .map((featured, index) => {
                       const property = properties.find(p => p.id === featured.property_id);
                       if (!property) return null;
-                      
+
                       return (
                         <div key={featured.id} className="bg-white rounded-lg shadow border p-4">
                           <div className="flex items-center justify-between">
@@ -1285,8 +1305,8 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                               <div className="mr-4 flex items-center justify-center w-8 h-8 bg-[#0d2233] text-white rounded-full">
                                 {index + 1}
                               </div>
-                              <img 
-                                src={property.cover_image || property.images?.[0] || '/placeholder.jpg'} 
+                              <img
+                                src={property.cover_image || property.images?.[0] || '/placeholder.jpg'}
                                 className="h-16 w-16 rounded-lg object-cover mr-4"
                                 alt={property.title}
                               />
@@ -1365,8 +1385,8 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                           <tr key={property.id} className="hover:bg-gray-50">
                             <td className="px-6 py-4">
                               <div className="flex items-center">
-                                <img 
-                                  src={property.cover_image || property.images?.[0] || '/placeholder.jpg'} 
+                                <img
+                                  src={property.cover_image || property.images?.[0] || '/placeholder.jpg'}
                                   className="h-10 w-10 rounded-lg object-cover"
                                   alt={property.title}
                                 />
@@ -1387,13 +1407,12 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                               <button
                                 onClick={() => toggleFeaturedProperty(property)}
-                                className={`inline-flex items-center px-4 py-2 rounded-lg ${
-                                  isFeatured
-                                    ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                                    : featuredProperties.length >= 6
+                                className={`inline-flex items-center px-4 py-2 rounded-lg ${isFeatured
+                                  ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                                  : featuredProperties.length >= 6
                                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                     : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-                                }`}
+                                  }`}
                                 disabled={!isFeatured && featuredProperties.length >= 6}
                               >
                                 {isFeatured ? (
@@ -1520,8 +1539,8 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                                   {lead.preco_max && `Máx: ${lead.preco_max}€`}
                                 </div>
                                 <div className="text-sm text-gray-500">
-                                  {lead.area_min && lead.area_max ? 
-                                    `${lead.area_min}-${lead.area_max}m²` : 
+                                  {lead.area_min && lead.area_max ?
+                                    `${lead.area_min}-${lead.area_max}m²` :
                                     (lead.area_min && `Min: ${lead.area_min}m²`)
                                   }
                                 </div>
@@ -1534,11 +1553,10 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                             <div className="text-sm text-gray-900">
                               {formatDate(lead.created_at)}
                             </div>
-                            <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              lead.type === 'venda' 
-                                ? 'bg-green-100 text-green-800' 
-                                : 'bg-blue-100 text-blue-800'
-                            }`}>
+                            <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${lead.type === 'venda'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-blue-100 text-blue-800'
+                              }`}>
                               {lead.type === 'venda' ? 'Venda' : 'Compra'}
                             </div>
                           </div>
@@ -1591,7 +1609,7 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                   <X className="h-6 w-6" />
                 </button>
               </div>
-              
+
               <div className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Dados Pessoais */}
@@ -1694,11 +1712,10 @@ const updatePropertyStatus = async (propertyId: string, newStatus: string, clien
                     <div className="space-y-3">
                       <div>
                         <span className="text-sm font-medium text-gray-600">Tipo de Operação:</span>
-                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ml-2 ${
-                          selectedLead.type === 'venda' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-blue-100 text-blue-800'
-                        }`}>
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ml-2 ${selectedLead.type === 'venda'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-blue-100 text-blue-800'
+                          }`}>
                           {selectedLead.type === 'venda' ? 'Venda' : 'Compra'}
                         </div>
                       </div>

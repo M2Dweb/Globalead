@@ -38,7 +38,7 @@ const PropertyDetailPage: React.FC = () => {
 
       try {
         const { data, error } = await getPropertyByRef(ref);
-        
+
         if (error) {
           console.error('Erro ao carregar propriedade:', error);
           setProperty({
@@ -121,11 +121,11 @@ const PropertyDetailPage: React.FC = () => {
           .select('*')
           .neq('ref', ref)
           .limit(3);
-        
+
         if (error) {
           console.error('Erro ao carregar propriedades similares:', error);
         }
-        
+
         setSimilarProperties(data || [
           {
             id: 2,
@@ -201,7 +201,7 @@ const PropertyDetailPage: React.FC = () => {
   const shareContent = (platform: string) => {
     const url = window.location.href;
     const text = `Confira este imóvel: ${property?.title}`;
-    
+
     switch (platform) {
       case 'facebook':
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
@@ -295,15 +295,15 @@ const PropertyDetailPage: React.FC = () => {
           backgroundPosition: 'center',
         }}
       >
-          <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
 
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="flex justify-center mb-4">
-              <StatusBadge status={property.availability_status || 'disponivel'} size="lg" />
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">{property.title}</h1>
-          
-          
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-4">
+            <StatusBadge status={property.availability_status || 'disponivel'} size="lg" />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">{property.title}</h1>
+
+
           <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
             <div className="flex items-center">
               <Bed className="h-6 w-6 mr-2" />
@@ -360,9 +360,8 @@ const PropertyDetailPage: React.FC = () => {
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
-                className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 ${
-                  index === currentImageIndex ? 'border-[#0d2233]' : 'border-transparent'
-                }`}
+                className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 ${index === currentImageIndex ? 'border-[#0d2233]' : 'border-transparent'
+                  }`}
               >
                 <img
                   src={image}
@@ -375,31 +374,96 @@ const PropertyDetailPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Property Types */}
-      {property.property_types && property.property_types.length > 0 && (
+      {/* Tipologias - Apenas para Empreendimentos */}
+      {property.type === 'empreendimento' && property.property_types && property.property_types.length > 0 && (
         <section className="py-12 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+            <h3 className="text-2xl font-bold text-[#0d2233] mb-8 text-center">
               Tipologias Disponíveis
             </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {property.property_types.map((type, index) => (
-                <div
-                  key={index}
-                  className={`bg-white p-6 rounded-xl shadow-lg cursor-pointer transition-all ${
-                    selectedPropertyType?.name === type.name ? 'ring-2 ring-[#0d2233]' : ''
-                  }`}
-                  onClick={() => setSelectedPropertyType(type)}
-                >
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">{type.name}</h4>
-                  <p className="text-gray-600 mb-2">Área de {type.area} m², {type.garage}</p>
-                  <p className="text-2xl font-bold text-[#0d2233] mb-4">desde {formatPrice(type.price)}</p>
-                  <img
-                    src={type.floor_plan}
-                    alt={`Planta ${type.name}`}
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
+
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-[#0d2233] text-white">
+                    <th className="px-5 py-4 text-left text-sm font-semibold tracking-wider">Fração</th>
+                    <th className="px-5 py-4 text-left text-sm font-semibold tracking-wider">Tipologia</th>
+                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Quartos</th>
+                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">WC</th>
+                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Área</th>
+                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Garagem</th>
+                    <th className="px-5 py-4 text-right text-sm font-semibold tracking-wider">Preço desde</th>
+                    <th className="px-5 py-4"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {property.property_types.map((type: any, index: number) => (
+                    <tr
+                      key={index}
+                      className={`border-b border-gray-100 transition-colors duration-150 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
+                        } hover:bg-blue-50/60`}
+                    >
+                      <td className="px-5 py-4 text-gray-600 font-medium">{type.fracao || '-'}</td>
+                      <td className="px-5 py-4">
+                        <span className="font-semibold text-[#0d2233]">{type.name}</span>
+                      </td>
+                      <td className="px-5 py-4 text-center text-gray-600">{type.bedrooms || '-'}</td>
+                      <td className="px-5 py-4 text-center text-gray-600">{type.bathrooms || '-'}</td>
+                      <td className="px-5 py-4 text-center text-gray-600">{type.area} m²</td>
+                      <td className="px-5 py-4 text-center">
+                        {type.garage === 'sim' ? (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Sim</span>
+                        ) : (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">Não</span>
+                        )}
+                      </td>
+                      <td className="px-5 py-4 text-right">
+                        <span className="font-bold text-[#0d2233]">{formatPrice(type.price)}</span>
+                      </td>
+                      <td className="px-5 py-4 text-center">
+                        <button
+                          onClick={() => {
+                            setSelectedPropertyType(type);
+                            document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className="px-4 py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
+                        >
+                          Saber mais
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile List */}
+            <div className="md:hidden divide-y divide-gray-200">
+              {property.property_types.map((type: any, index: number) => (
+                <div key={index} className="py-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      {type.fracao && <span className="text-xs text-gray-400">Fr. {type.fracao}</span>}
+                      <span className="font-semibold text-[#0d2233]">{type.name}</span>
+                    </div>
+                    <span className="font-bold text-[#0d2233]">{formatPrice(type.price)}</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-500 mb-3">
+                    {type.bedrooms && <span>{type.bedrooms} Quartos</span>}
+                    {type.bathrooms && <span>{type.bathrooms} WC</span>}
+                    <span>{type.area} m²</span>
+                    <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setSelectedPropertyType(type);
+                      document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="w-full py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
+                  >
+                    Saber mais
+                  </button>
                 </div>
               ))}
             </div>
@@ -411,129 +475,131 @@ const PropertyDetailPage: React.FC = () => {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Details and Description */}
+            {/* Details and Description - hidden for empreendimentos */}
             <div className="lg:col-span-2">
-              {/* Details */}
-              <div className="bg-gray-50 p-6 rounded-xl mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Detalhes</h3>
+              {property.type !== 'empreendimento' && (
+                <div className="bg-gray-50 p-6 rounded-xl mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Detalhes</h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8">
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Preço:</span>
-                    <span className="font-semibold">
-                      {formatPrice(selectedPropertyType?.price || property.price)}
-                    </span>
-                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8">
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Preço:</span>
+                      <span className="font-semibold">
+                        {formatPrice(selectedPropertyType?.price || property.price)}
+                      </span>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Estado:</span>
-                    <span className="font-semibold">{property.state || 'Novo'}</span>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Estado:</span>
+                      <span className="font-semibold">{property.state || 'Novo'}</span>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Área útil:</span>
-                    <span className="font-semibold">
-                      {selectedPropertyType?.area || property.area}m²
-                    </span>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Área útil:</span>
+                      <span className="font-semibold">
+                        {selectedPropertyType?.area || property.area}m²
+                      </span>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Quartos:</span>
-                    <span className="font-semibold">{property.bedrooms}</span>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Quartos:</span>
+                      <span className="font-semibold">{property.bedrooms}</span>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Casas de banho:</span>
-                    <span className="font-semibold">{property.bathrooms}</span>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Casas de banho:</span>
+                      <span className="font-semibold">{property.bathrooms}</span>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Ano de Construção:</span>
-                    <span className="font-semibold">{property.year_built}</span>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Ano de Construção:</span>
+                      <span className="font-semibold">{property.year_built}</span>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Estacionamento:</span>
-                    <span className="font-semibold">{property.garage || 'N/A'}</span>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Estacionamento:</span>
+                      <span className="font-semibold">{property.garage || 'N/A'}</span>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Certificado energético:</span>
-                    <span className="font-semibold">{property.energy_class}</span>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Certificado energético:</span>
+                      <span className="font-semibold">{property.energy_class}</span>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600">Referência:</span>
-                    <span className="font-semibold">{property.ref || 'N/A'}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Referência:</span>
+                      <span className="font-semibold">{property.ref || 'N/A'}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
-
-              {/* Description */}
-              <div className="bg-gray-50 p-6 rounded-xl mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Descrição do Imóvel</h3>
-                <div className="text-gray-700 leading-relaxed">
-                  <ContentRenderer content={property.description || ''} />
+              {property.type !== 'empreendimento' && (
+                <div className="bg-gray-50 p-6 rounded-xl mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Descrição do Imóvel</h3>
+                  <div className="text-gray-700 leading-relaxed">
+                    <ContentRenderer content={property.description || ''} />
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Share Content */}
-              <div className="bg-gray-50 p-6 rounded-xl text-center">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Partilha este conteúdo</h3>
-                <div className="flex justify-center gap-4 flex-wrap">
-                  <button
-                    onClick={() => shareContent('facebook')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                  >
-                    <Facebook className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => shareContent('whatsapp')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                  >
-                    <MessageCircle className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => shareContent('telegram')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                  >
-                    <Send className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => shareContent('twitter')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                  >
-                    <Twitter className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => shareContent('email')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                  >
-                    <Mail className="h-5 w-5" />
-                  </button>
+              {property.type !== 'empreendimento' && (
+                <div className="bg-gray-50 p-6 rounded-xl text-center">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Partilha este conteúdo</h3>
+                  <div className="flex justify-center gap-4 flex-wrap">
+                    <button
+                      onClick={() => shareContent('facebook')}
+                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    >
+                      <Facebook className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => shareContent('whatsapp')}
+                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    >
+                      <MessageCircle className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => shareContent('telegram')}
+                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    >
+                      <Send className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => shareContent('twitter')}
+                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    >
+                      <Twitter className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => shareContent('email')}
+                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    >
+                      <Mail className="h-5 w-5" />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
 
 
 
             {/* Visit Form */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1" id="contact-form">
               <div className="bg-white p-6 rounded-xl shadow-lg sticky top-32">
                 <div className="flex items-center space-x-4 mb-6">
                   <img
-                    src="/carlos/pe-fato-meio3-fundo.jpg" 
+                    src="/carlos/pe-fato-meio3-fundo.jpg"
                     className="w-20 h-20 rounded-full  border-2 border-[#79b2e9] object-top object-cover"
                   />
                   <div>
                     <a
-                    href="/carlos-goncalves" // alterar rota
-                    className="hover:underline cursor-pointer "
-                  >
-                    <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
-                  </a>
+                      href="/carlos-goncalves" // alterar rota
+                      className="hover:underline cursor-pointer "
+                    >
+                      <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
+                    </a>
                     <div className="flex items-center text-gray-800 text-base">
                       <Phone className="h-4 w-4 mr-1" />
                       <a href="tel:+351915482365" className="hover:underline">
@@ -543,206 +609,206 @@ const PropertyDetailPage: React.FC = () => {
                     <p className="text-sm text-gray-500">Chamada para a rede móvel nacional</p>
                   </div>
                 </div>
-                  {/* Conteúdo condicional baseado no status */}
-                  {property.availability_status === 'disponivel' && (
-                    <>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                  Agende a sua visita
-                </h3>
-                
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <input
-                    type="text"
-                    name="nome"
-                    value={formData.nome}
-                    onChange={handleInputChange}
-                    placeholder="Nome:"
-                    required
-                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="text"
-                    name="apelido"
-                    value={formData.apelido}
-                    onChange={handleInputChange}
-                    placeholder="Apelido:"
-                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="tel"
-                    name="telemovel"
-                    value={formData.telemovel}
-                    onChange={handleInputChange}
-                    placeholder="Telemóvel:"
-                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Email:"
-                    required
-                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                {/* Conteúdo condicional baseado no status */}
+                {property.availability_status === 'disponivel' && (
+                  <>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                      Agende a sua visita
+                    </h3>
 
-                  <select 
-                  name="horário" 
-                  value={formData.horario} 
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
-                    <option value="">Horário</option>
-                    <option value="9h">9h-12h30</option>
-                    <option value="12h30">12h30-16h</option>
-                    <option value="16h">16h-19h30</option>
-                  </select>
-                  <select 
-                    name="meio_contacto"
-                    value={formData.meio_contacto}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="">Meio de Contacto:</option>
-                    <option value="Email">Email</option>
-                    <option value="Telefone">Telefone</option>
-                    <option value="WhatsApp">WhatsApp</option>
-                  </select>
-                  
-                  <label className="flex items-start text-sm text-gray-700">
-                    <input type="checkbox" className="mt-1 mr-2" required />
-                    Sim, aceito os termos e condições indicados pela Globalead Portugal.
-                  </label>
-                  
-                  <p className="text-xs text-gray-600">
-                    Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
-                  </p>
-                  
-                  {submitStatus === 'success' && (
-                    <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                      Pedido de visita enviado com sucesso! Entraremos em contacto em breve.
-                    </div>
-                  )}
-                  
-                  {submitStatus === 'error' && (
-                    <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                      Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.
-                    </div>
-                  )}
-                  
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? 'Enviando...' : 'Agendar Visita'}
-                  </button>
-                </form>
-                 </>
-                  )}
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <input
+                        type="text"
+                        name="nome"
+                        value={formData.nome}
+                        onChange={handleInputChange}
+                        placeholder="Nome:"
+                        required
+                        className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      <input
+                        type="text"
+                        name="apelido"
+                        value={formData.apelido}
+                        onChange={handleInputChange}
+                        placeholder="Apelido:"
+                        className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      <input
+                        type="tel"
+                        name="telemovel"
+                        value={formData.telemovel}
+                        onChange={handleInputChange}
+                        placeholder="Telemóvel:"
+                        className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Email:"
+                        required
+                        className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
 
-                  {property.availability_status === 'reservado' && (
-                    <>
-                      <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg mb-6">
-                        <div className="flex">
-                          <Clock className="h-6 w-6 text-yellow-500 flex-shrink-0" />
-                          <div className="ml-3">
-                            <p className="text-yellow-700">
-                              Este imóvel está atualmente reservado. Se tiver interesse, podemos incluí-lo numa lista de espera.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                        Quer ser notificado?
-                      </h3>
-
-                      <div className="space-y-4">
-                        <button className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600 transition flex items-center justify-center gap-2">
-                          <Bell className="h-5 w-5" />
-                          Avise-me se ficar disponível
-                        </button>
-                        
-                        <button 
-                          onClick={() => navigate('/imoveis/lista')}
-                          className="w-full border-2 border-[#79b2e9] text-[#0d2233] py-3 rounded-lg hover:bg-blue-50 transition flex items-center justify-center gap-2"
-                        >
-                          <Search className="h-5 w-5" />
-                          Ver imóveis disponíveis
-                        </button>
-                      </div>
-                    </>
-                  )}
-
-                  {property.availability_status === 'vendido' && (
-                    <>
-                      <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mb-6">
-                        <div className="flex">
-                          <Heart className="h-6 w-6 text-red-500 flex-shrink-0" />
-                          <div className="ml-3">
-                            <p className="text-red-700">
-                              Este imóvel já foi vendido. Mas temos outras opções que podem interessar-lhe!
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                        Descubra alternativas
-                      </h3>
-
-                      <div className="space-y-4">
-                        <button 
-                          onClick={() => navigate('/imoveis/lista')}
-                          className="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2"
-                        >
-                          <Search className="h-5 w-5" />
-                          Ver imóveis disponíveis
-                        </button>
-                        
-                        <button 
-                          onClick={() => {
-                            // Filtrar por características similares
-                            navigate('/imoveis/lista?similares=true');
-                          }}
-                          className="w-full border-2 border-red-500 text-red-700 py-3 rounded-lg hover:bg-red-50 transition flex items-center justify-center gap-2"
-                        >
-                          <Heart className="h-5 w-5" />
-                          Imóveis similares
-                        </button>
-                      </div>
-                    </>
-                  )}
-
-                  {property.availability_status === 'indisponivel' && (
-                    <>
-                      <div className="bg-gray-50 border-l-4 border-gray-500 p-4 rounded-lg mb-6">
-                        <div className="flex">
-                          <AlertCircle className="h-6 w-6 text-gray-500 flex-shrink-0" />
-                          <div className="ml-3">
-                            <p className="text-gray-700">
-                              Este imóvel está temporariamente indisponível. Contacte-nos para mais informações.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <button 
-                        onClick={() => navigate('/imoveis/lista')}
-                        className="w-full bg-[#0d2233] text-white py-3 rounded-lg hover:bg-[#79b2e9] transition"
+                      <select
+                        name="horário"
+                        value={formData.horario}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
+                        <option value="">Horário</option>
+                        <option value="9h">9h-12h30</option>
+                        <option value="12h30">12h30-16h</option>
+                        <option value="16h">16h-19h30</option>
+                      </select>
+                      <select
+                        name="meio_contacto"
+                        value={formData.meio_contacto}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
-                        Ver outros imóveis
-                      </button>
-                    </>
-                  )}
+                        <option value="">Meio de Contacto:</option>
+                        <option value="Email">Email</option>
+                        <option value="Telefone">Telefone</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                      </select>
 
-                  {/* Contacto direto sempre visível */}
-                  <p className="text-sm text-gray-500 text-center mt-6">
-                    Ou contacte-nos diretamente: <br />
-                    <a href="tel:+351915482365" className="text-[#0d2233] font-semibold">
-                      +351 915 482 365
-                    </a>
-                  </p>
+                      <label className="flex items-start text-sm text-gray-700">
+                        <input type="checkbox" className="mt-1 mr-2" required />
+                        Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                      </label>
+
+                      <p className="text-xs text-gray-600">
+                        Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
+                      </p>
+
+                      {submitStatus === 'success' && (
+                        <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                          Pedido de visita enviado com sucesso! Entraremos em contacto em breve.
+                        </div>
+                      )}
+
+                      {submitStatus === 'error' && (
+                        <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                          Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.
+                        </div>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isSubmitting ? 'Enviando...' : 'Agendar Visita'}
+                      </button>
+                    </form>
+                  </>
+                )}
+
+                {property.availability_status === 'reservado' && (
+                  <>
+                    <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg mb-6">
+                      <div className="flex">
+                        <Clock className="h-6 w-6 text-yellow-500 flex-shrink-0" />
+                        <div className="ml-3">
+                          <p className="text-yellow-700">
+                            Este imóvel está atualmente reservado. Se tiver interesse, podemos incluí-lo numa lista de espera.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                      Quer ser notificado?
+                    </h3>
+
+                    <div className="space-y-4">
+                      <button className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600 transition flex items-center justify-center gap-2">
+                        <Bell className="h-5 w-5" />
+                        Avise-me se ficar disponível
+                      </button>
+
+                      <button
+                        onClick={() => navigate('/imoveis/lista')}
+                        className="w-full border-2 border-[#79b2e9] text-[#0d2233] py-3 rounded-lg hover:bg-blue-50 transition flex items-center justify-center gap-2"
+                      >
+                        <Search className="h-5 w-5" />
+                        Ver imóveis disponíveis
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {property.availability_status === 'vendido' && (
+                  <>
+                    <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mb-6">
+                      <div className="flex">
+                        <Heart className="h-6 w-6 text-red-500 flex-shrink-0" />
+                        <div className="ml-3">
+                          <p className="text-red-700">
+                            Este imóvel já foi vendido. Mas temos outras opções que podem interessar-lhe!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                      Descubra alternativas
+                    </h3>
+
+                    <div className="space-y-4">
+                      <button
+                        onClick={() => navigate('/imoveis/lista')}
+                        className="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2"
+                      >
+                        <Search className="h-5 w-5" />
+                        Ver imóveis disponíveis
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          // Filtrar por características similares
+                          navigate('/imoveis/lista?similares=true');
+                        }}
+                        className="w-full border-2 border-red-500 text-red-700 py-3 rounded-lg hover:bg-red-50 transition flex items-center justify-center gap-2"
+                      >
+                        <Heart className="h-5 w-5" />
+                        Imóveis similares
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {property.availability_status === 'indisponivel' && (
+                  <>
+                    <div className="bg-gray-50 border-l-4 border-gray-500 p-4 rounded-lg mb-6">
+                      <div className="flex">
+                        <AlertCircle className="h-6 w-6 text-gray-500 flex-shrink-0" />
+                        <div className="ml-3">
+                          <p className="text-gray-700">
+                            Este imóvel está temporariamente indisponível. Contacte-nos para mais informações.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => navigate('/imoveis/lista')}
+                      className="w-full bg-[#0d2233] text-white py-3 rounded-lg hover:bg-[#79b2e9] transition"
+                    >
+                      Ver outros imóveis
+                    </button>
+                  </>
+                )}
+
+                {/* Contacto direto sempre visível */}
+                <p className="text-sm text-gray-500 text-center mt-6">
+                  Ou contacte-nos diretamente: <br />
+                  <a href="tel:+351915482365" className="text-[#0d2233] font-semibold">
+                    +351 915 482 365
+                  </a>
+                </p>
               </div>
             </div>
           </div>
@@ -755,7 +821,7 @@ const PropertyDetailPage: React.FC = () => {
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
             Imóveis Semelhantes
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {similarProperties.map((similarProperty) => (
               <Link
@@ -769,7 +835,7 @@ const PropertyDetailPage: React.FC = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  
+
                   <h4 className="text-xl font-bold text-gray-900 mb-3">
                     {similarProperty.title}
                   </h4>
@@ -788,19 +854,19 @@ const PropertyDetailPage: React.FC = () => {
                     </div>
                     <div className="flex items-center">
                       <MapPin className="h-4 w-4 mr-1" />
-                    <span>{similarProperty.location}</span>
-                  
-                  </div>
+                      <span>{similarProperty.location}</span>
+
+                    </div>
                   </div>
                   <div className="text-gray-600 text-sm line-clamp-3">
-                  <ContentRenderer content={property.description || ''} />
+                    <ContentRenderer content={similarProperty.description || ''} />
                   </div>
-                  
+
                 </div>
                 <div className="p-3">
-                <button
+                  <button
                     className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition"
-                   onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
+                    onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
                   >
                     Ver Detalhes
                   </button>
@@ -811,21 +877,21 @@ const PropertyDetailPage: React.FC = () => {
         </div>
       </section>
       {/* Property Buy Form Section */}
-      
-        <section className="py-16 sm:py-20 bg-gray-900">
-          <div className="text-center mb-8 sm:mb-12">
-            <div className="flex justify-center mb-4 sm:mb-6">
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
-              Encontre o seu imóvel ideal
-            </h2>
-            <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
-              Diga-nos o que procura e encontraremos as melhores opções para si
-            </p>
+
+      <section className="py-16 sm:py-20 bg-gray-900">
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="flex justify-center mb-4 sm:mb-6">
           </div>
-          <PropertyBuyForm />
-        </section>
-      
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+            Encontre o seu imóvel ideal
+          </h2>
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
+            Diga-nos o que procura e encontraremos as melhores opções para si
+          </p>
+        </div>
+        <PropertyBuyForm />
+      </section>
+
     </div>
   );
 };

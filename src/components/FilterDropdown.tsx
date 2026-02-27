@@ -59,6 +59,7 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
   const propertyTypes = [
     { value: 'apartamento', label: 'Apartamento' },
     { value: 'moradia', label: 'Moradia' },
+    { value: 'empreendimento', label: 'Empreendimento' },
     { value: 'terreno', label: 'Terreno' },
     { value: 'escritorio', label: 'Escritório' },
     { value: 'loja', label: 'Loja' },
@@ -75,8 +76,8 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
   ];
 
   const features = [
-    'Garagem', 'Jardim', 'Piscina', 'Varanda', 'Elevador', 
-    'Ar Condicionado', 'Cozinha Equipada', 'Vista Mar', 
+    'Garagem', 'Jardim', 'Piscina', 'Varanda', 'Elevador',
+    'Ar Condicionado', 'Cozinha Equipada', 'Vista Mar',
     'Terraço', 'Lareira', 'Aquecimento Central'
   ];
 
@@ -173,8 +174,8 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
           <Slider
             range
             min={0}
-            max={1000000}
-            step={5000}
+            max={5000000}
+            step={10000}
             value={priceRange}
             onChange={handlePriceChange}
             trackStyle={[{ backgroundColor: '#79b2e9' }]}
@@ -186,7 +187,7 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
           />
           <div className="flex justify-between text-xs text-gray-500 mt-2">
             <span>€0</span>
-            <span>€1M</span>
+            <span>€5M</span>
           </div>
         </div>
       </div>
@@ -200,8 +201,8 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
           <Slider
             range
             min={0}
-            max={500}
-            step={1}
+            max={2000}
+            step={5}
             value={areaRange}
             onChange={handleAreaChange}
             trackStyle={[{ backgroundColor: '#79b2e9' }]}
@@ -213,7 +214,7 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
           />
           <div className="flex justify-between text-xs text-gray-500 mt-2">
             <span>0m²</span>
-            <span>500m²</span>
+            <span>2000m²</span>
           </div>
         </div>
       </div>
@@ -318,14 +319,14 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
     let count = 0;
     if (props.searchTerm) count++;
     if (props.selectedType !== 'all') count++;
-    if (props.priceRange[0] > 0 || props.priceRange[1] < 1000000) count++;
+    if (props.priceRange[0] > 0 || props.priceRange[1] < 5000000) count++;
     if (props.bedrooms !== 'all') count++;
     if (props.bathrooms !== 'all') count++;
     if (props.selectedDistrict !== 'all') count++;
     if (props.selectedState !== 'all') count++;
     if (props.selectedFeatures.length > 0) count++;
     if (props.energyClass !== 'all') count++;
-    if (props.areaRange[0] > 0 || props.areaRange[1] < 500) count++;
+    if (props.areaRange[0] > 0 || props.areaRange[1] < 2000) count++;
     return count;
   };
 

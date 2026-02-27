@@ -9,14 +9,14 @@ import StatusBadge from '../components/StatusBadge';
 const PropertyListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
-  const [priceRange, setPriceRange] = useState([0, 1000000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000000]);
   const [bedrooms, setBedrooms] = useState('all');
   const [bathrooms, setBathrooms] = useState('all');
   const [selectedDistrict, setSelectedDistrict] = useState('all');
   const [selectedState, setSelectedState] = useState('all');
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [energyClass, setEnergyClass] = useState('all');
-  const [areaRange, setAreaRange] = useState([0, 500]);
+  const [areaRange, setAreaRange] = useState<[number, number]>([0, 2000]);
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +30,7 @@ const PropertyListPage: React.FC = () => {
           .from('properties')
           .select('*')
           .order('created_at', { ascending: false });
-        
+
         if (error) {
           console.error('Erro ao carregar propriedades:', error);
           setProperties([
@@ -86,22 +86,24 @@ const PropertyListPage: React.FC = () => {
   }, [searchTerm, selectedType, priceRange, bedrooms, bathrooms, selectedDistrict, selectedState, selectedFeatures, energyClass, areaRange]);
 
   const filteredProperties = properties.filter(property => {
-    const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         property.location.toLowerCase().includes(searchTerm.toLowerCase());
+    const title = property.title || '';
+    const location = property.location || '';
+    const matchesSearch = !searchTerm || title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      location.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = selectedType === 'all' || property.type?.toLowerCase() === selectedType.toLowerCase();
-    const matchesPrice = property.price >= priceRange[0] && property.price <= priceRange[1];
-    const matchesBedrooms = bedrooms === 'all' || property.bedrooms?.toString() === bedrooms || (bedrooms === '4' && property.bedrooms >= 4);
-    const matchesBathrooms = bathrooms === 'all' || property.bathrooms?.toString() === bathrooms || (bathrooms === '4' && property.bathrooms >= 4);
+    const matchesPrice = !property.price || (property.price >= priceRange[0] && property.price <= priceRange[1]);
+    const matchesBedrooms = bedrooms === 'all' || !property.bedrooms || property.bedrooms?.toString() === bedrooms || (bedrooms === '4' && property.bedrooms >= 4);
+    const matchesBathrooms = bathrooms === 'all' || !property.bathrooms || property.bathrooms?.toString() === bathrooms || (bathrooms === '4' && property.bathrooms >= 4);
     const matchesDistrict = selectedDistrict === 'all' || property.district?.toLowerCase() === selectedDistrict.toLowerCase();
     const matchesState = selectedState === 'all' || property.state?.toLowerCase() === selectedState.toLowerCase();
-    const matchesArea = property.area >= areaRange[0] && property.area <= areaRange[1];
+    const matchesArea = !property.area || (property.area >= areaRange[0] && property.area <= areaRange[1]);
     const matchesEnergyClass = energyClass === 'all' || property.energy_class?.toLowerCase() === energyClass.toLowerCase();
-    const matchesFeatures = selectedFeatures.length === 0 || 
+    const matchesFeatures = selectedFeatures.length === 0 ||
       selectedFeatures.every(feature => property.features?.includes(feature));
-    
-    return matchesSearch && matchesType && matchesPrice && matchesBedrooms && 
-           matchesBathrooms && matchesDistrict && matchesState && matchesArea && 
-           matchesEnergyClass && matchesFeatures;
+
+    return matchesSearch && matchesType && matchesPrice && matchesBedrooms &&
+      matchesBathrooms && matchesDistrict && matchesState && matchesArea &&
+      matchesEnergyClass && matchesFeatures;
   }).sort((a, b) => {
     switch (sortBy) {
       case 'price-asc':
@@ -135,14 +137,14 @@ const PropertyListPage: React.FC = () => {
   const clearAllFilters = () => {
     setSearchTerm('');
     setSelectedType('all');
-    setPriceRange([0, 1000000]);
+    setPriceRange([0, 5000000]);
     setBedrooms('all');
     setBathrooms('all');
     setSelectedDistrict('all');
     setSelectedState('all');
     setSelectedFeatures([]);
     setEnergyClass('all');
-    setAreaRange([0, 500]);
+    setAreaRange([0, 2000]);
     setCurrentPage(1);
   };
 
@@ -167,23 +169,23 @@ const PropertyListPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#0d2233] to-[#79b2e9] text-white py-20">
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
           style={{
             backgroundImage: 'url(https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/imagens/1757630053067_23.png)'
           }}
         ></div>
-        
+
         {/* Overlay */}
         <div className="absolute inset-0 bg-black opacity-30"></div>
-        
+
         {/* Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative text-center z-10">
             <h1 className="text-4xl md:text-5xl font-bold mt-12 ">
               Encontre o imóvel perfeito para si
             </h1>
-            
+
           </div>
         </div>
       </section>
@@ -225,7 +227,7 @@ const PropertyListPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 md:mb-0">
                   {filteredProperties.length} imóveis encontrados
                 </h2>
-                <select 
+                <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9] w-full md:w-auto"
@@ -247,13 +249,12 @@ const PropertyListPage: React.FC = () => {
                   >
                     <div className="relative">
                       <img
-                        src={property.images[0]}
-                        alt={property.title}
-                        className={`w-full h-48 object-cover ${
-                          property.availability_status === 'vendido' ? 'grayscale' : ''
-                        }`}
+                        src={property.images?.[0] || 'https://via.placeholder.com/400x300?text=Sem+Imagem'}
+                        alt={property.title || 'Imóvel'}
+                        className={`w-full h-48 object-cover ${property.availability_status === 'vendido' ? 'grayscale' : ''
+                          }`}
                       />
-                      
+
                       {/* Overlay para reservado/vendido */}
                       {property.availability_status === 'reservado' && (
                         <div className="absolute inset-0 bg-yellow-500 bg-opacity-10"></div>
@@ -261,58 +262,74 @@ const PropertyListPage: React.FC = () => {
                       {property.availability_status === 'vendido' && (
                         <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
                       )}
-                      
+
                       {/* BADGE de status - esquerda */}
                       <div className="absolute top-4 left-4">
                         <StatusBadge status={property.availability_status || 'disponivel'} />
                       </div>
 
                       {/* TIPO do imóvel - direita */}
-                      <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
-                        {property.type === 'apartamento' ? 'Apartamento' : 
-                        property.type === 'moradia' ? 'Moradia' : 
-                        property.type === 'empreendimento' ? 'Empreendimento' : 
-                        property.type}
-                      </div>
+                      {property.type && (
+                        <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
+                          {property.type === 'apartamento' ? 'Apartamento' :
+                            property.type === 'moradia' ? 'Moradia' :
+                              property.type === 'empreendimento' ? 'Empreendimento' :
+                                property.type === 'terreno' ? 'Terreno' :
+                                  property.type === 'escritorio' ? 'Escritório' :
+                                    property.type === 'loja' ? 'Loja' :
+                                      property.type === 'armazem' ? 'Armazém' :
+                                        property.type === 'quinta' ? 'Quinta' :
+                                          property.type === 'predio' ? 'Prédio' :
+                                            property.type}
+                        </div>
+                      )}
 
                       {/* Número de fotos - canto inferior esquerdo */}
                       <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
-                        {property.images?.length || 1} fotos
+                        {property.images?.length || 0} fotos
                       </div>
                     </div>
-                    
+
                     <div className="p-6 flex flex-col flex-grow">
                       <div className="text-2xl font-bold text-[#79b2e9] mb-2">
-                        {formatPrice(property.price)}
+                        {property.price ? formatPrice(property.price) : 'Sob consulta'}
                       </div>
-                      
+
                       <h3 className="text-xl font-bold text-gray-900  line-clamp-2 min-h-[3.5rem]">
-                        {property.title}
+                        {property.title || 'Imóvel'}
                       </h3>
-                      
+
                       <div className="flex items-center space-x-4 text-gray-600 mb-3">
-                        <div className="flex items-center">
-                          <Bed className="h-4 w-4 mr-1" />
-                          <span>{property.bedrooms}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Bath className="h-4 w-4 mr-1" />
-                          <span>{property.bathrooms}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Square className="h-4 w-4 mr-1" />
-                          <span>{property.area}m²</span>
-                        </div>
-                        <div className="flex items-center">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          <span className="truncate">{property.location}</span>
-                        </div>
+                        {property.bedrooms != null && (
+                          <div className="flex items-center">
+                            <Bed className="h-4 w-4 mr-1" />
+                            <span>{property.bedrooms}</span>
+                          </div>
+                        )}
+                        {property.bathrooms != null && (
+                          <div className="flex items-center">
+                            <Bath className="h-4 w-4 mr-1" />
+                            <span>{property.bathrooms}</span>
+                          </div>
+                        )}
+                        {property.area != null && (
+                          <div className="flex items-center">
+                            <Square className="h-4 w-4 mr-1" />
+                            <span>{property.area}m²</span>
+                          </div>
+                        )}
+                        {property.location && (
+                          <div className="flex items-center">
+                            <MapPin className="h-4 w-4 mr-1" />
+                            <span className="truncate">{property.location}</span>
+                          </div>
+                        )}
                       </div>
-                      
+
                       <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow min-h-[4.5rem]">
                         <ContentRenderer content={property.description || ''} />
                       </div>
-                      
+
                       <div className="mt-auto">
                         <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors inline-flex items-center justify-center">
                           Ver Detalhes
@@ -338,14 +355,14 @@ const PropertyListPage: React.FC = () => {
               {totalPages > 1 && (
                 <div className="flex justify-center mt-12">
                   <div className="flex items-center space-x-2">
-                    <button 
+                    <button
                       onClick={() => paginate(currentPage - 1)}
                       disabled={currentPage === 1}
                       className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ChevronLeft className="h-5 w-5" />
                     </button>
-                    
+
                     {/* Page Numbers */}
                     {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                       let pageNumber;
@@ -358,22 +375,21 @@ const PropertyListPage: React.FC = () => {
                       } else {
                         pageNumber = currentPage - 2 + i;
                       }
-                      
+
                       return (
                         <button
                           key={pageNumber}
                           onClick={() => paginate(pageNumber)}
-                          className={`px-4 py-2 rounded-lg ${
-                            currentPage === pageNumber
-                              ? 'bg-[#0d2233] text-white'
-                              : 'border border-gray-300 hover:bg-gray-50'
-                          }`}
+                          className={`px-4 py-2 rounded-lg ${currentPage === pageNumber
+                            ? 'bg-[#0d2233] text-white'
+                            : 'border border-gray-300 hover:bg-gray-50'
+                            }`}
                         >
                           {pageNumber}
                         </button>
                       );
                     })}
-                    
+
                     {totalPages > 5 && currentPage < totalPages - 2 && (
                       <>
                         <span className="px-2 text-gray-500">...</span>
@@ -385,8 +401,8 @@ const PropertyListPage: React.FC = () => {
                         </button>
                       </>
                     )}
-                    
-                    <button 
+
+                    <button
                       onClick={() => paginate(currentPage + 1)}
                       disabled={currentPage === totalPages}
                       className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -394,7 +410,7 @@ const PropertyListPage: React.FC = () => {
                       <ChevronRight className="h-5 w-5" />
                     </button>
                   </div>
-                  
+
                   {/* Page Info */}
                   <div className="mt-4 text-center text-sm text-gray-600">
                     Página {currentPage} de {totalPages} ({filteredProperties.length} imóveis no total)
