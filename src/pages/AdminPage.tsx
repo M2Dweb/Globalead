@@ -554,7 +554,7 @@ const AdminPage: React.FC = () => {
   const addPropertyType = () => {
     setPropertyForm(prev => ({
       ...prev,
-      property_types: [...prev.property_types, { fracao: '', name: '', bedrooms: '', bathrooms: '', area: '', garage: 'nao', price: '', floor_plan: '' }]
+      property_types: [...prev.property_types, { fracao: '', name: '', bedrooms: '', bathrooms: '', area: '', garage: 'nao', price: '', floor_plan: '', piso: '' }]
     }));
   };
 
@@ -985,6 +985,13 @@ const AdminPage: React.FC = () => {
                             placeholder="Fração (ex: A, B, C)"
                             value={type.fracao || ''}
                             onChange={(e) => updatePropertyType(index, 'fracao', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Piso (ex: 1, 2, R/C)"
+                            value={type.piso || ''}
+                            onChange={(e) => updatePropertyType(index, 'piso', e.target.value)}
                             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                           <input

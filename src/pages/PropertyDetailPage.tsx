@@ -15,6 +15,7 @@ const PropertyDetailPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [selectedPropertyType, setSelectedPropertyType] = useState<any>(null);
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
     apelido: '',
@@ -375,116 +376,142 @@ const PropertyDetailPage: React.FC = () => {
       </section>
 
       {/* Tipologias - Apenas para Empreendimentos */}
-      {property.type === 'empreendimento' && property.property_types && property.property_types.length > 0 && (
-        <section className="py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-2xl font-bold text-[#0d2233] mb-8 text-center">
-              Tipologias Disponíveis
-            </h3>
+      {property.type === 'empreendimento' && property.property_types && property.property_types.length > 0 && (() => {
+        // Group by bedrooms
+        const groups: Record<string, any[]> = {};
+        property.property_types.forEach((t: any) => {
+          const key = t.bedrooms ? `${t.bedrooms} Quartos` : 'Outro';
+          if (!groups[key]) groups[key] = [];
+          groups[key].push(t);
+        });
+        const groupKeys = Object.keys(groups);
+        // Init all open by default
+        const isOpen = (key: string) => openGroups[key] !== false;
 
-            {/* Desktop Table */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-[#0d2233] text-white">
-                    <th className="px-5 py-4 text-left text-sm font-semibold tracking-wider">Fração</th>
-                    <th className="px-5 py-4 text-left text-sm font-semibold tracking-wider">Tipologia</th>
-                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Quartos</th>
-                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">WC</th>
-                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Área</th>
-                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Garagem</th>
-                    <th className="px-5 py-4 text-right text-sm font-semibold tracking-wider">Preço desde</th>
-                    <th className="px-5 py-4 text-center text-sm font-semibold tracking-wider">Planta</th>
-                    <th className="px-5 py-4"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {property.property_types.map((type: any, index: number) => (
-                    <tr
-                      key={index}
-                      className={`border-b border-gray-100 transition-colors duration-150 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
-                        } hover:bg-blue-50/60`}
+        return (
+          <section className="py-12 bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h3 className="text-2xl font-bold text-[#0d2233] mb-8 text-center">Tipologias Disponíveis</h3>
+
+              <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
+                {groupKeys.map((groupKey, gIdx) => (
+                  <div key={groupKey} className={gIdx > 0 ? 'border-t-2 border-gray-300' : ''}>
+
+                    {/* Accordion Header */}
+                    <button
+                      type="button"
+                      onClick={() => setOpenGroups(prev => ({ ...prev, [groupKey]: !isOpen(groupKey) }))}
+                      className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors duration-150 text-left"
                     >
-                      <td className="px-5 py-4 text-gray-600 font-medium">{type.fracao || '-'}</td>
-                      <td className="px-5 py-4">
-                        <span className="font-semibold text-[#0d2233]">{type.name}</span>
-                      </td>
-                      <td className="px-5 py-4 text-center text-gray-600">{type.bedrooms || '-'}</td>
-                      <td className="px-5 py-4 text-center text-gray-600">{type.bathrooms || '-'}</td>
-                      <td className="px-5 py-4 text-center text-gray-600">{type.area} m²</td>
-                      <td className="px-5 py-4 text-center">
-                        {type.garage === 'sim' ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Sim</span>
-                        ) : (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">Não</span>
-                        )}
-                      </td>
-                      <td className="px-5 py-4 text-right">
-                        <span className="font-bold text-[#0d2233]">{formatPrice(type.price)}</span>
-                      </td>
-                      <td className="px-5 py-4 text-center">
-                        {type.floor_plan ? (
-                          <a href={type.floor_plan} target="_blank" rel="noopener noreferrer">
-                            <img src={type.floor_plan} alt="Planta" className="w-12 h-12 object-cover rounded-lg mx-auto hover:scale-150 transition-transform duration-200 cursor-zoom-in" />
-                          </a>
-                        ) : (
-                          <span className="text-gray-300 text-xs">—</span>
-                        )}
-                      </td>
-                      <td className="px-5 py-4 text-center">
-                        <button
-                          onClick={() => {
-                            setSelectedPropertyType(type);
-                            document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
-                          }}
-                          className="px-4 py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
-                        >
-                          Saber mais
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      <span className="font-semibold text-[#0d2233] text-lg">
+                        {groupKey} <span className="text-gray-400 font-normal text-base">({groups[groupKey].length})</span>
+                      </span>
+                      <ChevronRight className={`h-5 w-5 text-[#79b2e9] transition-transform duration-200 ${isOpen(groupKey) ? 'rotate-90' : ''}`} />
+                    </button>
 
-            {/* Mobile List */}
-            <div className="md:hidden divide-y divide-gray-200">
-              {property.property_types.map((type: any, index: number) => (
-                <div key={index} className="py-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      {type.fracao && <span className="text-xs text-gray-400">Fr. {type.fracao}</span>}
-                      <span className="font-semibold text-[#0d2233]">{type.name}</span>
-                    </div>
-                    <span className="font-bold text-[#0d2233]">{formatPrice(type.price)}</span>
+                    {/* Accordion Body */}
+                    {isOpen(groupKey) && (
+                      <div className="overflow-x-auto">
+                        {/* Desktop Table */}
+                        <table className="w-full border-collapse hidden md:table">
+                          <thead>
+                            <tr className="bg-[#0d2233]/5 text-gray-500 text-xs uppercase tracking-wider">
+                              <th className="px-5 py-3 text-left border-r border-gray-200">Fração</th>
+                              <th className="px-5 py-3 text-left border-r border-gray-200">Tipologia</th>
+                              <th className="px-5 py-3 text-center border-r border-gray-200">Piso</th>
+                              <th className="px-5 py-3 text-center border-r border-gray-200">WC</th>
+                              <th className="px-5 py-3 text-center border-r border-gray-200">Área</th>
+                              <th className="px-5 py-3 text-center border-r border-gray-200">Garagem</th>
+                              <th className="px-5 py-3 text-right border-r border-gray-200">Preço desde</th>
+                              <th className="px-5 py-3 text-center border-r border-gray-200">Planta</th>
+                              <th className="px-5 py-3"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {groups[groupKey].map((type: any, idx: number) => (
+                              <tr key={idx} className="border-t border-gray-100 hover:bg-blue-50/40 transition-colors duration-150">
+                                <td className="px-5 py-4 text-gray-600 font-medium border-r border-gray-100">{type.fracao || '-'}</td>
+                                <td className="px-5 py-4 border-r border-gray-100">
+                                  <span className="font-semibold text-[#0d2233]">{type.name}</span>
+                                </td>
+                                <td className="px-5 py-4 text-center text-gray-600 border-r border-gray-100">{type.piso || '-'}</td>
+                                <td className="px-5 py-4 text-center text-gray-600 border-r border-gray-100">{type.bathrooms || '-'}</td>
+                                <td className="px-5 py-4 text-center text-gray-600 border-r border-gray-100">{type.area ? `${type.area} m²` : '-'}</td>
+                                <td className="px-5 py-4 text-center border-r border-gray-100">
+                                  {type.garage === 'sim'
+                                    ? <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Sim</span>
+                                    : <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">Não</span>}
+                                </td>
+                                <td className="px-5 py-4 text-right border-r border-gray-100">
+                                  <span className="font-bold text-[#0d2233]">{type.price ? formatPrice(type.price) : '-'}</span>
+                                </td>
+                                <td className="px-5 py-4 text-center border-r border-gray-100">
+                                  {type.floor_plan
+                                    ? <a href={type.floor_plan} target="_blank" rel="noopener noreferrer">
+                                      <img src={type.floor_plan} alt="Planta" className="w-12 h-12 object-cover rounded-lg mx-auto hover:scale-150 transition-transform duration-200 cursor-zoom-in" />
+                                    </a>
+                                    : <span className="text-gray-300 text-xs">—</span>}
+                                </td>
+                                <td className="px-5 py-4 text-center">
+                                  <button
+                                    onClick={() => {
+                                      setSelectedPropertyType(type);
+                                      document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                                    }}
+                                    className="px-4 py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200 whitespace-nowrap"
+                                  >
+                                    Saber mais
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+
+                        {/* Mobile */}
+                        <div className="md:hidden divide-y divide-gray-200">
+                          {groups[groupKey].map((type: any, idx: number) => (
+                            <div key={idx} className="px-4 py-4">
+                              <div className="flex justify-between mb-1">
+                                <div className="flex items-center gap-2">
+                                  {type.fracao && <span className="text-xs text-gray-400">Fr. {type.fracao}</span>}
+                                  <span className="font-semibold text-[#0d2233]">{type.name}</span>
+                                  {type.piso && <span className="text-xs text-gray-400">Piso {type.piso}</span>}
+                                </div>
+                                <span className="font-bold text-[#0d2233]">{type.price ? formatPrice(type.price) : '-'}</span>
+                              </div>
+                              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-500 mb-2">
+                                {type.bathrooms && <span>{type.bathrooms} WC</span>}
+                                {type.area && <span>{type.area} m²</span>}
+                                <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
+                              </div>
+                              {type.floor_plan && (
+                                <a href={type.floor_plan} target="_blank" rel="noopener noreferrer" className="block mb-3">
+                                  <img src={type.floor_plan} alt="Planta" className="w-full h-32 object-cover rounded-lg" />
+                                </a>
+                              )}
+                              <button
+                                onClick={() => {
+                                  setSelectedPropertyType(type);
+                                  document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                className="w-full py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
+                              >
+                                Saber mais
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-500 mb-2">
-                    {type.bedrooms && <span>{type.bedrooms} Quartos</span>}
-                    {type.bathrooms && <span>{type.bathrooms} WC</span>}
-                    <span>{type.area} m²</span>
-                    <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
-                  </div>
-                  {type.floor_plan && (
-                    <a href={type.floor_plan} target="_blank" rel="noopener noreferrer" className="block mb-3">
-                      <img src={type.floor_plan} alt="Planta" className="w-full h-32 object-cover rounded-lg" />
-                    </a>
-                  )}
-                  <button
-                    onClick={() => {
-                      setSelectedPropertyType(type);
-                      document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="w-full py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
-                  >
-                    Saber mais
-                  </button>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        );
+      })()}
+
 
       {/* Details and Form */}
       <section className="py-12">
