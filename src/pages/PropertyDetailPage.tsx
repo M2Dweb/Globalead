@@ -304,21 +304,22 @@ const PropertyDetailPage: React.FC = () => {
           </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{property.title}</h1>
 
-
-          <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
-            <div className="flex items-center">
-              <Bed className="h-6 w-6 mr-2" />
-              <span>{property.bedrooms}</span>
+          {property.type !== 'empreendimento' && (
+            <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
+              <div className="flex items-center">
+                <Bed className="h-6 w-6 mr-2" />
+                <span>{property.bedrooms}</span>
+              </div>
+              <div className="flex items-center">
+                <Bath className="h-6 w-6 mr-2" />
+                <span>{property.bathrooms}</span>
+              </div>
+              <div className="flex items-center">
+                <Square className="h-6 w-6 mr-2" />
+                <span>{property.area}m²</span>
+              </div>
             </div>
-            <div className="flex items-center">
-              <Bath className="h-6 w-6 mr-2" />
-              <span>{property.bathrooms}</span>
-            </div>
-            <div className="flex items-center">
-              <Square className="h-6 w-6 mr-2" />
-              <span>{property.area}m²</span>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -375,12 +376,30 @@ const PropertyDetailPage: React.FC = () => {
         </div>
       </section>
 
+      {/* CTA Bar - Agende Visita - only for empreendimentos */}
+      {property.type === 'empreendimento' && (
+        <div className="bg-[#0d2233] py-5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-white text-center sm:text-left">
+              <p className="text-lg font-semibold">Interessado neste empreendimento?</p>
+              <p className="text-sm text-blue-200">Agende uma reunião connosco e fique a conhecer todos os detalhes deste empreendimento</p>
+            </div>
+            <button
+              onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+              className="flex-shrink-0 bg-[#79b2e9] hover:bg-white hover:text-[#0d2233] text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
+            >
+              Agendar Visita
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Tipologias - Apenas para Empreendimentos */}
       {property.type === 'empreendimento' && property.property_types && property.property_types.length > 0 && (() => {
-        // Group by bedrooms
+        // Group by piso
         const groups: Record<string, any[]> = {};
         property.property_types.forEach((t: any) => {
-          const key = t.bedrooms ? `${t.bedrooms} Quartos` : 'Outro';
+          const key = t.piso ? `Piso ${t.piso}` : 'Sem Piso';
           if (!groups[key]) groups[key] = [];
           groups[key].push(t);
         });
@@ -415,53 +434,55 @@ const PropertyDetailPage: React.FC = () => {
                         {/* Desktop Table */}
                         <table className="w-full border-collapse hidden md:table">
                           <thead>
-                            <tr className="bg-[#0d2233]/5 text-gray-500 text-xs uppercase tracking-wider">
-                              <th className="px-5 py-3 text-left border-r border-gray-200">Fração</th>
-                              <th className="px-5 py-3 text-left border-r border-gray-200">Tipologia</th>
-                              <th className="px-5 py-3 text-center border-r border-gray-200">Piso</th>
-                              <th className="px-5 py-3 text-center border-r border-gray-200">WC</th>
-                              <th className="px-5 py-3 text-center border-r border-gray-200">Área</th>
-                              <th className="px-5 py-3 text-center border-r border-gray-200">Garagem</th>
-                              <th className="px-5 py-3 text-right border-r border-gray-200">Preço desde</th>
-                              <th className="px-5 py-3 text-center border-r border-gray-200">Planta</th>
-                              <th className="px-5 py-3"></th>
+                            <tr className="bg-[#0d2233] text-white text-xs uppercase tracking-wider">
+                              <th className="px-3 py-3 text-center">Fração</th>
+                              <th className="px-3 py-3 text-center">Tipologia</th>
+                              <th className="px-3 py-3 text-center">Piso</th>
+                              <th className="px-3 py-3 text-center">WC</th>
+                              <th className="px-3 py-3 text-center">Área</th>
+                              <th className="px-3 py-3 text-center">Garagem</th>
+                              <th className="px-3 py-3 text-center">Preço desde</th>
+                              <th className="px-3 py-3 text-center"></th>
                             </tr>
                           </thead>
                           <tbody>
                             {groups[groupKey].map((type: any, idx: number) => (
                               <tr key={idx} className="border-t border-gray-100 hover:bg-blue-50/40 transition-colors duration-150">
-                                <td className="px-5 py-4 text-gray-600 font-medium border-r border-gray-100">{type.fracao || '-'}</td>
-                                <td className="px-5 py-4 border-r border-gray-100">
-                                  <span className="font-semibold text-[#0d2233]">{type.name}</span>
+                                <td className="px-3 py-2 text-center text-gray-600 text-sm">{type.fracao || '-'}</td>
+                                <td className="px-3 py-2 text-center">
+                                  <span className="font-semibold text-[#0d2233] text-sm">{type.name}</span>
                                 </td>
-                                <td className="px-5 py-4 text-center text-gray-600 border-r border-gray-100">{type.piso || '-'}</td>
-                                <td className="px-5 py-4 text-center text-gray-600 border-r border-gray-100">{type.bathrooms || '-'}</td>
-                                <td className="px-5 py-4 text-center text-gray-600 border-r border-gray-100">{type.area ? `${type.area} m²` : '-'}</td>
-                                <td className="px-5 py-4 text-center border-r border-gray-100">
+                                <td className="px-3 py-2 text-center text-gray-600 text-sm">{type.piso || '-'}</td>
+                                <td className="px-3 py-2 text-center text-gray-600 text-sm">{type.bathrooms || '-'}</td>
+                                <td className="px-3 py-2 text-center text-gray-600 text-sm">{type.area ? `${type.area} m²` : '-'}</td>
+                                <td className="px-3 py-2 text-center">
                                   {type.garage === 'sim'
-                                    ? <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Sim</span>
-                                    : <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">Não</span>}
+                                    ? <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Sim</span>
+                                    : <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">Não</span>}
                                 </td>
-                                <td className="px-5 py-4 text-right border-r border-gray-100">
-                                  <span className="font-bold text-[#0d2233]">{type.price ? formatPrice(type.price) : '-'}</span>
+                                <td className="px-3 py-2 text-center">
+                                  <span className="font-bold text-[#0d2233] text-sm">{type.price ? formatPrice(type.price) : '-'}</span>
                                 </td>
-                                <td className="px-5 py-4 text-center border-r border-gray-100">
-                                  {type.floor_plan
-                                    ? <a href={type.floor_plan} target="_blank" rel="noopener noreferrer">
-                                      <img src={type.floor_plan} alt="Planta" className="w-12 h-12 object-cover rounded-lg mx-auto hover:scale-150 transition-transform duration-200 cursor-zoom-in" />
-                                    </a>
-                                    : <span className="text-gray-300 text-xs">—</span>}
-                                </td>
-                                <td className="px-5 py-4 text-center">
-                                  <button
-                                    onClick={() => {
-                                      setSelectedPropertyType(type);
-                                      document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
-                                    }}
-                                    className="px-4 py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200 whitespace-nowrap"
-                                  >
-                                    Saber mais
-                                  </button>
+                                <td className="px-3 py-2 text-center">
+                                  {type.status === 'reservado' ? (
+                                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-yellow-100 text-yellow-800 whitespace-nowrap">
+                                      Reservado
+                                    </span>
+                                  ) : type.status === 'vendido' ? (
+                                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-100 text-red-800 whitespace-nowrap">
+                                      Vendido
+                                    </span>
+                                  ) : (
+                                    <button
+                                      onClick={() => {
+                                        setSelectedPropertyType(type);
+                                        document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                                      }}
+                                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200 whitespace-nowrap"
+                                    >
+                                      Saber mais
+                                    </button>
+                                  )}
                                 </td>
                               </tr>
                             ))}
@@ -471,34 +492,39 @@ const PropertyDetailPage: React.FC = () => {
                         {/* Mobile */}
                         <div className="md:hidden divide-y divide-gray-200">
                           {groups[groupKey].map((type: any, idx: number) => (
-                            <div key={idx} className="px-4 py-4">
+                            <div key={idx} className="px-4 py-3">
                               <div className="flex justify-between mb-1">
                                 <div className="flex items-center gap-2">
                                   {type.fracao && <span className="text-xs text-gray-400">Fr. {type.fracao}</span>}
                                   <span className="font-semibold text-[#0d2233]">{type.name}</span>
                                   {type.piso && <span className="text-xs text-gray-400">Piso {type.piso}</span>}
                                 </div>
-                                <span className="font-bold text-[#0d2233]">{type.price ? formatPrice(type.price) : '-'}</span>
+                                <span className="font-bold text-[#0d2233] text-sm">{type.price ? formatPrice(type.price) : '-'}</span>
                               </div>
                               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-500 mb-2">
                                 {type.bathrooms && <span>{type.bathrooms} WC</span>}
                                 {type.area && <span>{type.area} m²</span>}
                                 <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
                               </div>
-                              {type.floor_plan && (
-                                <a href={type.floor_plan} target="_blank" rel="noopener noreferrer" className="block mb-3">
-                                  <img src={type.floor_plan} alt="Planta" className="w-full h-32 object-cover rounded-lg" />
-                                </a>
+                              {type.status === 'reservado' ? (
+                                <div className="w-full py-2 rounded-lg text-sm font-semibold bg-yellow-100 text-yellow-800 text-center">
+                                  Reservado
+                                </div>
+                              ) : type.status === 'vendido' ? (
+                                <div className="w-full py-2 rounded-lg text-sm font-semibold bg-red-100 text-red-800 text-center">
+                                  Vendido
+                                </div>
+                              ) : (
+                                <button
+                                  onClick={() => {
+                                    setSelectedPropertyType(type);
+                                    document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                                  }}
+                                  className="w-full py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
+                                >
+                                  Saber mais
+                                </button>
                               )}
-                              <button
-                                onClick={() => {
-                                  setSelectedPropertyType(type);
-                                  document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
-                                }}
-                                className="w-full py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
-                              >
-                                Saber mais
-                              </button>
                             </div>
                           ))}
                         </div>
@@ -583,6 +609,26 @@ const PropertyDetailPage: React.FC = () => {
                 </div>
               </div>
 
+              {/* Map - only for empreendimentos */}
+              {property.type === 'empreendimento' && property.map_url && (
+                <div className="bg-gray-50 p-6 rounded-xl mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <MapPin className="h-6 w-6 text-[#79b2e9]" /> Localização
+                  </h3>
+                  <div className="rounded-xl overflow-hidden h-72">
+                    <iframe
+                      src={property.map_url}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </div>
+                </div>
+              )}
+
               {property.type !== 'empreendimento' && (
                 <div className="bg-gray-50 p-6 rounded-xl text-center">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Partilha este conteúdo</h3>
@@ -631,22 +677,22 @@ const PropertyDetailPage: React.FC = () => {
                 <div className="flex items-center space-x-4 mb-6">
                   <img
                     src="/carlos/pe-fato-meio3-fundo.jpg"
-                    className="w-20 h-20 rounded-full  border-2 border-[#79b2e9] object-top object-cover"
+                    alt="Carlos Gonçalves"
+                    className="w-20 h-20 rounded-full border-2 border-[#79b2e9] object-top object-cover"
                   />
                   <div>
                     <a
-                      href="/carlos-goncalves" // alterar rota
-                      className="hover:underline cursor-pointer "
+                      href="/carlos-goncalves"
+                      className="hover:underline cursor-pointer"
                     >
                       <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
                     </a>
-                    <div className="flex items-center text-gray-800 text-base">
-                      <Phone className="h-4 w-4 mr-1" />
-                      <a href="tel:+351915482365" className="hover:underline">
+                    <div className="mt-1 flex flex-col">
+                      <span className="text-sm text-gray-500">Ou contacte-nos diretamente:</span>
+                      <a href="tel:+351915482365" className="font-bold text-gray-900 text-base hover:text-[#79b2e9]">
                         +351 915 482 365
                       </a>
                     </div>
-                    <p className="text-sm text-gray-500">Chamada para a rede móvel nacional</p>
                   </div>
                 </div>
                 {/* Conteúdo condicional baseado no status */}
@@ -842,13 +888,8 @@ const PropertyDetailPage: React.FC = () => {
                   </>
                 )}
 
-                {/* Contacto direto sempre visível */}
-                <p className="text-sm text-gray-500 text-center mt-6">
-                  Ou contacte-nos diretamente: <br />
-                  <a href="tel:+351915482365" className="text-[#0d2233] font-semibold">
-                    +351 915 482 365
-                  </a>
-                </p>
+
+
               </div>
             </div>
           </div>

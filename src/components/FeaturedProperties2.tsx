@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapPin, Bed, Bath, Square, ArrowRight } from 'lucide-react';
+import { MapPin, Bed, Bath, Square, ArrowRight, Building2, Store } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from './ContentRenderer';
@@ -30,7 +30,7 @@ const FeaturedProperties2: React.FC = () => {
             .select('*')
             .limit(6)
             .order('created_at', { ascending: false });
-          
+
           setProperties(regularData || []);
         } else {
           const featuredProperties = featuredData
@@ -78,12 +78,12 @@ const FeaturedProperties2: React.FC = () => {
                 onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
               >
                 <div className="relative">
-                  <img 
-                    src={property.images?.[0] || '/placeholder.jpg'} 
-                    alt={property.title} 
+                  <img
+                    src={property.images?.[0] || '/placeholder.jpg'}
+                    alt={property.title}
                     className="w-full h-48 object-cover"
                   />
-                  
+
                   {/* Badge de estado - esquerda (sempre visível se tiver status) */}
                   {property.availability_status && (
                     <div className="absolute top-4 left-4">
@@ -96,31 +96,54 @@ const FeaturedProperties2: React.FC = () => {
                     {getPropertyTypeLabel(property.type)}
                   </div>
                 </div>
-                
+
                 <div className="p-6 flex flex-col flex-grow">
 
                   <h3 className="text-xl font-bold text-gray-900 mb-1 text-center line-clamp-2 min-h-[3.5rem]">
                     {property.title}
                   </h3>
 
-                  <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-4 text-sm">
-                    <div className="flex items-center">
-                      <Bed className="h-4 w-4 mr-1" />
-                      <span>{property.bedrooms}</span>
+                  {property.type === 'empreendimento' ? (
+                    <div className="flex flex-wrap items-center justify-center gap-4 text-gray-600 mb-4 text-sm font-medium">
+                      {property.apartments && (
+                        <div className="flex items-center gap-1.5" title="Apartamentos">
+                          <Building2 className="h-4 w-4 text-[#79b2e9]" />
+                          <span>{property.apartments} Frações</span>
+                        </div>
+                      )}
+                      {property.stores && (
+                        <div className="flex items-center gap-1.5" title="Lojas">
+                          <Store className="h-4 w-4 text-[#79b2e9]" />
+                          <span>{property.stores} Lojas</span>
+                        </div>
+                      )}
+                      {property.location && (
+                        <div className="flex items-center gap-1.5 w-full justify-center text-xs mt-1">
+                          <MapPin className="h-3.5 w-3.5 text-gray-400" />
+                          <span className="truncate max-w-[200px]">{property.location}</span>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex items-center">
-                      <Bath className="h-4 w-4 mr-1" />
-                      <span>{property.bathrooms}</span>
+                  ) : (
+                    <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-4 text-sm">
+                      <div className="flex items-center">
+                        <Bed className="h-4 w-4 mr-1" />
+                        <span>{property.bedrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Bath className="h-4 w-4 mr-1" />
+                        <span>{property.bathrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Square className="h-4 w-4 mr-1" />
+                        <span>{property.area}m²</span>
+                      </div>
+                      <div className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        <span className="truncate">{property.location}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <Square className="h-4 w-4 mr-1" />
-                      <span>{property.area}m²</span>
-                    </div>
-                    <div className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      <span className="truncate">{property.location}</span>
-                    </div>
-                  </div>
+                  )}
 
                   {/* Descrição */}
                   <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow min-h-[4.5rem]">

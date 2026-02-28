@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          
+
           {/* Redes sociais - SECÇÃO ESQUERDA (VISÍVEL APENAS NO DESKTOP) */}
           <div className="hidden md:flex flex-col justify-center items-center">
             <div className="w-full max-w-xs mb-8">
@@ -266,8 +266,10 @@ const Footer: React.FC = () => {
               Livro de Reclamações
             </a>
           </div>
-              
-          <div>© 2026 Globalead Portugal · Todos os direitos reservados.</div>
+
+          <div>
+            © 2026 <Link to="/Admin" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</Link> Portugal · Todos os direitos reservados.
+          </div>
         </div>
       </div>
     </footer>

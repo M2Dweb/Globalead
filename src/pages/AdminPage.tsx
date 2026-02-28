@@ -47,7 +47,10 @@ const AdminPage: React.FC = () => {
     features: [] as string[],
     images: [] as string[],
     property_types: [] as any[],
-    state: ''
+    state: '',
+    map_url: '',
+    apartments: '',
+    stores: ''
   });
 
 
@@ -458,7 +461,10 @@ const AdminPage: React.FC = () => {
       features: [],
       images: [],
       property_types: [],
-      state: ''
+      state: '',
+      map_url: '',
+      apartments: '',
+      stores: ''
     });
 
     setEditingProperty(null);
@@ -508,7 +514,10 @@ const AdminPage: React.FC = () => {
       features: property.features || [],
       images: property.images || [],
       property_types: property.property_types || [],
-      state: property.state || ''
+      state: property.state || '',
+      map_url: property.map_url || '',
+      apartments: property.apartments?.toString() || '',
+      stores: property.stores?.toString() || ''
     });
 
     setEditingProperty(property);
@@ -554,7 +563,7 @@ const AdminPage: React.FC = () => {
   const addPropertyType = () => {
     setPropertyForm(prev => ({
       ...prev,
-      property_types: [...prev.property_types, { fracao: '', name: '', bedrooms: '', bathrooms: '', area: '', garage: 'nao', price: '', floor_plan: '', piso: '' }]
+      property_types: [...prev.property_types, { fracao: '', name: '', bedrooms: '', bathrooms: '', area: '', garage: 'nao', price: '', floor_plan: '', piso: '', status: 'disponivel' }]
     }));
   };
 
@@ -907,10 +916,31 @@ const AdminPage: React.FC = () => {
                       onChange={(e) => setPropertyForm({ ...propertyForm, garage: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg"
                     />
-
-
-
-
+                    <input
+                      type="text"
+                      placeholder="URL do Mapa (colar o link 'embed' do Google Maps)"
+                      value={propertyForm.map_url || ''}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, map_url: e.target.value })}
+                      className="px-4 py-2 border border-gray-300 rounded-lg col-span-2"
+                    />
+                    {propertyForm.type === 'empreendimento' && (
+                      <>
+                        <input
+                          type="number"
+                          placeholder="Nº de Apartamentos"
+                          value={propertyForm.apartments || ''}
+                          onChange={(e) => setPropertyForm({ ...propertyForm, apartments: e.target.value })}
+                          className="px-4 py-2 border border-gray-300 rounded-lg"
+                        />
+                        <input
+                          type="number"
+                          placeholder="Nº de Lojas"
+                          value={propertyForm.stores || ''}
+                          onChange={(e) => setPropertyForm({ ...propertyForm, stores: e.target.value })}
+                          className="px-4 py-2 border border-gray-300 rounded-lg"
+                        />
+                      </>
+                    )}
                   </div>
 
                   <div>
@@ -1029,6 +1059,15 @@ const AdminPage: React.FC = () => {
                           >
                             <option value="nao">Garagem: Não</option>
                             <option value="sim">Garagem: Sim</option>
+                          </select>
+                          <select
+                            value={type.status || 'disponivel'}
+                            onChange={(e) => updatePropertyType(index, 'status', e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="disponivel">Estado: Saber mais</option>
+                            <option value="reservado">Estado: Reservado</option>
+                            <option value="vendido">Estado: Vendido</option>
                           </select>
                           <input
                             type="number"

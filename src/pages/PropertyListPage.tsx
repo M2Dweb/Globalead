@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bed, Bath, Square, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Bed, Bath, Square, MapPin, ArrowRight, ChevronLeft, ChevronRight, Building2, Store } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
@@ -299,32 +299,55 @@ const PropertyListPage: React.FC = () => {
                         {property.title || 'Imóvel'}
                       </h3>
 
-                      <div className="flex items-center space-x-4 text-gray-600 mb-3">
-                        {property.bedrooms != null && (
-                          <div className="flex items-center">
-                            <Bed className="h-4 w-4 mr-1" />
-                            <span>{property.bedrooms}</span>
-                          </div>
-                        )}
-                        {property.bathrooms != null && (
-                          <div className="flex items-center">
-                            <Bath className="h-4 w-4 mr-1" />
-                            <span>{property.bathrooms}</span>
-                          </div>
-                        )}
-                        {property.area != null && (
-                          <div className="flex items-center">
-                            <Square className="h-4 w-4 mr-1" />
-                            <span>{property.area}m²</span>
-                          </div>
-                        )}
-                        {property.location && (
-                          <div className="flex items-center">
-                            <MapPin className="h-4 w-4 mr-1" />
-                            <span className="truncate">{property.location}</span>
-                          </div>
-                        )}
-                      </div>
+                      {property.type === 'empreendimento' ? (
+                        <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-4 text-sm font-medium">
+                          {property.apartments && (
+                            <div className="flex items-center gap-1.5" title="Apartamentos">
+                              <Building2 className="h-4 w-4 text-[#79b2e9]" />
+                              <span>{property.apartments} Frações</span>
+                            </div>
+                          )}
+                          {property.stores && (
+                            <div className="flex items-center gap-1.5" title="Lojas">
+                              <Store className="h-4 w-4 text-[#79b2e9]" />
+                              <span>{property.stores} Lojas</span>
+                            </div>
+                          )}
+                          {property.location && (
+                            <div className="flex items-center gap-1.5 w-full text-xs mt-1">
+                              <MapPin className="h-3.5 w-3.5 text-gray-400" />
+                              <span className="truncate max-w-[200px]">{property.location}</span>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex items-center space-x-4 text-gray-600 mb-3">
+                          {property.bedrooms != null && (
+                            <div className="flex items-center">
+                              <Bed className="h-4 w-4 mr-1" />
+                              <span>{property.bedrooms}</span>
+                            </div>
+                          )}
+                          {property.bathrooms != null && (
+                            <div className="flex items-center">
+                              <Bath className="h-4 w-4 mr-1" />
+                              <span>{property.bathrooms}</span>
+                            </div>
+                          )}
+                          {property.area != null && (
+                            <div className="flex items-center">
+                              <Square className="h-4 w-4 mr-1" />
+                              <span>{property.area}m²</span>
+                            </div>
+                          )}
+                          {property.location && (
+                            <div className="flex items-center">
+                              <MapPin className="h-4 w-4 mr-1" />
+                              <span className="truncate">{property.location}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
 
                       <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow min-h-[4.5rem]">
                         <ContentRenderer content={property.description || ''} />
