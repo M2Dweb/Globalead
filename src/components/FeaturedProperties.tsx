@@ -58,13 +58,7 @@ const FeaturedProperties: React.FC = () => {
     return types[type] || type;
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('pt-PT', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0
-    }).format(price);
-  };
+
 
   return (
     <section className="py-20 bg-gray-50">
@@ -106,23 +100,12 @@ const FeaturedProperties: React.FC = () => {
                 </div>
 
                 <div className="p-6 flex flex-col flex-grow">
-                  {/* COM PREÇO */}
-                  {property.type === 'empreendimento' ? (
-                    <div className="text-2xl font-bold text-[#79b2e9] mb-2 text-left">
-                      {property.price ? `Desde ${formatPrice(property.price)}` : 'Sob consulta'}
-                    </div>
-                  ) : (
-                    <div className="text-2xl font-bold text-[#79b2e9] mb-2 text-left">
-                      {property.price ? formatPrice(property.price) : 'Sob consulta'}
-                    </div>
-                  )}
-
-                  <h3 className="text-xl font-bold text-gray-900 text-left mb-1 line-clamp-2 min-h-[3.5rem]">
+                  <h3 className="text-xl font-bold text-gray-900 text-center mb-1 line-clamp-2 min-h-[3.5rem]">
                     {property.title}
                   </h3>
 
                   {property.type === 'empreendimento' ? (
-                    <div className="flex flex-wrap items-center justify-start gap-3 text-gray-600 mb-4 text-sm">
+                    <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-2 text-sm">
                       {property.apartments && (
                         <div className="flex items-center">
                           <Building2 className="h-4 w-4 mr-1 text-gray-600" />
@@ -143,7 +126,7 @@ const FeaturedProperties: React.FC = () => {
                       )}
                     </div>
                   ) : (
-                    <div className="flex flex-wrap items-center justify-start gap-3 text-gray-600 mb-4 text-sm">
+                    <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-2 text-sm">
                       <div className="flex items-center">
                         <Bed className="h-4 w-4 mr-1" />
                         <span>{property.bedrooms}</span>

@@ -340,7 +340,9 @@ const AdminPage: React.FC = () => {
           : null,
         state: propertyForm.state || null,
         features: propertyForm.features.filter(f => f.trim() !== ''),
-        property_types: propertyForm.property_types.length > 0 ? propertyForm.property_types : null
+        property_types: propertyForm.property_types.length > 0 ? propertyForm.property_types : null,
+        apartments: propertyForm.apartments ? parseInt(propertyForm.apartments) : null,
+        stores: propertyForm.stores ? parseInt(propertyForm.stores) : null
       };
 
       if (editingProperty) {
@@ -904,7 +906,7 @@ const AdminPage: React.FC = () => {
                     </select>
                     <input
                       type="text"
-                      placeholder="Referência do Imóvel (ex: GL-1023)"
+                      placeholder="Referência (ex: GL-1023 ou apartamentos-luxo)"
                       value={propertyForm.ref}
                       onChange={(e) => setPropertyForm({ ...propertyForm, ref: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg"

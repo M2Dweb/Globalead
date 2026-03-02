@@ -490,28 +490,44 @@ const PropertyDetailPage: React.FC = () => {
                         </table>
 
                         {/* Mobile */}
-                        <div className="md:hidden divide-y divide-gray-200">
+                        <div className="md:hidden flex flex-col gap-4 py-4 px-2">
                           {groups[groupKey].map((type: any, idx: number) => (
-                            <div key={idx} className="px-4 py-3">
-                              <div className="flex justify-between mb-1">
-                                <div className="flex items-center gap-2">
-                                  {type.fracao && <span className="text-xs text-gray-400">Fr. {type.fracao}</span>}
-                                  <span className="font-semibold text-[#0d2233]">{type.name}</span>
-                                  {type.piso && <span className="text-xs text-gray-400">Piso {type.piso}</span>}
+                            <div key={idx} className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow">
+                              <div className="flex justify-between items-start mb-4">
+                                <div className="flex flex-col">
+                                  <span className="font-bold text-[#0d2233] text-lg mb-1">{type.name}</span>
+                                  <div className="flex flex-wrap items-center gap-2 mt-1">
+                                    {type.fracao && <span className="text-xs font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-md">Fr. {type.fracao}</span>}
+                                    {type.piso && <span className="text-xs font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-md">Piso {type.piso}</span>}
+                                  </div>
                                 </div>
-                                <span className="font-bold text-[#0d2233] text-sm">{type.price ? formatPrice(type.price) : '-'}</span>
+                                <span className="text-[#79b2e9] font-bold text-lg">{type.price ? formatPrice(type.price) : '-'}</span>
                               </div>
-                              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-500 mb-2">
-                                {type.bathrooms && <span>{type.bathrooms} WC</span>}
-                                {type.area && <span>{type.area} m²</span>}
-                                <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
+
+                              <div className="grid grid-cols-2 gap-y-3 gap-x-4 mb-5 text-sm py-3 px-4 bg-gray-50 rounded-lg">
+                                {type.bathrooms && (
+                                  <div className="flex items-center gap-2 text-gray-600">
+                                    <Bath className="w-4 h-4 text-gray-400" />
+                                    <span>{type.bathrooms} WC</span>
+                                  </div>
+                                )}
+                                {type.area && (
+                                  <div className="flex items-center gap-2 text-gray-600">
+                                    <Square className="w-4 h-4 text-gray-400" />
+                                    <span>{type.area} m²</span>
+                                  </div>
+                                )}
+                                <div className="flex items-center gap-2 col-span-2 text-gray-600">
+                                  <span className="font-medium">Garagem:</span> {type.garage === 'sim' ? 'Sim' : 'Não'}
+                                </div>
                               </div>
+
                               {type.status === 'reservado' ? (
-                                <div className="w-full py-2 rounded-lg text-sm font-semibold bg-[#0d2233] text-white text-center">
+                                <div className="w-full py-2.5 rounded-lg text-sm font-semibold bg-[#0d2233] text-white text-center">
                                   Reservado
                                 </div>
                               ) : type.status === 'vendido' ? (
-                                <div className="w-full py-2 rounded-lg text-sm font-semibold bg-[#0d2233] text-white text-center">
+                                <div className="w-full py-2.5 rounded-lg text-sm font-semibold bg-[#0d2233] text-white text-center">
                                   Vendido
                                 </div>
                               ) : (
@@ -520,7 +536,7 @@ const PropertyDetailPage: React.FC = () => {
                                     setSelectedPropertyType(type);
                                     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
                                   }}
-                                  className="w-full py-2 rounded-lg text-sm font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
+                                  className="w-full py-2.5 rounded-lg text-sm font-bold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
                                 >
                                   Saber mais
                                 </button>
