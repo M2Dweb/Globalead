@@ -291,31 +291,37 @@ const PropertyListPage: React.FC = () => {
                     </div>
 
                     <div className="p-6 flex flex-col flex-grow">
-                      <div className="text-2xl font-bold text-[#79b2e9] mb-2">
-                        {property.price ? formatPrice(property.price) : 'Sob consulta'}
-                      </div>
+                      {property.type === 'empreendimento' ? (
+                        <div className="text-2xl font-bold text-[#79b2e9] mb-2">
+                          {property.price ? `Desde ${formatPrice(property.price)}` : 'Sob consulta'}
+                        </div>
+                      ) : (
+                        <div className="text-2xl font-bold text-[#79b2e9] mb-2">
+                          {property.price ? formatPrice(property.price) : 'Sob consulta'}
+                        </div>
+                      )}
 
                       <h3 className="text-xl font-bold text-gray-900  line-clamp-2 min-h-[3.5rem]">
                         {property.title || 'Imóvel'}
                       </h3>
 
                       {property.type === 'empreendimento' ? (
-                        <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-4 text-sm font-medium">
+                        <div className="flex flex-wrap items-center gap-3 text-gray-600 mb-3 text-sm">
                           {property.apartments && (
-                            <div className="flex items-center gap-1.5" title="Apartamentos">
-                              <Building2 className="h-4 w-4 text-[#79b2e9]" />
+                            <div className="flex items-center">
+                              <Building2 className="h-4 w-4 mr-1 text-gray-600" />
                               <span>{property.apartments} Frações</span>
                             </div>
                           )}
                           {property.stores && (
-                            <div className="flex items-center gap-1.5" title="Lojas">
-                              <Store className="h-4 w-4 text-[#79b2e9]" />
+                            <div className="flex items-center">
+                              <Store className="h-4 w-4 mr-1 text-gray-600" />
                               <span>{property.stores} Lojas</span>
                             </div>
                           )}
                           {property.location && (
-                            <div className="flex items-center gap-1.5 w-full text-xs mt-1">
-                              <MapPin className="h-3.5 w-3.5 text-gray-400" />
+                            <div className="flex items-center">
+                              <MapPin className="h-4 w-4 mr-1 text-gray-600" />
                               <span className="truncate max-w-[200px]">{property.location}</span>
                             </div>
                           )}

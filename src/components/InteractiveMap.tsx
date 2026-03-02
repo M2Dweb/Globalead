@@ -105,7 +105,7 @@ const InteractiveMap: React.FC = () => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              
+
               {properties.map((property) => (
                 <Marker
                   key={property.id}
@@ -184,7 +184,7 @@ const InteractiveMap: React.FC = () => {
                       <div className="text-2xl font-bold text-[#0d2233] mb-3">
                         {formatPrice(property.price)}
                       </div>
-                      
+
                       <div className="flex items-center space-x-4 text-gray-600 mb-3">
                         <div className="flex items-center">
                           <Bed className="h-4 w-4 mr-1" />
@@ -199,12 +199,12 @@ const InteractiveMap: React.FC = () => {
                           <span>{property.area}m²</span>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center text-gray-600 mb-4">
                         <MapPin className="h-4 w-4 mr-1" />
                         <span>{property.location}</span>
                       </div>
-                      
+
                       <button className="w-full bg-[#0d2233] text-white py-2 px-4 rounded-lg hover:bg-[#79b2e9] transition-colors">
                         Ver Detalhes
                       </button>
@@ -231,11 +231,10 @@ const InteractiveMap: React.FC = () => {
             <button
               key={property.id}
               onClick={() => setSelectedProperty(property.id)}
-              className={`text-left p-4 rounded-lg border transition-colors ${
-                selectedProperty === property.id
+              className={`text-left p-4 rounded-lg border transition-colors ${selectedProperty === property.id
                   ? 'border-[#0d2233] bg-blue-50'
                   : 'border-gray-200 hover:border-gray-300'
-              }`}
+                }`}
             >
               <div className="font-medium text-gray-900 mb-1">{property.title}</div>
               <div className="text-[#0d2233] font-bold">{formatPrice(property.price)}</div>

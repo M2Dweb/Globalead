@@ -58,6 +58,14 @@ const FeaturedProperties2: React.FC = () => {
     return types[type] || type;
   };
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('pt-PT', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0
+    }).format(price);
+  };
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -99,33 +107,33 @@ const FeaturedProperties2: React.FC = () => {
 
                 <div className="p-6 flex flex-col flex-grow">
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-1 text-center line-clamp-2 min-h-[3.5rem]">
+                  <h3 className="text-xl font-bold text-gray-900 text-left mb-1 line-clamp-2 min-h-[3.5rem]">
                     {property.title}
                   </h3>
 
                   {property.type === 'empreendimento' ? (
-                    <div className="flex flex-wrap items-center justify-center gap-4 text-gray-600 mb-4 text-sm font-medium">
+                    <div className="flex flex-wrap items-center justify-start gap-3 text-gray-600 mb-4 text-sm">
                       {property.apartments && (
-                        <div className="flex items-center gap-1.5" title="Apartamentos">
-                          <Building2 className="h-4 w-4 text-[#79b2e9]" />
+                        <div className="flex items-center">
+                          <Building2 className="h-4 w-4 mr-1 text-gray-600" />
                           <span>{property.apartments} Frações</span>
                         </div>
                       )}
                       {property.stores && (
-                        <div className="flex items-center gap-1.5" title="Lojas">
-                          <Store className="h-4 w-4 text-[#79b2e9]" />
+                        <div className="flex items-center">
+                          <Store className="h-4 w-4 mr-1 text-gray-600" />
                           <span>{property.stores} Lojas</span>
                         </div>
                       )}
                       {property.location && (
-                        <div className="flex items-center gap-1.5 w-full justify-center text-xs mt-1">
-                          <MapPin className="h-3.5 w-3.5 text-gray-400" />
-                          <span className="truncate max-w-[200px]">{property.location}</span>
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-1 text-gray-600" />
+                          <span className="truncate">{property.location}</span>
                         </div>
                       )}
                     </div>
                   ) : (
-                    <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-4 text-sm">
+                    <div className="flex flex-wrap items-center justify-start gap-3 text-gray-600 mb-4 text-sm">
                       <div className="flex items-center">
                         <Bed className="h-4 w-4 mr-1" />
                         <span>{property.bedrooms}</span>
@@ -145,7 +153,16 @@ const FeaturedProperties2: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Descrição */}
+                  {/* COM PREÇO */}
+                  {property.type === 'empreendimento' ? (
+                    <div className="text-2xl font-bold text-[#79b2e9] mb-2 text-left">
+                      {property.price ? `Desde ${formatPrice(property.price)}` : 'Sob consulta'}
+                    </div>
+                  ) : (
+                    <div className="text-2xl font-bold text-[#79b2e9] mb-2 text-left">
+                      {property.price ? formatPrice(property.price) : 'Sob consulta'}
+                    </div>
+                  )}
                   <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow min-h-[4.5rem]">
                     <ContentRenderer content={property.description || ''} />
                   </div>

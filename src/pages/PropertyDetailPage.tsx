@@ -465,11 +465,11 @@ const PropertyDetailPage: React.FC = () => {
                                 </td>
                                 <td className="px-3 py-2 text-center">
                                   {type.status === 'reservado' ? (
-                                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-yellow-100 text-yellow-800 whitespace-nowrap">
+                                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#0d2233] text-white whitespace-nowrap">
                                       Reservado
                                     </span>
                                   ) : type.status === 'vendido' ? (
-                                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-100 text-red-800 whitespace-nowrap">
+                                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#0d2233] text-white whitespace-nowrap">
                                       Vendido
                                     </span>
                                   ) : (
@@ -507,11 +507,11 @@ const PropertyDetailPage: React.FC = () => {
                                 <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
                               </div>
                               {type.status === 'reservado' ? (
-                                <div className="w-full py-2 rounded-lg text-sm font-semibold bg-yellow-100 text-yellow-800 text-center">
+                                <div className="w-full py-2 rounded-lg text-sm font-semibold bg-[#0d2233] text-white text-center">
                                   Reservado
                                 </div>
                               ) : type.status === 'vendido' ? (
-                                <div className="w-full py-2 rounded-lg text-sm font-semibold bg-red-100 text-red-800 text-center">
+                                <div className="w-full py-2 rounded-lg text-sm font-semibold bg-[#0d2233] text-white text-center">
                                   Vendido
                                 </div>
                               ) : (
@@ -617,7 +617,14 @@ const PropertyDetailPage: React.FC = () => {
                   </h3>
                   <div className="rounded-xl overflow-hidden h-72">
                     <iframe
-                      src={property.map_url}
+                      src={(() => {
+                        const url = property.map_url;
+                        if (url.includes('<iframe')) {
+                          const match = url.match(/src="([^"]+)"/);
+                          return match ? match[1] : url;
+                        }
+                        return url;
+                      })()}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
