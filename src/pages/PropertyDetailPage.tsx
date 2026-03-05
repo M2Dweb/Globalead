@@ -575,7 +575,7 @@ const PropertyDetailPage: React.FC = () => {
 
                     <div className="flex items-center gap-2">
                       <span className="text-gray-600">Estado:</span>
-                      <span className="font-semibold">{property.state || 'Novo'}</span>
+                      <span className="font-semibold capitalize">{property.state?.replace(/_/g, ' ') || 'Novo'}</span>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -625,8 +625,8 @@ const PropertyDetailPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Map - only for empreendimentos */}
-              {property.type === 'empreendimento' && property.map_url && (
+              {/* Map - for any property with a map URL */}
+              {property.map_url && property.map_url.trim() !== '' && (
                 <div className="bg-gray-50 p-6 rounded-xl mb-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <MapPin className="h-6 w-6 text-[#79b2e9]" /> Localização
@@ -652,43 +652,41 @@ const PropertyDetailPage: React.FC = () => {
                 </div>
               )}
 
-              {property.type !== 'empreendimento' && (
-                <div className="bg-gray-50 p-6 rounded-xl text-center">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Partilha este conteúdo</h3>
-                  <div className="flex justify-center gap-4 flex-wrap">
-                    <button
-                      onClick={() => shareContent('facebook')}
-                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                    >
-                      <Facebook className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={() => shareContent('whatsapp')}
-                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                    >
-                      <MessageCircle className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={() => shareContent('telegram')}
-                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                    >
-                      <Send className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={() => shareContent('twitter')}
-                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                    >
-                      <Twitter className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={() => shareContent('email')}
-                      className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
-                    >
-                      <Mail className="h-5 w-5" />
-                    </button>
-                  </div>
+              <div className="bg-gray-50 p-6 rounded-xl text-center">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Partilha este conteúdo</h3>
+                <div className="flex justify-center gap-4 flex-wrap">
+                  <button
+                    onClick={() => shareContent('facebook')}
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                  >
+                    <Facebook className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => shareContent('whatsapp')}
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => shareContent('telegram')}
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                  >
+                    <Send className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => shareContent('twitter')}
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                  >
+                    <Twitter className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => shareContent('email')}
+                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                  >
+                    <Mail className="h-5 w-5" />
+                  </button>
                 </div>
-              )}
+              </div>
             </div>
 
 
@@ -712,8 +710,8 @@ const PropertyDetailPage: React.FC = () => {
                     </a>
                     <div className="mt-1 flex flex-col">
                       <span className="text-sm text-gray-500">Ou contacte-nos diretamente:</span>
-                      <a href="tel:+351915482365" className="font-bold text-gray-900 text-base hover:text-[#79b2e9]">
-                        +351 915 482 365
+                      <a href="tel:+351910647620" className="font-bold text-gray-900 text-base hover:text-[#79b2e9]">
+                        +351 910 647 620
                       </a>
                     </div>
                   </div>

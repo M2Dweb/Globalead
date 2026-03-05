@@ -309,19 +309,19 @@ const PropertyListPage: React.FC = () => {
                         <div className="flex flex-wrap items-center gap-3 text-gray-600 mb-3 text-sm">
                           {property.apartments && (
                             <div className="flex items-center">
-                              <Building2 className="h-4 w-4 mr-1 text-gray-600" />
+                              <Building2 className="h-4 w-4 mr-1" />
                               <span>{property.apartments} Frações</span>
                             </div>
                           )}
                           {property.stores && (
                             <div className="flex items-center">
-                              <Store className="h-4 w-4 mr-1 text-gray-600" />
-                              <span>{property.stores} Lojas</span>
+                              <Store className="h-4 w-4 mr-1" />
+                              <span>{property.stores} {property.stores === 1 ? 'Loja' : 'Lojas'}</span>
                             </div>
                           )}
                           {property.location && (
                             <div className="flex items-center">
-                              <MapPin className="h-4 w-4 mr-1 text-gray-600" />
+                              <MapPin className="h-4 w-4 mr-1" />
                               <span className="truncate max-w-[200px]">{property.location}</span>
                             </div>
                           )}

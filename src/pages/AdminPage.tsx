@@ -232,6 +232,7 @@ const AdminPage: React.FC = () => {
 
   const [blogForm, setBlogForm] = useState({
     title: '',
+    ref: '',
     content: '',
     excerpt: '',
     category: '',
@@ -375,7 +376,7 @@ const AdminPage: React.FC = () => {
     try {
       const blogData = {
         ...blogForm,
-        ref: editingPost?.ref || generateRef('BLOG'),
+        ref: blogForm.ref || editingPost?.ref || generateRef('BLOG'),
         date: editingPost?.date || new Date().toISOString().split('T')[0]
       };
 
@@ -477,6 +478,7 @@ const AdminPage: React.FC = () => {
   const resetBlogForm = () => {
     setBlogForm({
       title: '',
+      ref: '',
       content: '',
       excerpt: '',
       category: '',
@@ -530,6 +532,7 @@ const AdminPage: React.FC = () => {
   const editBlogPost = (post: any) => {
     setBlogForm({
       title: post.title || '',
+      ref: post.ref || '',
       content: post.content || '',
       excerpt: post.excerpt || '',
       category: post.category || '',
@@ -1218,6 +1221,13 @@ const AdminPage: React.FC = () => {
                       onChange={(e) => setBlogForm({ ...blogForm, title: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
+                    />
+                    <input
+                      type="text"
+                      placeholder="Referência (ex: tendencias-2024)"
+                      value={blogForm.ref}
+                      onChange={(e) => setBlogForm({ ...blogForm, ref: e.target.value })}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <select
                       value={blogForm.category}

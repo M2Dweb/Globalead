@@ -28,7 +28,7 @@ const BlogPage: React.FC = () => {
           .from('blog_posts')
           .select('*')
           .order('date', { ascending: false });
-        
+
         if (error) {
           console.error('Erro ao carregar posts:', error);
           // Fallback data
@@ -84,7 +84,7 @@ const BlogPage: React.FC = () => {
   const filteredPosts = blogPosts.filter(post => {
     const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -106,7 +106,7 @@ const BlogPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center relative z-10">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Últimas notícias 
+                Últimas notícias
               </h1>
               <p className="text-xl text-blue-100 max-w-4xl mx-auto">
                 A carregar artigos...
@@ -136,7 +136,7 @@ const BlogPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Últimas notícias 
+              Últimas notícias
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
               Mantenha-se atualizado das últimas novidades sobre os vários setores de atividade da Globalead Portugal
@@ -150,8 +150,8 @@ const BlogPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Search and Filters */}
           <div className="mb-12">
-           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
-              
+            <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
+
               {/* Search */}
               <div className="relative w-full max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -175,11 +175,10 @@ const BlogPage: React.FC = () => {
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center justify-center ${
-                        selectedCategory === category.id
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center justify-center ${selectedCategory === category.id
                           ? 'bg-[#0d2233] text-white'
                           : 'bg-white text-gray-700 hover:bg-gray-100'
-                      }`}
+                        }`}
                     >
                       {category.id === 'all' ? (
                         <img
@@ -220,7 +219,7 @@ const BlogPage: React.FC = () => {
                   </div>
                 </div>
 
-                
+
                 <div className="p-6">
                   <div className="flex items-center text-sm text-gray-500 mb-3">
                     <Calendar className="h-4 w-4 mr-1" />
@@ -228,17 +227,17 @@ const BlogPage: React.FC = () => {
                     <span className="mx-2">•</span>
                     <span>Por {post.author}</span>
                   </div>
-                  
+
                   <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
                     {post.title}
                   </h3>
-                  
+
                   <div className="text-gray-600 text-sm mb-4 line-clamp-3">
                     <ContentRenderer content={post.excerpt} className="line-clamp-3" />
                   </div>
-                  
+
                   <Link
-                    to={`/blog/${post.id}`}
+                    to={`/blog/${post.ref || post.id}`}
                     className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center inline-block font-medium"
                   >
                     Saber mais
