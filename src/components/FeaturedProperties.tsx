@@ -139,6 +139,12 @@ const FeaturedProperties: React.FC = () => {
                         <Square className="h-4 w-4 mr-1" />
                         <span>{property.area}m²</span>
                       </div>
+                      {property.location && (
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-1" />
+                          <span className="truncate">{property.location}</span>
+                        </div>
+                      )}
                     </div>
                   )}
 

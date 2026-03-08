@@ -172,9 +172,32 @@ const PropertyDetailPage: React.FC = () => {
   useEffect(() => {
     if (!property || !property.images) return;
 
+    // Carousel interval
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
     }, 4000);
+
+    // Dynamic Meta Tags (Open Graph for Social Sharing)
+    const updateMetaTag = (propertyId: string, content: string) => {
+      let element = document.querySelector(`meta[property="${propertyId}"]`);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute('property', propertyId);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('content', content);
+    };
+
+    updateMetaTag('og:title', property.title);
+    updateMetaTag('og:description', typeof property.description === 'string'
+      ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...'
+      : 'Imóvel disponível na Globalead Portugal'
+    );
+    if (property.images.length > 0) {
+      updateMetaTag('og:image', property.images[0]);
+    }
+    updateMetaTag('og:type', 'website');
+    updateMetaTag('og:url', window.location.href);
 
     return () => clearInterval(interval);
   }, [property]);
@@ -201,7 +224,7 @@ const PropertyDetailPage: React.FC = () => {
 
   const shareContent = (platform: string) => {
     const url = window.location.href;
-    const text = `Confira este imóvel: ${property?.title}`;
+    const text = `Encontrei este imóvel que talvez te possa interessar: ${property?.title}`;
 
     switch (platform) {
       case 'facebook':
@@ -489,58 +512,43 @@ const PropertyDetailPage: React.FC = () => {
                           </tbody>
                         </table>
 
-                        {/* Mobile */}
-                        <div className="md:hidden flex flex-col gap-4 py-4 px-2">
+                        {/* Mobile — compact two-line rows */}
+                        <div className="md:hidden divide-y divide-gray-100">
                           {groups[groupKey].map((type: any, idx: number) => (
-                            <div key={idx} className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow">
-                              <div className="flex justify-between items-start mb-4">
-                                <div className="flex flex-col">
-                                  <span className="font-bold text-[#0d2233] text-lg mb-1">{type.name}</span>
-                                  <div className="flex flex-wrap items-center gap-2 mt-1">
-                                    {type.fracao && <span className="text-xs font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-md">Fr. {type.fracao}</span>}
-                                    {type.piso && <span className="text-xs font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-md">Piso {type.piso}</span>}
-                                  </div>
+                            <div
+                              key={idx}
+                              className="px-4 py-3 hover:bg-blue-50/30 transition-colors"
+                              onClick={() => {
+                                if (type.status !== 'reservado' && type.status !== 'vendido') {
+                                  setSelectedPropertyType(type);
+                                  document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                                }
+                              }}
+                            >
+                              {/* Line 1: Name  Fr.  Piso  Price */}
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <span className="font-bold text-[#0d2233] text-sm">{type.name}</span>
+                                  {type.fracao && <span className="text-xs text-gray-500">Fr.{type.fracao}</span>}
+                                  {type.piso && <span className="text-xs text-gray-500">Piso {type.piso}</span>}
                                 </div>
-                                <span className="text-[#79b2e9] font-bold text-lg">{type.price ? formatPrice(type.price) : '-'}</span>
+                                <span className="font-bold text-[#0d2233] text-sm ml-2 whitespace-nowrap">{type.price ? formatPrice(type.price) : '-'}</span>
                               </div>
-
-                              <div className="grid grid-cols-2 gap-y-3 gap-x-4 mb-5 text-sm py-3 px-4 bg-gray-50 rounded-lg">
-                                {type.bathrooms && (
-                                  <div className="flex items-center gap-2 text-gray-600">
-                                    <Bath className="w-4 h-4 text-gray-400" />
-                                    <span>{type.bathrooms} WC</span>
-                                  </div>
-                                )}
-                                {type.area && (
-                                  <div className="flex items-center gap-2 text-gray-600">
-                                    <Square className="w-4 h-4 text-gray-400" />
-                                    <span>{type.area} m²</span>
-                                  </div>
-                                )}
-                                <div className="flex items-center gap-2 col-span-2 text-gray-600">
-                                  <span className="font-medium">Garagem:</span> {type.garage === 'sim' ? 'Sim' : 'Não'}
+                              {/* Line 2: WC  Area  Garagem  Status */}
+                              <div className="flex items-center justify-between mt-1">
+                                <div className="flex items-center gap-3 text-xs text-gray-500">
+                                  {type.bathrooms && <span>{type.bathrooms} WC</span>}
+                                  {type.area && <span>{type.area} m²</span>}
+                                  <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
                                 </div>
+                                {type.status === 'reservado' ? (
+                                  <span className="text-xs font-semibold bg-[#0d2233] text-white px-2 py-0.5 rounded">Reservado</span>
+                                ) : type.status === 'vendido' ? (
+                                  <span className="text-xs font-semibold bg-[#0d2233] text-white px-2 py-0.5 rounded">Vendido</span>
+                                ) : (
+                                  <span className="text-xs font-semibold text-[#79b2e9]">Saber mais →</span>
+                                )}
                               </div>
-
-                              {type.status === 'reservado' ? (
-                                <div className="w-full py-2.5 rounded-lg text-sm font-semibold bg-[#0d2233] text-white text-center">
-                                  Reservado
-                                </div>
-                              ) : type.status === 'vendido' ? (
-                                <div className="w-full py-2.5 rounded-lg text-sm font-semibold bg-[#0d2233] text-white text-center">
-                                  Vendido
-                                </div>
-                              ) : (
-                                <button
-                                  onClick={() => {
-                                    setSelectedPropertyType(type);
-                                    document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
-                                  }}
-                                  className="w-full py-2.5 rounded-lg text-sm font-bold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200"
-                                >
-                                  Saber mais
-                                </button>
-                              )}
                             </div>
                           ))}
                         </div>
@@ -575,7 +583,15 @@ const PropertyDetailPage: React.FC = () => {
 
                     <div className="flex items-center gap-2">
                       <span className="text-gray-600">Estado:</span>
-                      <span className="font-semibold capitalize">{property.state?.replace(/_/g, ' ') || 'Novo'}</span>
+                      <span className="font-semibold">{
+                        ({
+                          em_construcao: 'Em construção',
+                          novo: 'Novo',
+                          usado: 'Usado',
+                          renovado: 'Renovado',
+                          em_planta: 'Em planta',
+                        } as Record<string, string>)[property.state || ''] || property.state?.replace(/_/g, ' ') || 'Novo'
+                      }</span>
                     </div>
 
                     <div className="flex items-center gap-2">

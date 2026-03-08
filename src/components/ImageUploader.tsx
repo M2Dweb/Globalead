@@ -17,7 +17,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, value }
     if (!file) return;
 
     setUploading(true);
-    
+
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
@@ -59,12 +59,13 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, value }
     <div className="space-y-4">
       {imageUrl && (
         <div className="relative inline-block">
-          <img 
-            src={imageUrl} 
-            alt="Preview" 
-            className="w-32 h-32 object-cover rounded-lg border border-gray-300" 
+          <img
+            src={imageUrl}
+            alt="Preview"
+            className="w-32 h-32 object-cover rounded-lg border border-gray-300"
           />
           <button
+            type="button"
             onClick={removeImage}
             className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
           >
@@ -72,7 +73,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, value }
           </button>
         </div>
       )}
-      
+
       <div>
         <label className="flex items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -84,9 +85,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, value }
             </p>
             <p className="text-xs text-gray-500">PNG, JPG ou JPEG (MAX. 10MB)</p>
           </div>
-          <input 
-            type="file" 
-            className="hidden" 
+          <input
+            type="file"
+            className="hidden"
             accept="image/*"
             onChange={handleFileChange}
             disabled={uploading}

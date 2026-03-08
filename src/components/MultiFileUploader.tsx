@@ -9,11 +9,11 @@ interface MultiFileUploaderProps {
   accept: 'image/*' | 'video/*';
 }
 
-export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({ 
-  folder, 
-  files, 
-  onUpload, 
-  accept 
+export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
+  folder,
+  files,
+  onUpload,
+  accept
 }) => {
   const [uploading, setUploading] = useState(false);
 
@@ -50,7 +50,7 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
 
       if (uploadedUrls.length > 0) {
         // **Substituímos o array completo**, evitando duplicações
-         onUpload(uploadedUrls);
+        onUpload(uploadedUrls);
       }
     } catch (error) {
       console.error('Erro no upload:', error);
@@ -86,6 +86,7 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
                 />
               )}
               <button
+                type="button"
                 onClick={() => removeFile(index)}
                 className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
               >
