@@ -328,7 +328,7 @@ const PropertyListPage: React.FC = () => {
                           )}
                         </div>
                       ) : (
-                        <div className="flex items-center space-x-4 text-gray-600 mb-3">
+                        <div className="flex items-center space-x-4 text-gray-600 mb-3 text-sm">
                           {property.bedrooms != null && (
                             <div className="flex items-center">
                               <Bed className="h-4 w-4 mr-1" />
