@@ -285,27 +285,20 @@ const HomePage: React.FC = () => {
             <div className="overflow-hidden">
               <div
                 className="flex transition-transform duration-1000 ease-in-out"
-                style={{ transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)` }}
+                style={{
+                  transform: `translateX(-${currentPartnerIndex * (100 / logosPerPage)}%)`
+                }}
               >
                 {partnerLogos.map((logo, index) => (
                   <div
                     key={index}
-                    className={`flex-shrink-0 w-1/2 sm:w-1/5 px-4`}
+                    className="flex-shrink-0 w-1/2 sm:w-1/5 px-2"
                   >
-                    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center justify-center h-32">
                       <img
                         src={logo}
                         alt={`Parceiro ${index + 1}`}
-                        className="w-full h-25 object-contain p-4"
-                        style={{
-                          filter: `
-                            grayscale(100%) 
-                            brightness(20%) 
-                            sepia(100%) 
-                            
-                            hue-rotate(200deg)
-                          `,
-                        }}
+                        className="max-h-20 object-contain"
                       />
                     </div>
                   </div>

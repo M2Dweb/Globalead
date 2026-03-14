@@ -78,7 +78,7 @@ const ContactosPage: React.FC = () => {
               Contactos
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-             Na Globalead Portugal colocamos sempre o cliente no centro. Estamos inteiramente disponíveis para lhe prestar o apoio que necessita.
+              Na Globalead Portugal colocamos sempre o cliente no centro. Estamos inteiramente disponíveis para lhe prestar o apoio que necessita.
             </p>
           </div>
         </div>
@@ -89,19 +89,19 @@ const ContactosPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
-             Caso tenha dúvidas sobre os nossos serviços, precise de assistência técnica, pretenda
-informações adicionais ou procure uma solução totalmente personalizada, a nossa equipa está
-preparada para encontrar a resposta certa para si.
+              Caso tenha dúvidas sobre os nossos serviços, precise de assistência técnica, pretenda
+              informações adicionais ou procure uma solução totalmente personalizada, a nossa equipa está
+              preparada para encontrar a resposta certa para si.
             </p>
             <br />
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
               Entre em contacto connosco através do formulário abaixo, envie-nos um e-mail ou ligue para os
-contactos indicados. A nossa prioridade é prestar-lhe um atendimento célere e eficaz,
-garantindo a sua máxima satisfação.
+              contactos indicados. A nossa prioridade é prestar-lhe um atendimento célere e eficaz,
+              garantindo a sua máxima satisfação.
             </p>
           </div>
 
-          
+
 
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
             <div className="text-center">
@@ -109,7 +109,7 @@ garantindo a sua máxima satisfação.
                 <Phone className="h-8 w-8 text-[#0d2233]" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Telefone</h3>
-              <p className="text-gray-600">915 482 365</p>
+              <p className="text-gray-600">910 647 620</p>
             </div>
 
             <div className="text-center">
@@ -145,7 +145,7 @@ garantindo a sua máxima satisfação.
           </div>
           <div className="flex flex-col items-center">
             <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 w-full max-w-2xl">
-              
+
 
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input
@@ -182,7 +182,7 @@ garantindo a sua máxima satisfação.
                   required
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
-                <select 
+                <select
                   name="assunto"
                   value={formData.assunto}
                   onChange={handleInputChange}
@@ -200,8 +200,8 @@ garantindo a sua máxima satisfação.
                   <option>Pedido de Simulação Seguros</option>
                   <option>Pedido de Simulação Alarmes</option>
                 </select>
-                
-                <select 
+
+                <select
                   name="meio_contacto"
                   value={formData.meio_contacto}
                   onChange={handleInputChange}
@@ -231,19 +231,19 @@ garantindo a sua máxima satisfação.
                   <p className="text-xs text-gray-600 mb-6">
                     Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
                   </p>
-                  
+
                   {submitStatus === 'success' && (
                     <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
                       Mensagem enviada com sucesso! Entraremos em contacto em breve.
                     </div>
                   )}
-                  
+
                   {submitStatus === 'error' && (
                     <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
                       Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
                     </div>
                   )}
-                  
+
                   <button
                     type="submit"
                     disabled={isSubmitting}

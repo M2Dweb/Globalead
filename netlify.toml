@@ -11,3 +11,7 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[edge_functions]]
+  function = "og-blog"
+  path = "/blog/*"

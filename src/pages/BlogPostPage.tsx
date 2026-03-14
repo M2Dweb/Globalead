@@ -3,6 +3,7 @@ import { Calendar } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { supabase, getBlogPostByRef } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
+import SEOHead from '../components/SEOHead';
 
 
 const categories = [
@@ -50,6 +51,13 @@ const BlogPostPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title={`${post.title} | Globalead Portugal`}
+        description={post.excerpt ? post.excerpt.replace(/<[^>]*>/g, '').substring(0, 200) : undefined}
+        image={post.image?.startsWith('http') ? post.image : `https://globalead.pt${post.image}`}
+        url={`https://globalead.pt/blog/${ref}`}
+        type="article"
+      />
       {/* Banner */}
       <section
         className="relative h-72 flex items-center justify-center text-white"

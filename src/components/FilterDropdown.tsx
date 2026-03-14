@@ -75,21 +75,7 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
     { value: 'para_remodelar', label: 'Para Remodelar' }
   ];
 
-  const features = [
-    'Garagem', 'Jardim', 'Piscina', 'Varanda', 'Elevador',
-    'Ar Condicionado', 'Cozinha Equipada', 'Vista Mar',
-    'Terraço', 'Lareira', 'Aquecimento Central'
-  ];
-
   const energyClasses = ['A+', 'A', 'B', 'B-', 'C', 'D', 'E', 'F'];
-
-  const handleFeatureToggle = (feature: string) => {
-    if (selectedFeatures.includes(feature)) {
-      setSelectedFeatures(selectedFeatures.filter(f => f !== feature));
-    } else {
-      setSelectedFeatures([...selectedFeatures, feature]);
-    }
-  };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-PT', {
@@ -289,25 +275,6 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
         </select>
       </div>
 
-      {/* Features */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Características
-        </label>
-        <div className="grid grid-cols-1 gap-2">
-          {features.map(feature => (
-            <label key={feature} className="flex items-center">
-              <input
-                type="checkbox"
-                checked={selectedFeatures.includes(feature)}
-                onChange={() => handleFeatureToggle(feature)}
-                className="mr-2 text-[#79b2e9] focus:ring-[#79b2e9]"
-              />
-              <span className="text-sm text-gray-700">{feature}</span>
-            </label>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

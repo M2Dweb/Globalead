@@ -53,7 +53,7 @@ const StickyCtaButton: React.FC = () => {
                   <div className="space-y-3">
                     <button
                       onClick={() => {
-                        window.open('tel:+351915482365', '_self');
+                        window.open('tel:+351910647620', '_self');
                         setIsExpanded(false);
                       }}
                       className="flex items-center w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors"
@@ -61,13 +61,13 @@ const StickyCtaButton: React.FC = () => {
                       <Phone className="h-5 w-5 text-[#0d2233] mr-3" />
                       <div>
                         <div className="font-medium text-gray-900">Ligar Agora</div>
-                        <div className="text-sm text-gray-500">915 482 365</div>
+                        <div className="text-sm text-gray-500">910 647 620</div>
                       </div>
                     </button>
-                    
+
                     <button
                       onClick={() => {
-                        window.open('https://wa.me/351915482365', '_blank');
+                        window.open('https://wa.me/351910647620', '_blank');
                         setIsExpanded(false);
                       }}
                       className="flex items-center w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors"
@@ -78,7 +78,7 @@ const StickyCtaButton: React.FC = () => {
                         <div className="text-sm text-gray-500">Mensagem direta</div>
                       </div>
                     </button>
-                    
+
                     <Link
                       to="/contactos"
                       onClick={() => setIsExpanded(false)}

@@ -27,7 +27,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
     "description": description,
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+351915482365",
+      "telephone": "+351910647620",
       "contactType": "customer service",
       "availableLanguage": "Portuguese"
     },
@@ -71,7 +71,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="keywords" content={keywords} />
       <meta name="robots" content="index, follow" />
       <meta name="author" content="Globalead Portugal" />
-      
+
       {/* Open Graph */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
@@ -80,18 +80,18 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content="Globalead Portugal" />
       <meta property="og:locale" content="pt_PT" />
-      
+
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
-      
+
       {/* Structured Data */}
       <script type="application/ld+json">
         {JSON.stringify(structuredData)}
       </script>
-      
+
       {/* PWA */}
       <link rel="manifest" href="/manifest.json" />
       <meta name="theme-color" content="#2563eb" />

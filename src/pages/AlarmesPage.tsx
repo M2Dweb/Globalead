@@ -292,7 +292,7 @@ const AlarmesPage: React.FC = () => {
               <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-8">
                 <div className="flex items-center">
                   <Phone className="h-6 w-6 mr-2" />
-                  <span className="text-lg">915 482 365 (chamada rede fixa nacional)</span>
+                  <span className="text-lg">910 647 620 (chamada rede fixa nacional)</span>
                 </div>
                 <button className="bg-white text-[#0d2233] px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 font-semibold">
                   Ver ofertas
@@ -310,7 +310,7 @@ const AlarmesPage: React.FC = () => {
                   Entre em contacto!
                 </p>
               </div>
-              
+
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input
                   type="text"
@@ -346,7 +346,7 @@ const AlarmesPage: React.FC = () => {
                   required
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <select 
+                <select
                   name="meio_contacto"
                   value={formData.meio_contacto}
                   onChange={handleInputChange}
@@ -373,7 +373,7 @@ const AlarmesPage: React.FC = () => {
                   placeholder="Horário:"
                   className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                
+
                 <div className="md:col-span-2">
                   <label className="flex items-start text-sm text-gray-700 mb-4">
                     <input type="checkbox" className="mt-1 mr-2" required />
@@ -382,19 +382,19 @@ const AlarmesPage: React.FC = () => {
                   <p className="text-xs text-gray-600 mb-4">
                     Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
                   </p>
-                  
+
                   {submitStatus === 'success' && (
                     <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
                       Mensagem enviada com sucesso! Entraremos em contacto em breve.
                     </div>
                   )}
-                  
+
                   {submitStatus === 'error' && (
                     <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
                       Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
                     </div>
                   )}
-                  
+
                   <button
                     type="submit"
                     disabled={isSubmitting}

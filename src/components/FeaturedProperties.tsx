@@ -86,17 +86,16 @@ const FeaturedProperties: React.FC = () => {
                     className="w-full h-48 object-cover"
                   />
 
-                  {/* Badge de estado - esquerda (sempre visível se tiver status) */}
-                  {property.availability_status && (
-                    <div className="absolute top-4 left-4">
+                  {/* Badge de estado ou tipo - canto superior direito */}
+                  {property.availability_status && property.availability_status !== 'disponivel' ? (
+                    <div className="absolute top-4 right-4">
                       <StatusBadge status={property.availability_status} />
                     </div>
+                  ) : (
+                    <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
+                      {getPropertyTypeLabel(property.type)}
+                    </div>
                   )}
-
-                  {/* Tipo do imóvel - direita (sempre visível) */}
-                  <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
-                    {getPropertyTypeLabel(property.type)}
-                  </div>
                 </div>
 
                 <div className="p-6 flex flex-col flex-grow">

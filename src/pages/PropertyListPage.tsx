@@ -196,29 +196,31 @@ const PropertyListPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             {/* Filters Sidebar */}
             <div className="lg:col-span-1">
-              <FilterDropdown
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                selectedType={selectedType}
-                setSelectedType={setSelectedType}
-                priceRange={priceRange}
-                setPriceRange={setPriceRange}
-                bedrooms={bedrooms}
-                setBedrooms={setBedrooms}
-                bathrooms={bathrooms}
-                setBathrooms={setBathrooms}
-                selectedDistrict={selectedDistrict}
-                setSelectedDistrict={setSelectedDistrict}
-                selectedState={selectedState}
-                setSelectedState={setSelectedState}
-                selectedFeatures={selectedFeatures}
-                setSelectedFeatures={setSelectedFeatures}
-                energyClass={energyClass}
-                setEnergyClass={setEnergyClass}
-                areaRange={areaRange}
-                setAreaRange={setAreaRange}
-                onClearFilters={clearAllFilters}
-              />
+              <div className="sticky top-24">
+                <FilterDropdown
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  selectedType={selectedType}
+                  setSelectedType={setSelectedType}
+                  priceRange={priceRange}
+                  setPriceRange={setPriceRange}
+                  bedrooms={bedrooms}
+                  setBedrooms={setBedrooms}
+                  bathrooms={bathrooms}
+                  setBathrooms={setBathrooms}
+                  selectedDistrict={selectedDistrict}
+                  setSelectedDistrict={setSelectedDistrict}
+                  selectedState={selectedState}
+                  setSelectedState={setSelectedState}
+                  selectedFeatures={selectedFeatures}
+                  setSelectedFeatures={setSelectedFeatures}
+                  energyClass={energyClass}
+                  setEnergyClass={setEnergyClass}
+                  areaRange={areaRange}
+                  setAreaRange={setAreaRange}
+                  onClearFilters={clearAllFilters}
+                />
+              </div>
             </div>
 
             {/* Properties Grid */}
@@ -263,13 +265,12 @@ const PropertyListPage: React.FC = () => {
                         <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
                       )}
 
-                      {/* BADGE de status - esquerda */}
-                      <div className="absolute top-4 left-4">
-                        <StatusBadge status={property.availability_status || 'disponivel'} />
-                      </div>
-
-                      {/* TIPO do imóvel - direita */}
-                      {property.type && (
+                      {/* BADGE de status ou TIPO do imóvel - direita */}
+                      {property.availability_status && property.availability_status !== 'disponivel' ? (
+                        <div className="absolute top-4 right-4">
+                          <StatusBadge status={property.availability_status} />
+                        </div>
+                      ) : property.type ? (
                         <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
                           {property.type === 'apartamento' ? 'Apartamento' :
                             property.type === 'moradia' ? 'Moradia' :
@@ -282,7 +283,7 @@ const PropertyListPage: React.FC = () => {
                                           property.type === 'predio' ? 'Prédio' :
                                             property.type}
                         </div>
-                      )}
+                      ): null}
 
                       {/* Número de fotos - canto inferior esquerdo */}
                       <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">

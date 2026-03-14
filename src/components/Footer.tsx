@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
               <a href="https://t.me/globaleadportugal" target="_blank" rel="noreferrer">
                 <FaTelegramPlane className="h-6 w-6 hover:text-[#79b2e9]" />
               </a>
-              <a href="https://api.whatsapp.com/send?phone=351915482365" target="_blank" rel="noreferrer">
+              <a href="https://api.whatsapp.com/send?phone=351910647620" target="_blank" rel="noreferrer">
                 <FaWhatsapp className="h-6 w-6 hover:text-[#79b2e9]" />
               </a>
             </div>
@@ -238,7 +238,7 @@ const Footer: React.FC = () => {
               <a href="https://t.me/globaleadportugal" target="_blank" rel="noreferrer">
                 <FaTelegramPlane className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
-              <a href="https://api.whatsapp.com/send?phone=351915482365" target="_blank" rel="noreferrer">
+              <a href="https://api.whatsapp.com/send?phone=351910647620" target="_blank" rel="noreferrer">
                 <FaWhatsapp className="h-7 w-7 hover:text-[#79b2e9]" />
               </a>
             </div>
