@@ -224,7 +224,7 @@ const HomePage: React.FC = () => {
               Caminhamos consigo<br />lado a lado
             </h1>
             <p className="text-xl text-gray-100 max-w-4xl mx-auto">
-              A Globalead Portugal é uma empresa inovadora que atua como intermediária, oferecendo soluções personalizadas em diversos setores. Com foco na comodidade, segurança e eficiência, simplificamos processos e proporcionamos um apoio gratuito, garantindo um serviço adaptado às reais necessidades e exigências de cada cliente.
+A Globalead Portugal é uma empresa inovadora que atua como intermediária, oferecendo soluções personalizadas. Simplificamos processos e proporcionamos um apoio gratuito, garantindo um serviço adaptado às reais necessidades de cada cliente.
             </p>
           </div>
         </div>
