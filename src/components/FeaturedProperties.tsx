@@ -53,7 +53,8 @@ const FeaturedProperties: React.FC = () => {
       apartamento: 'Apartamento',
       moradia: 'Moradia',
       terreno: 'Terreno',
-      empreendimento: 'Empreendimento'
+      empreendimento: 'Empreendimento',
+      trespasse: 'Trespasse'
     };
     return types[type] || type;
   };

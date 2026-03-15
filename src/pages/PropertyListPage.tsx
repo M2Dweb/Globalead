@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bed, Bath, Square, MapPin, ArrowRight, ChevronLeft, ChevronRight, Building2, Store } from 'lucide-react';
+import { Bed, Bath, Square, MapPin, ArrowRight, Building2, Store } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
@@ -281,7 +281,8 @@ const PropertyListPage: React.FC = () => {
                                       property.type === 'armazem' ? 'Armazém' :
                                         property.type === 'quinta' ? 'Quinta' :
                                           property.type === 'predio' ? 'Prédio' :
-                                            property.type}
+                                            property.type === 'trespasse' ? 'Trespasse' :
+                                              property.type}
                         </div>
                       ): null}
 
@@ -390,7 +391,7 @@ const PropertyListPage: React.FC = () => {
                       disabled={currentPage === 1}
                       className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <ChevronLeft className="h-5 w-5" />
+                      <span className="text-gray-600">Anterior</span>
                     </button>
 
                     {/* Page Numbers */}
@@ -437,7 +438,7 @@ const PropertyListPage: React.FC = () => {
                       disabled={currentPage === totalPages}
                       className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <ChevronRight className="h-5 w-5" />
+                      <span className="text-gray-600">Seguinte</span>
                     </button>
                   </div>
 

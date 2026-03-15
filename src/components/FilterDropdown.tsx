@@ -65,7 +65,8 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
     { value: 'loja', label: 'Loja' },
     { value: 'armazem', label: 'Armazém' },
     { value: 'quinta', label: 'Quinta' },
-    { value: 'predio', label: 'Prédio' }
+    { value: 'predio', label: 'Prédio' },
+    { value: 'trespasse', label: 'Trespasse' }
   ];
 
   const propertyStates = [

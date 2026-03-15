@@ -880,6 +880,12 @@ const AdminPage: React.FC = () => {
                       <option value="moradia">Moradia</option>
                       <option value="terreno">Terreno</option>
                       <option value="empreendimento">Empreendimento</option>
+                      <option value="escritorio">Escritório</option>
+                      <option value="loja">Loja</option>
+                      <option value="armazem">Armazém</option>
+                      <option value="quinta">Quinta</option>
+                      <option value="predio">Prédio</option>
+                      <option value="trespasse">Trespasse</option>
                     </select>
                     <input
                       type="text"
