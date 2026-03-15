@@ -15,3 +15,15 @@
 [[edge_functions]]
   function = "og-blog"
   path = "/blog/*"
+
+# PREVINE O CACHE DO HTML (obrigando o browser a pedir sempre a versão mais recente)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# CACHE ETERNO PARA OS ASSETS (imagens, JS e CSS com hash do Vite)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
