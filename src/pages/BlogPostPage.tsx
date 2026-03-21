@@ -68,7 +68,8 @@ const BlogPostPage: React.FC = () => {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <h1 className="text-3xl mt-10 font-bold relative z-10 text-center px-4">{post.title}</h1>
+        {/* Não usamos h1 aqui — o título é o H1 dentro do conteúdo do artigo (sem duplicação para SEO) */}
+        <div className="text-3xl mt-10 font-bold relative z-10 text-center px-4 text-white">{post.title}</div>
       </section>
 
       {/* Conteúdo + Sidebar */}

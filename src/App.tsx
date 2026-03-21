@@ -6,6 +6,7 @@ import { useEffect } from 'react';
  import Breadcrumbs from './components/Breadcrumbs';
  import StickyCtaButton from './components/StickyCtaButton';
  import SEOHead from './components/SEOHead';
+ import CookieBanner from './components/CookieBanner';
 
 //pages
  import HomePage from './pages/HomePage';
@@ -142,6 +143,7 @@ const AppLayout: React.FC = () => {
       
        {!(isCarlosGoncalvesPage || isAdminPage ) && <Footer />} 
        <StickyCtaButton /> 
+       <CookieBanner />
     </div>
   );
 };

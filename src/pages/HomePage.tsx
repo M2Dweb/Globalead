@@ -221,8 +221,11 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Caminhamos consigo<br />lado a lado
+              Imobiliário, Crédito & Seguros
             </h1>
+            <h2 className="text-2xl md:text-4xl font-semibold mb-4 text-blue-100">
+              Caminhamos consigo lado a lado
+            </h2>
             <p className="text-xl text-gray-100 max-w-4xl mx-auto">
 A Globalead Portugal é uma empresa inovadora que atua como intermediária, oferecendo soluções personalizadas. Simplificamos processos e proporcionamos um apoio gratuito, garantindo um serviço adaptado às reais necessidades de cada cliente.
             </p>
@@ -376,9 +379,9 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Tem dúvidas?
               </h2>
-              <h2 className="text-3xl md:text-2xl mb-2">
+              <h3 className="text-2xl mb-2">
                 Entre em contacto
-              </h2>
+              </h3>
             </div>
 
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">

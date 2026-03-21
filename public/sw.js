@@ -1,7 +1,7 @@
-const CACHE_NAME = 'globalead-v1';
+const CACHE_NAME = 'globalead-v2';
 const urlsToCache = [
-  '/', // Apenas o index
   '/logo.png', // Logo básico
+  // ⚠️ Não cachear '/' (index.html) — causa página branca quando o cache fica desatualizado
 ];
 
 // Instala o SW e adiciona os arquivos iniciais ao cache

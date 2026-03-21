@@ -11,7 +11,7 @@ interface SEOHeadProps {
 }
 
 const SEOHead: React.FC<SEOHeadProps> = ({
-  title = "Globalead Portugal",
+  title = "Globalead Portugal | Imóveis, Crédito Habitação e Seguros",
   description = "Especialistas em imobiliário, crédito habitação, certificação energética e seguros. Apoiamos todo o processo para comprar ou vender a sua casa em segurança.",
   keywords = "imóveis, mediação imobiliária, seguros, energia, alarmes, Portugal, Porto, Lisboa, casa, apartamento, moradia",
   image = "/fotos/globalead-icon.png",
@@ -67,6 +67,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   return (
     <Helmet>
       <title>{title}</title>
+      <link rel="canonical" href={url} />
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="robots" content="index, follow" />
