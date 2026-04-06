@@ -23,10 +23,15 @@ const AdminPage: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [showLeadDetails, setShowLeadDetails] = useState(false);
   const [selectedLead, setSelectedLead] = useState<any>(null);
+  // Contacts state
+  const [contactSubmissions, setContactSubmissions] = useState<any[]>([]);
+  const [showContactDetails, setShowContactDetails] = useState(false);
+  const [selectedContact, setSelectedContact] = useState<any>(null);
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   // Novos estados para gerenciar destaques
   const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
   const [featuredLoading, setFeaturedLoading] = useState(false);
+  const [cleaningImages, setCleaningImages] = useState(false);
 
 
   // Form states
@@ -300,6 +305,12 @@ const AdminPage: React.FC = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
+      // Fetch general contact submissions
+      const { data: contactsData } = await supabase
+        .from('contact_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
       // Fetch featured properties
       const { data: featuredData } = await supabase
         .from('featured_properties')
@@ -310,6 +321,7 @@ const AdminPage: React.FC = () => {
       setBlogPosts(blogData || []);
       setPropertyLeads(leadsData || []);
       setFeaturedProperties(featuredData || []);
+      setContactSubmissions(contactsData || []);
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
     }
@@ -446,6 +458,98 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const deleteContactSubmission = async (id: string) => {
+    if (confirm('Tem certeza que deseja excluir este contacto?')) {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .delete()
+        .eq('id', id);
+
+      if (!error) {
+        fetchData();
+        alert('Contacto excluído!');
+      }
+    }
+  };
+
+  const cleanupImages = async () => {
+    if (!confirm('Deseja procurar e eliminar ficheiros de imagem (Propriedades e Blog) que já não estão a ser utilizados na base de dados? Esta ação não pode ser desfeita.')) return;
+    setCleaningImages(true);
+
+    try {
+      // 1. Obter propriedades e extrair urls
+      const { data: props, error: propsError } = await supabase.from('properties').select('cover_image, images, property_types');
+      if (propsError) throw propsError;
+
+      // 2. Obter blog e extrair urls
+      const { data: blogs, error: blogsError } = await supabase.from('blog_posts').select('image');
+      if (blogsError) throw blogsError;
+
+      const usedUrls = new Set<string>();
+
+      if (props) {
+        props.forEach(p => {
+          if (p.cover_image) usedUrls.add(p.cover_image);
+          if (p.images && Array.isArray(p.images)) p.images.forEach((img: string) => usedUrls.add(img));
+          if (p.property_types && Array.isArray(p.property_types)) {
+            p.property_types.forEach((pt: any) => {
+              if (pt.floor_plan) usedUrls.add(pt.floor_plan);
+            });
+          }
+        });
+      }
+
+      if (blogs) {
+        blogs.forEach(b => {
+          if (b.image) usedUrls.add(b.image);
+        });
+      }
+
+      // 3. Listar ficheiros nas pastas e encontrar os orfãos
+      const folders = ['properties', 'properties/covers', 'floor-plans', 'blog'];
+      let filesToDelete: string[] = [];
+
+      for (const folder of folders) {
+        const { data: files, error: listError } = await supabase.storage.from('imagens').list(folder);
+        if (listError) {
+          console.error(`Erro ao listar pasta ${folder}:`, listError);
+          continue;
+        }
+
+        if (files) {
+          for (const file of files) {
+            // Ignorar ficheiros pequenos marcadores do storage
+            if (file.name.startsWith('.') || file.name === '.emptyFolderPlaceholder') continue;
+
+            const filePath = `${folder}/${file.name}`;
+            const { data: publicUrlData } = supabase.storage.from('imagens').getPublicUrl(filePath);
+            const publicUrl = publicUrlData.publicUrl;
+
+            if (!usedUrls.has(publicUrl)) {
+              filesToDelete.push(filePath);
+            }
+          }
+        }
+      }
+
+      // 4. Se houver, perguntar e apagar
+      if (filesToDelete.length > 0) {
+        if (confirm(`Encontradas ${filesToDelete.length} imagens órfãs que estão a ocupar espaço.\nDeseja apagar permanentemente?`)) {
+          const { error: removeError } = await supabase.storage.from('imagens').remove(filesToDelete);
+          if (removeError) throw removeError;
+          alert(`${filesToDelete.length} imagens eliminadas com sucesso!`);
+        }
+      } else {
+        alert('O sistema está otimizado! Não foram encontradas imagens órfãs.');
+      }
+    } catch (error) {
+      console.error('Erro na limpeza de imagens:', error);
+      alert('Ocorreu um erro ao limpar as imagens.');
+    } finally {
+      setCleaningImages(false);
+    }
+  };
+
   const resetPropertyForm = () => {
     setPropertyForm({
       title: '',
@@ -498,6 +602,16 @@ const AdminPage: React.FC = () => {
   const closeLeadDetails = () => {
     setShowLeadDetails(false);
     setSelectedLead(null);
+  };
+
+  const viewContactDetails = (contact: any) => {
+    setSelectedContact(contact);
+    setShowContactDetails(true);
+  };
+
+  const closeContactDetails = () => {
+    setShowContactDetails(false);
+    setSelectedContact(null);
   };
 
   const editProperty = (property: any) => {
@@ -689,9 +803,29 @@ const AdminPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
-          <p className="text-gray-600">Gerir propriedades, blog e dados de contacto</p>
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
+            <p className="text-gray-600">Gerir propriedades, blog e dados de contacto</p>
+          </div>
+          <button
+            onClick={cleanupImages}
+            disabled={cleaningImages}
+            className="bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors inline-flex items-center"
+            title="Apaga ficheiros de propriedades e blog do storage que já não estão associados a nenhum registo."
+          >
+            {cleaningImages ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600 mr-2"></div>
+                A calcular...
+              </>
+            ) : (
+              <>
+                <Trash2 className="h-5 w-5 mr-2" />
+                Limpar Banco de Imagens
+              </>
+            )}
+          </button>
         </div>
 
         {/* Tabs */}
@@ -701,7 +835,8 @@ const AdminPage: React.FC = () => {
               { id: 'properties', name: 'Propriedades', icon: Home },
               { id: 'featured', name: 'Destaques', icon: Star },
               { id: 'blog', name: 'Blog', icon: Edit },
-              { id: 'dados', name: 'Dados', icon: Users }
+              { id: 'dados', name: 'Leads Imóveis', icon: Users },
+              { id: 'contactos', name: 'Contactos', icon: MessageSquare }
             ].map(tab => {
               const IconComponent = tab.icon;
               return (
@@ -1650,6 +1785,86 @@ const AdminPage: React.FC = () => {
           </div>
         )}
 
+        {/* General Contacts Tab */}
+        {activeTab === 'contactos' && (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Contactos Gerais</h2>
+            </div>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Origem / Assunto</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contacto</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {contactSubmissions.map((contact) => (
+                      <tr key={contact.id}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">
+                            {contact.page}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {contact.assunto || 'Sem assunto'}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">{contact.nome} {contact.apelido}</div>
+                          <div className="text-sm text-gray-500">{contact.email}</div>
+                          {contact.telemovel && <div className="text-sm text-gray-500">{contact.telemovel}</div>}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {formatDate(contact.created_at)}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            contact.status === 'novo' ? 'bg-red-100 text-red-800' :
+                            contact.status === 'lido' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-green-100 text-green-800'
+                          }`}>
+                            {contact.status}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <button
+                            onClick={() => viewContactDetails(contact)}
+                            className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
+                            title="Ver detalhes"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => deleteContactSubmission(contact.id)}
+                            className="text-red-600 hover:text-red-900"
+                            title="Eliminar"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {contactSubmissions.length === 0 && (
+                <div className="text-center py-12">
+                  <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-500">Nenhum contacto recebido</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Lead Details Modal */}
         {showLeadDetails && selectedLead && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -1824,6 +2039,157 @@ const AdminPage: React.FC = () => {
                   </button>
                   <button
                     onClick={closeLeadDetails}
+                    className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                  >
+                    Fechar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Contact Details Modal */}
+        {showContactDetails && selectedContact && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center p-6 border-b">
+                <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+                  <FileText className="h-6 w-6 mr-2 text-[#0d2233]" />
+                  Detalhes do Contacto
+                </h2>
+                <button
+                  onClick={closeContactDetails}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Dados Pessoais */}
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                      <User className="h-5 w-5 mr-2 text-[#79b2e9]" />
+                      Dados Pessoais
+                    </h3>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Nome:</span>
+                        <p className="text-gray-900">{selectedContact.nome} {selectedContact.apelido}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Email:</span>
+                        <p className="text-gray-900">{selectedContact.email}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Telemóvel:</span>
+                        <p className="text-gray-900">{selectedContact.telemovel || 'Não fornecido'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Meio de Contacto:</span>
+                        <p className="text-gray-900">{selectedContact.meio_contacto || 'Não especificado'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Horário:</span>
+                        <p className="text-gray-900">{selectedContact.horario || 'Não especificado'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Localização/Distrito:</span>
+                        <p className="text-gray-900">{selectedContact.distrito || 'Não especificado'} {selectedContact.cod_postal ? `(${selectedContact.cod_postal})` : ''}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Detalhes do Pedido Gerais/Extra */}
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                      <MessageSquare className="h-5 w-5 mr-2 text-[#79b2e9]" />
+                      Detalhes do Pedido
+                    </h3>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Página de Origem:</span>
+                        <p className="text-gray-900 font-medium">{selectedContact.page}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Data e Hora:</span>
+                        <p className="text-gray-900">{formatDate(selectedContact.created_at)}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Assunto:</span>
+                        <p className="text-gray-900">{selectedContact.assunto || 'Sem assunto definido'}</p>
+                      </div>
+                      {selectedContact.mensagem && (
+                        <div>
+                          <span className="text-sm font-medium text-gray-600">Mensagem:</span>
+                          <p className="text-gray-900 mt-1 whitespace-pre-wrap">{selectedContact.mensagem}</p>
+                        </div>
+                      )}
+                      
+                      {selectedContact.extra_data && Object.keys(selectedContact.extra_data).length > 0 && (
+                        <div className="mt-4 border-t border-gray-200 pt-4">
+                          <span className="text-sm font-medium text-gray-600 block mb-2">Campos Adicionais:</span>
+                          <ul className="text-sm text-gray-600 space-y-1">
+                            {Object.entries(selectedContact.extra_data).map(([key, value]) => (
+                               <li key={key}><strong className="capitalize">{key.replace(/_/g, ' ')}:</strong> {value as string}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-end space-x-4 mt-6 pt-6 border-t">
+                  {selectedContact.status !== 'lido' && selectedContact.status !== 'respondido' && (
+                     <button
+                       onClick={async () => {
+                         await supabase.from('contact_submissions').update({ status: 'lido' }).eq('id', selectedContact.id);
+                         fetchData();
+                         closeContactDetails();
+                       }}
+                       className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors"
+                     >
+                       Marcar como Lido
+                     </button>
+                  )}
+                  {selectedContact.status !== 'respondido' && (
+                     <button
+                       onClick={async () => {
+                         await supabase.from('contact_submissions').update({ status: 'respondido' }).eq('id', selectedContact.id);
+                         fetchData();
+                         closeContactDetails();
+                       }}
+                       className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                     >
+                       Marcar como Respondido
+                     </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      const mailtoLink = `mailto:${selectedContact.email}?subject=Resposta: ${selectedContact.assunto || 'Contacto Globalead'}&body=Caro(a) ${selectedContact.nome},`;
+                      window.open(mailtoLink, '_self');
+                    }}
+                    className="bg-[#79b2e9] text-white px-4 py-2 rounded-lg hover:bg-[#0d2233] transition-colors inline-flex items-center"
+                  >
+                    <Mail className="h-4 w-4 mr-2" />
+                    Responder por Email
+                  </button>
+                  <button
+                    onClick={() => {
+                      window.open(`tel:${selectedContact.telemovel}`, '_self');
+                    }}
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors inline-flex items-center"
+                    disabled={!selectedContact.telemovel}
+                  >
+                    <Phone className="h-4 w-4 mr-2" />
+                    Ligar
+                  </button>
+                  <button
+                    onClick={closeContactDetails}
                     className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors"
                   >
                     Fechar

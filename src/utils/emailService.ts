@@ -1,4 +1,5 @@
 import emailjs from '@emailjs/browser';
+import { supabase } from '../lib/supabase';
 
 export interface FormData {
   nome: string;
@@ -71,6 +72,43 @@ const getFormattedSubject = (formData: FormData): string => {
   return `${categoryPrefix} ${defaultSubject}`;
 };
 
+// Guarda a submissão no Supabase (silencioso — não bloqueia o envio de email)
+const saveSubmission = async (formData: FormData): Promise<void> => {
+  try {
+    const extraData: Record<string, any> = {};
+    if (formData.preço)               extraData.preco              = formData.preço;
+    if (formData.tipo_ajuda)          extraData.tipo_ajuda         = formData.tipo_ajuda;
+    if (formData.valor_emprestimo)    extraData.valor_emprestimo   = formData.valor_emprestimo;
+    if (formData.escolha_imovel)      extraData.escolha_imovel     = formData.escolha_imovel;
+    if (formData.vender_imovel_atual) extraData.vender_imovel_atual= formData.vender_imovel_atual;
+    if (formData.num_proponentes)     extraData.num_proponentes    = formData.num_proponentes;
+    if (formData.rendimento_agregado) extraData.rendimento_agregado= formData.rendimento_agregado;
+    if (formData.area_min)            extraData.area_min           = formData.area_min;
+    if (formData.area_max)            extraData.area_max           = formData.area_max;
+    if (formData.num_quartos)         extraData.num_quartos        = formData.num_quartos;
+    if (formData.num_casas_banho)     extraData.num_casas_banho    = formData.num_casas_banho;
+
+    await supabase.from('contact_submissions').insert([{
+      nome:          formData.nome,
+      apelido:       formData.apelido   || null,
+      email:         formData.email,
+      telemovel:     formData.telemovel  || null,
+      assunto:       formData.assunto   || null,
+      mensagem:      formData.mensagem  || null,
+      meio_contacto: formData.meio_contacto || null,
+      horario:       formData.horario   || null,
+      distrito:      formData.distrito  || null,
+      cod_postal:    formData.cod_postal || null,
+      page:          formData.page,
+      extra_data:    extraData,
+      status:        'novo',
+    }]);
+  } catch (err) {
+    // Não bloquear o envio de email se o Supabase falhar
+    console.warn('[emailService] Aviso: não foi possível guardar submissão no Supabase:', err);
+  }
+};
+
 export const sendEmail = async (formData: FormData): Promise<boolean> => {
   // Configure these with your EmailJS credentials
   const serviceId = 'service_t50zwho';
@@ -78,6 +116,9 @@ export const sendEmail = async (formData: FormData): Promise<boolean> => {
   const publicKey = '9RG68jew5HcgT8N6e';
 
   try {
+    // Guardar no Supabase (não bloqueia mesmo que falhe)
+    await saveSubmission(formData);
+
     // Obter assunto formatado com prefixo
     const formattedSubject = getFormattedSubject(formData);
     
