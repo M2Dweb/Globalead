@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter,Clock, Bell, Search, Heart, AlertCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Phone, Clock, Bell, Search, Heart, AlertCircle, Play } from 'lucide-react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase, getPropertyByRef } from '../lib/supabase';
@@ -43,66 +43,7 @@ const PropertyDetailPage: React.FC = () => {
 
         if (error) {
           console.error('Erro ao carregar propriedade:', error);
-          setProperty({
-            id: ref,
-            ref: ref,
-            title: "Empreendimento Noval Park",
-            description: "O empreendimento Novel Park nasce em Vila Nova de Gaia, junto ao Monte da Virgem, numa das zonas mais elevadas e tranquilas da cidade. Implantado nos terrenos da Quinta do Cravel, o projeto usufrui de uma envolvente natural privilegiada, ao mesmo tempo que garante proximidade ao centro urbano e à ampla rede de serviços e acessos, tornando-se uma opção ideal para quem procura viver com equilíbrio entre natureza e comodidade.",
-            price: 432600,
-            bedrooms: 3,
-            bathrooms: 2,
-            area: 145,
-            location: "Vila Nova de Gaia",
-            type: "empreendimento",
-            energy_class: "NA",
-            year_built: 2026,
-            garage: 3,
-            reference: "T3NPVNG",
-            state: "Novo",
-            features: ["Garagem para 3 carros", "Jardim privativo", "Cozinha equipada"],
-            images: [
-              "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200",
-              "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1200",
-              "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200"
-            ],
-            property_types: [
-              {
-                name: "T1",
-                area: 70,
-                price: 218000,
-                garage: "C/Garagem",
-                floor_plan: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400"
-              },
-              {
-                name: "T2A",
-                area: 100,
-                price: 298700,
-                garage: "C/Garagem p/ 2 lugares",
-                floor_plan: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400"
-              },
-              {
-                name: "T2B",
-                area: 118,
-                price: 350200,
-                garage: "C/Garagem p/ 2 lugares",
-                floor_plan: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400"
-              },
-              {
-                name: "T3",
-                area: 145,
-                price: 432600,
-                garage: "C/Garagem p/ 3 lugares",
-                floor_plan: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"
-              }
-            ]
-          });
-          setSelectedPropertyType({
-            name: "T3",
-            area: 145,
-            price: 432600,
-            garage: "C/Garagem p/ 3 lugares",
-            floor_plan: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"
-          });
+          setProperty(null);
         } else {
           setProperty(data);
           if (data.property_types && data.property_types.length > 0) {
@@ -127,39 +68,7 @@ const PropertyDetailPage: React.FC = () => {
         if (error) {
           console.error('Erro ao carregar propriedades similares:', error);
         }
-
-        setSimilarProperties(data || [
-          {
-            id: 2,
-            title: "Apartamento T2 Moderno",
-            price: 280000,
-            bedrooms: 2,
-            bathrooms: 1,
-            area: 85,
-            location: "Cedofeita, Porto",
-            images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400"]
-          },
-          {
-            id: 3,
-            title: "Moradia T4 com Jardim",
-            price: 520000,
-            bedrooms: 4,
-            bathrooms: 3,
-            area: 200,
-            location: "Matosinhos, Porto",
-            images: ["https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400"]
-          },
-          {
-            id: 4,
-            title: "Apartamento T1 Centro",
-            price: 180000,
-            bedrooms: 1,
-            bathrooms: 1,
-            area: 55,
-            location: "Campanhã, Porto",
-            images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=400"]
-          }
-        ]);
+        setSimilarProperties(data || []);
       } catch (error) {
         console.error('Erro ao carregar propriedades similares:', error);
         setSimilarProperties([]);
@@ -177,28 +86,6 @@ const PropertyDetailPage: React.FC = () => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
     }, 4000);
-
-    // Dynamic Meta Tags (Open Graph for Social Sharing)
-    const updateMetaTag = (propertyId: string, content: string) => {
-      let element = document.querySelector(`meta[property="${propertyId}"]`);
-      if (!element) {
-        element = document.createElement('meta');
-        element.setAttribute('property', propertyId);
-        document.head.appendChild(element);
-      }
-      element.setAttribute('content', content);
-    };
-
-    updateMetaTag('og:title', property.title);
-    updateMetaTag('og:description', typeof property.description === 'string'
-      ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...'
-      : 'Imóvel disponível na Globalead Portugal'
-    );
-    if (property.images.length > 0) {
-      updateMetaTag('og:image', property.images[0]);
-    }
-    updateMetaTag('og:type', 'website');
-    updateMetaTag('og:url', window.location.href);
 
     return () => clearInterval(interval);
   }, [property]);
@@ -280,7 +167,6 @@ const PropertyDetailPage: React.FC = () => {
         ...formData,
         mensagem: `Interesse no imóvel: ${property?.title} (Ref: ${ref})`
       };
-      console.log('Dados do formulário PropertyDetail:', emailData);
       const success = await sendEmail(emailData as FormData);
       if (success) {
         setSubmitStatus('success');
@@ -383,7 +269,7 @@ const PropertyDetailPage: React.FC = () => {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative h-96 md:h-[500px] overflow-hidden rounded-xl mb-6">
-            {property.images.map((image, index) => (
+            {property.images.map((image: string, index: number) => (
               <img
                 key={index}
                 src={image}
@@ -414,7 +300,7 @@ const PropertyDetailPage: React.FC = () => {
           </div>
 
           <div className="flex space-x-2 overflow-x-auto pb-4">
-            {property.images.map((image, index) => (
+            {property.images.map((image: string, index: number) => (
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
@@ -827,7 +713,7 @@ const PropertyDetailPage: React.FC = () => {
                       />
 
                       <select
-                        name="horário"
+                        name="horario"
                         value={formData.horario}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
@@ -975,9 +861,7 @@ const PropertyDetailPage: React.FC = () => {
                     </button>
                   </>
                 )}
-
-
-
+                </div>
               </div>
             </div>
           </div>
@@ -1024,7 +908,6 @@ const PropertyDetailPage: React.FC = () => {
                     <div className="flex items-center">
                       <MapPin className="h-4 w-4 mr-1" />
                       <span>{similarProperty.location}</span>
-
                     </div>
                   </div>
                   <div className="text-gray-600 text-sm line-clamp-3">
@@ -1033,24 +916,21 @@ const PropertyDetailPage: React.FC = () => {
 
                 </div>
                 <div className="p-3">
-                  <button
-                    className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition"
-                    onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
+                  <div
+                    className="w-full bg-[#79b2e9] text-center text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition"
                   >
                     Ver Detalhes
-                  </button>
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
         </div>
       </section>
-      {/* Property Buy Form Section */}
 
+      {/* Property Buy Form Section */}
       <section className="py-16 sm:py-20 bg-gray-900">
         <div className="text-center mb-8 sm:mb-12">
-          <div className="flex justify-center mb-4 sm:mb-6">
-          </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
             Encontre o seu imóvel ideal
           </h2>
