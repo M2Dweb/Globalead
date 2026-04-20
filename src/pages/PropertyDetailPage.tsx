@@ -762,12 +762,12 @@ const PropertyDetailPage: React.FC = () => {
 
             {/* Visit Form */}
             <div className="lg:col-span-1" id="contact-form">
-              <div className="bg-white p-6 rounded-xl shadow-lg sticky top-32">
+              <div className="sticky top-32 space-y-6">
                 
-                {/* Vertical Video Section */}
+                {/* Vertical Video Section - Independent Box */}
                 {property.video_url && getYoutubeEmbedUrl(property.video_url) && (
-                  <div className="mb-6">
-                    <div className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                  <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                    <div className="relative aspect-[9/16] w-full">
                       <iframe
                         src={`${getYoutubeEmbedUrl(property.video_url)}?autoplay=0&rel=0`}
                         className="absolute top-0 left-0 w-full h-full"
@@ -780,27 +780,28 @@ const PropertyDetailPage: React.FC = () => {
                   </div>
                 )}
 
-                <div className="flex items-center space-x-4 mb-6">
-                  <img
-                    src="/carlos/pe-fato-meio3-fundo.jpg"
-                    alt="Carlos Gonçalves"
-                    className="w-20 h-20 rounded-full border-2 border-[#79b2e9] object-top object-cover"
-                  />
-                  <div>
-                    <a
-                      href="/carlos-goncalves"
-                      className="hover:underline cursor-pointer"
-                    >
-                      <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
-                    </a>
-                    <div className="mt-1 flex flex-col">
-                      <span className="text-sm text-gray-500">Ou contacte-nos diretamente:</span>
-                      <a href="tel:+351910647620" className="font-bold text-gray-900 text-base hover:text-[#79b2e9]">
-                        +351 910 647 620
+                <div className="bg-white p-6 rounded-xl shadow-lg">
+                  <div className="flex items-center space-x-4 mb-6">
+                    <img
+                      src="/carlos/pe-fato-meio3-fundo.jpg"
+                      alt="Carlos Gonçalves"
+                      className="w-20 h-20 rounded-full border-2 border-[#79b2e9] object-top object-cover"
+                    />
+                    <div>
+                      <a
+                        href="/carlos-goncalves"
+                        className="hover:underline cursor-pointer"
+                      >
+                        <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
                       </a>
+                      <div className="mt-1 flex flex-col">
+                        <span className="text-sm text-gray-500">Ou contacte-nos diretamente:</span>
+                        <a href="tel:+351910647620" className="font-bold text-gray-900 text-base hover:text-[#79b2e9]">
+                          +351 910 647 620
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
                 {/* Conteúdo condicional baseado no status */}
                 {property.availability_status === 'disponivel' && (
                   <>

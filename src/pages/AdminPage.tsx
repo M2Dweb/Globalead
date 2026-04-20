@@ -661,6 +661,7 @@ const AdminPage: React.FC = () => {
       property_types: property.property_types || [],
       state: property.state || '',
       map_url: property.map_url || '',
+      video_url: property.video_url || '',
       apartments: property.apartments?.toString() || '',
       stores: property.stores?.toString() || '',
       image_url: property.image_url || '',
