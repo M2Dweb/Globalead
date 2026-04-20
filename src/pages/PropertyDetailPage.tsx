@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Phone, Clock, Bell, Search, Heart, AlertCircle, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter,Clock, Bell, Search, Heart, AlertCircle } from 'lucide-react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase, getPropertyByRef } from '../lib/supabase';
@@ -673,25 +673,6 @@ const PropertyDetailPage: React.FC = () => {
                   <ContentRenderer content={property.description || ''} />
                 </div>
               </div>
-
-              {/* Video Section - Only if video_url exists */}
-              {property.video_url && getYoutubeEmbedUrl(property.video_url) && (
-                <div className="bg-gray-50 p-6 rounded-xl mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Play className="h-6 w-6 text-red-600" /> Vídeo de Apresentação
-                  </h3>
-                  <div className="relative pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-lg">
-                    <iframe
-                      src={getYoutubeEmbedUrl(property.video_url)!}
-                      className="absolute top-0 left-0 w-full h-full"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      title="Vídeo do Imóvel"
-                    ></iframe>
-                  </div>
-                </div>
-              )}
 
               {/* Map - for any property with a map URL */}
               {property.map_url && property.map_url.trim() !== '' && (
