@@ -763,6 +763,23 @@ const PropertyDetailPage: React.FC = () => {
             {/* Visit Form */}
             <div className="lg:col-span-1" id="contact-form">
               <div className="bg-white p-6 rounded-xl shadow-lg sticky top-32">
+                
+                {/* Vertical Video Section */}
+                {property.video_url && getYoutubeEmbedUrl(property.video_url) && (
+                  <div className="mb-6">
+                    <div className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                      <iframe
+                        src={`${getYoutubeEmbedUrl(property.video_url)}?autoplay=0&rel=0`}
+                        className="absolute top-0 left-0 w-full h-full"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title="Vídeo de Apresentação"
+                      ></iframe>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center space-x-4 mb-6">
                   <img
                     src="/carlos/pe-fato-meio3-fundo.jpg"
