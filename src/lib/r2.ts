@@ -4,6 +4,20 @@ const accountId = import.meta.env.VITE_CLOUDFLARE_ACCOUNT_ID || '';
 const accessKeyId = import.meta.env.VITE_R2_ACCESS_KEY_ID || '';
 const secretAccessKey = import.meta.env.VITE_R2_SECRET_ACCESS_KEY || '';
 
+export const R2_BUCKET_NAME = import.meta.env.VITE_R2_BUCKET_NAME || '';
+export const R2_PUBLIC_BASE_URL = import.meta.env.VITE_R2_PUBLIC_BASE_URL || '';
+
+// Log configuration status (without exposing keys)
+if (!accountId || !accessKeyId || !secretAccessKey || !R2_BUCKET_NAME || !R2_PUBLIC_BASE_URL) {
+  console.error('R2 Configuration is incomplete:', {
+    hasAccountId: !!accountId,
+    hasAccessKeyId: !!accessKeyId,
+    hasSecretAccessKey: !!secretAccessKey,
+    hasBucketName: !!R2_BUCKET_NAME,
+    hasPublicBaseUrl: !!R2_PUBLIC_BASE_URL
+  });
+}
+
 export const r2Client = new S3Client({
   region: 'auto',
   endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
@@ -12,9 +26,6 @@ export const r2Client = new S3Client({
     secretAccessKey,
   },
 });
-
-export const R2_BUCKET_NAME = import.meta.env.VITE_R2_BUCKET_NAME || '';
-export const R2_PUBLIC_BASE_URL = import.meta.env.VITE_R2_PUBLIC_BASE_URL || '';
 
 export const listR2Folder = async (folder: string): Promise<string[]> => {
   const command = new ListObjectsV2Command({
