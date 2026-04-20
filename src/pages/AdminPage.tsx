@@ -592,6 +592,7 @@ const AdminPage: React.FC = () => {
       property_types: [],
       state: '',
       map_url: '',
+      video_url: '',
       apartments: '',
       stores: '',
       image_url: '',
@@ -1108,6 +1109,13 @@ const AdminPage: React.FC = () => {
                       placeholder="URL do Mapa (colar o link 'embed' do Google Maps)"
                       value={propertyForm.map_url || ''}
                       onChange={(e) => setPropertyForm({ ...propertyForm, map_url: e.target.value })}
+                      className="px-4 py-2 border border-gray-300 rounded-lg col-span-2"
+                    />
+                    <input
+                      type="text"
+                      placeholder="URL do Vídeo do YouTube (ex: https://www.youtube.com/watch?v=...)"
+                      value={propertyForm.video_url || ''}
+                      onChange={(e) => setPropertyForm({ ...propertyForm, video_url: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg col-span-2"
                     />
                     {propertyForm.type === 'empreendimento' && (

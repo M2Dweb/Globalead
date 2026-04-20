@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Phone, Clock, Bell, Search, Heart, AlertCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Phone, Clock, Bell, Search, Heart, AlertCircle, Play } from 'lucide-react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { supabase, getPropertyByRef } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
@@ -214,6 +215,19 @@ const PropertyDetailPage: React.FC = () => {
     }
   };
 
+  const getYoutubeEmbedUrl = (url: string) => {
+    if (!url) return null;
+    let videoId = '';
+    if (url.includes('v=')) {
+      videoId = url.split('v=')[1].split('&')[0];
+    } else if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0];
+    } else if (url.includes('youtube.com/embed/')) {
+      videoId = url.split('youtube.com/embed/')[1].split('?')[0];
+    }
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  };
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-PT', {
       style: 'currency',
@@ -310,6 +324,25 @@ const PropertyDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>{`${property.title} | Globalead Portugal`}</title>
+        <meta name="description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:title" content={`${property.title} - ${formatPrice(selectedPropertyType?.price || property.price)}`} />
+        <meta property="og:description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
+        <meta property="og:image" content={property.images[0]} />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={window.location.href} />
+        <meta property="twitter:title" content={property.title} />
+        <meta property="twitter:description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
+        <meta property="twitter:image" content={property.images[0]} />
+      </Helmet>
+
       {/* Header */}
       <section
         className="relative text-white py-12 mt-16"
@@ -640,6 +673,25 @@ const PropertyDetailPage: React.FC = () => {
                   <ContentRenderer content={property.description || ''} />
                 </div>
               </div>
+
+              {/* Video Section - Only if video_url exists */}
+              {property.video_url && getYoutubeEmbedUrl(property.video_url) && (
+                <div className="bg-gray-50 p-6 rounded-xl mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <Play className="h-6 w-6 text-red-600" /> Vídeo de Apresentação
+                  </h3>
+                  <div className="relative pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-lg">
+                    <iframe
+                      src={getYoutubeEmbedUrl(property.video_url)!}
+                      className="absolute top-0 left-0 w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title="Vídeo do Imóvel"
+                    ></iframe>
+                  </div>
+                </div>
+              )}
 
               {/* Map - for any property with a map URL */}
               {property.map_url && property.map_url.trim() !== '' && (
