@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CreditCalculator from '../components/CreditCalculator';
 import ContactForm from '../components/ContactForm';
-import { supabase } from '../lib/supabase';
+import { listR2Folder } from '../lib/r2';
 import FAQ from '../components/FAQ';
 
 const CreditoPage: React.FC = () => {
@@ -39,31 +39,19 @@ const CreditoPage: React.FC = () => {
 
   const fetchPartnerLogos = async () => {
     try {
-      const { data, error } = await supabase.storage
-        .from('imagens')
-        .list('bancos', {
-          limit: 20,
-          offset: 0
-        });
+      const logoUrls = await listR2Folder('bancos');
 
-      if (error) {
-        console.error('Erro ao carregar logos dos parceiros:', error);
+      if (logoUrls.length === 0) {
+        console.warn('Nenhum logo encontrado no R2, usando fallback.');
         // Fallback logos
         setPartnerLogos([
           "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
           "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
           "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
           "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-          "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-          "https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/bancos/xxx.png"
+          "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
         ]);
-      } else if (data) {
-        const logoUrls = data.map(file => {
-          const { data: urlData } = supabase.storage
-            .from('imagens')
-            .getPublicUrl(`bancos/${file.name}`);
-          return urlData.publicUrl;
-        });
+      } else {
         setPartnerLogos(logoUrls);
       }
     } catch (error) {
@@ -84,7 +72,7 @@ const CreditoPage: React.FC = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
           style={{
-            backgroundImage: 'url("https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/fundo2.jpg")'
+            backgroundImage: `url("${import.meta.env.VITE_R2_PUBLIC_BASE_URL}/videos/fundo2.jpg")`
           }}
         ></div>
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

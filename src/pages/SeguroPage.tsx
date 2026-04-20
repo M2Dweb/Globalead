@@ -3,7 +3,7 @@ import { Car, Heart, Home, Shield, Users, Briefcase, Scale, Building } from 'luc
 import InsuranceComparator from '../components/InsuranceComparator';
 import FAQ from '../components/FAQ';
 import AnimatedSection from '../components/AnimatedSection';
-import { supabase } from '../lib/supabase';
+import { listR2Folder } from '../lib/r2';
 import { sendEmail, FormData } from '../utils/emailService';
 
 const SeguroPage: React.FC = () => {
@@ -93,12 +93,8 @@ const SeguroPage: React.FC = () => {
 
   const fetchPartnerLogos = async () => {
     try {
-      const { data, error } = await supabase.storage.from('imagens').list('seguros', { limit: 25, offset: 0 });
-      if (error) setPartnerLogos([]);
-      else if (data) {
-        const logoUrls = data.map(file => supabase.storage.from('imagens').getPublicUrl(`seguros/${file.name}`).data.publicUrl);
-        setPartnerLogos(logoUrls);
-      }
+      const logoUrls = await listR2Folder('seguros');
+      setPartnerLogos(logoUrls);
     } catch { setPartnerLogos([]); }
   };
 

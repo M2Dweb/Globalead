@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { uploadToR2 } from '../lib/uploadToR2';
 import { Upload, X } from 'lucide-react';
 
 interface ImageUploaderProps {
   folder: string;
   onUpload: (url: string) => void;
+  onUploadComplete?: (data: { url: string; key: string }) => void;
   value?: string;
 }
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, value }) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploadComplete, value }) => {
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(value || '');
 
@@ -23,24 +24,12 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, value }
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `${folder}/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from('imagens')
-        .upload(filePath, file, { upsert: true });
+      const { url, key } = await uploadToR2(file, filePath);
 
-      if (uploadError) {
-        console.error('Erro ao fazer upload:', uploadError.message);
-        alert('Erro ao fazer upload da imagem');
-        return;
-      }
-
-      // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('imagens')
-        .getPublicUrl(filePath);
-
-      if (urlData?.publicUrl) {
-        setImageUrl(urlData.publicUrl);
-        onUpload(urlData.publicUrl);
+      setImageUrl(url);
+      onUpload(url);
+      if (onUploadComplete) {
+        onUploadComplete({ url, key });
       }
     } catch (error) {
       console.error('Erro no upload:', error);

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import { listR2Folder, r2Client, R2_BUCKET_NAME, getBucketMetrics } from '../lib/r2';
+import { DeleteObjectsCommand } from '@aws-sdk/client-s3';
+import CircularProgressCard from '../components/CircularProgressCard';
 import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare, FileText, Lock, Star, CheckCircle, StarOff } from 'lucide-react';
 import RichTextEditor from '../components/RichTextEditor';
 import ImageUploader from '../components/ImageUploader';
@@ -33,6 +36,23 @@ const AdminPage: React.FC = () => {
   const [featuredLoading, setFeaturedLoading] = useState(false);
   const [cleaningImages, setCleaningImages] = useState(false);
 
+  // R2 Storage Metrics
+  const [storageMetrics, setStorageMetrics] = useState({ usedBytes: 0, fileCount: 0 });
+  const R2_QUOTA_BYTES = 10 * 1024 * 1024 * 1024; // 10GB Quota
+
+  const fetchR2Metrics = async () => {
+    const metrics = await getBucketMetrics();
+    setStorageMetrics(metrics);
+  };
+
+  const formatBytes = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
 
   // Form states
   const [propertyForm, setPropertyForm] = useState({
@@ -55,7 +75,9 @@ const AdminPage: React.FC = () => {
     state: '',
     map_url: '',
     apartments: '',
-    stores: ''
+    stores: '',
+    image_url: '',
+    image_key: ''
   });
 
 
@@ -243,7 +265,9 @@ const AdminPage: React.FC = () => {
     category: '',
     author: 'Globalead Portugal',
     image: '',
-    read_time: '5 min'
+    read_time: '5 min',
+    image_url: '',
+    image_key: ''
   });
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
@@ -287,6 +311,9 @@ const AdminPage: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
+      // Fetch R2 Metrics
+      await fetchR2Metrics();
+
       // Fetch properties
       const { data: propertiesData } = await supabase
         .from('properties')
@@ -477,23 +504,24 @@ const AdminPage: React.FC = () => {
     setCleaningImages(true);
 
     try {
-      // 1. Obter propriedades e extrair urls
-      const { data: props, error: propsError } = await supabase.from('properties').select('cover_image, images, property_types');
-      if (propsError) throw propsError;
+      // 1. Obter propriedades e blog e extrair urls/keys
+      const { data: props } = await supabase.from('properties').select('cover_image, images, property_types, image_url, image_key');
+      const { data: blogs } = await supabase.from('blog_posts').select('image, image_url, image_key');
 
-      // 2. Obter blog e extrair urls
-      const { data: blogs, error: blogsError } = await supabase.from('blog_posts').select('image');
-      if (blogsError) throw blogsError;
-
-      const usedUrls = new Set<string>();
+      const usedKeys = new Set<string>();
 
       if (props) {
         props.forEach(p => {
-          if (p.cover_image) usedUrls.add(p.cover_image);
-          if (p.images && Array.isArray(p.images)) p.images.forEach((img: string) => usedUrls.add(img));
-          if (p.property_types && Array.isArray(p.property_types)) {
-            p.property_types.forEach((pt: any) => {
-              if (pt.floor_plan) usedUrls.add(pt.floor_plan);
+          if (p.image_key) usedKeys.add(p.image_key);
+          // Fallback para quando só temos o URL
+          if (p.cover_image && p.cover_image.includes(R2_PUBLIC_BASE_URL)) {
+             usedKeys.add(p.cover_image.replace(`${R2_PUBLIC_BASE_URL}/`, ''));
+          }
+          if (p.images && Array.isArray(p.images)) {
+            p.images.forEach((img: string) => {
+              if (img.includes(R2_PUBLIC_BASE_URL)) {
+                usedKeys.add(img.replace(`${R2_PUBLIC_BASE_URL}/`, ''));
+              }
             });
           }
         });
@@ -501,46 +529,40 @@ const AdminPage: React.FC = () => {
 
       if (blogs) {
         blogs.forEach(b => {
-          if (b.image) usedUrls.add(b.image);
+          if (b.image_key) usedKeys.add(b.image_key);
+          if (b.image && b.image.includes(R2_PUBLIC_BASE_URL)) {
+             usedKeys.add(b.image.replace(`${R2_PUBLIC_BASE_URL}/`, ''));
+          }
         });
       }
 
-      // 3. Listar ficheiros nas pastas e encontrar os orfãos
+      // 2. Listar ficheiros no R2 e encontrar os orfãos
       const folders = ['properties', 'properties/covers', 'floor-plans', 'blog'];
-      let filesToDelete: string[] = [];
+      let keysToDelete: { Key: string }[] = [];
 
       for (const folder of folders) {
-        const { data: files, error: listError } = await supabase.storage.from('imagens').list(folder);
-        if (listError) {
-          console.error(`Erro ao listar pasta ${folder}:`, listError);
-          continue;
-        }
-
-        if (files) {
-          for (const file of files) {
-            // Ignorar ficheiros pequenos marcadores do storage
-            if (file.name.startsWith('.') || file.name === '.emptyFolderPlaceholder') continue;
-
-            const filePath = `${folder}/${file.name}`;
-            const { data: publicUrlData } = supabase.storage.from('imagens').getPublicUrl(filePath);
-            const publicUrl = publicUrlData.publicUrl;
-
-            if (!usedUrls.has(publicUrl)) {
-              filesToDelete.push(filePath);
-            }
+        const fullUrls = await listR2Folder(folder);
+        
+        for (const url of fullUrls) {
+          const key = url.replace(`${R2_PUBLIC_BASE_URL}/`, '');
+          if (!usedKeys.has(key)) {
+            keysToDelete.push({ Key: key });
           }
         }
       }
 
-      // 4. Se houver, perguntar e apagar
-      if (filesToDelete.length > 0) {
-        if (confirm(`Encontradas ${filesToDelete.length} imagens órfãs que estão a ocupar espaço.\nDeseja apagar permanentemente?`)) {
-          const { error: removeError } = await supabase.storage.from('imagens').remove(filesToDelete);
-          if (removeError) throw removeError;
-          alert(`${filesToDelete.length} imagens eliminadas com sucesso!`);
+      // 3. Se houver, perguntar e apagar
+      if (keysToDelete.length > 0) {
+        if (confirm(`Encontradas ${keysToDelete.length} imagens órfãs no Cloudflare R2.\nDeseja apagar permanentemente?`)) {
+          const command = new DeleteObjectsCommand({
+            Bucket: R2_BUCKET_NAME,
+            Delete: { Objects: keysToDelete }
+          });
+          await r2Client.send(command);
+          alert(`${keysToDelete.length} imagens eliminadas do R2 com sucesso!`);
         }
       } else {
-        alert('O sistema está otimizado! Não foram encontradas imagens órfãs.');
+        alert('O sistema está otimizado! Não foram encontradas imagens órfãs no R2.');
       }
     } catch (error) {
       console.error('Erro na limpeza de imagens:', error);
@@ -571,7 +593,9 @@ const AdminPage: React.FC = () => {
       state: '',
       map_url: '',
       apartments: '',
-      stores: ''
+      stores: '',
+      image_url: '',
+      image_key: ''
     });
 
     setEditingProperty(null);
@@ -588,7 +612,9 @@ const AdminPage: React.FC = () => {
       category: '',
       author: 'Globalead Portugal',
       image: '',
-      read_time: '5 min'
+      read_time: '5 min',
+      image_url: '',
+      image_key: ''
     });
     setEditingPost(null);
     setShowForm(false);
@@ -635,7 +661,9 @@ const AdminPage: React.FC = () => {
       state: property.state || '',
       map_url: property.map_url || '',
       apartments: property.apartments?.toString() || '',
-      stores: property.stores?.toString() || ''
+      stores: property.stores?.toString() || '',
+      image_url: property.image_url || '',
+      image_key: property.image_key || ''
     });
 
     setEditingProperty(property);
@@ -652,7 +680,9 @@ const AdminPage: React.FC = () => {
       category: post.category || '',
       author: post.author || 'Globalead Portugal',
       image: post.image || '',
-      read_time: post.read_time || '5 min'
+      read_time: post.read_time || '5 min',
+      image_url: post.image_url || '',
+      image_key: post.image_key || ''
     });
     setEditingPost(post);
     setShowForm(true);
@@ -803,29 +833,40 @@ const AdminPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-start mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
             <p className="text-gray-600">Gerir propriedades, blog e dados de contacto</p>
           </div>
-          <button
-            onClick={cleanupImages}
-            disabled={cleaningImages}
-            className="bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors inline-flex items-center"
-            title="Apaga ficheiros de propriedades e blog do storage que já não estão associados a nenhum registo."
-          >
-            {cleaningImages ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600 mr-2"></div>
-                A calcular...
-              </>
-            ) : (
-              <>
-                <Trash2 className="h-5 w-5 mr-2" />
-                Limpar Banco de Imagens
-              </>
-            )}
-          </button>
+          
+          <div className="flex items-center space-x-4">
+            <CircularProgressCard 
+              title="Armazenamento R2"
+              used={formatBytes(storageMetrics.usedBytes)}
+              total="10 GB"
+              percentage={Math.round((storageMetrics.usedBytes / R2_QUOTA_BYTES) * 100) || 0}
+              color={storageMetrics.usedBytes > R2_QUOTA_BYTES * 0.9 ? "text-red-500" : "text-blue-600"}
+            />
+
+            <button
+              onClick={cleanupImages}
+              disabled={cleaningImages}
+              className="bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors inline-flex items-center"
+              title="Apaga ficheiros de propriedades e blog do storage que já não estão associados a nenhum registo."
+            >
+              {cleaningImages ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600 mr-2"></div>
+                  A calcular...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="h-5 w-5 mr-2" />
+                  Limpar Banco de Imagens
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Tabs */}
@@ -1141,6 +1182,7 @@ const AdminPage: React.FC = () => {
                       onUpload={(url) =>
                         setPropertyForm({ ...propertyForm, cover_image: url })
                       }
+                      onUploadComplete={(data) => setPropertyForm(prev => ({ ...prev, image_url: data.url, image_key: data.key }))}
                     />
                     <label className="block text-sm font-medium text-gray-700 mb-2">Imagens</label>
                     <MultiFileUploader
@@ -1428,6 +1470,7 @@ const AdminPage: React.FC = () => {
                     <ImageUploader
                       folder="blog"
                       onUpload={(url) => setBlogForm({ ...blogForm, image: url })}
+                      onUploadComplete={(data) => setBlogForm(prev => ({ ...prev, image_url: data.url, image_key: data.key }))}
                       value={blogForm.image}
                     />
                   </div>

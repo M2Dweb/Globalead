@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
 import FeaturedProperties2 from '../components/FeaturedProperties2';
+import { listR2Folder } from '../lib/r2';
 
 const HomePage: React.FC = () => {
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
@@ -83,15 +84,10 @@ const HomePage: React.FC = () => {
 
     const fetchPartnerLogos = async () => {
       try {
-        const { data, error } = await supabase.storage
-          .from('imagens')
-          .list('patrocinios', {
-            limit: 30,
-            offset: 0
-          });
+        const logoUrls = await listR2Folder('patrocinios');
 
-        if (error) {
-          console.error('Erro ao carregar logos dos parceiros:', error);
+        if (logoUrls.length === 0) {
+          console.warn('Nenhum logo encontrado no R2 (homepage), usando fallback.');
           setPartnerLogos([
             "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
             "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
@@ -100,13 +96,7 @@ const HomePage: React.FC = () => {
             "https://images.pexels.com/photos/9800029/pexels-photo-9800029.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
             "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop"
           ]);
-        } else if (data) {
-          const logoUrls = data.map(file => {
-            const { data: urlData } = supabase.storage
-              .from('imagens')
-              .getPublicUrl(`patrocinios/${file.name}`);
-            return urlData.publicUrl;
-          });
+        } else {
           setPartnerLogos(logoUrls);
         }
       } catch (error) {
@@ -216,7 +206,7 @@ const HomePage: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover opacity-30"
           poster="/fotos/HomePage-foto.png"
         >
-          <source src="https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/videos/Cidade_do_Porto_-_www.globalead.pt_1_kzfzqg.mp4" type="video/mp4" />
+          <source src={`${import.meta.env.VITE_R2_PUBLIC_BASE_URL}/videos/Cidade_do_Porto_-_www.globalead.pt_1_kzfzqg.mp4`} type="video/mp4" />
         </video>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">

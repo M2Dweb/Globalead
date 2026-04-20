@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { uploadToR2 } from '../lib/uploadToR2';
 import { Upload, X } from 'lucide-react';
 
 interface MultiFileUploaderProps {
@@ -30,22 +30,8 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
         const fileName = `${Date.now()}_${i}.${fileExt}`;
         const filePath = `${folder}/${fileName}`;
 
-        const { error: uploadError } = await supabase.storage
-          .from('imagens')
-          .upload(filePath, file, { upsert: true });
-
-        if (uploadError) {
-          console.error('Erro no upload:', uploadError);
-          continue;
-        }
-
-        const { data: urlData } = supabase.storage
-          .from('imagens')
-          .getPublicUrl(filePath);
-
-        if (urlData?.publicUrl) {
-          uploadedUrls.push(urlData.publicUrl);
-        }
+        const { url } = await uploadToR2(file, filePath);
+        uploadedUrls.push(url);
       }
 
       if (uploadedUrls.length > 0) {
