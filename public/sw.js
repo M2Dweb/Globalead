@@ -35,9 +35,14 @@ self.addEventListener('fetch', (event) => {
 
   const requestUrl = new URL(event.request.url);
 
+  // ⚠️ Ignora Cloudflare R2 e Vídeos
+  if (requestUrl.hostname.includes('r2.dev') || requestUrl.pathname.endsWith('.mp4') || requestUrl.pathname.endsWith('.webm')) {
+    return; // Deixa o navegador lidar diretamente com a rede
+  }
+
   // ⚠️ Evita interceptar arquivos com hash (como os do Vite)
   if (requestUrl.pathname.startsWith('/assets/')) {
-    return; // Deixa o navegador lidar com isso
+    return;
   }
 
   event.respondWith(
