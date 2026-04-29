@@ -106,7 +106,7 @@ const CreditoPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Benefits Section */}
+    {/* Benefits Section */}
       <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -121,7 +121,7 @@ const CreditoPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Benefit 1 */}
             <div className="text-center group">
-              <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col">
+              <div className="hover-card-effect">
                 <div className="flex justify-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#79b2e9] to-blue-600 rounded-full flex items-center justify-center">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,7 +140,7 @@ const CreditoPage: React.FC = () => {
 
             {/* Benefit 2 */}
             <div className="text-center group">
-              <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col">
+              <div className="hover-card-effect">
                 <div className="flex justify-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#79b2e9] to-blue-600 rounded-full flex items-center justify-center">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,7 +159,7 @@ const CreditoPage: React.FC = () => {
 
             {/* Benefit 3 */}
             <div className="text-center group">
-              <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col">
+              <div className="hover-card-effect">
                 <div className="flex justify-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#79b2e9] to-blue-600 rounded-full flex items-center justify-center">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,7 +178,7 @@ const CreditoPage: React.FC = () => {
 
             {/* Benefit 4 */}
             <div className="text-center group">
-              <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col">
+              <div className="hover-card-effect">
                 <div className="flex justify-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#79b2e9] to-blue-600 rounded-full flex items-center justify-center">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

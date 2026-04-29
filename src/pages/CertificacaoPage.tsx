@@ -101,7 +101,7 @@ const CertificacaoPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="text-center group">
-                <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col">
+                <div className="hover-card-effect">
                   
                   <div className="flex justify-center mb-6 relative">
                     <div className="w-16 h-16 bg-gradient-to-br from-[#79b2e9] to-blue-600 rounded-full flex items-center justify-center mx-auto">
@@ -134,7 +134,7 @@ const CertificacaoPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {certificateTypes.map((type, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg text-center">
+              <div key={index} className="hover-card-effect text-center">
                 <div className="flex justify-center mb-6">
                   {type.icon}
                 </div>

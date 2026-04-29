@@ -130,7 +130,7 @@ const SeguroPage: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {insuranceTypes.map((i, idx) => (
-                <div key={idx} className="bg-white p-8 rounded-2xl shadow-md hover:[#0d2233] border border-gray-100 transition-shadow duration-300">
+                <div key={idx} className="hover-card-effect">
                   <div className="flex items-start">
                     <div className="mr-6 flex-shrink-0">{i.icon}</div>
                     <div>
@@ -158,7 +158,7 @@ const SeguroPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {benefits.map((b, idx) => (
                 <div key={idx} className="text-center group">
-                  <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col">
+                  <div className="hover-card-effect">
                     
                     <div className="flex justify-center mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-[#79b2e9] to-blue-600 rounded-full flex items-center justify-center">

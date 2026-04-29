@@ -21,7 +21,7 @@ const SobrePage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>([false, false, false]); // controlar "ler mais" por testimonial
+  const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>([false, false, false, false, false, false]); // controlar "ler mais" por testimonial
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -83,6 +83,24 @@ const SobrePage: React.FC = () => {
       image: fml ,
       platform: "Google",
       review: "Entrámos em contacto com a Globalead depois de vermos um anúncio nas redes sociais, numa altura em que procurávamos apoio para tratar de um processo de crédito. Graças ao acompanhamento da Globalead, conseguimos alcançar uma prestação justa, confortável e totalmente adequada ao nosso orçamento familiar. Para além disso, ainda nos ajudaram a renegociar o seguro da casa e o seguro de vida. Um agradecimento muito especial ao Carlos, que esteve sempre ao nosso lado com profissionalismo, dedicação e uma enorme disponibilidade. Tornou todo o processo simples e sereno, e deixou-nos com a certeza de que podemos contar com ele no futuro."
+    },
+    {
+      name: "Liliana da Silva",
+      image: "/testemonials/liliana.jpeg",
+      platform: "Google",
+      review: "Grata Carlos, por toda a ajuda, dedicação e profissionalismo na concretização deste negócio. Ao longo do processo, demonstrou uma postura transparente, responsável e ética, explicando tudo com clareza. Soube ouvir as minhas preocupações e respeitar os meus tempos. Recomendo sem qualquer dúvida e acredito que voltaremos a trabalhar juntos. Votos de muito sucesso!"
+    },
+    {
+      name: "Wneres & Daiane",
+      image: "/testemonials/Wneres.jpeg",
+      platform: "Google",
+      review: "Obrigada por toda a ajuda ao longo destes meses, Carlos. Foste um verdadeiro profissional. Após tanta insistência, documentação e burocracia, conseguimos finalmente comprar a nossa primeira casa em Portugal. Foste incansável em todo o processo, desde o apoio no crédito até à concretização da compra, acompanhando-nos sempre de forma próxima, do início até à escritura. Estamos muito gratos por te termos encontrado e por toda a dedicação demonstrada ao longo deste percurso."
+    },
+    {
+      name: "Ana Fernandes",
+      image: "/testemonials/Ana.jpeg",
+      platform: "Google",
+      review: "Quero destacar o empenho prestado ao longo de todo o processo, especialmente a forma clara e transparente com que sempre esclareceu todas as questões. Para além disso, a vasta rede de serviços que disponibilizou para apoiar a venda revelou-se um fator diferenciador e, na minha opinião, contribuiu significativamente para o sucesso do negócio. Muito obrigada por todo o profissionalismo e dedicação."
     }
   ];
 
@@ -184,7 +202,7 @@ reputação como uma rede de intermediação e gestão de excelência.
             {reasons.map((reason, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg text-center"
+                className="hover-card-effect text-center"
               >
                 <div className="flex justify-center items-center mb-4">
                   <div className="bg-[#79b2e9] text-white w-14 h-14 rounded-full flex items-center justify-center">
@@ -252,12 +270,12 @@ reputação como uma rede de intermediação e gestão de excelência.
               return (
                 <div
                   key={index}
-                  className="bg-white rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
+                  className="hover-card-effect w-full max-w-sm text-center"
                 >
                   <div className="flex justify-center mb-3 sm:mb-4">
                     <img src={testimonial.image} alt="testimonial" className="rounded-xl w-full h-auto" />
                   </div>
-                  <div className="p-6 flex flex-col flex-grow">
+                  <div className="p-0 flex flex-col flex-grow">
                     {/* estrelas */}
                     <div className="flex justify-center mb-3 sm:mb-4">
                       <div className="flex text-yellow-400">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Hammer, Palette, Building, Users, Compass, Scale, CreditCard,
   FileText, Shield, MapPin, Camera, Globe, Paintbrush,
-  Share2, Tag, Video} from 'lucide-react';
+  Share2, Tag, Video, Star} from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 import { sendEmail, FormData } from '../utils/emailService';
@@ -25,8 +25,16 @@ const ImoveisPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>(new Array(6).fill(false));
 
-  
+  const toggleExpand = (index: number) => {
+    setExpandedTestimonials(prev => {
+      const copy = [...prev];
+      copy[index] = !copy[index];
+      return copy;
+    });
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -102,41 +110,73 @@ const ImoveisPage: React.FC = () => {
     {
       icon: <Hammer className="h-12 w-12 text-[#0d2233]" />,
       title: "Obras e Remodelações",
-      description: "Realizamos obras e remodelações de forma profissional, desde pequenas melhorias a renovações completas.",
-      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600"
+      description: "Realizamos obras e remodelações de forma profissional, desde pequenas melhorias a renovações completas."
     },
     {
       icon: <Palette className="h-12 w-12 text-[#0d2233]" />,
       title: "Design e Decoração",
-      description: "Criamos ambientes funcionais e elegantes, acompanhando desde o planeamento até à escolha do mobiliário e decoração.",
-      image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600"
+      description: "Criamos ambientes funcionais e elegantes, acompanhando desde o planeamento até à escolha do mobiliário e decoração."
     },
     {
       icon: <Building className="h-12 w-12 text-[#0d2233]" />,
       title: "Promotora Imobiliária",
-      description: "Desenvolvemos projetos imobiliários inovadores, com design, funcionalidade e elevado potencial de valorização.",
-      image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600"
+      description: "Desenvolvemos projetos imobiliários inovadores, com design, funcionalidade e elevado potencial de valorização."
     },
     {
       icon: <Users className="h-12 w-12 text-[#0d2233]" />,
       title: "Relocation",
-      description: "Apoiamos a sua mudança para Portugal com procura de imóvel, gestão documental e integração local.",
-      image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600"
+      description: "Apoiamos a sua mudança para Portugal com procura de imóvel, gestão documental e integração local."
     },
     {
       icon: <Compass className="h-12 w-12 text-[#0d2233]" />,
       title: "Arquitetura",
-      description: "Projetamos espaços intemporais e autênticos, que refletem identidade e resistem ao tempo.",
-      image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=600"
+      description: "Projetamos espaços intemporais e autênticos, que refletem identidade e resistem ao tempo."
     },
     {
       icon: <Scale className="h-12 w-12 text-[#0d2233]" />,
       title: "Apoio Jurídico",
-      description: "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo.",
-      image: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=600"
+      description: "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo."
     }
   ];
 
+  const testimonials = [
+    {
+      name: "Gonçalo Vinhas",
+      image: "/testemonials/goncalo-vinhas.jpg",
+      platform: "WhatsApp",
+      review: "Contactei a Globalead para encontrar soluções de seguro automóvel e fui atendido pelo Carlos Gonçalves. Desde o primeiro contacto, o Carlos mostrou-se extremamente profissional e prestável! Apresentou-me as melhores opções conforme as minhas necessidades, explicou-me detalhadamente cada proposta e tratou de todo o processo com grande eficiência. Em menos de 24 horas, o meu seguro já estava ativo. Fiquei muito satisfeito com o serviço e recomendo vivamente a Globalead pela rapidez, clareza e qualidade no atendimento."
+    },
+    {
+      name: "Francisco Gonçalves",
+      image: "/testemonials/francisco-gonçalves.jpg",
+      platform: "Facebook",
+      review: "Quando o Carlos, em representação da Globalead Portugal, entrou em contacto comigo, percebi de imediato a confiança e a dedicação com que se apresentou. Prometeu um trabalho rigoroso e empenhado na venda do meu imóvel e cumpriu cada palavra. Ao longo de todo o processo, o Carlos foi incansável, sempre disponível, prestável e atento a cada detalhe. Ajudou-me a reunir toda a documentação necessária e acompanhou-me passo a passo, transformando aquilo que poderia ser um desafio num percurso tranquilo e seguro. O resultado foi muito mais do que a concretização da venda: foi a certeza de que posso contar com alguém que coloca profissionalismo e humanidade lado a lado. Estou profundamente grato pelo trabalho desenvolvido e confiante de que, no futuro, o Carlos será sempre a minha primeira escolha."
+    },
+    {
+      name: "Família Gomes",
+      image: "/testemonials/familia-gomes.jpg",
+      platform: "Google",
+      review: "Entrámos em contacto com a Globalead depois de vermos um anúncio nas redes sociais, numa altura em que procurávamos apoio para tratar de um processo de crédito. Graças ao acompanhamento da Globalead, conseguimos alcançar uma prestação justa, confortável e totalmente adequada ao nosso orçamento familiar. Para além disso, ainda nos ajudaram a renegociar o seguro da casa e o seguro de vida. Um agradecimento muito especial ao Carlos, que esteve sempre ao nosso lado com profissionalismo, dedicação e uma enorme disponibilidade. Tornou todo o processo simples e sereno, e deixou-nos com a certeza de que podemos contar com ele no futuro."
+    },
+    {
+      name: "Liliana da Silva",
+      image: "/testemonials/liliana.jpeg",
+      platform: "Google",
+      review: "Grata Carlos, por toda a ajuda, dedicação e profissionalismo na concretização deste negócio. Ao longo do processo, demonstrou uma postura transparente, responsável e ética, explicando tudo com clareza. Soube ouvir as minhas preocupações e respeitar os meus tempos. Recomendo sem qualquer dúvida e acredito que voltaremos a trabalhar juntos. Votos de muito sucesso!"
+    },
+    {
+      name: "Wneres & Daiane",
+      image: "/testemonials/Wneres.jpeg",
+      platform: "Google",
+      review: "Obrigada por toda a ajuda ao longo destes meses, Carlos. Foste um verdadeiro profissional. Após tanta insistência, documentação e burocracia, conseguimos finalmente comprar a nossa primeira casa em Portugal. Foste incansável em todo o processo, desde o apoio no crédito até à concretização da compra, acompanhando-nos sempre de forma próxima, do início até à escritura. Estamos muito gratos por te termos encontrado e por toda a dedicação demonstrada ao longo deste percurso."
+    },
+    {
+      name: "Ana Fernandes",
+      image: "/testemonials/Ana.jpeg",
+      platform: "Google",
+      review: "Quero destacar o empenho prestado ao longo de todo o processo, especialmente a forma clara e transparente com que sempre esclareceu todas as questões. Para além disso, a vasta rede de serviços que disponibilizou para apoiar a venda revelou-se um fator diferenciador e, na minha opinião, contribuiu significativamente para o sucesso do negócio. Muito obrigada por todo o profissionalismo e dedicação."
+    }
+  ];
 
   const businessServices = [
     {
@@ -236,7 +276,7 @@ const ImoveisPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {businessServices.map((service, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
+              <div key={index} className="hover-card-effect text-center">
                 <div className="flex justify-center mb-6">
                   {service.icon}
                 </div>
@@ -357,19 +397,12 @@ const ImoveisPage: React.FC = () => {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
+                className="hover-card-effect"
               >
-                {/* Imagem apenas no desktop */}
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="hidden md:block w-full h-48 object-cover"
-                />
-
-                <div className="p-6 flex flex-col flex-grow">
+                <div className="flex flex-col flex-grow">
                   {/* Ícone sempre visível */}
                   <div className="flex items-center mb-4">
-                    <div className="flex items-center justify-center w-14 h-14 text-white rounded-xl">
+                    <div className="flex items-center justify-center w-14 h-14 text-[#0d2233] rounded-xl">
                       {service.icon}
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 ml-3">
@@ -378,12 +411,77 @@ const ImoveisPage: React.FC = () => {
                   </div>
 
                   {/* Texto curto no mobile, completo no desktop */}
-                  <p className="text-gray-600 mb-6 line-clamp-3 md:line-clamp-none">
+                  <p className="text-gray-600 mb-6">
                     {service.description}
                   </p>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              O que dizem os clientes sobre nós
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => {
+              const words = testimonial.review.split(' ');
+              const isExpanded = expandedTestimonials[index];
+              const maxWords = 35;
+              const displayText = isExpanded || words.length <= maxWords 
+                ? testimonial.review 
+                : words.slice(0, maxWords).join(' ') + '...';
+
+              return (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl shadow-lg w-full text-center flex flex-col justify-between overflow-hidden border border-gray-100"
+                >
+                  <div className="flex justify-center">
+                    <img src={testimonial.image} alt="testimonial" className="w-full h-64 object-cover" />
+                  </div>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <div className="flex justify-center mb-4">
+                      <div className="flex text-yellow-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-5 w-5 fill-current" />
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex-grow flex items-center justify-center mb-4">
+                      <p className="text-gray-600 italic">
+                        "{displayText}"
+                        {words.length > maxWords && !isExpanded && (
+                          <span 
+                            className="ml-1 font-bold text-[#79b2e9] cursor-pointer"
+                            onClick={() => toggleExpand(index)}
+                          >
+                            ler mais
+                          </span>
+                        )}
+                      </p>
+                    </div>
+
+                    <div className="border-t pt-4 mt-6">
+                      <p className="font-semibold text-gray-900">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Review: {testimonial.platform}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -168,13 +168,6 @@ const PropertyListPage: React.FC = () => {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#0d2233] to-[#79b2e9] text-white py-20">
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-          style={{
-            backgroundImage: 'url(https://dzkxlimlbabjstaivuja.supabase.co/storage/v1/object/public/imagens/imagens/1757630053067_23.png)'
-          }}
-        ></div>
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black opacity-30"></div>

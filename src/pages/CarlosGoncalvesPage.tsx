@@ -91,10 +91,28 @@ const CarlosGoncalvesPage: React.FC = () => {
       image: fml ,
       platform: "Google",
       review: "Entrámos em contacto com a Globalead depois de vermos um anúncio nas redes sociais, numa altura em que procurávamos apoio para tratar de um processo de crédito. Graças ao acompanhamento da Globalead, conseguimos alcançar uma prestação justa, confortável e totalmente adequada ao nosso orçamento familiar. Para além disso, ainda nos ajudaram a renegociar o seguro da casa e o seguro de vida. Um agradecimento muito especial ao Carlos, que esteve sempre ao nosso lado com profissionalismo, dedicação e uma enorme disponibilidade. Tornou todo o processo simples e sereno, e deixou-nos com a certeza de que podemos contar com ele no futuro."
+    },
+    {
+      name: "Liliana da Silva",
+      image: "/testemonials/liliana.jpeg",
+      platform: "Google",
+      review: "Grata Carlos, por toda a ajuda, dedicação e profissionalismo na concretização deste negócio. Ao longo do processo, demonstrou uma postura transparente, responsável e ética, explicando tudo com clareza. Soube ouvir as minhas preocupações e respeitar os meus tempos. Recomendo sem qualquer dúvida e acredito que voltaremos a trabalhar juntos. Votos de muito sucesso!"
+    },
+    {
+      name: "Wneres & Daiane",
+      image: "/testemonials/Wneres.jpeg",
+      platform: "Google",
+      review: "Obrigada por toda a ajuda ao longo destes meses, Carlos. Foste um verdadeiro profissional. Após tanta insistência, documentação e burocracia, conseguimos finalmente comprar a nossa primeira casa em Portugal. Foste incansável em todo o processo, desde o apoio no crédito até à concretização da compra, acompanhando-nos sempre de forma próxima, do início até à escritura. Estamos muito gratos por te termos encontrado e por toda a dedicação demonstrada ao longo deste percurso."
+    },
+    {
+      name: "Ana Fernandes",
+      image: "/testemonials/Ana.jpeg",
+      platform: "Google",
+      review: "Quero destacar o empenho prestado ao longo de todo o processo, especialmente a forma clara e transparente com que sempre esclareceu todas as questões. Para além disso, a vasta rede de serviços que disponibilizou para apoiar a venda revelou-se um fator diferenciador e, na minha opinião, contribuiu significativamente para o sucesso do negócio. Muito obrigada por todo o profissionalismo e dedicação."
     }
   ];
   
-  const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>([false, false, false]);
+  const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>([false, false, false, false, false, false]);
 
   const toggleExpand = (index: number) => {
     setExpandedTestimonials(prev => {
@@ -343,19 +361,12 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
               {services.map((service, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
+                  className="hover-card-effect"
                 >
-                  {/* Imagem apenas no desktop */}
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="hidden md:block w-full h-48 object-cover"
-                  />
-
-                  <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                  <div className="p-0 flex flex-col flex-grow">
                     {/* Ícone sempre visível */}
                     <div className="flex items-center mb-3 sm:mb-4">
-                      <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 text-white rounded-xl">
+                      <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 text-[#0d2233] rounded-xl">
                         {service.icon}
                       </div>
                       <h3 className="text-lg sm:text-xl font-semibold text-gray-900 ml-3">
@@ -364,7 +375,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                     </div>
 
                     {/* Texto curto no mobile, completo no desktop */}
-                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 line-clamp-3 md:line-clamp-none">
+                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
                       {service.description}
                     </p>
                   </div>
@@ -398,12 +409,12 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                       return (
                         <div
                           key={index}
-                          className="bg-white rounded-xl shadow-lg w-full max-w-sm text-center flex flex-col justify-between"
+                          className="hover-card-effect w-full max-w-sm text-center"
                         >
                           <div className="flex justify-center mb-3 sm:mb-4">
                             <img src={testimonial.image} alt="testimonial" className="rounded-xl w-full h-auto" />
                           </div>
-                          <div className="p-6 flex flex-col flex-grow">
+                          <div className="p-0 flex flex-col flex-grow">
                             {/* estrelas */}
                             <div className="flex justify-center mb-3 sm:mb-4">
                               <div className="flex text-yellow-400">
@@ -419,7 +430,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                                 "{displayText}"
                                 {words.length > maxWords && !isExpanded && (
                                   <span 
-                                    className="ml-1 font-bold text-blue-400 cursor-pointer"
+                                    className="ml-1 font-bold text-[#79b2e9] cursor-pointer"
                                     onClick={() => toggleExpand(index)}
                                   >
                                     ler mais

@@ -174,7 +174,7 @@ const TvNetVozPage: React.FC = () => {
               {tvNetVozServices.map((service, index) => (
                 <div 
                   key={index}
-                  className="bg-white p-4 sm:p-6 lg:p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 flex flex-col justify-between h-full"
+                  className="hover-card-effect"
                 >
                   <div className="text-center flex flex-col flex-grow">
                     <div className="mb-4 sm:mb-6 flex justify-center">
@@ -346,7 +346,7 @@ const TvNetVozPage: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {packageAnalysis.map((item, index) => (
-                <div key={index} className="bg-white p-4 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 w-full border border-gray-100">
+                <div key={index} className="hover-card-effect w-full">
                   <div className="mb-3 sm:mb-4 flex justify-center">
                     {item.icon}
                   </div>

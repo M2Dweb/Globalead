@@ -236,7 +236,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {businessServices.map((service, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
+              <div key={index} className="hover-card-effect text-center">
                 <div className="flex justify-center mb-6">
                   {service.icon}
                 </div>

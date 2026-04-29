@@ -189,7 +189,7 @@ const AlarmesPage: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {securityCompanies.map((company, index) => (
-                <div key={index} className="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                <div key={index} className="hover-card-effect">
                   <div className="flex items-center mb-6">
                     <img
                       src={company.logo}
@@ -227,7 +227,7 @@ const AlarmesPage: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {howItWorks.map((step, index) => (
-                <div key={index} className="text-center">
+                <div key={index} className="hover-card-effect text-center">
                   <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     {step.icon}
                   </div>
@@ -259,7 +259,7 @@ const AlarmesPage: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {features.map((feature, index) => (
-                <div key={index} className="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                <div key={index} className="hover-card-effect">
                   <div className="flex items-start">
                     <div className="mr-6 flex-shrink-0">
                       {feature.icon}

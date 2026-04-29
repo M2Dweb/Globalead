@@ -222,8 +222,8 @@ const BlogPage: React.FC = () => {
           {/* Blog Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentPosts.map(post => (
-              <article key={post.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group border border-gray-100">
-                <div className="relative group">
+              <article key={post.id} className="hover-card-effect group">
+                <div className="relative group mb-6 -mx-8 -mt-8 overflow-hidden rounded-t-2xl">
                   <a href={`/blog/${post.ref || post.id}`}>
                     <img
                       src={post.image}
@@ -242,7 +242,7 @@ const BlogPage: React.FC = () => {
                 </div>
 
 
-                <div className="p-6">
+                <div className="flex flex-col flex-grow">
                   <div className="flex items-center text-sm text-gray-500 mb-3">
                     <Calendar className="h-4 w-4 mr-1" />
                     <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
@@ -254,7 +254,7 @@ const BlogPage: React.FC = () => {
                     {post.title}
                   </h3>
 
-                  <div className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
                     <ContentRenderer content={post.excerpt} className="line-clamp-3" />
                   </div>
 
