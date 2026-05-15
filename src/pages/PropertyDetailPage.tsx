@@ -889,10 +889,10 @@ const PropertyDetailPage: React.FC = () => {
                 />
                 <div className="p-6">
 
-                  <h4 className="text-xl font-bold text-gray-900 mb-3">
+                  <h4 className="text-xl font-bold text-gray-900 text-center mb-3">
                     {similarProperty.title}
                   </h4>
-                  <div className="flex items-center space-x-4 text-gray-600 mb-3">
+                  <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-3 text-sm">
                     <div className="flex items-center">
                       <Bed className="h-4 w-4 mr-1" />
                       <span>{similarProperty.bedrooms}</span>

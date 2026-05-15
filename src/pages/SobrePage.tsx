@@ -87,19 +87,19 @@ const SobrePage: React.FC = () => {
     {
       name: "Liliana da Silva",
       image: "/testemonials/liliana.jpeg",
-      platform: "Google",
+      platform: "Instagram",
       review: "Grata Carlos, por toda a ajuda, dedicação e profissionalismo na concretização deste negócio. Ao longo do processo, demonstrou uma postura transparente, responsável e ética, explicando tudo com clareza. Soube ouvir as minhas preocupações e respeitar os meus tempos. Recomendo sem qualquer dúvida e acredito que voltaremos a trabalhar juntos. Votos de muito sucesso!"
     },
     {
       name: "Wneres & Daiane",
       image: "/testemonials/Wneres.jpeg",
-      platform: "Google",
+      platform: "WhatsApp",
       review: "Obrigada por toda a ajuda ao longo destes meses, Carlos. Foste um verdadeiro profissional. Após tanta insistência, documentação e burocracia, conseguimos finalmente comprar a nossa primeira casa em Portugal. Foste incansável em todo o processo, desde o apoio no crédito até à concretização da compra, acompanhando-nos sempre de forma próxima, do início até à escritura. Estamos muito gratos por te termos encontrado e por toda a dedicação demonstrada ao longo deste percurso."
     },
     {
       name: "Ana Fernandes",
       image: "/testemonials/Ana.jpeg",
-      platform: "Google",
+      platform: "Facebook",
       review: "Quero destacar o empenho prestado ao longo de todo o processo, especialmente a forma clara e transparente com que sempre esclareceu todas as questões. Para além disso, a vasta rede de serviços que disponibilizou para apoiar a venda revelou-se um fator diferenciador e, na minha opinião, contribuiu significativamente para o sucesso do negócio. Muito obrigada por todo o profissionalismo e dedicação."
     }
   ];
