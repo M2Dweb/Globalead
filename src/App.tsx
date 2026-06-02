@@ -26,9 +26,6 @@ import { useEffect } from 'react';
  import TermosCondicoes from './pages/TermosCondicoes';
  import ResolucaoLitigios from './pages/ResolucaoLitigios';
 
-import WaitingPage from './pages/WaitingPage';
-import { Home } from 'lucide-react';
-
  
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();

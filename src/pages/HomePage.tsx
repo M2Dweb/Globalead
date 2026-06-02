@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Zap, Tv, Calendar, Cctv, FileText, CreditCard, ArrowRight } from 'lucide-react';
+import { Shield, Calendar, FileText, CreditCard } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
@@ -65,7 +65,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('properties')
           .select('*')
           .limit(6) // Alterado de 3 para 6

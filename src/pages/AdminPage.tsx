@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { listR2Folder, r2Client, R2_BUCKET_NAME, getBucketMetrics } from '../lib/r2';
+import { listR2Folder, r2Client, R2_BUCKET_NAME, R2_PUBLIC_BASE_URL, getBucketMetrics } from '../lib/r2';
 import { DeleteObjectsCommand } from '@aws-sdk/client-s3';
 import CircularProgressCard from '../components/CircularProgressCard';
 import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare, FileText, Lock, Star, CheckCircle, StarOff } from 'lucide-react';
@@ -33,7 +33,6 @@ const AdminPage: React.FC = () => {
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   // Novos estados para gerenciar destaques
   const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
-  const [featuredLoading, setFeaturedLoading] = useState(false);
   const [cleaningImages, setCleaningImages] = useState(false);
 
   // R2 Storage Metrics
@@ -74,6 +73,7 @@ const AdminPage: React.FC = () => {
     property_types: [] as any[],
     state: '',
     map_url: '',
+    video_url: '',
     apartments: '',
     stores: '',
     image_url: '',

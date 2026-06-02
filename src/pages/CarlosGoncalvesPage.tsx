@@ -94,19 +94,19 @@ const CarlosGoncalvesPage: React.FC = () => {
     },
     {
       name: "Liliana da Silva",
-      image: "/testemonials/liliana.jpeg",
+      image: "/testemonials/liliana.jpg",
       platform: "Instagram",
       review: "Grata Carlos, por toda a ajuda, dedicação e profissionalismo na concretização deste negócio. Ao longo do processo, demonstrou uma postura transparente, responsável e ética, explicando tudo com clareza. Soube ouvir as minhas preocupações e respeitar os meus tempos. Recomendo sem qualquer dúvida e acredito que voltaremos a trabalhar juntos. Votos de muito sucesso!"
     },
     {
       name: "Wneres & Daiane",
-      image: "/testemonials/Wneres.jpeg",
+      image: "/testemonials/Wneres.jpg",
       platform: "WhatsApp",
       review: "Obrigada por toda a ajuda ao longo destes meses, Carlos. Foste um verdadeiro profissional. Após tanta insistência, documentação e burocracia, conseguimos finalmente comprar a nossa primeira casa em Portugal. Foste incansável em todo o processo, desde o apoio no crédito até à concretização da compra, acompanhando-nos sempre de forma próxima, do início até à escritura. Estamos muito gratos por te termos encontrado e por toda a dedicação demonstrada ao longo deste percurso."
     },
     {
       name: "Ana Fernandes",
-      image: "/testemonials/Ana.jpeg",
+      image: "/testemonials/Ana.jpg",
       platform: "Facebook",
       review: "Quero destacar o empenho prestado ao longo de todo o processo, especialmente a forma clara e transparente com que sempre esclareceu todas as questões. Para além disso, a vasta rede de serviços que disponibilizou para apoiar a venda revelou-se um fator diferenciador e, na minha opinião, contribuiu significativamente para o sucesso do negócio. Muito obrigada por todo o profissionalismo e dedicação."
     }
@@ -397,39 +397,37 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                     </h2>
                   </div>
         
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {testimonials.map((testimonial, index) => {
                       const words = testimonial.review.split(' ');
                       const isExpanded = expandedTestimonials[index];
                       const maxWords = 35;
-                      const displayText = isExpanded || words.length <= maxWords 
-                        ? testimonial.review 
+                      const displayText = isExpanded || words.length <= maxWords
+                        ? testimonial.review
                         : words.slice(0, maxWords).join(' ') + '...';
-        
+
                       return (
                         <div
                           key={index}
-                          className="hover-card-effect w-full max-w-sm text-center"
+                          className="bg-white rounded-xl shadow-lg w-full text-center flex flex-col justify-between overflow-hidden border border-gray-100"
                         >
-                          <div className="flex justify-center mb-3 sm:mb-4">
-                            <img src={testimonial.image} alt="testimonial" className="rounded-xl w-full h-auto" />
+                          <div className="flex justify-center">
+                            <img src={testimonial.image} alt="testimonial" className="w-full h-64 object-cover" />
                           </div>
-                          <div className="p-0 flex flex-col flex-grow">
-                            {/* estrelas */}
-                            <div className="flex justify-center mb-3 sm:mb-4">
+                          <div className="p-6 flex flex-col flex-grow">
+                            <div className="flex justify-center mb-4">
                               <div className="flex text-yellow-400">
                                 {[...Array(5)].map((_, i) => (
-                                  <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
+                                  <Star key={i} className="h-5 w-5 fill-current" />
                                 ))}
                               </div>
                             </div>
-        
-                            {/* review com ler mais */}
+
                             <div className="flex-grow flex items-center justify-center mb-4">
-                              <p className="text-sm sm:text-base text-gray-600 italic">
+                              <p className="text-gray-600 italic">
                                 "{displayText}"
                                 {words.length > maxWords && !isExpanded && (
-                                  <span 
+                                  <span
                                     className="ml-1 font-bold text-[#79b2e9] cursor-pointer"
                                     onClick={() => toggleExpand(index)}
                                   >
@@ -438,13 +436,12 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                                 )}
                               </p>
                             </div>
-        
-                            {/* nome + plataforma */}
-                            <div className="border-t pt-3 sm:pt-4 mt-4 sm:mt-6">
-                              <p className="text-sm sm:text-base font-semibold text-gray-900">
+
+                            <div className="border-t pt-4 mt-6">
+                              <p className="font-semibold text-gray-900">
                                 {testimonial.name}
                               </p>
-                              <p className="text-xs sm:text-sm text-gray-500">
+                              <p className="text-sm text-gray-500">
                                 Review: {testimonial.platform}
                               </p>
                             </div>

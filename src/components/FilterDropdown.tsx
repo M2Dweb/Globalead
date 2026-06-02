@@ -43,8 +43,6 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
   setSelectedDistrict,
   selectedState,
   setSelectedState,
-  selectedFeatures,
-  setSelectedFeatures,
   energyClass,
   setEnergyClass,
   areaRange,

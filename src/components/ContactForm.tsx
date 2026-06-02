@@ -13,7 +13,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
   page, 
   showExtraFields = false, 
   extraFields,
-  title = "Contratar um crédito habitação é a decisão financeira mais impactante da tua vida",
   buttonText = "Enviar Mensagem"
 }) => {
   const [formData, setFormData] = useState<Partial<FormData>>({

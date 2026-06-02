@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Phone, Clock, Bell, Search, Heart, AlertCircle, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Clock, Bell, Search, Heart, AlertCircle } from 'lucide-react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase, getPropertyByRef } from '../lib/supabase';

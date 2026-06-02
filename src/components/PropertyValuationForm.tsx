@@ -3,24 +3,6 @@ import { Home, MapPin, ChevronRight, Plus, Minus, ArrowLeft, User, Phone, Mail, 
 import { supabase } from '../lib/supabase';
 import { sendEmail } from '../utils/emailService';
 
-interface PropertyValuationData {
-  nome: string;
-  apelido: string;
-  email: string;
-  telemovel: string;
-  tipo_imovel: string;
-  localizacao: string;
-  area: string;
-  quartos: string;
-  casas_banho: string;
-  preco_pretendido: string;
-  estado_imovel: string;
-  descricao: string;
-  urgencia: string;
-  meio_contacto: string;
-  horario: string;
-}
-
 interface PropertyData {
   finalidade: 'vender' | 'arrendar' | 'trespasse' | null;
   tipoImovel: 'apartamento' | 'moradia' | 'terreno' | 'quinta-herdade' | 'garagem' | 'predio' | 'quarto' | 'escritorio' | 'loja' | 'armazem' | 'imovel-negocio' | null;

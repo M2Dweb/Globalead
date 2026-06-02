@@ -8,7 +8,7 @@ import { sendEmail, FormData } from '../utils/emailService';
 
 const SeguroPage: React.FC = () => {
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
-  const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
+  const [currentPartnerIndex] = useState(0);
   const [logosPerPage, setLogosPerPage] = useState(window.innerWidth < 640 ? 2 : 5);
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',

@@ -201,15 +201,20 @@ const CreditoPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Credit Calculator 
+      {/* Credit Calculator */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <CreditCalculator />
-          <div className="text-center mt-6"> 
-            
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Simule o seu <span className="text-[#79b2e9]">crédito habitação</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Ajuste os valores e veja de imediato uma estimativa da sua prestação mensal
+            </p>
           </div>
+          <CreditCalculator />
         </div>
-      </section>*/}
+      </section>
 
       {/* Partners Section */}
       <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">

@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Shield, Heart, Car, Users } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 
 const InsuranceComparator: React.FC = () => {
   const [selectedInsurance, setSelectedInsurance] = useState('multiriscos');
-
-  // LOGOS
-  const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
 
   // Seguros principais
   const mainInsurance = {
