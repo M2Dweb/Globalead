@@ -208,6 +208,57 @@ const PropertyDetailPage: React.FC = () => {
     );
   }
 
+  // Dados estruturados (Schema.org) do imóvel para resultados ricos no Google
+  const priceValue = Number(selectedPropertyType?.price || property.price) || 0;
+  const plainDescription = typeof property.description === 'string'
+    ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 300)
+    : '';
+  const canonicalUrl = `https://globalead.pt/imoveis/${ref || property.ref || property.id}`;
+  const propertyImages = Array.isArray(property.images)
+    ? property.images.filter(Boolean)
+    : [property.images].filter(Boolean);
+  const isAvailable = !property.availability_status || property.availability_status === 'disponivel';
+
+  const propertyStructuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Product',
+        name: property.title,
+        description: plainDescription,
+        image: propertyImages,
+        url: canonicalUrl,
+        category: 'Imóvel',
+        brand: { '@type': 'Organization', name: 'Globalead Portugal' },
+        ...(priceValue > 0 && {
+          offers: {
+            '@type': 'Offer',
+            price: priceValue,
+            priceCurrency: 'EUR',
+            availability: isAvailable ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut',
+            url: canonicalUrl,
+            seller: { '@type': 'Organization', name: 'Globalead Portugal' },
+          },
+        }),
+        additionalProperty: [
+          ...(property.bedrooms ? [{ '@type': 'PropertyValue', name: 'Quartos', value: property.bedrooms }] : []),
+          ...(property.bathrooms ? [{ '@type': 'PropertyValue', name: 'Casas de banho', value: property.bathrooms }] : []),
+          ...(property.area ? [{ '@type': 'PropertyValue', name: 'Área', value: property.area, unitCode: 'MTK' }] : []),
+          ...(property.energy_class ? [{ '@type': 'PropertyValue', name: 'Classe energética', value: property.energy_class }] : []),
+          ...(property.location ? [{ '@type': 'PropertyValue', name: 'Localização', value: property.location }] : []),
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Imóveis', item: 'https://globalead.pt/imoveis' },
+          { '@type': 'ListItem', position: 2, name: 'Catálogo', item: 'https://globalead.pt/imoveis/lista' },
+          { '@type': 'ListItem', position: 3, name: property.title },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
@@ -227,6 +278,11 @@ const PropertyDetailPage: React.FC = () => {
         <meta property="twitter:title" content={property.title} />
         <meta property="twitter:description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
         <meta property="twitter:image" content={property.images[0]} />
+
+        {/* Dados estruturados do imóvel */}
+        <script type="application/ld+json">
+          {JSON.stringify(propertyStructuredData)}
+        </script>
       </Helmet>
 
       {/* Header */}

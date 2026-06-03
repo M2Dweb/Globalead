@@ -16,7 +16,7 @@ const CRAWLER_USER_AGENTS = [
 ];
 
 const SITE_URL = "https://globalead.pt";
-const DEFAULT_IMAGE = `${SITE_URL}/fotos/globalead-icon.png`;
+const DEFAULT_IMAGE = `${SITE_URL}/globalead-logo-background.png`;
 const DEFAULT_DESC =
   "Especialistas em imobiliário, crédito habitação, certificação energética e seguros. Apoiamos todo o processo para comprar ou vender a sua casa em segurança.";
 

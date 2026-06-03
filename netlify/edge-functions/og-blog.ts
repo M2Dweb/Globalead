@@ -75,7 +75,7 @@ export default async function handler(request: Request, context: Context) {
     const ogDescription = post.excerpt
       ? post.excerpt.replace(/<[^>]*>/g, "").substring(0, 200)
       : "Especialistas em imobiliário, crédito habitação, certificação energética e seguros.";
-    const ogImage = post.image || `${siteUrl}/fotos/globalead-icon.png`;
+    const ogImage = post.image || `${siteUrl}/globalead-logo-background.png`;
 
     // Return HTML with OG meta tags for the crawler
     const html = `<!DOCTYPE html>
