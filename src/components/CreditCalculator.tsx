@@ -74,16 +74,43 @@ const DISTRICTS = [
   'Setúbal', 'Viana do Castelo', 'Vila Real', 'Viseu', 'Madeira', 'Açores',
 ];
 
-const CreditCalculator: React.FC = () => {
-  const [propertyValue, setPropertyValue] = useState(200000);
-  const [savings, setSavings] = useState(70000);
+interface CreditCalculatorProps {
+  /** Pré-preenche o preço do imóvel (ex.: vindo de uma página de imóvel). */
+  initialPropertyValue?: number;
+  /** Pré-preenche as poupanças. Por defeito 20% do valor do imóvel. */
+  initialSavings?: number;
+  /** Pré-seleciona a localização (distrito). */
+  initialLocation?: string;
+}
+
+const CreditCalculator: React.FC<CreditCalculatorProps> = ({
+  initialPropertyValue,
+  initialSavings,
+  initialLocation,
+}) => {
+  const startProperty = Math.min(Math.max(initialPropertyValue ?? 200000, 25000), 2000000);
+  const startSavings = Math.min(
+    Math.max(
+      initialSavings ?? (initialPropertyValue ? Math.round((startProperty * 0.2) / 1000) * 1000 : 70000),
+      0,
+    ),
+    startProperty,
+  );
+
+  const [propertyValue, setPropertyValue] = useState(startProperty);
+  const [savings, setSavings] = useState(startSavings);
   const [interestRate, setInterestRate] = useState(2.75);
   const [loanTerm, setLoanTerm] = useState(30);
   const [rateType, setRateType] = useState<'fixa' | 'variavel'>('variavel');
-  const [location, setLocation] = useState('Lisboa');
+  const [location, setLocation] = useState(initialLocation ?? 'Lisboa');
   const [houseType, setHouseType] = useState<'principal' | 'secundaria'>('principal');
   const [young, setYoung] = useState(false);
   const [showAmortization, setShowAmortization] = useState(false);
+
+  // Inclui a localização do imóvel no seletor mesmo que não seja um distrito (ex.: "Guimarães")
+  const locationOptions = initialLocation && !DISTRICTS.includes(initialLocation)
+    ? [initialLocation, ...DISTRICTS]
+    : DISTRICTS;
 
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<Partial<FormData>>({
@@ -334,7 +361,7 @@ const CreditCalculator: React.FC = () => {
                 onChange={(e) => setLocation(e.target.value)}
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#79b2e9] bg-white"
               >
-                {DISTRICTS.map((d) => <option key={d} value={d}>{d}</option>)}
+                {locationOptions.map((d) => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>
 

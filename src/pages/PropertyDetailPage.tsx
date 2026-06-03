@@ -7,6 +7,7 @@ import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
 import PropertyBuyForm from '../components/PropertyBuyForm';
 import StatusBadge from '../components/StatusBadge';
+import CreditCalculator from '../components/CreditCalculator';
 
 const PropertyDetailPage: React.FC = () => {
   const { ref } = useParams<{ ref: string }>();
@@ -210,6 +211,10 @@ const PropertyDetailPage: React.FC = () => {
 
   // Dados estruturados (Schema.org) do imóvel para resultados ricos no Google
   const priceValue = Number(selectedPropertyType?.price || property.price) || 0;
+  // Tipologias com preço (empreendimentos) — permite escolher qual simular no crédito
+  const priceableTypes: any[] = property.type === 'empreendimento' && Array.isArray(property.property_types)
+    ? property.property_types.filter((t: any) => Number(t.price) > 0)
+    : [];
   const plainDescription = typeof property.description === 'string'
     ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 300)
     : '';
@@ -923,6 +928,50 @@ const PropertyDetailPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Simulador de Crédito — pré-preenchido com o valor deste imóvel */}
+      {priceValue > 0 && (
+        <section className="py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                Simule o seu crédito habitação
+              </h3>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                {priceableTypes.length > 1
+                  ? 'Escolha a tipologia que pretende e o simulador ajusta-se automaticamente ao respetivo valor.'
+                  : `Valores já ajustados a este imóvel (${formatPrice(priceValue)}). Ajuste os parâmetros à sua medida e peça uma simulação detalhada e gratuita.`}
+              </p>
+            </div>
+
+            {/* Seletor de tipologia — só para empreendimentos com várias tipologias com preço */}
+            {priceableTypes.length > 1 && (
+              <div className="max-w-md mx-auto mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2 text-center">
+                  Tipologia a simular
+                </label>
+                <select
+                  value={Math.max(0, priceableTypes.findIndex((t) => t === selectedPropertyType))}
+                  onChange={(e) => setSelectedPropertyType(priceableTypes[Number(e.target.value)])}
+                  className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
+                >
+                  {priceableTypes.map((t, i) => (
+                    <option key={i} value={i}>
+                      {t.name}{t.fracao ? ` · Fr. ${t.fracao}` : ''}{t.piso ? ` · Piso ${t.piso}` : ''} — {formatPrice(Number(t.price))}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            <CreditCalculator
+              key={priceValue}
+              initialPropertyValue={priceValue}
+              initialLocation={property.location || undefined}
+            />
+          </div>
+        </section>
+      )}
 
       {/* Similar Properties */}
       <section className="py-12 bg-gray-50">
