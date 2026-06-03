@@ -11,6 +11,43 @@
   function = "og-blog"
   path = "/blog/*"
 
+# OG tags por página para crawlers sociais (WhatsApp, Facebook, LinkedIn, etc.)
+[[edge_functions]]
+  function = "og-pages"
+  path = "/"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/sobre"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/imoveis"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/imoveis/*"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/seguros"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/credito"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/certificacao"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/carlos-goncalves"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/contactos"
+
 # PREVINE O CACHE DO HTML (obrigando o browser a pedir sempre a versão mais recente)
 [[headers]]
   for = "/"

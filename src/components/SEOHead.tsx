@@ -1,6 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
+const SITE_URL = 'https://globalead.pt';
+const DEFAULT_DESCRIPTION =
+  'Especialistas em imobiliário, crédito habitação, certificação energética e seguros. Apoiamos todo o processo para comprar ou vender a sua casa em segurança.';
+
 interface SEOHeadProps {
   title?: string;
   description?: string;
@@ -8,76 +12,77 @@ interface SEOHeadProps {
   image?: string;
   url?: string;
   type?: string;
+  noindex?: boolean;
 }
 
 const SEOHead: React.FC<SEOHeadProps> = ({
-  title = "Globalead Portugal | Imóveis, Crédito Habitação e Seguros",
-  description = "Especialistas em imobiliário, crédito habitação, certificação energética e seguros. Apoiamos todo o processo para comprar ou vender a sua casa em segurança.",
-  keywords = "imóveis, mediação imobiliária, seguros, energia, alarmes, Portugal, Porto, Lisboa, casa, apartamento, moradia",
-  image = "/fotos/globalead-icon.png",
-  url = "https://globalead.pt",
-  type = "website"
+  title = 'Globalead Portugal | Imóveis, Crédito Habitação e Seguros',
+  description = DEFAULT_DESCRIPTION,
+  keywords = 'imóveis, mediação imobiliária, crédito habitação, seguros, certificação energética, energia, alarmes, Portugal, Porto, Lisboa, casa, apartamento, moradia',
+  image = '/fotos/globalead-icon.png',
+  url = SITE_URL,
+  type = 'website',
+  noindex = false,
 }) => {
+  const absoluteImage = image.startsWith('http') ? image : `${SITE_URL}${image}`;
+
   const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Globalead Portugal",
-    "url": url,
-    "logo": `${url}/fotos/globalead-icon.png`,
-    "description": description,
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+351910647620",
-      "contactType": "customer service",
-      "availableLanguage": "Portuguese"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "PT"
-    },
-    "sameAs": [
-      "https://www.facebook.com/globalead",
-      "https://www.instagram.com/globalead",
-      "https://www.linkedin.com/company/globalead"
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'RealEstateAgent',
+        '@id': `${SITE_URL}/#organization`,
+        name: 'Globalead Portugal',
+        url: SITE_URL,
+        logo: `${SITE_URL}/fotos/globalead-icon.png`,
+        image: `${SITE_URL}/fotos/globalead-icon.png`,
+        description: DEFAULT_DESCRIPTION,
+        telephone: '+351910647620',
+        priceRange: '€€',
+        areaServed: { '@type': 'Country', name: 'Portugal' },
+        address: { '@type': 'PostalAddress', addressCountry: 'PT' },
+        sameAs: [
+          'https://www.facebook.com/globalead',
+          'https://www.instagram.com/globalead',
+          'https://www.linkedin.com/company/globalead',
+        ],
+        knowsLanguage: ['pt-PT'],
+        makesOffer: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Mediação Imobiliária', description: 'Compra, venda e arrendamento de imóveis' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Crédito Habitação', description: 'Intermediação de crédito habitação com os principais bancos' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Seguros', description: 'Seguros automóvel, habitação, vida e saúde' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Certificação Energética', description: 'Certificados energéticos para imóveis' } },
+        ],
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: 'Globalead Portugal',
+        description: DEFAULT_DESCRIPTION,
+        inLanguage: 'pt-PT',
+        publisher: { '@id': `${SITE_URL}/#organization` },
+      },
     ],
-    "service": [
-      {
-        "@type": "Service",
-        "name": "Mediação Imobiliária",
-        "description": "Compra, venda e arrendamento de imóveis"
-      },
-      {
-        "@type": "Service",
-        "name": "Seguros",
-        "description": "Seguros automóvel, habitação, vida e saúde"
-      },
-      {
-        "@type": "Service",
-        "name": "Energia",
-        "description": "Fornecimento de energia elétrica e gás natural"
-      },
-      {
-        "@type": "Service",
-        "name": "Sistemas de Alarme",
-        "description": "Instalação e monitorização de sistemas de segurança"
-      }
-    ]
   };
 
   return (
     <Helmet>
+      <html lang="pt-PT" />
       <title>{title}</title>
       <link rel="canonical" href={url} />
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+      <meta name="googlebot" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
       <meta name="author" content="Globalead Portugal" />
 
       {/* Open Graph */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={absoluteImage} />
+      <meta property="og:image:alt" content={title} />
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content="Globalead Portugal" />
       <meta property="og:locale" content="pt_PT" />
@@ -86,20 +91,10 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={absoluteImage} />
 
       {/* Structured Data */}
-      <script type="application/ld+json">
-        {JSON.stringify(structuredData)}
-      </script>
-
-      {/* PWA */}
-      <link rel="manifest" href="/manifest.json" />
-      <meta name="theme-color" content="#2563eb" />
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      <meta name="apple-mobile-web-app-title" content="Globalead" />
-      <link rel="apple-touch-icon" href="/fotos/globalead-icon.png" />
+      <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
     </Helmet>
   );
 };

@@ -27,6 +27,118 @@ import { useEffect } from 'react';
  import ResolucaoLitigios from './pages/ResolucaoLitigios';
 
  
+const SITE_URL = 'https://globalead.pt';
+
+interface PageSeo {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  url: string;
+  noindex?: boolean;
+}
+
+// SEO por página (título, descrição e canonical únicos por rota)
+const getSeo = (path: string): PageSeo => {
+  const canonical = path === '/' || path === '/home' ? `${SITE_URL}/` : `${SITE_URL}${path}`;
+
+  switch (path) {
+    case '/':
+    case '/home':
+      return { url: `${SITE_URL}/` };
+    case '/sobre':
+      return {
+        url: canonical,
+        title: 'Sobre Nós | Globalead Portugal',
+        description:
+          'Conheça a Globalead Portugal: a nossa história, valores e equipa especializada em imobiliário, crédito habitação, seguros e energia. Acompanhamento gratuito e personalizado.',
+      };
+    case '/imoveis':
+      return {
+        url: canonical,
+        title: 'Comprar e Vender Imóveis | Globalead Portugal',
+        description:
+          'Compre ou venda o seu imóvel com a Globalead Portugal. Apartamentos, moradias e empreendimentos com acompanhamento completo, do primeiro contacto à escritura.',
+        keywords: 'comprar casa, vender imóvel, apartamentos, moradias, empreendimentos, mediação imobiliária, Portugal',
+      };
+    case '/imoveis/lista':
+      return {
+        url: canonical,
+        title: 'Catálogo de Imóveis | Globalead Portugal',
+        description:
+          'Veja o catálogo de imóveis disponíveis da Globalead Portugal: apartamentos, moradias, terrenos e empreendimentos em todo o país.',
+      };
+    case '/seguros':
+      return {
+        url: canonical,
+        title: 'Seguros Auto, Vida e Habitação | Globalead Portugal',
+        description:
+          'Compare e contrate seguros automóvel, vida, habitação e saúde com a Globalead Portugal. Encontramos a melhor proteção ao melhor preço, sem custos para si.',
+        keywords: 'seguros, seguro automóvel, seguro de vida, seguro de saúde, seguro habitação, Portugal',
+      };
+    case '/credito':
+      return {
+        url: canonical,
+        title: 'Crédito Habitação e Simulador | Globalead Portugal',
+        description:
+          'Simule o seu crédito habitação e descubra a prestação mensal. A Globalead negoceia com os principais bancos as melhores condições — intermediação de crédito gratuita.',
+        keywords: 'crédito habitação, simulador crédito habitação, prestação mensal, taxa de juro, intermediário de crédito, Portugal',
+      };
+    case '/certificacao':
+      return {
+        url: canonical,
+        title: 'Certificação Energética | Globalead Portugal',
+        description:
+          'Certificação energética de imóveis com a Globalead Portugal. Tratamos de todo o processo do certificado energético, obrigatório na venda ou arrendamento.',
+      };
+    case '/carlos-goncalves':
+      return {
+        url: canonical,
+        title: 'Carlos Gonçalves — Consultor | Globalead Portugal',
+        description:
+          'Carlos Gonçalves, consultor da Globalead Portugal com mais de 10 anos de experiência. Acompanhamento próximo na compra, venda e crédito do seu imóvel.',
+      };
+    case '/blog':
+      return {
+        url: canonical,
+        title: 'Blog | Globalead Portugal',
+        description:
+          'Blog da Globalead Portugal: notícias, dicas e guias sobre imobiliário, crédito habitação, seguros e energia para o ajudar a decidir melhor.',
+      };
+    case '/contactos':
+      return {
+        url: canonical,
+        title: 'Contactos | Globalead Portugal',
+        description:
+          'Entre em contacto com a Globalead Portugal. Fale com a nossa equipa sobre imóveis, crédito habitação, seguros e energia. Acompanhamento gratuito e personalizado.',
+      };
+    case '/termos-condicoes':
+      return {
+        url: canonical,
+        title: 'Termos e Condições | Globalead Portugal',
+        description: 'Termos e condições de utilização do site da Globalead Portugal.',
+      };
+    case '/politica-privacidade':
+      return {
+        url: canonical,
+        title: 'Política de Privacidade | Globalead Portugal',
+        description:
+          'Política de privacidade e tratamento de dados pessoais da Globalead Portugal, em conformidade com o RGPD.',
+      };
+    case '/resolucao-litigios':
+      return {
+        url: canonical,
+        title: 'Resolução de Litígios | Globalead Portugal',
+        description: 'Informação sobre resolução alternativa de litígios de consumo da Globalead Portugal.',
+      };
+    case '/admin':
+      return { url: canonical, title: 'Administração | Globalead Portugal', noindex: true };
+    default:
+      // Páginas dinâmicas (/imoveis/:ref, /blog/:ref) definem o próprio SEO;
+      // aqui garantimos apenas o canonical correto.
+      return { url: canonical };
+  }
+};
+
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
 
@@ -99,11 +211,12 @@ const AppLayout: React.FC = () => {
    const breadcrumbs = getBreadcrumbs();
    const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
    const isAdminPage = location.pathname === '/admin';
-  
+   const seo = getSeo(location.pathname);
+
 
   return (
     <div className="min-h-screen bg-white">
-       <SEOHead /> 
+       <SEOHead {...seo} />
       <ScrollToTop />
       
       <Header />
