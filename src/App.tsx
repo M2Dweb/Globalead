@@ -1,30 +1,31 @@
-import React from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
- import Header from './components/Header';
- import Footer from './components/Footer'; 
- import Breadcrumbs from './components/Breadcrumbs';
- import StickyCtaButton from './components/StickyCtaButton';
- import SEOHead from './components/SEOHead';
- import CookieBanner from './components/CookieBanner';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Breadcrumbs from './components/Breadcrumbs';
+import StickyCtaButton from './components/StickyCtaButton';
+import SEOHead from './components/SEOHead';
+import CookieBanner from './components/CookieBanner';
+import LoadingSpinner from './components/LoadingSpinner';
 
-//pages
- import HomePage from './pages/HomePage';
- import SobrePage from './pages/SobrePage';
- import ImoveisPage from './pages/ImoveisPage';
- import SeguroPage from './pages/SeguroPage';
- import ContactosPage from './pages/ContactosPage';
- import PropertyListPage from './pages/PropertyListPage';
- import PropertyDetailPage from './pages/PropertyDetailPage';
- import AdminPage from './pages/AdminPage';
- import CreditoPage from './pages/CreditoPage';
- import CertificacaoPage from './pages/CertificacaoPage';
- import BlogPage from './pages/BlogPage';
- import BlogPostPage from './pages/BlogPostPage';
- import CarlosGoncalvesPage from './pages/CarlosGoncalvesPage';
- import PoliticaPrivacidade from './pages/PoliticaPrivacidade';
- import TermosCondicoes from './pages/TermosCondicoes';
- import ResolucaoLitigios from './pages/ResolucaoLitigios';
+// pages (lazy-loaded para reduzir o bundle inicial e acelerar o carregamento)
+const HomePage = lazy(() => import('./pages/HomePage'));
+const SobrePage = lazy(() => import('./pages/SobrePage'));
+const ImoveisPage = lazy(() => import('./pages/ImoveisPage'));
+const SeguroPage = lazy(() => import('./pages/SeguroPage'));
+const ContactosPage = lazy(() => import('./pages/ContactosPage'));
+const PropertyListPage = lazy(() => import('./pages/PropertyListPage'));
+const PropertyDetailPage = lazy(() => import('./pages/PropertyDetailPage'));
+const AdminPage = lazy(() => import('./pages/AdminPage'));
+const CreditoPage = lazy(() => import('./pages/CreditoPage'));
+const CertificacaoPage = lazy(() => import('./pages/CertificacaoPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const CarlosGoncalvesPage = lazy(() => import('./pages/CarlosGoncalvesPage'));
+const PoliticaPrivacidade = lazy(() => import('./pages/PoliticaPrivacidade'));
+const TermosCondicoes = lazy(() => import('./pages/TermosCondicoes'));
+const ResolucaoLitigios = lazy(() => import('./pages/ResolucaoLitigios'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
  
 const SITE_URL = 'https://globalead.pt';
@@ -226,6 +227,7 @@ const AppLayout: React.FC = () => {
       /> 
       
       <main>
+        <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><LoadingSpinner size="lg" /></div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
@@ -247,8 +249,10 @@ const AppLayout: React.FC = () => {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:ref" element={<BlogPostPage />} />
           <Route path="/admin" element={<AdminPage />} />
-          <Route path="/contactos" element={<ContactosPage />} /> 
+          <Route path="/contactos" element={<ContactosPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </Suspense>
       </main>
       
        {!(isCarlosGoncalvesPage || isAdminPage ) && <Footer />} 

@@ -7,13 +7,15 @@ interface MultiFileUploaderProps {
   files: string[];
   onUpload: (urls: string[]) => void;
   accept: 'image/*' | 'video/*';
+  adminPassword?: string;
 }
 
 export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
   folder,
   files,
   onUpload,
-  accept
+  accept,
+  adminPassword = '',
 }) => {
   const [uploading, setUploading] = useState(false);
 
@@ -30,7 +32,7 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
         const fileName = `${Date.now()}_${i}.${fileExt}`;
         const filePath = `${folder}/${fileName}`;
 
-        const { url } = await uploadToR2(file, filePath);
+        const { url } = await uploadToR2(file, filePath, adminPassword);
         uploadedUrls.push(url);
       }
 

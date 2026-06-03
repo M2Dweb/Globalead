@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { listR2Folder, r2Client, R2_BUCKET_NAME, R2_PUBLIC_BASE_URL, getBucketMetrics } from '../lib/r2';
-import { DeleteObjectsCommand } from '@aws-sdk/client-s3';
+import { listR2Folder, R2_PUBLIC_BASE_URL, getBucketMetrics } from '../lib/r2';
 import CircularProgressCard from '../components/CircularProgressCard';
+import AdminStats from '../components/AdminStats';
 import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Calendar, User, Mail, Phone, MapPin, Home, Euro, Users, Clock, MessageSquare, FileText, Lock, Star, CheckCircle, StarOff } from 'lucide-react';
 import RichTextEditor from '../components/RichTextEditor';
 import ImageUploader from '../components/ImageUploader';
@@ -554,11 +554,12 @@ const AdminPage: React.FC = () => {
       // 3. Se houver, perguntar e apagar
       if (keysToDelete.length > 0) {
         if (confirm(`Encontradas ${keysToDelete.length} imagens órfãs no Cloudflare R2.\nDeseja apagar permanentemente?`)) {
-          const command = new DeleteObjectsCommand({
-            Bucket: R2_BUCKET_NAME,
-            Delete: { Objects: keysToDelete }
+          const res = await fetch('/.netlify/functions/r2-delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ keys: keysToDelete.map((k) => k.Key), password }),
           });
-          await r2Client.send(command);
+          if (!res.ok) throw new Error('r2-delete failed');
           alert(`${keysToDelete.length} imagens eliminadas do R2 com sucesso!`);
         }
       } else {
@@ -835,20 +836,12 @@ const AdminPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-start mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
-            <p className="text-gray-600">Gerir propriedades, blog e dados de contacto</p>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <CircularProgressCard 
-              title="Armazenamento R2"
-              used={formatBytes(storageMetrics.usedBytes)}
-              total="10 GB"
-              percentage={Math.round((storageMetrics.usedBytes / R2_QUOTA_BYTES) * 100) || 0}
-              color={storageMetrics.usedBytes > R2_QUOTA_BYTES * 0.9 ? "text-red-500" : "text-blue-600"}
-            />
+        <div className="mb-8">
+          <div className="flex justify-between items-start mb-6 gap-4 flex-wrap">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Painel de Administração</h1>
+              <p className="text-gray-600">Gerir propriedades, blog e dados de contacto</p>
+            </div>
 
             <button
               onClick={cleanupImages}
@@ -868,6 +861,27 @@ const AdminPage: React.FC = () => {
                 </>
               )}
             </button>
+          </div>
+
+          {/* Painel de indicadores */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <CircularProgressCard
+              title="Armazenamento R2"
+              used={formatBytes(storageMetrics.usedBytes)}
+              total="10 GB"
+              percentage={Math.round((storageMetrics.usedBytes / R2_QUOTA_BYTES) * 100) || 0}
+              color={storageMetrics.usedBytes > R2_QUOTA_BYTES * 0.9 ? "text-red-500" : "text-blue-600"}
+            />
+
+            <AdminStats
+              propertiesCount={properties.length}
+              leadsCount={propertyLeads.length}
+              contactsCount={contactSubmissions.length}
+              postsCount={blogPosts.length}
+              featuredCount={featuredProperties.length}
+              leads={propertyLeads}
+              contacts={contactSubmissions}
+            />
           </div>
         </div>
 
@@ -1192,6 +1206,7 @@ const AdminPage: React.FC = () => {
                         setPropertyForm({ ...propertyForm, cover_image: url })
                       }
                       onUploadComplete={(data) => setPropertyForm(prev => ({ ...prev, image_url: data.url, image_key: data.key }))}
+                      adminPassword={password}
                     />
                     <label className="block text-sm font-medium text-gray-700 mb-2">Imagens</label>
                     <MultiFileUploader
@@ -1199,6 +1214,7 @@ const AdminPage: React.FC = () => {
                       files={propertyForm.images}
                       onUpload={(urls) => setPropertyForm({ ...propertyForm, images: urls })}
                       accept="image/*"
+                      adminPassword={password}
                     />
                   </div>
 
@@ -1280,6 +1296,7 @@ const AdminPage: React.FC = () => {
                             folder="floor-plans"
                             onUpload={(url) => updatePropertyType(index, 'floor_plan', url)}
                             value={type.floor_plan}
+                            adminPassword={password}
                           />
                         </div>
                         <button
@@ -1481,6 +1498,7 @@ const AdminPage: React.FC = () => {
                       onUpload={(url) => setBlogForm({ ...blogForm, image: url })}
                       onUploadComplete={(data) => setBlogForm(prev => ({ ...prev, image_url: data.url, image_key: data.key }))}
                       value={blogForm.image}
+                      adminPassword={password}
                     />
                   </div>
 

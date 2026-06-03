@@ -7,9 +7,10 @@ interface ImageUploaderProps {
   onUpload: (url: string) => void;
   onUploadComplete?: (data: { url: string; key: string }) => void;
   value?: string;
+  adminPassword?: string;
 }
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploadComplete, value }) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploadComplete, value, adminPassword = '' }) => {
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(value || '');
 
@@ -24,7 +25,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploa
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `${folder}/${fileName}`;
 
-      const { url, key } = await uploadToR2(file, filePath);
+      const { url, key } = await uploadToR2(file, filePath, adminPassword);
 
       setImageUrl(url);
       onUpload(url);
