@@ -64,6 +64,7 @@ const PropertyDetailPage: React.FC = () => {
           .from('properties')
           .select('*')
           .neq('ref', ref)
+          .or('availability_status.is.null,availability_status.neq.vendido')
           .limit(3);
 
         if (error) {
@@ -79,6 +80,13 @@ const PropertyDetailPage: React.FC = () => {
     fetchProperty();
     fetchSimilarProperties();
   }, [ref]);
+
+  // Imóveis vendidos não são acessíveis — reencaminha para a lista
+  useEffect(() => {
+    if (!loading && property && property.availability_status === 'vendido') {
+      navigate('/imoveis/lista', { replace: true });
+    }
+  }, [loading, property, navigate]);
 
   useEffect(() => {
     if (!property || !property.images) return;
@@ -205,6 +213,15 @@ const PropertyDetailPage: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl text-red-600">Imóvel não encontrado</div>
+      </div>
+    );
+  }
+
+  // Imóvel vendido: não mostra o conteúdo (o efeito acima reencaminha para a lista)
+  if (property.availability_status === 'vendido') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">A redirecionar...</div>
       </div>
     );
   }
@@ -692,18 +709,29 @@ const PropertyDetailPage: React.FC = () => {
             <div className="lg:col-span-1" id="contact-form">
               <div className="sticky top-32 space-y-6">
                 
-                {/* Vertical Video Section - Independent Box */}
-                {property.video_url && getYoutubeEmbedUrl(property.video_url) && (
+                {/* Vertical Video Section - Independent Box (YouTube ou ficheiro carregado no site) */}
+                {property.video_url && (
                   <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100">
                     <div className="relative aspect-[9/16] w-full">
-                      <iframe
-                        src={`${getYoutubeEmbedUrl(property.video_url)}?autoplay=0&rel=0`}
-                        className="absolute top-0 left-0 w-full h-full"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        title="Vídeo de Apresentação"
-                      ></iframe>
+                      {getYoutubeEmbedUrl(property.video_url) ? (
+                        <iframe
+                          src={`${getYoutubeEmbedUrl(property.video_url)}?autoplay=0&rel=0`}
+                          className="absolute top-0 left-0 w-full h-full"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          title="Vídeo de Apresentação"
+                        ></iframe>
+                      ) : (
+                        <video
+                          src={property.video_url}
+                          className="absolute top-0 left-0 w-full h-full object-cover"
+                          controls
+                          playsInline
+                          preload="metadata"
+                          title="Vídeo de Apresentação"
+                        />
+                      )}
                     </div>
                   </div>
                 )}
@@ -934,14 +962,9 @@ const PropertyDetailPage: React.FC = () => {
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              <h3 className="text-2xl font-bold text-gray-900">
                 Simule o seu crédito habitação
               </h3>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                {priceableTypes.length > 1
-                  ? 'Escolha a tipologia que pretende e o simulador ajusta-se automaticamente ao respetivo valor.'
-                  : `Valores já ajustados a este imóvel (${formatPrice(priceValue)}). Ajuste os parâmetros à sua medida e peça uma simulação detalhada e gratuita.`}
-              </p>
             </div>
 
             {/* Seletor de tipologia — só para empreendimentos com várias tipologias com preço */}

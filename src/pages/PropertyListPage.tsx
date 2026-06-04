@@ -236,12 +236,11 @@ const PropertyListPage: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {currentProperties.map((property) => (
-                  <Link
-                    key={property.id}
-                    to={`/imoveis/${property.ref || property.id}`}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
-                  >
+                {currentProperties.map((property) => {
+                  const isSold = property.availability_status === 'vendido';
+                  const cardClass = `bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full ${isSold ? 'cursor-not-allowed' : 'hover:shadow-xl transition-shadow duration-300'}`;
+                  const cardInner = (
+                    <>
                     <div className="relative">
                       <img
                         src={property.images?.[0] || 'https://via.placeholder.com/400x300?text=Sem+Imagem'}
@@ -355,14 +354,26 @@ const PropertyListPage: React.FC = () => {
                       </div>
 
                       <div className="mt-auto">
-                        <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors inline-flex items-center justify-center">
-                          Ver Detalhes
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </div>
+                        {isSold ? (
+                          <div className="w-full bg-gray-400 text-white py-2 px-4 rounded-lg inline-flex items-center justify-center cursor-not-allowed">
+                            Imóvel Vendido
+                          </div>
+                        ) : (
+                          <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors inline-flex items-center justify-center">
+                            Ver Detalhes
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </Link>
-                ))}
+                    </>
+                  );
+                  return isSold ? (
+                    <div key={property.id} className={cardClass}>{cardInner}</div>
+                  ) : (
+                    <Link key={property.id} to={`/imoveis/${property.ref || property.id}`} className={cardClass}>{cardInner}</Link>
+                  );
+                })}
               </div>
 
               {/* No Results */}

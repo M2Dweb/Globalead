@@ -31,11 +31,12 @@ const FeaturedProperties: React.FC = () => {
             .limit(3)
             .order('created_at', { ascending: false });
 
-          setProperties(regularData || []);
+          setProperties((regularData || []).filter((p: any) => p.availability_status !== 'vendido'));
         } else {
           const featuredProperties = featuredData
             .map(item => item.properties)
-            .filter(Boolean);
+            .filter(Boolean)
+            .filter((p: any) => p.availability_status !== 'vendido');
           setProperties(featuredProperties);
         }
       } catch (error) {
