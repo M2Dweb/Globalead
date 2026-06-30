@@ -77,7 +77,8 @@ const AdminPage: React.FC = () => {
     apartments: '',
     stores: '',
     image_url: '',
-    image_key: ''
+    image_key: '',
+    video_poster: ''
   });
 
 
@@ -597,7 +598,8 @@ const AdminPage: React.FC = () => {
       apartments: '',
       stores: '',
       image_url: '',
-      image_key: ''
+      image_key: '',
+      video_poster: ''
     });
 
     setEditingProperty(null);
@@ -666,7 +668,8 @@ const AdminPage: React.FC = () => {
       apartments: property.apartments?.toString() || '',
       stores: property.stores?.toString() || '',
       image_url: property.image_url || '',
-      image_key: property.image_key || ''
+      image_key: property.image_key || '',
+      video_poster: property.video_poster || ''
     });
 
     setEditingProperty(property);
@@ -1142,6 +1145,15 @@ const AdminPage: React.FC = () => {
                         files={propertyForm.video_url && !propertyForm.video_url.includes('youtu') ? [propertyForm.video_url] : []}
                         onUpload={(urls) => setPropertyForm({ ...propertyForm, video_url: urls[0] || '' })}
                         accept="video/*"
+                        adminPassword={password}
+                      />
+                      <p className="text-xs text-gray-500 mt-4 mb-2">
+                        Capa do vídeo (opcional) — imagem mostrada antes de dar play. Se não definir, usa a 1ª foto do imóvel. (Não se aplica a vídeos do YouTube.)
+                      </p>
+                      <ImageUploader
+                        folder="properties/video-posters"
+                        value={propertyForm.video_poster}
+                        onUpload={(url) => setPropertyForm({ ...propertyForm, video_poster: url })}
                         adminPassword={password}
                       />
                     </div>

@@ -356,7 +356,7 @@ const PropertyListPage: React.FC = () => {
                       <div className="mt-auto">
                         {isSold ? (
                           <div className="w-full bg-gray-400 text-white py-2 px-4 rounded-lg inline-flex items-center justify-center cursor-not-allowed">
-                            Imóvel Vendido
+                            VENDIDO
                           </div>
                         ) : (
                           <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors inline-flex items-center justify-center">

@@ -34,7 +34,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploa
       }
     } catch (error) {
       console.error('Erro no upload:', error);
-      alert('Erro ao fazer upload da imagem');
+      alert('Erro ao carregar a imagem: ' + (error as Error).message);
     } finally {
       setUploading(false);
     }

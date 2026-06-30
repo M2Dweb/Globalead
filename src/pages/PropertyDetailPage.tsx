@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Clock, Bell, Search, Heart, AlertCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Clock, Bell, Search, Heart, AlertCircle, PlayCircle } from 'lucide-react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase, getPropertyByRef } from '../lib/supabase';
@@ -712,6 +712,10 @@ const PropertyDetailPage: React.FC = () => {
                 {/* Vertical Video Section - Independent Box (YouTube ou ficheiro carregado no site) */}
                 {property.video_url && (
                   <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                    <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-100">
+                      <PlayCircle className="h-5 w-5 text-[#79b2e9]" />
+                      <span className="font-semibold text-[#0d2233]">Vídeo de Apresentação</span>
+                    </div>
                     <div className="relative aspect-[9/16] w-full">
                       {getYoutubeEmbedUrl(property.video_url) ? (
                         <iframe
@@ -725,6 +729,7 @@ const PropertyDetailPage: React.FC = () => {
                       ) : (
                         <video
                           src={property.video_url}
+                          poster={property.video_poster || property.images?.[0]}
                           className="absolute top-0 left-0 w-full h-full object-cover"
                           controls
                           playsInline

@@ -42,7 +42,7 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
       }
     } catch (error) {
       console.error('Erro no upload:', error);
-      alert('Erro ao fazer upload dos ficheiros');
+      alert('Erro ao carregar os ficheiros: ' + (error as Error).message);
     } finally {
       setUploading(false);
     }
