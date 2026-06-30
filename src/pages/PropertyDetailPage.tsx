@@ -124,6 +124,14 @@ const PropertyDetailPage: React.FC = () => {
     return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
   };
 
+  const getInstagramEmbedUrl = (url: string) => {
+    if (!url) return null;
+    // Aceita links de reels, posts ou tv do Instagram
+    const match = url.match(/instagram\.com\/(?:reel|reels|p|tv)\/([A-Za-z0-9_-]+)/);
+    if (!match) return null;
+    return `https://www.instagram.com/reel/${match[1]}/embed`;
+  };
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-PT', {
       style: 'currency',
@@ -717,7 +725,17 @@ const PropertyDetailPage: React.FC = () => {
                       <span className="font-semibold text-[#0d2233]">Vídeo de Apresentação</span>
                     </div>
                     <div className="relative aspect-[9/16] w-full">
-                      {getYoutubeEmbedUrl(property.video_url) ? (
+                      {getInstagramEmbedUrl(property.video_url) ? (
+                        <iframe
+                          src={getInstagramEmbedUrl(property.video_url) as string}
+                          className="absolute top-0 left-0 w-full h-full"
+                          frameBorder="0"
+                          scrolling="no"
+                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          allowFullScreen
+                          title="Vídeo de Apresentação"
+                        ></iframe>
+                      ) : getYoutubeEmbedUrl(property.video_url) ? (
                         <iframe
                           src={`${getYoutubeEmbedUrl(property.video_url)}?autoplay=0&rel=0`}
                           className="absolute top-0 left-0 w-full h-full"
