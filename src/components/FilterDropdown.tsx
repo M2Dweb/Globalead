@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronDown, ListFilter as Filter, X } from 'lucide-react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -281,6 +282,16 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
 const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Bloqueia o scroll do fundo enquanto o painel de filtros (mobile) está aberto
+  useEffect(() => {
+    if (!isOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [isOpen]);
+
   const getActiveFiltersCount = () => {
     let count = 0;
     if (props.searchTerm) count++;
@@ -334,11 +345,18 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
-      {isOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 z-50 bg-white border border-gray-200 rounded-lg shadow-xl mt-2 max-h-96 overflow-y-auto">
-          <div className="p-4">
-            <div className="flex justify-between items-center mb-4">
+      {/* Mobile Panel — bottom sheet via portal (escapa a qualquer stacking context da grelha) */}
+      {isOpen && createPortal(
+        <div className="md:hidden fixed inset-0 z-[9999] flex flex-col">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+          {/* Painel ancorado ao fundo */}
+          <div className="relative mt-auto bg-white rounded-t-2xl shadow-2xl max-h-[85vh] flex flex-col">
+            <div className="flex justify-between items-center p-4 border-b border-gray-100">
               <h3 className="text-lg font-semibold text-gray-900">Filtros</h3>
               <div className="flex items-center space-x-2">
                 {getActiveFiltersCount() > 0 && (
@@ -353,14 +371,24 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-gray-500 hover:text-gray-700"
+                  aria-label="Fechar filtros"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
             </div>
-            <FilterContent {...props} />
+            <div className="p-4 overflow-y-auto">
+              <FilterContent {...props} />
+              <button
+                onClick={() => setIsOpen(false)}
+                className="w-full mt-6 bg-[#0d2233] text-white py-3 rounded-lg font-semibold hover:bg-[#79b2e9] transition-colors"
+              >
+                Ver resultados
+              </button>
+            </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

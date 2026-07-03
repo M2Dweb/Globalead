@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { uploadToR2 } from '../lib/uploadToR2';
+import { compressImage } from '../lib/compressImage';
 import { Upload, X } from 'lucide-react';
 
 interface ImageUploaderProps {
@@ -15,12 +16,14 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploa
   const [imageUrl, setImageUrl] = useState(value || '');
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    let file = e.target.files?.[0];
     if (!file) return;
 
     setUploading(true);
 
     try {
+      // Comprime/redimensiona a imagem no browser antes de subir
+      file = await compressImage(file);
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `${folder}/${fileName}`;

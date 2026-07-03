@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
 import FilterDropdown from '../components/FilterDropdown';
 import StatusBadge from '../components/StatusBadge';
+import { imageUrl } from '../lib/imageUrl';
 
 const PropertyListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -243,8 +244,10 @@ const PropertyListPage: React.FC = () => {
                     <>
                     <div className="relative">
                       <img
-                        src={property.images?.[0] || 'https://via.placeholder.com/400x300?text=Sem+Imagem'}
+                        src={imageUrl(property.images?.[0], { width: 600 }) || 'https://via.placeholder.com/400x300?text=Sem+Imagem'}
                         alt={property.title || 'Imóvel'}
+                        loading="lazy"
+                        decoding="async"
                         className={`w-full h-48 object-cover ${property.availability_status === 'vendido' ? 'grayscale' : ''
                           }`}
                       />

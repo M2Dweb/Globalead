@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { uploadToR2 } from '../lib/uploadToR2';
+import { compressImage } from '../lib/compressImage';
 import { Upload, X } from 'lucide-react';
 
 interface MultiFileUploaderProps {
@@ -27,7 +28,11 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
 
     try {
       for (let i = 0; i < e.target.files.length; i++) {
-        const file = e.target.files[i];
+        let file = e.target.files[i];
+        // Imagens são comprimidas/redimensionadas no browser antes de subir (vídeos passam intactos)
+        if (accept.startsWith('image')) {
+          file = await compressImage(file);
+        }
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}_${i}.${fileExt}`;
         const filePath = `${folder}/${fileName}`;

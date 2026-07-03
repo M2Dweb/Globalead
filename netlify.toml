@@ -6,6 +6,11 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# Netlify Image CDN — autoriza otimizar as imagens do R2 (redimensiona, converte
+# para WebP/AVIF e serve com cache a partir da CDN da Netlify, aliviando o r2.dev)
+[images]
+  remote_images = ["https://pub-5f573f26090442adbdeb6739a1e97fa9.r2.dev/.*"]
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

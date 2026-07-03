@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from './ContentRenderer';
 import StatusBadge from './StatusBadge';
+import { imageUrl } from '../lib/imageUrl';
 
 const FeaturedProperties: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
@@ -83,8 +84,10 @@ const FeaturedProperties: React.FC = () => {
               >
                 <div className="relative">
                   <img
-                    src={property.images?.[0] || '/placeholder.jpg'}
+                    src={imageUrl(property.images?.[0], { width: 600 }) || '/placeholder.jpg'}
                     alt={property.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-48 object-cover"
                   />
 

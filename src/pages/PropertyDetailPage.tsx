@@ -8,6 +8,8 @@ import ContentRenderer from '../components/ContentRenderer';
 import PropertyBuyForm from '../components/PropertyBuyForm';
 import StatusBadge from '../components/StatusBadge';
 import CreditCalculator from '../components/CreditCalculator';
+import HoverVideo from '../components/HoverVideo';
+import { imageUrl } from '../lib/imageUrl';
 
 const PropertyDetailPage: React.FC = () => {
   const { ref } = useParams<{ ref: string }>();
@@ -319,7 +321,7 @@ const PropertyDetailPage: React.FC = () => {
       <section
         className="relative text-white py-12 mt-16"
         style={{
-          backgroundImage: `url(${property.images[0]})`,
+          backgroundImage: `url("${imageUrl(property.images[0], { width: 1600, quality: 70 })}")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -355,17 +357,36 @@ const PropertyDetailPage: React.FC = () => {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative h-96 md:h-[500px] overflow-hidden rounded-xl mb-6">
-            {property.images.map((image: string, index: number) => (
-              <img
-                key={index}
-                src={image}
-                alt={`${property.title} ${index + 1}`}
-                className={`
-                  w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000
-                  ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
-                `}
-              />
-            ))}
+            {property.images.map((image: string, index: number) => {
+              // Só carregamos a imagem atual e as vizinhas (com wraparound).
+              // Evita descarregar dezenas de imagens em tamanho real de uma vez.
+              const total = property.images.length;
+              const dist = Math.abs(index - currentImageIndex);
+              const modDist = Math.min(dist, total - dist);
+              if (modDist > 1) {
+                return (
+                  <div
+                    key={index}
+                    className="w-full h-full absolute top-0 left-0 opacity-0"
+                    aria-hidden="true"
+                  />
+                );
+              }
+              return (
+                <img
+                  key={index}
+                  src={imageUrl(image, { width: 1280 })}
+                  alt={`${property.title} ${index + 1}`}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  fetchPriority={index === currentImageIndex ? 'high' : 'auto'}
+                  className={`
+                    w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000
+                    ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
+                  `}
+                />
+              );
+            })}
 
             <button
               onClick={prevImage}
@@ -394,8 +415,10 @@ const PropertyDetailPage: React.FC = () => {
                   }`}
               >
                 <img
-                  src={image}
+                  src={imageUrl(image, { width: 160 })}
                   alt={`${property.title} ${index + 1}`}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </button>
@@ -722,13 +745,14 @@ const PropertyDetailPage: React.FC = () => {
                   <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100">
                     <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-100">
                       <PlayCircle className="h-5 w-5 text-[#79b2e9]" />
-                      <span className="font-semibold text-[#0d2233]">Vídeo de Apresentação</span>
+                      <span className="font-semibold text-[#0d2233]">Virtual Tour</span>
                     </div>
-                    <div className="relative aspect-[9/16] w-full">
+                    <div className="relative aspect-[9/16] w-full overflow-hidden">
                       {getInstagramEmbedUrl(property.video_url) ? (
                         <iframe
                           src={getInstagramEmbedUrl(property.video_url) as string}
-                          className="absolute top-0 left-0 w-full h-full"
+                          className="absolute left-0 w-full"
+                          style={{ top: '-54px', height: 'calc(100% + 240px)' }}
                           frameBorder="0"
                           scrolling="no"
                           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
@@ -745,14 +769,9 @@ const PropertyDetailPage: React.FC = () => {
                           title="Vídeo de Apresentação"
                         ></iframe>
                       ) : (
-                        <video
+                        <HoverVideo
                           src={property.video_url}
                           poster={property.video_poster || property.images?.[0]}
-                          className="absolute top-0 left-0 w-full h-full object-cover"
-                          controls
-                          playsInline
-                          preload="metadata"
-                          title="Vídeo de Apresentação"
                         />
                       )}
                     </div>
@@ -1034,8 +1053,10 @@ const PropertyDetailPage: React.FC = () => {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <img
-                  src={similarProperty.images[0]}
+                  src={imageUrl(similarProperty.images[0], { width: 600 })}
                   alt={similarProperty.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
