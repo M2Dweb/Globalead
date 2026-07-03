@@ -1,4 +1,4 @@
-const CACHE_NAME = 'globalead-v2';
+const CACHE_NAME = 'globalead-v3';
 const urlsToCache = [
   '/logo.png', // Logo básico
   // ⚠️ Não cachear '/' (index.html) — causa página branca quando o cache fica desatualizado
