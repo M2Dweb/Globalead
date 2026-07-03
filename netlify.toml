@@ -11,13 +11,6 @@
 [images]
   remote_images = ["https://pub-5f573f26090442adbdeb6739a1e97fa9.r2.dev/.*"]
 
-# Nome amigável para o Image CDN: /img?url=... em vez de /.netlify/images?url=...
-# TEM de vir antes do catch-all /* abaixo, senão é apanhado por ele.
-[[redirects]]
-  from = "/img"
-  to = "/.netlify/images"
-  status = 200
-
 [[redirects]]
   from = "/*"
   to = "/index.html"

@@ -28,11 +28,10 @@ export const imageUrl = (src?: string | null, _opts: ImageOptions = {}): string 
   if (!src) return src || '';
 
   // Assets locais e URLs já processados passam intactos
-  if (!isRemote(src) || src.includes('/img?') || src.includes('/.netlify/images')) return src;
+  if (!isRemote(src) || src.includes('/.netlify/images')) return src;
 
   // Em dev o endpoint do Image CDN não existe — usa o original
   if (!import.meta.env.PROD) return src;
 
-  // /img é um rewrite para /.netlify/images (ver netlify.toml)
-  return `/img?url=${encodeURIComponent(src)}`;
+  return `/.netlify/images?url=${encodeURIComponent(src)}`;
 };
