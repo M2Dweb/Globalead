@@ -7,6 +7,7 @@ import StickyCtaButton from './components/StickyCtaButton';
 import SEOHead from './components/SEOHead';
 import CookieBanner from './components/CookieBanner';
 import LoadingSpinner from './components/LoadingSpinner';
+import PreferencePopup from './components/PreferencePopup';
 
 // pages (lazy-loaded para reduzir o bundle inicial e acelerar o carregamento)
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -255,9 +256,10 @@ const AppLayout: React.FC = () => {
         </Suspense>
       </main>
       
-       {!(isCarlosGoncalvesPage || isAdminPage ) && <Footer />} 
-       <StickyCtaButton /> 
+       {!(isCarlosGoncalvesPage || isAdminPage ) && <Footer />}
+       <StickyCtaButton />
        <CookieBanner />
+       {!isAdminPage && <PreferencePopup />}
     </div>
   );
 };

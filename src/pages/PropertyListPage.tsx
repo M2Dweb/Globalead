@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Bed, Bath, Square, MapPin, ArrowRight, Building2, Store } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
 import FilterDropdown from '../components/FilterDropdown';
@@ -23,6 +23,13 @@ const PropertyListPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [propertiesPerPage] = useState(9);
   const [sortBy, setSortBy] = useState('newest');
+  const [searchParams] = useSearchParams();
+
+  // Pré-filtro por tipo via URL (ex.: /imoveis/lista?tipo=empreendimento)
+  useEffect(() => {
+    const tipo = searchParams.get('tipo');
+    if (tipo) setSelectedType(tipo);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchProperties = async () => {

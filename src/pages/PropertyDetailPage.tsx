@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Clock, Bell, Search, Heart, AlertCircle, PlayCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Clock, Bell, Search, Heart, AlertCircle, PlayCircle, Car } from 'lucide-react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase, getPropertyByRef } from '../lib/supabase';
@@ -11,9 +11,29 @@ import CreditCalculator from '../components/CreditCalculator';
 import HoverVideo from '../components/HoverVideo';
 import { imageUrl } from '../lib/imageUrl';
 
+const propertyTypeLabels: Record<string, string> = {
+  apartamento: 'Apartamento',
+  moradia: 'Moradia',
+  terreno: 'Terreno',
+  empreendimento: 'Empreendimento',
+  trespasse: 'Trespasse',
+};
+
+// Métrica da barra fixa superior do imóvel
+const BarMetric: React.FC<{ icon: React.ReactNode; value: React.ReactNode; label: string }> = ({ icon, value, label }) => (
+  <div className="flex flex-col items-center text-center leading-tight">
+    <div className="flex items-center gap-1">
+      {icon}
+      <span className="text-sm font-medium">{value}</span>
+    </div>
+    <span className="text-[10px] text-blue-200/80 mt-0.5">{label}</span>
+  </div>
+);
+
 const PropertyDetailPage: React.FC = () => {
   const { ref } = useParams<{ ref: string }>();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [property, setProperty] = useState<any | null>(null);
   const [similarProperties, setSimilarProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -317,9 +337,70 @@ const PropertyDetailPage: React.FC = () => {
         </script>
       </Helmet>
 
+      {/* Barra fixa superior com os dados do imóvel */}
+      <div className="sticky top-16 z-30 mt-16 bg-[#0d2233] text-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-3 sm:gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            aria-label="Voltar"
+            className="flex-shrink-0 h-9 w-9 flex items-center justify-center border border-white/30 hover:bg-white/10 transition-colors"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium truncate">{property.location || property.title}</p>
+            <p className="text-xs text-blue-200 truncate">
+              <span className="font-semibold text-white">
+                {formatPrice(selectedPropertyType?.price || property.price)}
+              </span>
+              {property.type !== 'empreendimento' && property.bedrooms != null && (
+                <> · {propertyTypeLabels[property.type] || property.type} {property.bedrooms} Quartos</>
+              )}
+              {property.ref && <> (ref: {property.ref})</>}
+            </p>
+          </div>
+
+          {/* Métricas (desktop) */}
+          {property.type !== 'empreendimento' && (
+            <div className="hidden lg:flex items-center gap-5">
+              {property.bedrooms != null && (
+                <BarMetric icon={<Bed className="h-4 w-4" />} value={property.bedrooms} label="Quartos" />
+              )}
+              {property.bathrooms != null && (
+                <BarMetric icon={<Bath className="h-4 w-4" />} value={property.bathrooms} label="C. Banho" />
+              )}
+              {property.garage && property.garage !== 'N/A' && (
+                <BarMetric icon={<Car className="h-4 w-4" />} value={property.garage} label="Garagem" />
+              )}
+              {property.area && (
+                <BarMetric icon={<Square className="h-4 w-4" />} value={`${property.area}m²`} label="Área privativa" />
+              )}
+            </div>
+          )}
+
+          {/* Ações */}
+          <div className="flex-shrink-0 flex items-center gap-2">
+            <button
+              onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-white text-[#0d2233] text-sm font-medium px-4 py-2 hover:bg-[#79b2e9] hover:text-white transition-colors"
+            >
+              Contactar
+            </button>
+            <button
+              onClick={() => setIsFavorite((v) => !v)}
+              aria-label="Adicionar aos favoritos"
+              className="h-9 w-9 flex items-center justify-center border border-white/30 hover:bg-white/10 transition-colors"
+            >
+              <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Header */}
       <section
-        className="relative text-white py-12 mt-16"
+        className="relative text-white py-12"
         style={{
           backgroundImage: `url("${imageUrl(property.images[0], { width: 1600, quality: 70 })}")`,
           backgroundSize: 'cover',
@@ -595,73 +676,8 @@ const PropertyDetailPage: React.FC = () => {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Details and Description - hidden for empreendimentos */}
+            {/* Description (os detalhes passaram para a barra fixa no topo) */}
             <div className="lg:col-span-2">
-              {property.type !== 'empreendimento' && (
-                <div className="bg-gray-50 p-6 rounded-xl mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Detalhes</h3>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8">
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Preço:</span>
-                      <span className="font-semibold">
-                        {formatPrice(selectedPropertyType?.price || property.price)}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Estado:</span>
-                      <span className="font-semibold">{
-                        ({
-                          em_construcao: 'Em construção',
-                          novo: 'Novo',
-                          usado: 'Usado',
-                          renovado: 'Renovado',
-                          em_planta: 'Em planta',
-                        } as Record<string, string>)[property.state || ''] || property.state?.replace(/_/g, ' ') || 'Novo'
-                      }</span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Área útil:</span>
-                      <span className="font-semibold">
-                        {selectedPropertyType?.area || property.area}m²
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Quartos:</span>
-                      <span className="font-semibold">{property.bedrooms}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Casas de banho:</span>
-                      <span className="font-semibold">{property.bathrooms}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Ano de Construção:</span>
-                      <span className="font-semibold">{property.year_built}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Estacionamento:</span>
-                      <span className="font-semibold">{property.garage || 'N/A'}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Certificado energético:</span>
-                      <span className="font-semibold">{property.energy_class}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600">Referência:</span>
-                      <span className="font-semibold">{property.ref || 'N/A'}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
               <div className="bg-gray-50 p-6 rounded-xl mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Descrição do Imóvel</h3>
                 <div className="text-gray-700 leading-relaxed">
@@ -781,7 +797,7 @@ const PropertyDetailPage: React.FC = () => {
                 <div className="bg-white p-6 rounded-xl shadow-lg">
                   <div className="flex items-center space-x-4 mb-6">
                     <img
-                      src="/carlos/pe-fato-meio3-fundo.jpg"
+                      src="/carlos/facebook.jpg"
                       alt="Carlos Gonçalves"
                       className="w-20 h-20 rounded-full border-2 border-[#79b2e9] object-top object-cover"
                     />
