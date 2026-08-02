@@ -71,7 +71,7 @@ const PreferencePopup: React.FC = () => {
   return (
     // Canto inferior direito, não-modal (não bloqueia a utilização do site)
     <div
-      className="fixed z-[90] bottom-4 right-4 left-4 sm:left-auto sm:w-[25rem] max-w-[calc(100vw-2rem)]"
+      className="fixed z-[90] bottom-4 right-4 left-4 sm:left-auto sm:w-[27rem] max-w-[calc(100vw-2rem)]"
       role="dialog"
       aria-label="Não encontra o que procura?"
     >
@@ -118,12 +118,12 @@ const PreferencePopup: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Insira o seu email"
-                className="flex-grow border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:border-[#0d2233]"
+                className="flex-grow min-w-0 border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:border-[#0d2233]"
               />
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-[#0d2233] text-white px-8 py-3 font-medium tracking-wide hover:bg-[#79b2e9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                className="flex-shrink-0 bg-[#0d2233] text-white px-6 py-3 font-medium tracking-wide hover:bg-[#79b2e9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
               >
                 {isSubmitting ? 'A enviar...' : 'Enviar'}
               </button>

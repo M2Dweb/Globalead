@@ -337,8 +337,10 @@ const PropertyDetailPage: React.FC = () => {
         </script>
       </Helmet>
 
-      {/* Barra fixa superior com os dados do imóvel */}
-      <div className="sticky top-16 z-30 mt-16 bg-[#0d2233] text-white shadow-md">
+      {/* Barra fixa superior com os dados do imóvel.
+          Fixa por baixo da barra de breadcrumbs (fixed top-16, ~44px de altura)
+          para não haver sobreposição; margem no topo para separar do header. */}
+      <div className="sticky top-[112px] z-30 mt-[112px] bg-[#0d2233] text-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => navigate(-1)}
