@@ -639,7 +639,7 @@ segura e sem complicações!
 
                     <button
                       onClick={() => setCurrentStep(4)}
-                      className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium"
+                      className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-4 px-6 rounded-2xl hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-all duration-300 font-medium"
                     >
                       Continuar
                     </button>
@@ -795,7 +795,7 @@ segura e sem complicações!
 
                     <button
                       onClick={() => setCurrentStep(5)}
-                      className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium"
+                      className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-4 px-6 rounded-2xl hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-all duration-300 font-medium"
                     >
                       Continuar
                     </button>
@@ -852,7 +852,7 @@ segura e sem complicações!
 
                     <button
                       onClick={() => setCurrentStep(5)}
-                      className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium"
+                      className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-4 px-6 rounded-2xl hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-all duration-300 font-medium"
                     >
                       Continuar
                     </button>
@@ -1131,7 +1131,7 @@ segura e sem complicações!
                       <button
                         onClick={handleSubmit}
                         disabled={isSubmitting}
-                        className="w-full bg-[#0d2233] text-white py-4 px-6 rounded-2xl hover:bg-[#79b2e9] transition-all duration-300 font-medium shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-4 px-6 rounded-2xl hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-all duration-300 font-medium shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isSubmitting ? 'A enviar...' : 'Solicitar Avaliação Gratuita'}
                       </button>

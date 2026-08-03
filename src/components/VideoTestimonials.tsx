@@ -145,7 +145,7 @@ const VideoTestimonials: React.FC = () => {
           <p className="text-gray-600 mb-6">
             Quer partilhar a sua experiência connosco?
           </p>
-          <button className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors font-semibold">
+          <button className="bg-white text-[#0d2233] border border-[#0d2233] px-8 py-3 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors font-semibold">
             Deixar Testemunho
           </button>
         </div>

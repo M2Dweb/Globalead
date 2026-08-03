@@ -381,7 +381,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
               <FilterContent {...props} />
               <button
                 onClick={() => setIsOpen(false)}
-                className="w-full mt-6 bg-[#0d2233] text-white py-3 rounded-lg font-semibold hover:bg-[#79b2e9] transition-colors"
+                className="w-full mt-6 bg-white text-[#0d2233] border border-[#0d2233] py-3 rounded-lg font-semibold hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
               >
                 Ver resultados
               </button>

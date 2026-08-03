@@ -141,7 +141,7 @@ const BlogWithFilters: React.FC = () => {
         {/* Load More */}
         {filteredPosts.length > 6 && (
           <div className="text-center mt-12">
-            <button className="bg-[#0d2233] text-white px-8 py-3 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center">
+            <button className="bg-white text-[#0d2233] border border-[#0d2233] px-8 py-3 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300 font-semibold inline-flex items-center">
               Carregar mais artigos
               <ArrowRight className="ml-2 h-5 w-5" />
             </button>

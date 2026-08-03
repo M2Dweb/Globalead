@@ -9,35 +9,43 @@ const FeaturedProperties2: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const TARGET = 6; // mostrar sempre 6 imóveis em destaque
+
+    const isElegible = (p: any) => p && p.availability_status !== 'vendido' && p.type !== 'empreendimento';
+
     const fetchProperties = async () => {
       try {
-        // Buscar propriedades em destaque
-        const { data: featuredData, error: featuredError } = await supabase
+        // 1) Propriedades marcadas como destaque (curadas no admin)
+        const { data: featuredData } = await supabase
           .from('featured_properties')
-          .select(`
-            property_id,
-            properties (*)
-          `)
+          .select(`property_id, properties (*)`)
           .order('position', { ascending: true })
-          .limit(6);
+          .limit(TARGET);
 
-        if (featuredError || !featuredData || featuredData.length === 0) {
-          // Fallback para últimas propriedades (exclui empreendimentos — têm secção própria)
+        let result: any[] = (featuredData || [])
+          .map((item: any) => item.properties)
+          .filter(isElegible);
+
+        // 2) Se houver menos de 6, completar com os imóveis mais recentes
+        if (result.length < TARGET) {
           const { data: regularData } = await supabase
             .from('properties')
             .select('*')
             .neq('type', 'empreendimento')
-            .limit(6)
-            .order('created_at', { ascending: false });
+            .order('created_at', { ascending: false })
+            .limit(TARGET * 3);
 
-          setProperties((regularData || []).filter((p: any) => p.availability_status !== 'vendido'));
-        } else {
-          const featuredProperties = featuredData
-            .map((item) => item.properties)
-            .filter(Boolean)
-            .filter((p: any) => p.availability_status !== 'vendido' && p.type !== 'empreendimento');
-          setProperties(featuredProperties);
+          const existingIds = new Set(result.map((p) => p.id));
+          for (const p of regularData || []) {
+            if (result.length >= TARGET) break;
+            if (isElegible(p) && !existingIds.has(p.id)) {
+              existingIds.add(p.id);
+              result.push(p);
+            }
+          }
         }
+
+        setProperties(result.slice(0, TARGET));
       } catch (error) {
         console.error('Erro:', error);
         setProperties([]);

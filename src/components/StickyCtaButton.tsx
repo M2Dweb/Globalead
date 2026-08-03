@@ -34,7 +34,7 @@ const StickyCtaButton: React.FC = () => {
             {/* Main CTA Button */}
             <motion.button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="bg-[#0d2233] hover:bg-[#79b2e9] text-white p-4 rounded-full shadow-lg transition-colors duration-300"
+              className="bg-white text-[#0d2233] border border-[#0d2233] hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] p-4 rounded-full shadow-lg transition-colors duration-300"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >

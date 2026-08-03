@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { MapPin, Bed, Bath, Square, ArrowRight, Building2, Store } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import ContentRenderer from './ContentRenderer';
-import StatusBadge from './StatusBadge';
-import { imageUrl } from '../lib/imageUrl';
+import PropertyCardSothebys from './PropertyCardSothebys';
 
 const FeaturedProperties: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
@@ -12,34 +9,40 @@ const FeaturedProperties: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const TARGET = 6;
+    const isElegible = (p: any) => p && p.availability_status !== 'vendido' && p.type !== 'empreendimento';
+
     const fetchProperties = async () => {
       try {
-        // Buscar propriedades em destaque
-        const { data: featuredData, error: featuredError } = await supabase
+        const { data: featuredData } = await supabase
           .from('featured_properties')
-          .select(`
-            property_id,
-            properties (*)
-          `)
+          .select(`property_id, properties (*)`)
           .order('position', { ascending: true })
-          .limit(3);
+          .limit(TARGET);
 
-        if (featuredError || !featuredData || featuredData.length === 0) {
-          // Fallback para últimas propriedades
+        let result: any[] = (featuredData || [])
+          .map((item: any) => item.properties)
+          .filter(isElegible);
+
+        if (result.length < TARGET) {
           const { data: regularData } = await supabase
             .from('properties')
             .select('*')
-            .limit(3)
-            .order('created_at', { ascending: false });
+            .neq('type', 'empreendimento')
+            .order('created_at', { ascending: false })
+            .limit(TARGET * 3);
 
-          setProperties((regularData || []).filter((p: any) => p.availability_status !== 'vendido'));
-        } else {
-          const featuredProperties = featuredData
-            .map(item => item.properties)
-            .filter(Boolean)
-            .filter((p: any) => p.availability_status !== 'vendido');
-          setProperties(featuredProperties);
+          const existingIds = new Set(result.map((p) => p.id));
+          for (const p of regularData || []) {
+            if (result.length >= TARGET) break;
+            if (isElegible(p) && !existingIds.has(p.id)) {
+              existingIds.add(p.id);
+              result.push(p);
+            }
+          }
         }
+
+        setProperties(result.slice(0, TARGET));
       } catch (error) {
         console.error('Erro:', error);
         setProperties([]);
@@ -50,135 +53,29 @@ const FeaturedProperties: React.FC = () => {
     fetchProperties();
   }, []);
 
-  const getPropertyTypeLabel = (type: string) => {
-    const types: Record<string, string> = {
-      apartamento: 'Apartamento',
-      moradia: 'Moradia',
-      terreno: 'Terreno',
-      empreendimento: 'Empreendimento',
-      trespasse: 'Trespasse'
-    };
-    return types[type] || type;
-  };
-
-
-
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Visite o seu próximo lar de sonho
-          </h2>
+        {/* Cabeçalho estilo Sotheby's */}
+        <div className="section-heading">
+          <h2 className="section-heading__title">Imóveis em destaque</h2>
+          <span className="section-heading__divider" />
+          <span className="section-heading__subtitle">A sua vida começa com uma casa que o inspira</span>
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-xl text-gray-600">A carregar imóveis...</div>
+          <div className="text-center py-12 text-lg text-gray-500">A carregar imóveis...</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {properties.map((property) => (
-              <div
-                key={property.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full"
-                onClick={() => navigate(`/imoveis/${property.ref || property.id}`)}
-              >
-                <div className="relative">
-                  <img
-                    src={imageUrl(property.images?.[0], { width: 600 }) || '/placeholder.jpg'}
-                    alt={property.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-48 object-cover"
-                  />
-
-                  {/* Badge de estado ou tipo - canto superior direito */}
-                  {property.availability_status && property.availability_status !== 'disponivel' ? (
-                    <div className="absolute top-4 right-4">
-                      <StatusBadge status={property.availability_status} />
-                    </div>
-                  ) : (
-                    <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {getPropertyTypeLabel(property.type)}
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-bold text-gray-900 text-center mb-1 line-clamp-2 min-h-[3.5rem]">
-                    {property.title}
-                  </h3>
-
-                  {property.type === 'empreendimento' ? (
-                    <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-2 text-sm">
-                      {property.apartments && (
-                        <div className="flex items-center">
-                          <Building2 className="h-4 w-4 mr-1" />
-                          <span>{property.apartments} Frações</span>
-                        </div>
-                      )}
-                      {property.stores && (
-                        <div className="flex items-center">
-                          <Store className="h-4 w-4 mr-1" />
-                          <span>{property.stores} {property.stores === 1 ? 'Loja' : 'Lojas'}</span>
-                        </div>
-                      )}
-                      {property.location && (
-                        <div className="flex items-center">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          <span className="truncate">{property.location}</span>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-2 text-sm">
-                      <div className="flex items-center">
-                        <Bed className="h-4 w-4 mr-1" />
-                        <span>{property.bedrooms}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Bath className="h-4 w-4 mr-1" />
-                        <span>{property.bathrooms}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Square className="h-4 w-4 mr-1" />
-                        <span>{property.area}m²</span>
-                      </div>
-                      {property.location && (
-                        <div className="flex items-center">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          <span className="truncate">{property.location}</span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Descrição */}
-                  <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow min-h-[4.5rem]">
-                    <ContentRenderer content={property.description || ''} />
-                  </div>
-
-                  <button
-                    className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition mt-auto"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/imoveis/${property.ref || property.id}`);
-                    }}
-                  >
-                    Ver Detalhes
-                  </button>
-                </div>
-              </div>
+              <PropertyCardSothebys key={property.id} property={property} variant="imovel" />
             ))}
           </div>
         )}
 
-        <div className="flex justify-center items-center mt-12">
-          <button
-            onClick={() => navigate("/imoveis/lista")}
-            className="bg-[#79b2e9] text-white px-8 py-3 rounded-lg hover:bg-[#0d2233] transition font-semibold inline-flex items-center"
-          >
-            Ver Todos
-            <ArrowRight className="ml-2 h-5 w-5" />
+        <div className="flex justify-center mt-12">
+          <button onClick={() => navigate('/imoveis/lista')} className="btn-outline">
+            Todos os Imóveis
           </button>
         </div>
       </div>

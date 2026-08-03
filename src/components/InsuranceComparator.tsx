@@ -140,7 +140,7 @@ const scrollToForm = () => {
       <div className="mt-6 text-center">
         <button 
           onClick={scrollToForm}
-          className="bg-[#79b2e9] text-white font-semibold py-3 px-8 rounded-lg hover:[#0d2233]"
+          className="bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300"
         >
           Pedir Simulação
         </button>

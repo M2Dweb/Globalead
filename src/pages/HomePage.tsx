@@ -201,7 +201,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
                 
                 <button
                   onClick={() => navigate(service.link)} 
-                  className="w-full bg-[#79b2e9] text-white py-2 px-12 rounded-lg hover:bg-[#0d2233] transition-colors"
+                  className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                 >
                   Saber mais
                 </button>
@@ -297,7 +297,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
                     <ContentRenderer content={post.excerpt} className="line-clamp-3" />
                   </p>
 
-                  <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors text-center">
+                  <div className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-4 rounded-lg group-hover:bg-[#79b2e9] group-hover:text-white group-hover:border-[#79b2e9] transition-colors text-center">
                     Ler Mais
                   </div>
                 </div>

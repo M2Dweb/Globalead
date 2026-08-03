@@ -289,7 +289,7 @@ const ImoveisPage: React.FC = () => {
                 
                 <button
                   onClick={() => navigate(service.link)} 
-                  className="w-full bg-[#79b2e9] text-white py-2 px-12 rounded-lg hover:bg-[#0d2233] transition-colors"
+                  className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                 >
                   Saber mais
                 </button>
@@ -344,7 +344,7 @@ const ImoveisPage: React.FC = () => {
               <div className="flex justify-center md:justify-start">
                 <a
                   href="/carlos-goncalves"
-                  className="bg-[#79b2e9] text-white py-3 px-12 rounded-lg hover:bg-[#0d2233] transition-colors font-medium"
+                  className="bg-white text-[#0d2233] border border-[#0d2233] py-3 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors font-medium"
                 >
                   Conhecer Carlos Gonçalves
                 </a>
@@ -713,7 +713,7 @@ const ImoveisPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300"
+                  className="w-full bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300"
                 >
                   {isSubmitting ? 'Enviando...' : 'Enviar Pedido'}
                 </button>

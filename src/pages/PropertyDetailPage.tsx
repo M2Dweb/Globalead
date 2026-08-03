@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Clock, Bell, Search, Heart, AlertCircle, PlayCircle, Car } from 'lucide-react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase, getPropertyByRef } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
+import PropertyCardSothebys from '../components/PropertyCardSothebys';
 import PropertyBuyForm from '../components/PropertyBuyForm';
 import StatusBadge from '../components/StatusBadge';
 import CreditCalculator from '../components/CreditCalculator';
@@ -351,14 +352,23 @@ const PropertyDetailPage: React.FC = () => {
           </button>
 
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium truncate">{property.location || property.title}</p>
+            {/* Empreendimento → mostra o NOME; imóvel normal → mostra a localização */}
+            <p className="text-sm font-medium truncate">
+              {property.type === 'empreendimento' ? property.title : property.location || property.title}
+            </p>
             <p className="text-xs text-blue-200 truncate">
               <span className="font-semibold text-white">
-                {formatPrice(selectedPropertyType?.price || property.price)}
+                {property.type === 'empreendimento'
+                  ? priceValue > 0
+                    ? `Desde ${formatPrice(priceValue)}`
+                    : 'Sob Consulta'
+                  : formatPrice(selectedPropertyType?.price || property.price)}
               </span>
-              {property.type !== 'empreendimento' && property.bedrooms != null && (
-                <> · {propertyTypeLabels[property.type] || property.type} {property.bedrooms} Quartos</>
-              )}
+              {property.type === 'empreendimento'
+                ? property.location && <> · {property.location}</>
+                : property.bedrooms != null && (
+                    <> · {propertyTypeLabels[property.type] || property.type} {property.bedrooms} Quartos</>
+                  )}
               {property.ref && <> (ref: {property.ref})</>}
             </p>
           </div>
@@ -411,28 +421,12 @@ const PropertyDetailPage: React.FC = () => {
       >
         <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
 
+        {/* Título e métricas foram removidos daqui — já constam na barra azul do topo
+            (evita repetir a informação). Mantém-se apenas o badge de estado. */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center">
             <StatusBadge status={property.availability_status || 'disponivel'} size="lg" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{property.title}</h1>
-
-          {property.type !== 'empreendimento' && (
-            <div className="flex justify-center items-center space-x-8 text-lg relative z-10">
-              <div className="flex items-center">
-                <Bed className="h-6 w-6 mr-2" />
-                <span>{property.bedrooms}</span>
-              </div>
-              <div className="flex items-center">
-                <Bath className="h-6 w-6 mr-2" />
-                <span>{property.bathrooms}</span>
-              </div>
-              <div className="flex items-center">
-                <Square className="h-6 w-6 mr-2" />
-                <span>{property.area}m²</span>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
@@ -520,7 +514,7 @@ const PropertyDetailPage: React.FC = () => {
             </div>
             <button
               onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="flex-shrink-0 bg-[#79b2e9] hover:bg-white hover:text-[#0d2233] text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
+              className="flex-shrink-0 bg-white text-[#0d2233] border border-[#0d2233] hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
             >
               Agendar Visita
             </button>
@@ -554,7 +548,7 @@ const PropertyDetailPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setOpenGroups(prev => ({ ...prev, [groupKey]: !isOpen(groupKey) }))}
-                      className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors duration-150 text-left"
+                      className="w-full flex items-center justify-center gap-3 px-6 py-4 hover:bg-gray-50 transition-colors duration-150 text-center"
                     >
                       <span className="font-semibold text-[#0d2233] text-lg">
                         {groupKey} <span className="text-gray-400 font-normal text-base">({groups[groupKey].length})</span>
@@ -612,7 +606,7 @@ const PropertyDetailPage: React.FC = () => {
                                         setSelectedPropertyType(type);
                                         document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
                                       }}
-                                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#79b2e9] text-white hover:bg-[#0d2233] transition-colors duration-200 whitespace-nowrap"
+                                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-[#0d2233] border border-[#0d2233] hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-200 whitespace-nowrap"
                                     >
                                       Saber mais
                                     </button>
@@ -719,31 +713,31 @@ const PropertyDetailPage: React.FC = () => {
                 <div className="flex justify-center gap-4 flex-wrap">
                   <button
                     onClick={() => shareContent('facebook')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    className="bg-white text-[#0d2233] border border-[#0d2233] p-3 rounded-full hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                   >
                     <Facebook className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('whatsapp')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    className="bg-white text-[#0d2233] border border-[#0d2233] p-3 rounded-full hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                   >
                     <MessageCircle className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('telegram')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    className="bg-white text-[#0d2233] border border-[#0d2233] p-3 rounded-full hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                   >
                     <Send className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('twitter')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    className="bg-white text-[#0d2233] border border-[#0d2233] p-3 rounded-full hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                   >
                     <Twitter className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => shareContent('email')}
-                    className="bg-[#79b2e9] text-white p-3 rounded-full hover:bg-[#0d2233] transition-colors"
+                    className="bg-white text-[#0d2233] border border-[#0d2233] p-3 rounded-full hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                   >
                     <Mail className="h-5 w-5" />
                   </button>
@@ -907,7 +901,7 @@ const PropertyDetailPage: React.FC = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-[#0d2233] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isSubmitting ? 'Enviando...' : 'Agendar Visita'}
                       </button>
@@ -1004,7 +998,7 @@ const PropertyDetailPage: React.FC = () => {
 
                     <button
                       onClick={() => navigate('/imoveis/lista')}
-                      className="w-full bg-[#0d2233] text-white py-3 rounded-lg hover:bg-[#79b2e9] transition"
+                      className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-3 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition"
                     >
                       Ver outros imóveis
                     </button>
@@ -1063,56 +1057,13 @@ const PropertyDetailPage: React.FC = () => {
             Imóveis Semelhantes
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {similarProperties.map((similarProperty) => (
-              <Link
+              <PropertyCardSothebys
                 key={similarProperty.id}
-                to={`/imoveis/${similarProperty.ref || similarProperty.id}`}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-              >
-                <img
-                  src={imageUrl(similarProperty.images[0], { width: 600 })}
-                  alt={similarProperty.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-
-                  <h4 className="text-xl font-bold text-gray-900 text-center mb-3">
-                    {similarProperty.title}
-                  </h4>
-                  <div className="flex flex-wrap items-center justify-center gap-3 text-gray-600 mb-3 text-sm">
-                    <div className="flex items-center">
-                      <Bed className="h-4 w-4 mr-1" />
-                      <span>{similarProperty.bedrooms}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Bath className="h-4 w-4 mr-1" />
-                      <span>{similarProperty.bathrooms}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Square className="h-4 w-4 mr-1" />
-                      <span>{similarProperty.area}m²</span>
-                    </div>
-                    <div className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      <span>{similarProperty.location}</span>
-                    </div>
-                  </div>
-                  <div className="text-gray-600 text-sm line-clamp-3">
-                    <ContentRenderer content={similarProperty.description || ''} />
-                  </div>
-
-                </div>
-                <div className="p-3">
-                  <div
-                    className="w-full bg-[#79b2e9] text-center text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition"
-                  >
-                    Ver Detalhes
-                  </div>
-                </div>
-              </Link>
+                property={similarProperty}
+                variant={similarProperty.type === 'empreendimento' ? 'empreendimento' : 'imovel'}
+              />
             ))}
           </div>
         </div>

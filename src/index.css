@@ -14,43 +14,24 @@
   }
 }
 
-@layer base {
-  /* Texto normal do site — sans limpo estilo Sotheby's (aplica a TODO o site) */
-  html {
-    @apply font-sans;
-  }
-  body {
-    @apply font-sans text-gray-800 antialiased;
-  }
-
-  /* Títulos do site — serif elegante estilo Sotheby's.
-     Aplica a todos os níveis de título (h1..h6). Labels pequenos (ex.: nos
-     cards de imóvel) usam a classe utilitária `font-sans` para se manterem sans. */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-serif;
-    letter-spacing: 0.01em;
-  }
-}
+/* NOTA sobre tipografia:
+   O site mantém a fonte antiga (default) em todo o lado. A serif nova
+   (Cormorant Garamond) é aplicada APENAS nos cabeçalhos das secções novas
+   da homepage, através da classe `.section-heading__title`. */
 
 @layer components {
   .hover-card-effect {
     @apply bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col;
   }
 
-  /* Botão estilo Sotheby's — retângulo com contorno fino, sem preenchimento.
-     Ex.: "Todos os Imóveis" */
+  /* Botão do site — branco por defeito, azul ao passar o rato (substitui o antigo botão azul cheio). */
   .btn-outline {
-    @apply inline-flex items-center justify-center border border-[#0d2233] text-[#0d2233] bg-transparent px-8 py-3 text-sm font-medium tracking-wide uppercase transition-colors duration-200 hover:bg-[#0d2233] hover:text-white;
+    @apply inline-flex items-center justify-center border border-[#0d2233] text-[#0d2233] bg-white px-8 py-3 text-sm font-medium tracking-wide transition-colors duration-200 hover:bg-[#79b2e9] hover:border-[#79b2e9] hover:text-white;
   }
 
-  /* Variante para fundos escuros (contorno claro) */
+  /* Variante para fundos escuros — contorno claro, azul ao passar o rato. */
   .btn-outline-light {
-    @apply inline-flex items-center justify-center border border-white text-white bg-transparent px-8 py-3 text-sm font-medium tracking-wide uppercase transition-colors duration-200 hover:bg-white hover:text-[#0d2233];
+    @apply inline-flex items-center justify-center border border-white text-white bg-transparent px-8 py-3 text-sm font-medium tracking-wide transition-colors duration-200 hover:bg-[#79b2e9] hover:border-[#79b2e9] hover:text-white;
   }
 
   /* Cabeçalho de secção estilo Sotheby's: título serif + divisor vertical + subtítulo */

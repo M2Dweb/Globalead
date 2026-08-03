@@ -18,7 +18,7 @@ const NotFoundPage: React.FC = () => {
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             to="/"
-            className="inline-flex items-center justify-center bg-[#79b2e9] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#0d2233] transition-colors"
+            className="inline-flex items-center justify-center bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-6 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
           >
             <Home className="h-5 w-5 mr-2" />
             Voltar ao início

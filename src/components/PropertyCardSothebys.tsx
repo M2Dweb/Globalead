@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bed, Bath, Maximize, Heart, ArrowRight, GitCompare } from 'lucide-react';
+import { Bed, Bath, Maximize, Heart, ArrowRight, Share2, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { imageUrl } from '../lib/imageUrl';
 
@@ -56,11 +56,29 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
   const navigate = useNavigate();
   const [imgIdx, setImgIdx] = useState(0);
   const [fav, setFav] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const images: string[] = Array.isArray(property.images) ? property.images.filter(Boolean) : [];
   const cover = images[imgIdx] || images[0];
   const href = `/imoveis/${property.ref || property.id}`;
   const go = () => navigate(href);
+
+  // Partilhar o imóvel (Web Share API nativo; fallback: copiar o link)
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const shareUrl = `${window.location.origin}${href}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: property.title, text: property.title, url: shareUrl });
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
+      }
+    } catch {
+      /* utilizador cancelou a partilha — ignorar */
+    }
+  };
 
   const dots = images.slice(0, 6);
 
@@ -177,14 +195,12 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
           <div className="flex items-center gap-2 flex-shrink-0">
             <button
               type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                go();
-              }}
-              aria-label="Comparar"
+              onClick={handleShare}
+              aria-label="Partilhar"
+              title={copied ? 'Link copiado' : 'Partilhar'}
               className="flex items-center justify-center h-8 w-8 border border-gray-300 text-gray-500 hover:border-[#0d2233] hover:text-[#0d2233] transition-colors"
             >
-              <GitCompare className="h-4 w-4" />
+              {copied ? <Check className="h-4 w-4 text-green-600" /> : <Share2 className="h-4 w-4" />}
             </button>
             <span className="flex items-center justify-center h-8 w-8 border border-gray-300 text-[#0d2233] group-hover:bg-[#0d2233] group-hover:text-white transition-colors">
               <ArrowRight className="h-4 w-4" />

@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Corpo/texto normal — estilo Sotheby's (aprox. Benton Sans -> Inter)
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        // Títulos — serif elegante estilo Sotheby's
+        // NOTA: o `sans` fica com o default do Tailwind (fonte antiga do site).
+        // A serif nova é usada APENAS nos cabeçalhos das secções novas da homepage
+        // (classe .section-heading__title), via `font-serif`.
         serif: ['"Cormorant Garamond"', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
     },

@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
 import FilterDropdown from '../components/FilterDropdown';
+import PropertyCardSothebys from '../components/PropertyCardSothebys';
 import StatusBadge from '../components/StatusBadge';
 import { imageUrl } from '../lib/imageUrl';
 
@@ -244,146 +245,13 @@ const PropertyListPage: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {currentProperties.map((property) => {
-                  const isSold = property.availability_status === 'vendido';
-                  const cardClass = `bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full ${isSold ? 'cursor-not-allowed' : 'hover:shadow-xl transition-shadow duration-300'}`;
-                  const cardInner = (
-                    <>
-                    <div className="relative">
-                      <img
-                        src={imageUrl(property.images?.[0], { width: 600 }) || 'https://via.placeholder.com/400x300?text=Sem+Imagem'}
-                        alt={property.title || 'Imóvel'}
-                        loading="lazy"
-                        decoding="async"
-                        className={`w-full h-48 object-cover ${property.availability_status === 'vendido' ? 'grayscale' : ''
-                          }`}
-                      />
-
-                      {/* Overlay para reservado/vendido */}
-                      {property.availability_status === 'reservado' && (
-                        <div className="absolute inset-0 bg-yellow-500 bg-opacity-10"></div>
-                      )}
-                      {property.availability_status === 'vendido' && (
-                        <div className="absolute inset-0 bg-red-500 bg-opacity-10"></div>
-                      )}
-
-                      {/* BADGE de status ou TIPO do imóvel - direita */}
-                      {property.availability_status && property.availability_status !== 'disponivel' ? (
-                        <div className="absolute top-4 right-4">
-                          <StatusBadge status={property.availability_status} />
-                        </div>
-                      ) : property.type ? (
-                        <div className="absolute top-4 right-4 bg-[#79b2e9] text-white px-3 py-1 rounded-full text-sm font-medium">
-                          {property.type === 'apartamento' ? 'Apartamento' :
-                            property.type === 'moradia' ? 'Moradia' :
-                              property.type === 'empreendimento' ? 'Empreendimento' :
-                                property.type === 'terreno' ? 'Terreno' :
-                                  property.type === 'escritorio' ? 'Escritório' :
-                                    property.type === 'loja' ? 'Loja' :
-                                      property.type === 'armazem' ? 'Armazém' :
-                                        property.type === 'quinta' ? 'Quinta' :
-                                          property.type === 'predio' ? 'Prédio' :
-                                            property.type === 'trespasse' ? 'Trespasse' :
-                                              property.type}
-                        </div>
-                      ): null}
-
-                      {/* Número de fotos - canto inferior esquerdo */}
-                      <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
-                        {property.images?.length || 0} fotos
-                      </div>
-                    </div>
-
-                    <div className="p-6 flex flex-col flex-grow">
-                      {property.type === 'empreendimento' ? (
-                        <div className="text-2xl font-bold text-[#79b2e9] mb-2">
-                          {property.price ? `Desde ${formatPrice(property.price)}` : 'Sob consulta'}
-                        </div>
-                      ) : (
-                        <div className="text-2xl font-bold text-[#79b2e9] mb-2">
-                          {property.price ? formatPrice(property.price) : 'Sob consulta'}
-                        </div>
-                      )}
-
-                      <h3 className="text-xl font-bold text-gray-900  line-clamp-2 min-h-[3.5rem]">
-                        {property.title || 'Imóvel'}
-                      </h3>
-
-                      {property.type === 'empreendimento' ? (
-                        <div className="flex flex-wrap items-center gap-3 text-gray-600 mb-3 text-sm">
-                          {property.apartments && (
-                            <div className="flex items-center">
-                              <Building2 className="h-4 w-4 mr-1" />
-                              <span>{property.apartments} Frações</span>
-                            </div>
-                          )}
-                          {property.stores && (
-                            <div className="flex items-center">
-                              <Store className="h-4 w-4 mr-1" />
-                              <span>{property.stores} {property.stores === 1 ? 'Loja' : 'Lojas'}</span>
-                            </div>
-                          )}
-                          {property.location && (
-                            <div className="flex items-center">
-                              <MapPin className="h-4 w-4 mr-1" />
-                              <span className="truncate max-w-[200px]">{property.location}</span>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="flex items-center space-x-4 text-gray-600 mb-3 text-sm">
-                          {property.bedrooms != null && (
-                            <div className="flex items-center">
-                              <Bed className="h-4 w-4 mr-1" />
-                              <span>{property.bedrooms}</span>
-                            </div>
-                          )}
-                          {property.bathrooms != null && (
-                            <div className="flex items-center">
-                              <Bath className="h-4 w-4 mr-1" />
-                              <span>{property.bathrooms}</span>
-                            </div>
-                          )}
-                          {property.area != null && (
-                            <div className="flex items-center">
-                              <Square className="h-4 w-4 mr-1" />
-                              <span>{property.area}m²</span>
-                            </div>
-                          )}
-                          {property.location && (
-                            <div className="flex items-center">
-                              <MapPin className="h-4 w-4 mr-1" />
-                              <span className="truncate">{property.location}</span>
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow min-h-[4.5rem]">
-                        <ContentRenderer content={property.description || ''} />
-                      </div>
-
-                      <div className="mt-auto">
-                        {isSold ? (
-                          <div className="w-full bg-gray-400 text-white py-2 px-4 rounded-lg inline-flex items-center justify-center cursor-not-allowed">
-                            VENDIDO
-                          </div>
-                        ) : (
-                          <div className="w-full bg-[#79b2e9] text-white py-2 px-4 rounded-lg hover:bg-[#0d2233] transition-colors inline-flex items-center justify-center">
-                            Ver Detalhes
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    </>
-                  );
-                  return isSold ? (
-                    <div key={property.id} className={cardClass}>{cardInner}</div>
-                  ) : (
-                    <Link key={property.id} to={`/imoveis/${property.ref || property.id}`} className={cardClass}>{cardInner}</Link>
-                  );
-                })}
+                {currentProperties.map((property) => (
+                  <PropertyCardSothebys
+                    key={property.id}
+                    property={property}
+                    variant={property.type === 'empreendimento' ? 'empreendimento' : 'imovel'}
+                  />
+                ))}
               </div>
 
               {/* No Results */}
