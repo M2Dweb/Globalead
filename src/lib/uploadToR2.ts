@@ -31,11 +31,21 @@ export const uploadToR2 = async (
   const { presignedUrl, publicUrl, key } = await presignRes.json();
 
   // 2. Upload direto para o R2
-  const uploadRes = await fetch(presignedUrl, {
-    method: 'PUT',
-    headers: { 'Content-Type': file.type || 'application/octet-stream' },
-    body: file,
-  });
+  let uploadRes: Response;
+  try {
+    uploadRes = await fetch(presignedUrl, {
+      method: 'PUT',
+      headers: { 'Content-Type': file.type || 'application/octet-stream' },
+      body: file,
+    });
+  } catch {
+    // O browser esconde o motivo real (CORS ou falha de rede) atrás de um
+    // "Failed to fetch" genérico — damos uma mensagem que se percebe.
+    throw new Error(
+      'Não foi possível enviar o ficheiro para o servidor de imagens. ' +
+        'Verifique a ligação à internet e tente novamente.'
+    );
+  }
 
   if (!uploadRes.ok) {
     throw new Error(`Upload para R2 falhou: ${uploadRes.status}`);

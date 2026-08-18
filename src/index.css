@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Proteção das fotos/vídeos: impede arrastar para fora do browser, o menu de
+   "guardar imagem" por toque longo no telemóvel e a seleção da imagem.
+   O texto da página mantém-se normalmente selecionável.
+   Complementado pelo componente MediaProtection (bloqueia o botão direito). */
+img,
+video,
+picture {
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 /* Animação de entrada do popup (canto inferior direito) */
 @keyframes popup-in {
   from {

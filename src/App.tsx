@@ -8,6 +8,7 @@ import SEOHead from './components/SEOHead';
 import CookieBanner from './components/CookieBanner';
 import LoadingSpinner from './components/LoadingSpinner';
 import PreferencePopup from './components/PreferencePopup';
+import MediaProtection from './components/MediaProtection';
 
 // pages (lazy-loaded para reduzir o bundle inicial e acelerar o carregamento)
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -194,12 +195,10 @@ const AppLayout: React.FC = () => {
      if (path === '/politica-privacidade') return [{ label: 'Política de Privacidade', current: true }];
      if (path === '/resolucao-litigios') return [{ label: 'Resolução de Litígios', current: true }];
      if (path === '/admin') return [{ label: 'Administração', current: true }];
+     // Detalhe de imóvel: sem breadcrumbs — a barra azul do imóvel já fica
+     // encostada ao header e faz o papel de navegação (botão "voltar").
      if (path.startsWith('/imoveis/') && path !== '/imoveis/lista') {
-       return [
-         { label: 'Imóveis', href: '/imoveis' },
-         { label: 'Catálogo', href: '/imoveis/lista' },
-         { label: 'Detalhes', current: true }
-       ];
+       return [];
      }
      if (path.startsWith('/blog/')) {
        return [
@@ -260,6 +259,9 @@ const AppLayout: React.FC = () => {
        <StickyCtaButton />
        <CookieBanner />
        {!isAdminPage && <PreferencePopup />}
+       {/* Bloqueia botão direito / arrastar / toque longo nas fotos.
+           No /admin fica desligado para não atrapalhar a gestão de conteúdos. */}
+       {!isAdminPage && <MediaProtection />}
     </div>
   );
 };

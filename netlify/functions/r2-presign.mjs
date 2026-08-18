@@ -17,6 +17,14 @@ const getClient = () =>
       accessKeyId: process.env.R2_ACCESS_KEY_ID,
       secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
     },
+    // OBRIGATÓRIO para URLs pré-assinados no R2.
+    // Por omissão o SDK da AWS junta ao URL `x-amz-checksum-crc32=AAAAAA==`
+    // (o CRC32 de um corpo vazio, porque na altura de assinar ainda não há
+    // ficheiro). Quando o browser faz o PUT com a foto real, o checksum não
+    // bate certo e o R2 recusa — e como a resposta de erro não traz cabeçalhos
+    // CORS, o browser só mostra "Failed to fetch".
+    requestChecksumCalculation: 'WHEN_REQUIRED',
+    responseChecksumValidation: 'WHEN_REQUIRED',
   });
 
 const verifyAdminPassword = async (password) => {

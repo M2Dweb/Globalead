@@ -339,9 +339,10 @@ const PropertyDetailPage: React.FC = () => {
       </Helmet>
 
       {/* Barra fixa superior com os dados do imóvel.
-          Fixa imediatamente por baixo da barra de breadcrumbs (fixed top-16, ~44px
-          de altura → termina a ~108px), encostada, sem folga nem sobreposição. */}
-      <div className="sticky top-[108px] z-30 mt-[108px] bg-[#0d2233] text-white shadow-md">
+          Encostada diretamente ao header (fixed, 72px de altura: logo h-14 + py-2).
+          Nas páginas de imóvel os breadcrumbs estão desligados (ver App.tsx), por
+          isso não há faixa branca vazia entre o header e esta barra. */}
+      <div className="sticky top-[72px] z-30 mt-[72px] bg-[#0d2233] text-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => navigate(-1)}
@@ -1030,10 +1031,10 @@ const PropertyDetailPage: React.FC = () => {
                 <select
                   value={Math.max(0, priceableTypes.findIndex((t) => t === selectedPropertyType))}
                   onChange={(e) => setSelectedPropertyType(priceableTypes[Number(e.target.value)])}
-                  className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
+                  className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 bg-white text-center focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
                 >
                   {priceableTypes.map((t, i) => (
-                    <option key={i} value={i}>
+                    <option key={i} value={i} className="text-center">
                       {t.name}{t.fracao ? ` · Fr. ${t.fracao}` : ''}{t.piso ? ` · Piso ${t.piso}` : ''} — {formatPrice(Number(t.price))}
                     </option>
                   ))}

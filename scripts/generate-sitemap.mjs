@@ -67,10 +67,12 @@ function urlEntry({ loc, lastmod, changefreq, priority }) {
 async function run() {
   const entries = STATIC_ROUTES.map(urlEntry);
 
-  const properties = await fetchRows('properties', 'ref,id,created_at');
+  const properties = await fetchRows('properties', 'ref,id,created_at,availability_status');
   for (const p of properties) {
     const slug = p.ref || p.id;
     if (!slug) continue;
+    // Vendidos reencaminham para o catálogo — fora do sitemap para não gerarem soft-404.
+    if (p.availability_status === 'vendido') continue;
     entries.push(urlEntry({
       loc: `/imoveis/${encodeURIComponent(slug)}`,
       lastmod: toDate(p.created_at),
