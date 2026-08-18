@@ -90,6 +90,11 @@ const Footer: React.FC = () => {
               />
             </div>
 
+            {/* Licença de mediação imobiliária (obrigatório) */}
+            <p className="text-sm text-gray-300 tracking-wide">
+              Globalead Portugal - AMI nº 8774
+            </p>
+
             {/* ÍCONES CENTRADOS VERTICALMENTE EM RELAÇÃO À LOGO */}
             <div className="flex space-x-4 mt-4">
               <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noreferrer">
@@ -217,6 +222,11 @@ const Footer: React.FC = () => {
                 alt="Globalead Logo"
               />
             </div>
+
+            {/* Licença de mediação imobiliária (obrigatório) */}
+            <p className="text-sm text-gray-300 tracking-wide mb-6">
+              Globalead Portugal - AMI nº 8774
+            </p>
 
             {/* ÍCONES ABAIXO DA LINHA NO MOBILE */}
             <div className="flex space-x-6">
