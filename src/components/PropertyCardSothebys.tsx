@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Bed, Bath, Maximize, Heart, ArrowRight, Share2, Check } from 'lucide-react';
+import { Bed, Bath, Maximize, Heart, ArrowRight, Share2, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { imageUrl } from '../lib/imageUrl';
+import StatusBadge from './StatusBadge';
 
 interface PropertyCardSothebysProps {
   property: any;
@@ -58,7 +59,10 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
   const [fav, setFav] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const images: string[] = Array.isArray(property.images) ? property.images.filter(Boolean) : [];
+  const allImages: string[] = Array.isArray(property.images) ? property.images.filter(Boolean) : [];
+  // No cartão navegamos só pelas primeiras fotos — as restantes veem-se na
+  // página do imóvel. Setas e pontos usam exatamente o mesmo conjunto.
+  const images = allImages.slice(0, 6);
   const cover = images[imgIdx] || images[0];
   const href = `/imoveis/${property.ref || property.id}`;
   const go = () => navigate(href);
@@ -80,7 +84,12 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
     }
   };
 
-  const dots = images.slice(0, 6);
+  const dots = images;
+
+  const step = (e: React.MouseEvent, delta: number) => {
+    e.stopPropagation();
+    setImgIdx((i) => (i + delta + images.length) % images.length);
+  };
 
   const ImageArea = (
     <div className="relative overflow-hidden bg-gray-100">
@@ -91,6 +100,13 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
         decoding="async"
         className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
       />
+
+      {/* Etiqueta de estado (Reservado / Vendido) — canto superior esquerdo */}
+      {(property.availability_status === 'reservado' || property.availability_status === 'vendido') && (
+        <div className="absolute top-3 left-3">
+          <StatusBadge status={property.availability_status} size="md" />
+        </div>
+      )}
 
       {/* Favorito */}
       <button
@@ -104,6 +120,29 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
       >
         <Heart className={`h-5 w-5 ${fav ? 'fill-current text-white' : ''}`} />
       </button>
+
+      {/* Setas para percorrer as fotos — aparecem ao passar o rato.
+          No telemóvel ficam sempre visíveis, porque não há "hover". */}
+      {images.length > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={(e) => step(e, -1)}
+            aria-label="Foto anterior"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/45 hover:bg-black/70 text-white p-1.5 transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => step(e, 1)}
+            aria-label="Foto seguinte"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/45 hover:bg-black/70 text-white p-1.5 transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </>
+      )}
 
       {/* Indicadores (dots) */}
       {dots.length > 1 && (

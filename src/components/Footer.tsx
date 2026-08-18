@@ -80,8 +80,8 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
           {/* Redes sociais - SECÇÃO ESQUERDA (VISÍVEL APENAS NO DESKTOP) */}
-          <div className="hidden md:flex flex-col justify-center items-center">
-            <div className="w-full max-w-xs mb-8">
+          <div className="hidden md:flex flex-col justify-center items-center gap-6">
+            <div className="w-full max-w-xs">
               <img
                 src="/G.png"
                 className="w-full h-full object-contain cursor-pointer"
@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
             </p>
 
             {/* ÍCONES CENTRADOS VERTICALMENTE EM RELAÇÃO À LOGO */}
-            <div className="flex space-x-4 mt-4">
+            <div className="flex space-x-4">
               <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noreferrer">
                 <Facebook className="h-6 w-6 hover:text-[#79b2e9]" />
               </a>
@@ -213,8 +213,8 @@ const Footer: React.FC = () => {
         {/* Redes Sociais - VISÍVEL APENAS NO MOBILE */}
         <div className="md:hidden">
           {/* LOGO MAIOR EM MOBILE */}
-          <div className="flex flex-col items-center mb-6">
-            <div className="w-64 mb-6">
+          <div className="flex flex-col items-center gap-6 mb-6">
+            <div className="w-64">
               <img
                 src="/G.png"
                 className="w-full h-full object-contain cursor-pointer"
@@ -224,7 +224,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Licença de mediação imobiliária (obrigatório) */}
-            <p className="text-sm text-gray-300 tracking-wide mb-6">
+            <p className="text-sm text-gray-300 tracking-wide">
               Globalead Portugal - AMI nº 8774
             </p>
 

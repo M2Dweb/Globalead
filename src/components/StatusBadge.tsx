@@ -5,18 +5,26 @@ interface StatusBadgeProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
+/**
+ * Etiqueta de estado do imóvel (Reservado / Vendido).
+ *
+ * Formato quadrado (cantos direitos) nas cores da Globalead, para poder ficar
+ * sobreposta à foto nos cartões de imóvel — assim os imóveis reservados e
+ * vendidos podem continuar no site, devidamente identificados, em vez de
+ * terem de ser removidos.
+ */
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'sm' }) => {
   const config = {
     reservado: {
       bg: 'bg-[#79b2e9]',
       text: 'text-white',
-      label: 'Reservado'
+      label: 'Reservado',
     },
     vendido: {
-      bg: 'bg-[#79b2e9]',
+      bg: 'bg-[#0d2233]',
       text: 'text-white',
-      label: 'Vendido'
-    }
+      label: 'Vendido',
+    },
   };
 
   if (status !== 'reservado' && status !== 'vendido') {
@@ -24,14 +32,15 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'sm' }) => {
   }
 
   const current = config[status as keyof typeof config];
-  
-  let baseClasses = "inline-flex items-center rounded-full font-medium whitespace-nowrap";
-  
+
+  let baseClasses = 'inline-flex items-center font-medium tracking-wide whitespace-nowrap';
+
   if (size === 'lg') {
-    baseClasses += " px-4 py-2 text-base";
+    baseClasses += ' px-5 py-2 text-base';
+  } else if (size === 'md') {
+    baseClasses += ' px-4 py-1.5 text-sm';
   } else {
-    // defaults to exactly matching the property type tag
-    baseClasses += " px-3 py-1 text-sm";
+    baseClasses += ' px-3 py-1 text-xs';
   }
 
   return (

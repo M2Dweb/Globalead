@@ -87,6 +87,7 @@ const PropertyDetailPage: React.FC = () => {
           .from('properties')
           .select('*')
           .neq('ref', ref)
+          // Nas sugestões só entram imóveis ainda disponíveis
           .or('availability_status.is.null,availability_status.neq.vendido')
           .limit(3);
 
@@ -103,13 +104,6 @@ const PropertyDetailPage: React.FC = () => {
     fetchProperty();
     fetchSimilarProperties();
   }, [ref]);
-
-  // Imóveis vendidos não são acessíveis — reencaminha para a lista
-  useEffect(() => {
-    if (!loading && property && property.availability_status === 'vendido') {
-      navigate('/imoveis/lista', { replace: true });
-    }
-  }, [loading, property, navigate]);
 
   useEffect(() => {
     if (!property || !property.images) return;
@@ -244,15 +238,6 @@ const PropertyDetailPage: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl text-red-600">Imóvel não encontrado</div>
-      </div>
-    );
-  }
-
-  // Imóvel vendido: não mostra o conteúdo (o efeito acima reencaminha para a lista)
-  if (property.availability_status === 'vendido') {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">A redirecionar...</div>
       </div>
     );
   }

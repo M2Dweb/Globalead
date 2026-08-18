@@ -10,19 +10,26 @@ const FeaturedProperties: React.FC = () => {
 
   useEffect(() => {
     const TARGET = 6;
-    const isElegible = (p: any) => p && p.availability_status !== 'vendido' && p.type !== 'empreendimento';
+    // Escolhas do admin: entram tal como foram escolhidas (mesmo reservadas ou
+    // vendidas — o cartão mostra a etiqueta de estado).
+    const isImovel = (p: any) => p && p.type !== 'empreendimento';
+    // Preenchimento automático: só imóveis ainda disponíveis.
+    const isElegible = (p: any) => isImovel(p) && p.availability_status !== 'vendido';
 
     const fetchProperties = async () => {
       try {
+        // Sem limite na query: a tabela guarda os destaques dos dois grupos
+        // (imóveis e empreendimentos). Cortamos só depois de filtrar, senão
+        // os empreendimentos podiam ocupar os lugares dos imóveis.
         const { data: featuredData } = await supabase
           .from('featured_properties')
           .select(`property_id, properties (*)`)
-          .order('position', { ascending: true })
-          .limit(TARGET);
+          .order('position', { ascending: true });
 
-        let result: any[] = (featuredData || [])
+        const result: any[] = (featuredData || [])
           .map((item: any) => item.properties)
-          .filter(isElegible);
+          .filter(isImovel)
+          .slice(0, TARGET);
 
         if (result.length < TARGET) {
           const { data: regularData } = await supabase

@@ -8,6 +8,27 @@ import RichTextEditor from '../components/RichTextEditor';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
 
+/**
+ * Destaques da página inicial.
+ * A homepage tem duas secções independentes — "Imóveis em destaque" e
+ * "Empreendimentos em destaque" — por isso a escolha no admin também é
+ * separada, com o seu próprio limite de lugares.
+ */
+type DestaqueGroup = 'imovel' | 'empreendimento';
+
+const MAX_DESTAQUES: Record<DestaqueGroup, number> = {
+  imovel: 6,
+  empreendimento: 4,
+};
+
+const GROUP_LABELS: Record<DestaqueGroup, string> = {
+  imovel: 'imóveis',
+  empreendimento: 'empreendimentos',
+};
+
+const groupOf = (property: any): DestaqueGroup =>
+  property?.type === 'empreendimento' ? 'empreendimento' : 'imovel';
+
 const AdminPage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showPasswordPopup, setShowPasswordPopup] = useState(true);
@@ -84,6 +105,14 @@ const AdminPage: React.FC = () => {
 
 
 
+  // Destaques de um grupo (imóveis ou empreendimentos), já ordenados.
+  // Cada entrada traz junto a propriedade correspondente.
+  const featuredOfGroup = (group: DestaqueGroup) =>
+    featuredProperties
+      .map(fp => ({ ...fp, property: properties.find(p => p.id === fp.property_id) }))
+      .filter(fp => fp.property && groupOf(fp.property) === group)
+      .sort((a, b) => a.position - b.position);
+
   const toggleFeaturedProperty = async (property: any) => {
     try {
       const isFeatured = featuredProperties.some(fp => fp.property_id === property.id);
@@ -97,9 +126,14 @@ const AdminPage: React.FC = () => {
 
         if (error) throw error;
       } else {
-
-        if (featuredProperties.length >= 6) {
-          alert('Já existem 6 propriedades em destaque. Remova uma antes de adicionar outra.');
+        // O limite é por grupo: a homepage tem uma secção de imóveis e outra
+        // de empreendimentos, cada uma com o seu número de lugares.
+        const group = groupOf(property);
+        if (featuredOfGroup(group).length >= MAX_DESTAQUES[group]) {
+          alert(
+            `Já existem ${MAX_DESTAQUES[group]} ${GROUP_LABELS[group]} em destaque. ` +
+            'Remova um antes de adicionar outro.'
+          );
           return;
         }
 
@@ -171,53 +205,36 @@ const AdminPage: React.FC = () => {
 
 
 
-  // Função para reordenar destaques
-  const reorderFeaturedProperty = async (propertyId: string, newPosition: number) => {
+  /**
+   * Sobe ou desce um destaque dentro do seu grupo, trocando a posição com o
+   * vizinho. (A versão anterior tinha limites fixos — Math.min(3, ...) — que
+   * partiam a ordenação a partir do 4.º destaque.)
+   */
+  const moveFeatured = async (property: any, direction: -1 | 1) => {
     try {
-      const oldPosition = featuredProperties.find(fp => fp.property_id === propertyId)?.position;
+      const list = featuredOfGroup(groupOf(property));
+      const index = list.findIndex(fp => fp.property_id === property.id);
+      const target = list[index + direction];
+      if (index === -1 || !target) return;
 
-      if (oldPosition === undefined) return;
+      const current = list[index];
 
-      // Reordenar todas as posições
-      const updatedFeatured = featuredProperties.map(fp => {
-        if (fp.property_id === propertyId) {
-          return { ...fp, position: newPosition };
-        }
+      // Troca as posições entre os dois
+      const updates = [
+        { property_id: current.property_id, position: target.position },
+        { property_id: target.property_id, position: current.position },
+      ];
 
-        // Ajustar outras posições
-        if (oldPosition < newPosition) {
-          // Movendo para baixo
-          if (fp.position > oldPosition && fp.position <= newPosition) {
-            return { ...fp, position: fp.position - 1 };
-          }
-        } else {
-          // Movendo para cima
-          if (fp.position >= newPosition && fp.position < oldPosition) {
-            return { ...fp, position: fp.position + 1 };
-          }
-        }
-
-        return fp;
-      }).sort((a, b) => a.position - b.position);
-
-      // Atualizar no banco de dados
-      const updates = updatedFeatured.map((fp, index) => ({
-        ...fp,
-        position: index + 1
-      }));
-
-      // Atualizar todas as posições
-      for (const fp of updates) {
+      for (const u of updates) {
         const { error } = await supabase
           .from('featured_properties')
-          .update({ position: fp.position })
-          .eq('property_id', fp.property_id);
+          .update({ position: u.position })
+          .eq('property_id', u.property_id);
 
         if (error) throw error;
       }
 
       fetchData();
-
     } catch (error) {
       console.error('Erro ao reordenar destaques:', error);
       alert('Erro ao reordenar propriedades');
@@ -1551,177 +1568,209 @@ const AdminPage: React.FC = () => {
         {activeTab === 'featured' && (
           <div>
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">Propriedades em Destaque</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Destaques da Página Inicial</h2>
               <p className="text-gray-600 mt-2">
-                Selecione até 6 propriedades para aparecerem na página inicial.
-                Arraste para reordenar (a primeira aparece na esquerda).
+                A página inicial tem duas secções separadas. Escolha aqui os imóveis
+                de uma e os empreendimentos da outra — a ordem que definir é a ordem
+                em que aparecem no site.
               </p>
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <div className="flex items-center">
-                  <Star className="h-5 w-5 text-blue-500 mr-2" />
-                  <p className="text-sm text-blue-700">
-                    <span className="font-semibold">{featuredProperties.length}/6</span> propriedades selecionadas
-                  </p>
-                </div>
-              </div>
             </div>
 
-            {/* Lista de propriedades em destaque */}
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Propriedades Selecionadas</h3>
+            {(['imovel', 'empreendimento'] as DestaqueGroup[]).map((group) => {
+              const selecionados = featuredOfGroup(group);
+              const maximo = MAX_DESTAQUES[group];
+              const disponiveis = properties.filter((p) => groupOf(p) === group);
+              const titulo = group === 'imovel' ? 'Imóveis em destaque' : 'Empreendimentos em destaque';
+              const cheio = selecionados.length >= maximo;
 
-              {featuredProperties.length === 0 ? (
-                <div className="text-center py-8 bg-gray-50 rounded-lg">
-                  <StarOff className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">Nenhuma propriedade em destaque</p>
-                  <p className="text-sm text-gray-400 mt-2">Selecione propriedades abaixo para adicionar aos destaques</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {featuredProperties
-                    .sort((a, b) => a.position - b.position)
-                    .map((featured, index) => {
-                      const property = properties.find(p => p.id === featured.property_id);
-                      if (!property) return null;
+              return (
+                <div key={group} className="mb-14">
+                  <h3 className="text-xl font-bold text-gray-900">{titulo}</h3>
 
-                      return (
-                        <div key={featured.id} className="bg-white rounded-lg shadow border p-4">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                              <div className="mr-4 flex items-center justify-center w-8 h-8 bg-[#0d2233] text-white rounded-full">
-                                {index + 1}
-                              </div>
-                              <img
-                                src={property.cover_image || property.images?.[0] || '/placeholder.jpg'}
-                                className="h-16 w-16 rounded-lg object-cover mr-4"
-                                alt={property.title}
-                              />
-                              <div>
-                                <h4 className="font-medium text-gray-900">{property.title}</h4>
-                                <div className="flex items-center text-sm text-gray-500">
-                                  <MapPin className="h-3 w-3 mr-1" />
-                                  {property.location}
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  {property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                              <div className="flex space-x-1">
-                                <button
-                                  onClick={() => reorderFeaturedProperty(property.id, Math.max(1, index))}
-                                  disabled={index === 0}
-                                  className={`p-2 rounded ${index === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-[#0d2233] hover:bg-gray-100'}`}
-                                  title="Mover para cima"
-                                >
-                                  ↑
-                                </button>
-                                <button
-                                  onClick={() => reorderFeaturedProperty(property.id, Math.min(3, index + 2))}
-                                  disabled={index === featuredProperties.length - 1}
-                                  className={`p-2 rounded ${index === featuredProperties.length - 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-[#0d2233] hover:bg-gray-100'}`}
-                                  title="Mover para baixo"
-                                >
-                                  ↓
-                                </button>
-                              </div>
-                              <button
-                                onClick={() => removeFromFeatured(property.id)}
-                                className="text-red-600 hover:text-red-800 p-2"
-                                title="Remover dos destaques"
-                              >
-                                <Trash2 className="h-5 w-5" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              )}
-            </div>
+                  <div className="mt-3 mb-6 p-4 bg-blue-50 rounded-lg">
+                    <div className="flex items-center">
+                      <Star className="h-5 w-5 text-blue-500 mr-2" />
+                      <p className="text-sm text-blue-700">
+                        <span className="font-semibold">{selecionados.length}/{maximo}</span>{' '}
+                        {GROUP_LABELS[group]} selecionados
+                      </p>
+                    </div>
+                  </div>
 
-            {/* Lista de todas as propriedades para seleção */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Todas as Propriedades</h3>
-              <div className="bg-white rounded-lg shadow overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Propriedade
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Preço
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Localização
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Destaque
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {properties.map((property) => {
-                        const isFeatured = featuredProperties.some(fp => fp.property_id === property.id);
+                  {/* Selecionados, pela ordem em que aparecem no site */}
+                  {selecionados.length === 0 ? (
+                    <div className="text-center py-8 bg-gray-50 rounded-lg">
+                      <StarOff className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                      <p className="text-gray-500">Nenhum destaque escolhido</p>
+                      <p className="text-sm text-gray-400 mt-2">
+                        Sem escolhas, o site mostra automaticamente os mais recentes.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {selecionados.map((featured, index) => {
+                        const property = featured.property;
+                        const metrics = [
+                          property.bedrooms ? `${property.bedrooms}Q` : null,
+                          property.bathrooms ? `${property.bathrooms}WC` : null,
+                          property.area ? `${property.area}m²` : null,
+                        ].filter(Boolean);
+
                         return (
-                          <tr key={property.id} className="hover:bg-gray-50">
-                            <td className="px-6 py-4">
+                          <div key={featured.id} className="bg-white rounded-lg shadow border p-4">
+                            <div className="flex items-center justify-between">
                               <div className="flex items-center">
+                                <div className="mr-4 flex items-center justify-center w-8 h-8 bg-[#0d2233] text-white rounded-full flex-shrink-0">
+                                  {index + 1}
+                                </div>
                                 <img
                                   src={property.cover_image || property.images?.[0] || '/placeholder.jpg'}
-                                  className="h-10 w-10 rounded-lg object-cover"
+                                  className="h-16 w-16 rounded-lg object-cover mr-4"
                                   alt={property.title}
                                 />
-                                <div className="ml-4">
-                                  <div className="text-sm font-medium text-gray-900">{property.title}</div>
-                                  <div className="text-sm text-gray-500">
-                                    {property.bedrooms}Q • {property.bathrooms}WC • {property.area}m²
+                                <div>
+                                  <h4 className="font-medium text-gray-900">{property.title}</h4>
+                                  <div className="flex items-center text-sm text-gray-500">
+                                    <MapPin className="h-3 w-3 mr-1" />
+                                    {property.location}
                                   </div>
+                                  {metrics.length > 0 && (
+                                    <div className="text-sm text-gray-500">{metrics.join(' • ')}</div>
+                                  )}
                                 </div>
                               </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                              {formatCurrency(property.price)}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {property.location}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                              <button
-                                onClick={() => toggleFeaturedProperty(property)}
-                                className={`inline-flex items-center px-4 py-2 rounded-lg ${isFeatured
-                                  ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                                  : featuredProperties.length >= 6
-                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-                                  }`}
-                                disabled={!isFeatured && featuredProperties.length >= 6}
-                              >
-                                {isFeatured ? (
-                                  <>
-                                    <CheckCircle className="h-4 w-4 mr-2" />
-                                    Em Destaque
-                                  </>
-                                ) : (
-                                  <>
-                                    <Star className="h-4 w-4 mr-2" />
-                                    Adicionar
-                                  </>
-                                )}
-                              </button>
-                            </td>
-                          </tr>
+                              <div className="flex items-center space-x-4">
+                                <div className="flex space-x-1">
+                                  <button
+                                    onClick={() => moveFeatured(property, -1)}
+                                    disabled={index === 0}
+                                    className={`p-2 rounded ${index === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-[#0d2233] hover:bg-gray-100'}`}
+                                    title="Mover para cima"
+                                  >
+                                    ↑
+                                  </button>
+                                  <button
+                                    onClick={() => moveFeatured(property, 1)}
+                                    disabled={index === selecionados.length - 1}
+                                    className={`p-2 rounded ${index === selecionados.length - 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-[#0d2233] hover:bg-gray-100'}`}
+                                    title="Mover para baixo"
+                                  >
+                                    ↓
+                                  </button>
+                                </div>
+                                <button
+                                  onClick={() => removeFromFeatured(property.id)}
+                                  className="text-red-600 hover:text-red-800 p-2"
+                                  title="Remover dos destaques"
+                                >
+                                  <Trash2 className="h-5 w-5" />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                         );
                       })}
-                    </tbody>
-                  </table>
+                    </div>
+                  )}
+
+                  {/* Escolher de entre todos os deste tipo */}
+                  <div className="mt-6">
+                    <h4 className="text-base font-semibold text-gray-900 mb-3">
+                      Todos os {GROUP_LABELS[group]}
+                    </h4>
+
+                    {disponiveis.length === 0 ? (
+                      <p className="text-sm text-gray-500">
+                        Ainda não existem {GROUP_LABELS[group]} criados.
+                      </p>
+                    ) : (
+                      <div className="bg-white rounded-lg shadow overflow-hidden">
+                        <div className="overflow-x-auto">
+                          <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                              <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                  Propriedade
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                  Preço
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                  Localização
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                  Destaque
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                              {disponiveis.map((property) => {
+                                const isFeatured = featuredProperties.some(fp => fp.property_id === property.id);
+                                const metrics = [
+                                  property.bedrooms ? `${property.bedrooms}Q` : null,
+                                  property.bathrooms ? `${property.bathrooms}WC` : null,
+                                  property.area ? `${property.area}m²` : null,
+                                ].filter(Boolean);
+
+                                return (
+                                  <tr key={property.id} className="hover:bg-gray-50">
+                                    <td className="px-6 py-4">
+                                      <div className="flex items-center">
+                                        <img
+                                          src={property.cover_image || property.images?.[0] || '/placeholder.jpg'}
+                                          className="h-10 w-10 rounded-lg object-cover"
+                                          alt={property.title}
+                                        />
+                                        <div className="ml-4">
+                                          <div className="text-sm font-medium text-gray-900">{property.title}</div>
+                                          {metrics.length > 0 && (
+                                            <div className="text-sm text-gray-500">{metrics.join(' • ')}</div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                      {formatCurrency(property.price)}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                      {property.location}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                      <button
+                                        onClick={() => toggleFeaturedProperty(property)}
+                                        className={`inline-flex items-center px-4 py-2 rounded-lg ${isFeatured
+                                          ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                                          : cheio
+                                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                            : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
+                                          }`}
+                                        disabled={!isFeatured && cheio}
+                                      >
+                                        {isFeatured ? (
+                                          <>
+                                            <CheckCircle className="h-4 w-4 mr-2" />
+                                            Em Destaque
+                                          </>
+                                        ) : (
+                                          <>
+                                            <Star className="h-4 w-4 mr-2" />
+                                            Adicionar
+                                          </>
+                                        )}
+                                      </button>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         )}
 

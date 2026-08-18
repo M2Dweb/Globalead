@@ -35,13 +35,11 @@ const PropertyListPage: React.FC = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        // Imóveis vendidos não entram no catálogo: a página de detalhe
-        // reencaminha-os para aqui, por isso apareciam no catálogo mas
-        // não era possível abri-los.
+        // Vendidos e reservados continuam no catálogo — ficam identificados
+        // com a etiqueta de estado no cartão (ver PropertyCardSothebys).
         const { data, error } = await supabase
           .from('properties')
           .select('*')
-          .or('availability_status.is.null,availability_status.neq.vendido')
           .order('created_at', { ascending: false });
 
         if (error) {

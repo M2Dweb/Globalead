@@ -9,21 +9,42 @@ const FeaturedEmpreendimentos: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const TARGET = 4;
+    const isEmpreendimento = (p: any) => p && p.type === 'empreendimento';
+
     const fetchEmpreendimentos = async () => {
       try {
-        const { data, error } = await supabase
-          .from('properties')
-          .select('*')
-          .eq('type', 'empreendimento')
-          .order('created_at', { ascending: false })
-          .limit(4);
+        // 1. Empreendimentos escolhidos no admin (aba "Destaques"), pela ordem definida.
+        const { data: featuredData } = await supabase
+          .from('featured_properties')
+          .select(`property_id, properties (*)`)
+          .order('position', { ascending: true });
 
-        if (error) {
-          console.error('Erro ao carregar empreendimentos:', error);
-          setEmpreendimentos([]);
-        } else {
-          setEmpreendimentos((data || []).filter((p: any) => p.availability_status !== 'vendido'));
+        const result: any[] = (featuredData || [])
+          .map((item: any) => item.properties)
+          .filter(isEmpreendimento)
+          .slice(0, TARGET);
+
+        // 2. Se faltarem, completa com os mais recentes ainda disponíveis.
+        if (result.length < TARGET) {
+          const { data: regularData } = await supabase
+            .from('properties')
+            .select('*')
+            .eq('type', 'empreendimento')
+            .order('created_at', { ascending: false })
+            .limit(TARGET * 3);
+
+          const existingIds = new Set(result.map((p) => p.id));
+          for (const p of regularData || []) {
+            if (result.length >= TARGET) break;
+            if (!existingIds.has(p.id) && p.availability_status !== 'vendido') {
+              existingIds.add(p.id);
+              result.push(p);
+            }
+          }
         }
+
+        setEmpreendimentos(result.slice(0, TARGET));
       } catch (error) {
         console.error('Erro ao carregar empreendimentos:', error);
         setEmpreendimentos([]);
