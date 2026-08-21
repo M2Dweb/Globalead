@@ -90,10 +90,11 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            {/* Licença de mediação imobiliária (obrigatório) */}
+            {/* Licença de mediação imobiliária — desativada a pedido do cliente
             <p className="text-sm text-gray-300 tracking-wide">
               Globalead Portugal - AMI nº 8774
             </p>
+            */}
 
             {/* ÍCONES CENTRADOS VERTICALMENTE EM RELAÇÃO À LOGO */}
             <div className="flex space-x-4">
@@ -223,10 +224,11 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            {/* Licença de mediação imobiliária (obrigatório) */}
+            {/* Licença de mediação imobiliária — desativada a pedido do cliente
             <p className="text-sm text-gray-300 tracking-wide">
               Globalead Portugal - AMI nº 8774
             </p>
+            */}
 
             {/* ÍCONES ABAIXO DA LINHA NO MOBILE */}
             <div className="flex space-x-6">
