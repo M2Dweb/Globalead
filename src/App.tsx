@@ -9,6 +9,7 @@ import CookieBanner from './components/CookieBanner';
 import LoadingSpinner from './components/LoadingSpinner';
 import PreferencePopup from './components/PreferencePopup';
 import MediaProtection from './components/MediaProtection';
+import MaintenancePage from './pages/MaintenancePage';
 
 // pages (lazy-loaded para reduzir o bundle inicial e acelerar o carregamento)
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -30,6 +31,16 @@ const ResolucaoLitigios = lazy(() => import('./pages/ResolucaoLitigios'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
  
+// ############################################################
+// #  MODO MANUTENÇÃO                                         #
+// #                                                          #
+// #  true  → o site inteiro mostra a tela de manutenção.     #
+// #  false → o site volta ao normal.                         #
+// #                                                          #
+// #  O /admin fica sempre acessível, mesmo com isto a true.  #
+// ############################################################
+const MAINTENANCE_MODE = true;
+
 const SITE_URL = 'https://globalead.pt';
 
 interface PageSeo {
@@ -213,6 +224,11 @@ const AppLayout: React.FC = () => {
    const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
    const isAdminPage = location.pathname === '/admin';
    const seo = getSeo(location.pathname);
+
+   // Manutenção: substitui o site todo, menos o /admin.
+   if (MAINTENANCE_MODE && !isAdminPage) {
+     return <MaintenancePage />;
+   }
 
 
   return (
