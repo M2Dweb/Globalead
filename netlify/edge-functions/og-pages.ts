@@ -135,7 +135,9 @@ async function fetchProperty(ref: string): Promise<{ title: string; description:
   if (!supabaseUrl || !supabaseAnonKey) return null;
 
   try {
-    const apiUrl = `${supabaseUrl}/rest/v1/properties?ref=eq.${encodeURIComponent(ref)}&select=title,description,images,location&limit=1`;
+    // is_published=eq.true: um anúncio escondido não gera preview no WhatsApp,
+    // Facebook ou LinkedIn — cai no OG genérico do site.
+    const apiUrl = `${supabaseUrl}/rest/v1/properties?ref=eq.${encodeURIComponent(ref)}&is_published=eq.true&select=title,description,images,location&limit=1`;
     const response = await fetch(apiUrl, {
       headers: { apikey: supabaseAnonKey, Authorization: `Bearer ${supabaseAnonKey}` },
     });

@@ -56,6 +56,7 @@ const HomePage: React.FC = () => {
         const { error } = await supabase
           .from('properties')
           .select('*')
+          .eq('is_published', true)
           .limit(6) // Alterado de 3 para 6
           .order('created_at', { ascending: false });
         

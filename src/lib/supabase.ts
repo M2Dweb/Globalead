@@ -22,6 +22,10 @@ export interface Property {
   features: string[];
   images: string[];
   state?: string;
+  /** Estado de venda. Vendidos e reservados continuam no site, com etiqueta. */
+  availability_status?: 'disponivel' | 'reservado' | 'vendido' | 'indisponivel';
+  /** false = escondido do site público, mas continua no /admin. */
+  is_published?: boolean;
 }
 
 export interface BlogPost {
@@ -49,13 +53,17 @@ export const generateRef = (prefix: string = ''): string => {
 };
 
 // Função para buscar por referência
+// Nota: filtra por is_published para que um anúncio escondido também não
+// possa ser aberto por URL direto — a página de detalhe mostra então
+// "Imóvel não encontrado", como para uma referência inexistente.
 export const getPropertyByRef = async (ref: string) => {
   const { data, error } = await supabase
     .from('properties')
     .select('*')
     .eq('ref', ref)
+    .eq('is_published', true)
     .single();
-  
+
   return { data, error };
 };
 

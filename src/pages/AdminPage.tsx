@@ -52,6 +52,7 @@ const AdminPage: React.FC = () => {
   const [showContactDetails, setShowContactDetails] = useState(false);
   const [selectedContact, setSelectedContact] = useState<any>(null);
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
+  const [updatingPublished, setUpdatingPublished] = useState<string | null>(null);
   // Novos estados para gerenciar destaques
   const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
   const [cleaningImages, setCleaningImages] = useState(false);
@@ -202,8 +203,45 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  /**
+   * Publica ou esconde um anúncio do site público, sem o apagar.
+   *
+   * Escondido, o imóvel desaparece do catálogo, dos destaques, das sugestões,
+   * do sitemap e dos previews de partilha, e o URL direto passa a responder
+   * "Imóvel não encontrado". Continua aqui no admin, com todas as fotos e
+   * dados intactos, e volta ao site com um clique.
+   *
+   * Nada a ver com o estado de venda: um imóvel pode estar "Vendido" e
+   * publicado (aparece com etiqueta), ou "Disponível" e escondido.
+   */
+  const togglePublished = async (property: { id: string; title: string; is_published?: boolean }) => {
+    const willPublish = property.is_published === false;
 
+    if (!willPublish && !confirm(`Esconder "${property.title}" do site?\n\nO anúncio deixa de aparecer no site público, mas não é apagado — pode voltar a publicá-lo quando quiser.`)) {
+      return;
+    }
 
+    try {
+      setUpdatingPublished(property.id);
+
+      const { error } = await supabase
+        .from('properties')
+        .update({ is_published: willPublish })
+        .eq('id', property.id);
+
+      if (error) throw error;
+
+      // Atualiza a lista local para o botão responder já, sem esperar o refetch.
+      setProperties((prev) =>
+        prev.map((p) => (p.id === property.id ? { ...p, is_published: willPublish } : p))
+      );
+    } catch (error) {
+      console.error('Erro ao alterar visibilidade:', error);
+      alert('Não foi possível alterar a visibilidade do anúncio. Tente novamente.');
+    } finally {
+      setUpdatingPublished(null);
+    }
+  };
 
   /**
    * Sobe ou desce um destaque dentro do seu grupo, trocando a posição com o
@@ -962,13 +1000,17 @@ const AdminPage: React.FC = () => {
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Propriedade</th>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Localização</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Visível</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
                         {properties.map((property) => (
-                          <tr key={property.id}>
+                          <tr
+                            key={property.id}
+                            className={property.is_published === false ? 'bg-gray-50 opacity-60' : undefined}
+                          >
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="flex items-center">
                                 <img src={property.cover_image || property.images?.[0] || '/placeholder.jpg'} className="h-10 w-10 rounded-lg object-cover" />
@@ -984,18 +1026,25 @@ const AdminPage: React.FC = () => {
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               {property.location}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <td className="px-6 py-4 whitespace-nowrap">
                               <button
-                                onClick={() => editProperty(property)}
-                                className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
+                                onClick={() => togglePublished(property)}
+                                disabled={updatingPublished === property.id}
+                                title={property.is_published === false
+                                  ? 'Escondido do site — clique para publicar'
+                                  : 'Visível no site — clique para esconder'}
+                                aria-label={property.is_published === false
+                                  ? `Publicar ${property.title} no site`
+                                  : `Esconder ${property.title} do site`}
+                                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors disabled:opacity-50 ${
+                                  property.is_published === false
+                                    ? 'bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200'
+                                    : 'bg-green-100 text-green-800 border-green-300 hover:bg-green-200'
+                                }`}
                               >
-                                <Edit className="h-4 w-4" />
-                              </button>
-                              <button
-                                onClick={() => deleteProperty(property.id)}
-                                className="text-red-600 hover:text-red-900"
-                              >
-                                <Trash2 className="h-4 w-4" />
+                                {property.is_published === false
+                                  ? <><EyeOff className="h-4 w-4" /> Escondido</>
+                                  : <><Eye className="h-4 w-4" /> No site</>}
                               </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -1016,6 +1065,22 @@ const AdminPage: React.FC = () => {
                                 <option value="reservado">Reservado</option>
                                 <option value="vendido">Vendido</option>
                               </select>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button
+                                onClick={() => editProperty(property)}
+                                aria-label={`Editar ${property.title}`}
+                                className="text-[#0d2233] hover:text-[#79b2e9] mr-4"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </button>
+                              <button
+                                onClick={() => deleteProperty(property.id)}
+                                aria-label={`Apagar ${property.title}`}
+                                className="text-red-600 hover:text-red-900"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
                             </td>
                           </tr>
                         ))}

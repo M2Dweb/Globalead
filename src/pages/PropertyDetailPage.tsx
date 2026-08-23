@@ -87,6 +87,7 @@ const PropertyDetailPage: React.FC = () => {
           .from('properties')
           .select('*')
           .neq('ref', ref)
+          .eq('is_published', true)
           // Nas sugestões só entram imóveis ainda disponíveis
           .or('availability_status.is.null,availability_status.neq.vendido')
           .limit(3);

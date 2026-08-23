@@ -40,6 +40,7 @@ const PropertyListPage: React.FC = () => {
         const { data, error } = await supabase
           .from('properties')
           .select('*')
+          .eq('is_published', true)
           .order('created_at', { ascending: false });
 
         if (error) {

@@ -11,7 +11,10 @@ const FeaturedProperties2: React.FC = () => {
   useEffect(() => {
     const TARGET = 6; // mostrar sempre 6 imóveis em destaque
 
-    const isElegible = (p: any) => p && p.availability_status !== 'vendido' && p.type !== 'empreendimento';
+    // is_published !== false: um anúncio escondido no admin nunca chega aos
+    // destaques, mesmo que continue marcado na aba "Destaques".
+    const isElegible = (p: any) =>
+      p && p.availability_status !== 'vendido' && p.type !== 'empreendimento' && p.is_published !== false;
 
     const fetchProperties = async () => {
       try {
@@ -32,6 +35,7 @@ const FeaturedProperties2: React.FC = () => {
             .from('properties')
             .select('*')
             .neq('type', 'empreendimento')
+            .eq('is_published', true)
             .order('created_at', { ascending: false })
             .limit(TARGET * 3);
 

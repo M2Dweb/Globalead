@@ -12,7 +12,10 @@ const FeaturedProperties: React.FC = () => {
     const TARGET = 6;
     // Escolhas do admin: entram tal como foram escolhidas (mesmo reservadas ou
     // vendidas — o cartão mostra a etiqueta de estado).
-    const isImovel = (p: any) => p && p.type !== 'empreendimento';
+    // is_published !== false: um anúncio escondido no admin nunca chega aos
+    // destaques, mesmo que continue marcado na aba "Destaques".
+    const isImovel = (p: any) =>
+      p && p.type !== 'empreendimento' && p.is_published !== false;
     // Preenchimento automático: só imóveis ainda disponíveis.
     const isElegible = (p: any) => isImovel(p) && p.availability_status !== 'vendido';
 
@@ -36,6 +39,7 @@ const FeaturedProperties: React.FC = () => {
             .from('properties')
             .select('*')
             .neq('type', 'empreendimento')
+            .eq('is_published', true)
             .order('created_at', { ascending: false })
             .limit(TARGET * 3);
 

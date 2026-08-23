@@ -30,10 +30,10 @@ const STATIC_ROUTES = [
   { loc: '/resolucao-litigios', changefreq: 'yearly', priority: '0.3' },
 ];
 
-async function fetchRows(table, select) {
+async function fetchRows(table, select, filter = '') {
   if (!SUPABASE_URL || !SUPABASE_KEY) return [];
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=${select}`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=${select}${filter}`, {
       headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
     });
     if (!res.ok) {
@@ -67,7 +67,9 @@ function urlEntry({ loc, lastmod, changefreq, priority }) {
 async function run() {
   const entries = STATIC_ROUTES.map(urlEntry);
 
-  const properties = await fetchRows('properties', 'ref,id,created_at');
+  // Anúncios escondidos ficam fora do sitemap — senão o Google continuava a
+  // indexar um URL que agora responde "Imóvel não encontrado".
+  const properties = await fetchRows('properties', 'ref,id,created_at', '&is_published=eq.true');
   for (const p of properties) {
     const slug = p.ref || p.id;
     if (!slug) continue;

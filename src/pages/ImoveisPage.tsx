@@ -81,6 +81,7 @@ const ImoveisPage: React.FC = () => {
         const { error } = await supabase
           .from('properties')
           .select('*')
+          .eq('is_published', true)
           .limit(12)
           .order('created_at', { ascending: false });
         

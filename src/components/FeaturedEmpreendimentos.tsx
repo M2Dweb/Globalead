@@ -10,7 +10,10 @@ const FeaturedEmpreendimentos: React.FC = () => {
 
   useEffect(() => {
     const TARGET = 4;
-    const isEmpreendimento = (p: any) => p && p.type === 'empreendimento';
+    // is_published !== false: um anúncio escondido no admin nunca chega aos
+    // destaques, mesmo que continue marcado na aba "Destaques".
+    const isEmpreendimento = (p: any) =>
+      p && p.type === 'empreendimento' && p.is_published !== false;
 
     const fetchEmpreendimentos = async () => {
       try {
@@ -31,6 +34,7 @@ const FeaturedEmpreendimentos: React.FC = () => {
             .from('properties')
             .select('*')
             .eq('type', 'empreendimento')
+            .eq('is_published', true)
             .order('created_at', { ascending: false })
             .limit(TARGET * 3);
 
