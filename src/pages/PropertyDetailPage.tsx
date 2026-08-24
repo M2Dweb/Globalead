@@ -7,7 +7,6 @@ import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
 import PropertyCardSothebys from '../components/PropertyCardSothebys';
 import PropertyBuyForm from '../components/PropertyBuyForm';
-import StatusBadge from '../components/StatusBadge';
 import CreditCalculator from '../components/CreditCalculator';
 import HoverVideo from '../components/HoverVideo';
 import { imageUrl } from '../lib/imageUrl';
@@ -396,26 +395,6 @@ const PropertyDetailPage: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Header */}
-      <section
-        className="relative text-white py-12"
-        style={{
-          backgroundImage: `url("${imageUrl(property.images[0], { width: 1600, quality: 70 })}")`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
-
-        {/* Título e métricas foram removidos daqui — já constam na barra azul do topo
-            (evita repetir a informação). Mantém-se apenas o badge de estado. */}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center">
-            <StatusBadge status={property.availability_status || 'disponivel'} size="lg" />
-          </div>
-        </div>
-      </section>
 
       {/* Image Gallery */}
       <section className="py-12">

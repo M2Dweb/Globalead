@@ -18,16 +18,23 @@ const FeaturedProperties2: React.FC = () => {
 
     const fetchProperties = async () => {
       try {
-        // 1) Propriedades marcadas como destaque (curadas no admin)
+        // 1) Propriedades marcadas como destaque (curadas no admin).
+        //
+        // SEM .limit() aqui de propósito: featured_properties guarda os dois
+        // grupos (imóveis e empreendimentos) numa única sequência de posições
+        // partilhada. Cortar a 6 na query trazia as 6 primeiras posições —
+        // que podem ser empreendimentos — e o filtro abaixo deixava-nos com
+        // menos de 6 imóveis, obrigando o preenchimento automático a inventar
+        // o resto. Cortamos só DEPOIS de filtrar.
         const { data: featuredData } = await supabase
           .from('featured_properties')
           .select(`property_id, properties (*)`)
-          .order('position', { ascending: true })
-          .limit(TARGET);
+          .order('position', { ascending: true });
 
         let result: any[] = (featuredData || [])
           .map((item: any) => item.properties)
-          .filter(isElegible);
+          .filter(isElegible)
+          .slice(0, TARGET);
 
         // 2) Se houver menos de 6, completar com os imóveis mais recentes
         if (result.length < TARGET) {

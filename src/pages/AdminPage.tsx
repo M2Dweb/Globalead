@@ -235,9 +235,26 @@ const AdminPage: React.FC = () => {
       setProperties((prev) =>
         prev.map((p) => (p.id === property.id ? { ...p, is_published: willPublish } : p))
       );
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Erro ao alterar visibilidade:', error);
-      alert('Não foi possível alterar a visibilidade do anúncio. Tente novamente.');
+
+      const err = error as { message?: string; code?: string; hint?: string };
+      const raw = `${err?.message || ''} ${err?.code || ''}`;
+
+      // A coluna is_published é criada pela migração 20260823_add_is_published.sql.
+      // Se ela ainda não foi corrida na base de dados, o UPDATE falha aqui.
+      const faltaColuna =
+        raw.includes('is_published') ||
+        err?.code === '42703' ||      // undefined_column
+        err?.code === 'PGRST204';    // coluna ausente na schema cache do PostgREST
+
+      alert(
+        faltaColuna
+          ? 'A coluna is_published ainda não existe na base de dados.\n\n' +
+            'Corra a migração supabase/migrations/20260823_add_is_published.sql ' +
+            'no SQL Editor do Supabase e tente outra vez.'
+          : `Não foi possível alterar a visibilidade do anúncio.\n\n${err?.message || 'Erro desconhecido'}`
+      );
     } finally {
       setUpdatingPublished(null);
     }
