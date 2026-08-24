@@ -39,7 +39,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 // #                                                          #
 // #  O /admin fica sempre acessível, mesmo com isto a true.  #
 // ############################################################
-const MAINTENANCE_MODE = true;
+const MAINTENANCE_MODE = false;
 
 const SITE_URL = 'https://globalead.pt';
 
