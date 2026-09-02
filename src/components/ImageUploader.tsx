@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { uploadToR2 } from '../lib/uploadToR2';
 import { compressImage } from '../lib/compressImage';
 import { Upload, X } from 'lucide-react';
@@ -14,6 +14,12 @@ interface ImageUploaderProps {
 const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploadComplete, value, adminPassword = '' }) => {
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(value || '');
+
+  // Mantém a pré-visualização alinhada com o formulário. Sem isto, ao trocar de
+  // registo (ou depois de limpar o formulário) continuava a ver-se a imagem anterior.
+  useEffect(() => {
+    setImageUrl(value || '');
+  }, [value]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     let file = e.target.files?.[0];
@@ -46,6 +52,10 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploa
   const removeImage = () => {
     setImageUrl('');
     onUpload('');
+    // Limpa também a referência ao ficheiro no R2 (image_url / image_key).
+    if (onUploadComplete) {
+      onUploadComplete({ url: '', key: '' });
+    }
   };
 
   return (

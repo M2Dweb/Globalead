@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Bed, Bath, Square, MapPin, ArrowRight, Building2, Store } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import ContentRenderer from '../components/ContentRenderer';
 import FilterDropdown from '../components/FilterDropdown';
 import PropertyCardSothebys from '../components/PropertyCardSothebys';
-import StatusBadge from '../components/StatusBadge';
-import { imageUrl } from '../lib/imageUrl';
 
 const PropertyListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -158,14 +154,6 @@ const PropertyListPage: React.FC = () => {
     setEnergyClass('all');
     setAreaRange([0, 2000]);
     setCurrentPage(1);
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('pt-PT', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0
-    }).format(price);
   };
 
   if (loading) {

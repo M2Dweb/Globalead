@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Bed, Bath, Maximize, Heart, ArrowRight, Share2, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { imageUrl } from '../lib/imageUrl';
+import { getPropertyImages } from '../lib/propertyImages';
 import StatusBadge from './StatusBadge';
 
 interface PropertyCardSothebysProps {
@@ -59,7 +60,8 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
   const [fav, setFav] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const allImages: string[] = Array.isArray(property.images) ? property.images.filter(Boolean) : [];
+  // Foto de Capa (definida no /admin) primeiro; depois as restantes fotos.
+  const allImages: string[] = getPropertyImages(property);
   // No cartão navegamos só pelas primeiras fotos — as restantes veem-se na
   // página do imóvel. Setas e pontos usam exatamente o mesmo conjunto.
   const images = allImages.slice(0, 6);

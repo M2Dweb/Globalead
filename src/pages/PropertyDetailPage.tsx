@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Bed, Bath, Square, MapPin, Mail, Facebook, MessageCircle, Send, Twitter, Clock, Bell, Search, Heart, AlertCircle, PlayCircle, Car } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -10,6 +10,7 @@ import PropertyBuyForm from '../components/PropertyBuyForm';
 import CreditCalculator from '../components/CreditCalculator';
 import HoverVideo from '../components/HoverVideo';
 import { imageUrl } from '../lib/imageUrl';
+import { getPropertyImages } from '../lib/propertyImages';
 
 const propertyTypeLabels: Record<string, string> = {
   apartamento: 'Apartamento',
@@ -53,6 +54,9 @@ const PropertyDetailPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  // Galeria com a Foto de Capa (definida no /admin) em primeiro lugar.
+  const propertyImages = useMemo(() => getPropertyImages(property), [property]);
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -106,25 +110,25 @@ const PropertyDetailPage: React.FC = () => {
   }, [ref]);
 
   useEffect(() => {
-    if (!property || !property.images) return;
+    if (propertyImages.length === 0) return;
 
     // Carousel interval
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % propertyImages.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [property]);
+  }, [propertyImages]);
 
   const nextImage = () => {
-    if (property) {
-      setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
+    if (propertyImages.length > 0) {
+      setCurrentImageIndex((prev) => (prev + 1) % propertyImages.length);
     }
   };
 
   const prevImage = () => {
-    if (property) {
-      setCurrentImageIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
+    if (propertyImages.length > 0) {
+      setCurrentImageIndex((prev) => (prev - 1 + propertyImages.length) % propertyImages.length);
     }
   };
 
@@ -252,9 +256,6 @@ const PropertyDetailPage: React.FC = () => {
     ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 300)
     : '';
   const canonicalUrl = `https://globalead.pt/imoveis/${ref || property.ref || property.id}`;
-  const propertyImages = Array.isArray(property.images)
-    ? property.images.filter(Boolean)
-    : [property.images].filter(Boolean);
   const isAvailable = !property.availability_status || property.availability_status === 'disponivel';
 
   const propertyStructuredData = {
@@ -308,14 +309,14 @@ const PropertyDetailPage: React.FC = () => {
         <meta property="og:url" content={window.location.href} />
         <meta property="og:title" content={`${property.title} - ${formatPrice(selectedPropertyType?.price || property.price)}`} />
         <meta property="og:description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
-        <meta property="og:image" content={property.images[0]} />
+        <meta property="og:image" content={propertyImages[0]} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={window.location.href} />
         <meta property="twitter:title" content={property.title} />
         <meta property="twitter:description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
-        <meta property="twitter:image" content={property.images[0]} />
+        <meta property="twitter:image" content={propertyImages[0]} />
 
         {/* Dados estruturados do imóvel */}
         <script type="application/ld+json">
@@ -400,10 +401,10 @@ const PropertyDetailPage: React.FC = () => {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative h-96 md:h-[500px] overflow-hidden rounded-xl mb-6">
-            {property.images.map((image: string, index: number) => {
+            {propertyImages.map((image: string, index: number) => {
               // Só carregamos a imagem atual e as vizinhas (com wraparound).
               // Evita descarregar dezenas de imagens em tamanho real de uma vez.
-              const total = property.images.length;
+              const total = propertyImages.length;
               const dist = Math.abs(index - currentImageIndex);
               const modDist = Math.min(dist, total - dist);
               if (modDist > 1) {
@@ -445,12 +446,12 @@ const PropertyDetailPage: React.FC = () => {
             </button>
 
             <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
-              {currentImageIndex + 1} / {property.images.length}
+              {currentImageIndex + 1} / {propertyImages.length}
             </div>
           </div>
 
           <div className="flex space-x-2 overflow-x-auto pb-4">
-            {property.images.map((image: string, index: number) => (
+            {propertyImages.map((image: string, index: number) => (
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
@@ -749,7 +750,7 @@ const PropertyDetailPage: React.FC = () => {
                       ) : (
                         <HoverVideo
                           src={property.video_url}
-                          poster={property.video_poster || property.images?.[0]}
+                          poster={property.video_poster || propertyImages[0]}
                         />
                       )}
                     </div>

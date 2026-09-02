@@ -137,7 +137,7 @@ async function fetchProperty(ref: string): Promise<{ title: string; description:
   try {
     // is_published=eq.true: um anúncio escondido não gera preview no WhatsApp,
     // Facebook ou LinkedIn — cai no OG genérico do site.
-    const apiUrl = `${supabaseUrl}/rest/v1/properties?ref=eq.${encodeURIComponent(ref)}&is_published=eq.true&select=title,description,images,location&limit=1`;
+    const apiUrl = `${supabaseUrl}/rest/v1/properties?ref=eq.${encodeURIComponent(ref)}&is_published=eq.true&select=title,description,images,location,cover_image&limit=1`;
     const response = await fetch(apiUrl, {
       headers: { apikey: supabaseAnonKey, Authorization: `Bearer ${supabaseAnonKey}` },
     });
@@ -149,7 +149,9 @@ async function fetchProperty(ref: string): Promise<{ title: string; description:
     const p = rows[0];
     const title = `${p.title}${p.location ? ` - ${p.location}` : ""} | Globalead Portugal`;
     const description = (p.description ? String(p.description).replace(/<[^>]*>/g, "") : DEFAULT_DESC).substring(0, 200);
-    const image = Array.isArray(p.images) && p.images[0] ? p.images[0] : DEFAULT_IMAGE;
+    // A "Foto de Capa" definida no /admin tem prioridade sobre a 1ª foto da galeria.
+    const image =
+      p.cover_image || (Array.isArray(p.images) && p.images[0] ? p.images[0] : DEFAULT_IMAGE);
     return { title, description, image };
   } catch (error) {
     console.error("Erro ao obter imóvel para OG tags:", error);
