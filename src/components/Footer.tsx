@@ -8,7 +8,6 @@ import {
   FaWhatsapp
 } from 'react-icons/fa';
 import { supabase } from '../lib/supabase';
-import { sendEmail, FormData } from '../utils/emailService';
 
 type BlogPost = {
   id: number;
@@ -52,20 +51,26 @@ const Footer: React.FC = () => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    const emailData: FormData = {
-      nome: newsletterData.nome,
-      apelido: newsletterData.apelido,
-      email: newsletterData.email,
-      assunto: 'Subscrição Newsletter',
-      mensagem: 'Pedido de subscrição da newsletter',
-      page: 'newsletter'
-    };
-
     try {
-      const success = await sendEmail(emailData);
-      setSubmitStatus(success ? 'success' : 'error');
-      if (success) {
+      // A função corre no servidor: é lá que ficam a service role key do
+      // Supabase e a chave do Brevo. Em `npm run dev` isto não existe —
+      // é preciso `netlify dev` para testar a subscrição localmente.
+      const response = await fetch('/.netlify/functions/newsletter-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: newsletterData.nome,
+          apelido: newsletterData.apelido,
+          email: newsletterData.email,
+          source: 'rodape'
+        })
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
         setNewsletterData({ nome: '', apelido: '', email: '' });
+      } else {
+        setSubmitStatus('error');
       }
     } catch {
       setSubmitStatus('error');

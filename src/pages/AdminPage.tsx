@@ -53,6 +53,10 @@ const AdminPage: React.FC = () => {
   const [selectedContact, setSelectedContact] = useState<any>(null);
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   const [updatingPublished, setUpdatingPublished] = useState<string | null>(null);
+  // Newsletter
+  const [newsletterSubscribers, setNewsletterSubscribers] = useState<any[]>([]);
+  const [loadingNewsletter, setLoadingNewsletter] = useState(false);
+  const [newsletterError, setNewsletterError] = useState('');
   // Novos estados para gerenciar destaques
   const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
   const [cleaningImages, setCleaningImages] = useState(false);
@@ -810,6 +814,62 @@ const AdminPage: React.FC = () => {
     }));
   };
 
+  // A lista de subscritores não é legível com a chave anónima (RLS ligado, sem
+  // políticas). Vem por uma função protegida com a mesma password do painel.
+  const fetchNewsletterSubscribers = async () => {
+    setLoadingNewsletter(true);
+    setNewsletterError('');
+    try {
+      const response = await fetch('/.netlify/functions/newsletter-list', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+
+      if (!response.ok) throw new Error('Pedido recusado');
+
+      const { subscribers } = await response.json();
+      setNewsletterSubscribers(subscribers || []);
+    } catch (error) {
+      console.error('Erro ao carregar subscritores:', error);
+      setNewsletterError('Não foi possível carregar os subscritores.');
+      setNewsletterSubscribers([]);
+    } finally {
+      setLoadingNewsletter(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'newsletter') fetchNewsletterSubscribers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
+  // Exporta a lista em CSV. Separador ';' e BOM para o Excel português abrir
+  // o ficheiro com as colunas certas e os acentos direitos.
+  const exportNewsletterCsv = () => {
+    const header = ['Email', 'Nome', 'Apelido', 'Estado', 'Origem', 'Consentimento', 'No Brevo'];
+    const escape = (value: any) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+
+    const rows = newsletterSubscribers.map((sub) => [
+      sub.email,
+      sub.nome || '',
+      sub.apelido || '',
+      sub.status,
+      sub.source || '',
+      sub.consent_at ? new Date(sub.consent_at).toLocaleString('pt-PT') : '',
+      sub.brevo_synced ? 'Sim' : 'Não'
+    ].map(escape).join(';'));
+
+    const csv = '\uFEFF' + [header.map(escape).join(';'), ...rows].join('\r\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `newsletter-globalead-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-PT');
   };
@@ -968,7 +1028,8 @@ const AdminPage: React.FC = () => {
               { id: 'featured', name: 'Destaques', icon: Star },
               { id: 'blog', name: 'Blog', icon: Edit },
               { id: 'dados', name: 'Leads Imóveis', icon: Users },
-              { id: 'contactos', name: 'Contactos', icon: MessageSquare }
+              { id: 'contactos', name: 'Contactos', icon: MessageSquare },
+              { id: 'newsletter', name: 'Newsletter', icon: Mail }
             ].map(tab => {
               const IconComponent = tab.icon;
               return (
@@ -2084,6 +2145,102 @@ const AdminPage: React.FC = () => {
                 <div className="text-center py-12">
                   <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-500">Nenhum contacto recebido</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Newsletter Tab */}
+        {activeTab === 'newsletter' && (
+          <div>
+            <div className="flex flex-wrap gap-4 justify-between items-center mb-6">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Newsletter</h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  {newsletterSubscribers.length} subscritor(es). As campanhas enviam-se no Brevo —
+                  esta lista é a cópia da Globalead.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={fetchNewsletterSubscribers}
+                  className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Atualizar
+                </button>
+                <button
+                  onClick={exportNewsletterCsv}
+                  disabled={newsletterSubscribers.length === 0}
+                  className="bg-[#0d2233] text-white px-4 py-2 rounded-lg hover:bg-[#79b2e9] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Exportar CSV
+                </button>
+              </div>
+            </div>
+
+            {newsletterError && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
+                {newsletterError}
+              </div>
+            )}
+
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              {loadingNewsletter ? (
+                <div className="text-center py-12 text-gray-500">A carregar subscritores...</div>
+              ) : newsletterSubscribers.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subscritor</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Origem</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Consentimento</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Brevo</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {newsletterSubscribers.map((sub) => (
+                        <tr key={sub.id}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">
+                              {[sub.nome, sub.apelido].filter(Boolean).join(' ') || '—'}
+                            </div>
+                            <div className="text-sm text-gray-500">{sub.email}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {sub.source || '—'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {formatDate(sub.consent_at || sub.created_at)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              sub.status === 'ativo' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
+                            }`}>
+                              {sub.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {sub.brevo_synced ? (
+                              <span className="inline-flex items-center text-green-700 text-xs font-medium">
+                                <CheckCircle className="h-4 w-4 mr-1" />
+                                Sincronizado
+                              </span>
+                            ) : (
+                              <span className="text-xs text-yellow-700">Por sincronizar</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <Mail className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-500">Ainda não há subscritores</p>
                 </div>
               )}
             </div>
