@@ -90,11 +90,12 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            {/* Licença de mediação imobiliária — desativada a pedido do cliente
-            <p className="text-sm text-gray-300 tracking-wide">
-              Globalead Portugal - AMI nº 8774
-            </p>
-            */}
+            {/* Identificação legal — licença de mediação imobiliária e seguro de RC */}
+            <div className="text-center text-xs text-gray-300 leading-relaxed space-y-1">
+              <p className="font-medium tracking-wide">Globalead Portugal</p>
+              <p>Licença AMI: 27908 – IMPIC, I.P.</p>
+              <p>Seguro de RC: Apólice n.º 209032170</p>
+            </div>
 
             {/* ÍCONES CENTRADOS VERTICALMENTE EM RELAÇÃO À LOGO */}
             <div className="flex space-x-4">
@@ -224,11 +225,12 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            {/* Licença de mediação imobiliária — desativada a pedido do cliente
-            <p className="text-sm text-gray-300 tracking-wide">
-              Globalead Portugal - AMI nº 8774
-            </p>
-            */}
+            {/* Identificação legal — licença de mediação imobiliária e seguro de RC */}
+            <div className="text-center text-xs text-gray-300 leading-relaxed space-y-1">
+              <p className="font-medium tracking-wide">Globalead Portugal</p>
+              <p>Licença AMI: 27908 – IMPIC, I.P.</p>
+              <p>Seguro de RC: Apólice n.º 209032170</p>
+            </div>
 
             {/* ÍCONES ABAIXO DA LINHA NO MOBILE */}
             <div className="flex space-x-6">
