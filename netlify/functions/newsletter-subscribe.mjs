@@ -18,8 +18,12 @@
  */
 import { createClient } from '@supabase/supabase-js';
 
-// Deliberadamente simples: só apanha erros de escrita óbvios. Quem valida a
-// sério é o Brevo, no double opt-in.
+// Deliberadamente simples: só apanha erros de escrita óbvios.
+//
+// Isto é opt-in simples: o consentimento fica registado (consent_at, source)
+// mas ninguém confirma que o endereço é mesmo de quem subscreveu. Se em algum
+// momento aparecerem subscrições falsas, o passo seguinte é ligar o double
+// opt-in do Brevo — exige um template de confirmação criado lá.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const json = (statusCode, payload) => ({
