@@ -7,6 +7,7 @@ import {
   FaTelegramPlane,
   FaWhatsapp
 } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 
 type BlogPost = {
@@ -16,6 +17,7 @@ type BlogPost = {
 };
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const [latestPosts, setLatestPosts] = useState<BlogPost[]>([]);
   const [newsletterData, setNewsletterData] = useState({
     nome: '',
@@ -130,7 +132,7 @@ const Footer: React.FC = () => {
 
           {/* Últimas notícias - CENTRALIZADO VERTICALMENTE */}
           <div className="flex flex-col justify-center text-center">
-            <h3 className="text-xl font-bold mb-5">Últimas Notícias</h3>
+            <h3 className="text-xl font-bold mb-5">{t('footer.ultimasNoticias')}</h3>
             <div className="space-y-3">
               {latestPosts.length ? (
                 latestPosts.map(post => (
@@ -143,7 +145,7 @@ const Footer: React.FC = () => {
                   </Link>
                 ))
               ) : (
-                <p className="text-gray-400 text-sm">A carregar...</p>
+                <p className="text-gray-400 text-sm">{t('footer.aCarregar')}</p>
               )}
             </div>
           </div>
@@ -151,13 +153,13 @@ const Footer: React.FC = () => {
           {/* Newsletter - CENTRALIZADO VERTICALMENTE */}
           <div className="flex flex-col justify-center text-center">
             <h3 className="text-xl font-bold mb-6">
-              Receba as últimas novidades
+              {t('footer.newsletterTitulo')}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-3">
               <input
                 name="nome"
-                placeholder="Nome"
+                placeholder={t('footer.nome')}
                 required
                 value={newsletterData.nome}
                 onChange={handleChange}
@@ -166,7 +168,7 @@ const Footer: React.FC = () => {
 
               <input
                 name="apelido"
-                placeholder="Apelido"
+                placeholder={t('footer.apelido')}
                 value={newsletterData.apelido}
                 onChange={handleChange}
                 className="w-full px-3 py-2 rounded text-black"
@@ -175,7 +177,7 @@ const Footer: React.FC = () => {
               <input
                 name="email"
                 type="email"
-                placeholder="Email"
+                placeholder={t('footer.email')}
                 required
                 value={newsletterData.email}
                 onChange={handleChange}
@@ -185,22 +187,22 @@ const Footer: React.FC = () => {
               <div className="flex items-start text-left">
                 <input type="checkbox" required className="mt-1 mr-2" />
                 <span className="text-xs text-gray-400">
-                  Autorizo o tratamento dos meus dados nos termos da{' '}
+                  {t('footer.consentimento')}{' '}
                   <Link to="/politica-privacidade" className="underline hover:text-white">
-                    Política de Privacidade
+                    {t('footer.politicaPrivacidade')}
                   </Link>.
                 </span>
               </div>
 
               {submitStatus === 'success' && (
                 <p className="text-green-500 text-xs">
-                  Subscrição realizada com sucesso.
+                  {t('footer.sucesso')}
                 </p>
               )}
 
               {submitStatus === 'error' && (
                 <p className="text-red-500 text-xs">
-                  Erro ao subscrever. Tente novamente.
+                  {t('footer.erro')}
                 </p>
               )}
 
@@ -208,7 +210,7 @@ const Footer: React.FC = () => {
                 disabled={isSubmitting}
                 className="w-full bg-[#79b2e9] hover:bg-[#0d2233] py-2 rounded"
               >
-                {isSubmitting ? 'A enviar...' : 'Subscrever'}
+                {isSubmitting ? t('footer.aEnviar') : t('footer.subscrever')}
               </button>
             </form>
           </div>
@@ -268,13 +270,13 @@ const Footer: React.FC = () => {
         <div className="pt-8 text-center text-sm text-gray-400 space-y-6">
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/politica-privacidade" className="hover:text-white">
-              Política de Privacidade
+              {t('footer.politicaPrivacidade')}
             </Link>
             <Link to="/termos-condicoes" className="hover:text-white">
-              Termos e Condições
+              {t('footer.termosCondicoes')}
             </Link>
             <Link to="/resolucao-litigios" className="hover:text-white">
-              Resolução de Litígios
+              {t('footer.resolucaoLitigios')}
             </Link>
             <a
               href="https://www.livroreclamacoes.pt/Inicio/"
@@ -282,12 +284,12 @@ const Footer: React.FC = () => {
               rel="noreferrer"
               className="hover:text-white"
             >
-              Livro de Reclamações
+              {t('footer.livroReclamacoes')}
             </a>
           </div>
 
           <div>
-            © 2026 <Link to="/Admin" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</Link> Portugal · Todos os direitos reservados.
+            © 2026 <Link to="/Admin" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</Link> Portugal · {t('footer.direitos')}
           </div>
         </div>
       </div>

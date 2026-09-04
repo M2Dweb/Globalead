@@ -2,6 +2,8 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
+// Arranca o i18n antes de qualquer componente ler uma tradução.
+import './i18n';
 import './index.css';
 import Analytics from './components/Analytics';
 

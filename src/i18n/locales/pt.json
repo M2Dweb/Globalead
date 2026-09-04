@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "sobre": "Sobre",
+    "imoveis": "Imóveis",
+    "credito": "Crédito",
+    "seguros": "Seguros",
+    "blog": "Blog",
+    "contactos": "Contactos",
+    "cta": "Quanto vale a minha casa?",
+    "abrirMenu": "Abrir menu",
+    "fecharMenu": "Fechar menu"
+  },
+  "idioma": {
+    "escolher": "Escolher idioma",
+    "verEm": "Ver esta página em {{idioma}}"
+  },
+  "footer": {
+    "ultimasNoticias": "Últimas Notícias",
+    "aCarregar": "A carregar...",
+    "newsletterTitulo": "Receba as últimas novidades",
+    "nome": "Nome",
+    "apelido": "Apelido",
+    "email": "Email",
+    "consentimento": "Autorizo o tratamento dos meus dados nos termos da",
+    "sucesso": "Subscrição realizada com sucesso.",
+    "erro": "Erro ao subscrever. Tente novamente.",
+    "aEnviar": "A enviar...",
+    "subscrever": "Subscrever",
+    "politicaPrivacidade": "Política de Privacidade",
+    "termosCondicoes": "Termos e Condições",
+    "resolucaoLitigios": "Resolução de Litígios",
+    "livroReclamacoes": "Livro de Reclamações",
+    "direitos": "Todos os direitos reservados."
+  }
+}

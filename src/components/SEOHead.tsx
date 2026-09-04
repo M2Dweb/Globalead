@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { DEFAULT_LANG, LANG_META, type Lang } from '../i18n/languages';
 
 const SITE_URL = 'https://globalead.pt';
 const DEFAULT_DESCRIPTION =
@@ -13,6 +14,10 @@ interface SEOHeadProps {
   url?: string;
   type?: string;
   noindex?: boolean;
+  /** Idioma da página. Define o <html lang>, o og:locale e o inLanguage. */
+  lang?: Lang;
+  /** Endereços da mesma página nos outros idiomas, para as etiquetas hreflang. */
+  alternates?: { lang: Lang; url: string }[];
 }
 
 const SEOHead: React.FC<SEOHeadProps> = ({
@@ -23,7 +28,10 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   url = SITE_URL,
   type = 'website',
   noindex = false,
+  lang = DEFAULT_LANG,
+  alternates = [],
 }) => {
+  const meta = LANG_META[lang];
   const absoluteImage = image.startsWith('http') ? image : `${SITE_URL}${image}`;
 
   const structuredData = {
@@ -46,7 +54,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
           'https://www.instagram.com/globalead',
           'https://www.linkedin.com/company/globalead',
         ],
-        knowsLanguage: ['pt-PT'],
+        knowsLanguage: ['pt-PT', 'en'],
         makesOffer: [
           { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Mediação Imobiliária', description: 'Compra, venda e arrendamento de imóveis' } },
           { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Crédito Habitação', description: 'Intermediação de crédito habitação com os principais bancos' } },
@@ -60,7 +68,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
         url: SITE_URL,
         name: 'Globalead Portugal',
         description: DEFAULT_DESCRIPTION,
-        inLanguage: 'pt-PT',
+        inLanguage: meta.htmlLang,
         publisher: { '@id': `${SITE_URL}/#organization` },
       },
     ],
@@ -68,9 +76,21 @@ const SEOHead: React.FC<SEOHeadProps> = ({
 
   return (
     <Helmet>
-      <html lang="pt-PT" />
+      <html lang={meta.htmlLang} />
       <title>{title}</title>
       <link rel="canonical" href={url} />
+
+      {/* hreflang: diz ao Google que estas páginas são a mesma coisa noutro
+          idioma, em vez de conteúdo duplicado. O x-default aponta para o
+          português, que é a versão da raiz. */}
+      {alternates.map((alt) => (
+        <link key={alt.lang} rel="alternate" hrefLang={LANG_META[alt.lang].htmlLang} href={alt.url} />
+      ))}
+      {alternates
+        .filter((alt) => alt.lang === DEFAULT_LANG)
+        .map((alt) => (
+          <link key="x-default" rel="alternate" hrefLang="x-default" href={alt.url} />
+        ))}
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
@@ -85,7 +105,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta property="og:image:alt" content={title} />
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content="Globalead Portugal" />
-      <meta property="og:locale" content="pt_PT" />
+      <meta property="og:locale" content={meta.ogLocale} />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />

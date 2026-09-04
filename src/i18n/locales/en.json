@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "sobre": "About",
+    "imoveis": "Properties",
+    "credito": "Mortgages",
+    "seguros": "Insurance",
+    "blog": "Blog",
+    "contactos": "Contact",
+    "cta": "What's my home worth?",
+    "abrirMenu": "Open menu",
+    "fecharMenu": "Close menu"
+  },
+  "idioma": {
+    "escolher": "Choose language",
+    "verEm": "View this page in {{idioma}}"
+  },
+  "footer": {
+    "ultimasNoticias": "Latest News",
+    "aCarregar": "Loading...",
+    "newsletterTitulo": "Get the latest updates",
+    "nome": "First name",
+    "apelido": "Last name",
+    "email": "Email",
+    "consentimento": "I agree to my data being processed under the",
+    "sucesso": "You're subscribed.",
+    "erro": "Something went wrong. Please try again.",
+    "aEnviar": "Sending...",
+    "subscrever": "Subscribe",
+    "politicaPrivacidade": "Privacy Policy",
+    "termosCondicoes": "Terms & Conditions",
+    "resolucaoLitigios": "Dispute Resolution",
+    "livroReclamacoes": "Complaints Book",
+    "direitos": "All rights reserved."
+  }
+}

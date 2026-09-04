@@ -10,6 +10,12 @@ import LoadingSpinner from './components/LoadingSpinner';
 import PreferencePopup from './components/PreferencePopup';
 import MediaProtection from './components/MediaProtection';
 import MaintenancePage from './pages/MaintenancePage';
+import {
+  LANGUAGES,
+  basenameFor,
+  getLangFromPathname,
+  pathForLang,
+} from './i18n/languages';
 
 // pages (lazy-loaded para reduzir o bundle inicial e acelerar o carregamento)
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -42,6 +48,10 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const MAINTENANCE_MODE = false;
 
 const SITE_URL = 'https://globalead.pt';
+
+// O idioma sai do endereço uma única vez, no arranque. Trocar de idioma navega
+// para o outro endereço e a página recarrega — ver LanguageSwitcher.
+const LANG = getLangFromPathname(window.location.pathname);
 
 interface PageSeo {
   title?: string;
@@ -223,7 +233,20 @@ const AppLayout: React.FC = () => {
    const breadcrumbs = getBreadcrumbs();
    const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
    const isAdminPage = location.pathname === '/admin';
-   const seo = getSeo(location.pathname);
+   const baseSeo = getSeo(location.pathname);
+
+   // O react-router corre com basename, por isso `location.pathname` vem sempre
+   // sem o prefixo de idioma. O canonical e os hreflang têm de o repor.
+   const bareUrl = baseSeo.url.replace(SITE_URL, '') || '/';
+   const seo = {
+     ...baseSeo,
+     url: `${SITE_URL}${pathForLang(LANG, bareUrl)}`,
+     lang: LANG,
+     alternates: LANGUAGES.map((code) => ({
+       lang: code,
+       url: `${SITE_URL}${pathForLang(code, bareUrl)}`,
+     })),
+   };
 
    // Manutenção: substitui o site todo, menos o /admin.
    if (MAINTENANCE_MODE && !isAdminPage) {
@@ -284,7 +307,7 @@ const AppLayout: React.FC = () => {
 
 function App() {
   return (
-    <Router>
+    <Router basename={basenameFor(LANG)}>
       <AppLayout />
     </Router>
   );

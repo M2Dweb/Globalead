@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Header: React.FC = () => {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -17,13 +20,13 @@ const Header: React.FC = () => {
   }, []);
 
   const menuItems = [
-    { name: 'Sobre', path: '/sobre' },
-    { name: 'Imóveis', path: '/imoveis' },
-    { name: 'Crédito', path: '/credito' },
-    //{ name: 'CE', path: '/certificacao' },
-    { name: 'Seguros', path: '/seguros' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Contactos', path: '/contactos' },
+    { key: 'nav.sobre', path: '/sobre' },
+    { key: 'nav.imoveis', path: '/imoveis' },
+    { key: 'nav.credito', path: '/credito' },
+    //{ key: 'nav.certificacao', path: '/certificacao' },
+    { key: 'nav.seguros', path: '/seguros' },
+    { key: 'nav.blog', path: '/blog' },
+    { key: 'nav.contactos', path: '/contactos' },
   ];
 
   const isHeroPage = ['/', '/sobre', '/imoveis', '/blog', '/contactos'].includes(location.pathname);
@@ -77,7 +80,7 @@ const Header: React.FC = () => {
           </Link>
 
           {/* NAV + BOTÃO (DESKTOP) */}
-          <div className="hidden lg:flex items-center flex-1 justify-center">
+          <div className="hidden xl:flex items-center flex-1 justify-center">
             <nav className="flex space-x-8">
               {menuItems.map((item) => (
                 <Link
@@ -93,31 +96,36 @@ const Header: React.FC = () => {
                       : 'text-gray-700 hover:text-[#0d2233]'
                   }`}
                 >
-                  {item.name}
+                  {t(item.key)}
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* BOTÃO CTA (DESKTOP) */}
-          <div className="hidden lg:flex items-center">
+          {/* IDIOMA + BOTÃO CTA (DESKTOP) */}
+          <div className="hidden xl:flex items-center gap-5 ml-6">
+            <LanguageSwitcher onDark={shouldBeTransparent} />
             <button
               onClick={handleCTA}
-              className={`ml-6 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 border
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 border
                 ${
                   shouldBeTransparent
                     ? 'text-white border-white hover:bg-white hover:text-[#0d2233]'
                     : 'bg-[#0d2233] text-white border-[#0d2233] hover:bg-[#163a55]'
                 }`}
             >
-              Quanto vale a minha casa?
+              {t('nav.cta')}
             </button>
           </div>
 
-          {/* MOBILE MENU BUTTON */}
-          <div className="lg:hidden">
+          {/* IDIOMA + MENU (MOBILE) — o seletor fica FORA do hamburguer.
+              Escondido lá dentro, quase ninguém o encontraria. */}
+          <div className="flex items-center gap-4 xl:hidden">
+            <LanguageSwitcher onDark={shouldBeTransparent} />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? t('nav.fecharMenu') : t('nav.abrirMenu')}
+              aria-expanded={isMenuOpen}
               className={
                 shouldBeTransparent
                   ? 'text-white hover:text-blue-200'
@@ -131,7 +139,7 @@ const Header: React.FC = () => {
 
         {/* MOBILE NAVIGATION */}
         {isMenuOpen && (
-          <div className="lg:hidden">
+          <div className="xl:hidden">
             <div
               className={`px-2 pt-2 pb-4 space-y-1 sm:px-3 ${
                 shouldBeTransparent ? 'bg-black bg-opacity-90' : 'bg-gray-50'
@@ -152,7 +160,7 @@ const Header: React.FC = () => {
                       : 'text-gray-700 hover:text-[#0d2233] hover:bg-gray-100'
                   }`}
                 >
-                  {item.name}
+                  {t(item.key)}
                 </Link>
               ))}
 
@@ -165,7 +173,7 @@ const Header: React.FC = () => {
                     : 'bg-[#0d2233] text-white hover:bg-[#163a55]'
                 }`}
               >
-                Quanto vale a minha casa?
+                {t('nav.cta')}
               </button>
             </div>
           </div>
