@@ -13,10 +13,19 @@ export type Lang = (typeof LANGUAGES)[number];
 export const DEFAULT_LANG: Lang = 'pt';
 
 /** Etiquetas do seletor e valores para as metatags. */
-export const LANG_META: Record<Lang, { label: string; htmlLang: string; ogLocale: string }> = {
-  pt: { label: 'PT', htmlLang: 'pt-PT', ogLocale: 'pt_PT' },
-  en: { label: 'EN', htmlLang: 'en', ogLocale: 'en_GB' },
+export const LANG_META: Record<
+  Lang,
+  { label: string; htmlLang: string; ogLocale: string; dateLocale: string }
+> = {
+  // dateLocale: en-GB e nao en-US, para as datas saírem em dia/mês/ano como em
+  // português — quem compra casa em Portugal lê 04/09/2026, não 09/04/2026.
+  pt: { label: 'PT', htmlLang: 'pt-PT', ogLocale: 'pt_PT', dateLocale: 'pt-PT' },
+  en: { label: 'EN', htmlLang: 'en', ogLocale: 'en_GB', dateLocale: 'en-GB' },
 };
+
+/** Locale para datas e números. Aceita o valor cru do i18next. */
+export const dateLocaleFor = (lang: string): string =>
+  (LANG_META[lang as Lang] || LANG_META[DEFAULT_LANG]).dateLocale;
 
 const isLang = (value: string): value is Lang => (LANGUAGES as readonly string[]).includes(value);
 

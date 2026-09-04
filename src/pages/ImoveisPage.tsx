@@ -8,9 +8,11 @@ import { supabase } from '../lib/supabase';
 import { sendEmail, FormData } from '../utils/emailService';
 import FeaturedProperties from '../components/FeaturedProperties';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ImoveisPage: React.FC = () => {
 
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
@@ -110,33 +112,33 @@ const ImoveisPage: React.FC = () => {
   const services = [
     {
       icon: <Hammer className="h-12 w-12 text-[#0d2233]" />,
-      title: "Obras e Remodelações",
-      description: "Realizamos obras e remodelações de forma profissional, desde pequenas melhorias a renovações completas."
+      title: t('imoveis.obrasTitulo'),
+      description: t('imoveis.obrasTexto')
     },
     {
       icon: <Palette className="h-12 w-12 text-[#0d2233]" />,
-      title: "Design e Decoração",
-      description: "Criamos ambientes funcionais e elegantes, acompanhando desde o planeamento até à escolha do mobiliário e decoração."
+      title: t('imoveis.designTitulo'),
+      description: t('imoveis.designTexto')
     },
     {
       icon: <Building className="h-12 w-12 text-[#0d2233]" />,
-      title: "Promotora Imobiliária",
-      description: "Desenvolvemos projetos imobiliários inovadores, com design, funcionalidade e elevado potencial de valorização."
+      title: t('imoveis.promotoraTitulo'),
+      description: t('imoveis.promotoraTexto')
     },
     {
       icon: <Users className="h-12 w-12 text-[#0d2233]" />,
-      title: "Relocation",
-      description: "Apoiamos a sua mudança para Portugal com procura de imóvel, gestão documental e integração local."
+      title: t('imoveis.relocationTitulo'),
+      description: t('imoveis.relocationTexto')
     },
     {
       icon: <Compass className="h-12 w-12 text-[#0d2233]" />,
-      title: "Arquitetura",
-      description: "Projetamos espaços intemporais e autênticos, que refletem identidade e resistem ao tempo."
+      title: t('imoveis.arquiteturaTitulo'),
+      description: t('imoveis.arquiteturaTexto')
     },
     {
       icon: <Scale className="h-12 w-12 text-[#0d2233]" />,
-      title: "Apoio Jurídico",
-      description: "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo."
+      title: t('imoveis.juridicoTitulo'),
+      description: t('imoveis.juridicoTexto')
     }
   ];
 
@@ -145,92 +147,92 @@ const ImoveisPage: React.FC = () => {
       name: "Gonçalo Vinhas",
       image: "/testemonials/goncalo-vinhas.jpg",
       platform: "WhatsApp",
-      review: "Contactei a Globalead para encontrar soluções de seguro automóvel e fui atendido pelo Carlos Gonçalves. Desde o primeiro contacto, o Carlos mostrou-se extremamente profissional e prestável! Apresentou-me as melhores opções conforme as minhas necessidades, explicou-me detalhadamente cada proposta e tratou de todo o processo com grande eficiência. Em menos de 24 horas, o meu seguro já estava ativo. Fiquei muito satisfeito com o serviço e recomendo vivamente a Globalead pela rapidez, clareza e qualidade no atendimento."
+      review: t('testemunhos.goncalo')
     },
     {
       name: "Francisco Gonçalves",
       image: "/testemonials/francisco-gonçalves.jpg",
       platform: "Facebook",
-      review: "Quando o Carlos, em representação da Globalead Portugal, entrou em contacto comigo, percebi de imediato a confiança e a dedicação com que se apresentou. Prometeu um trabalho rigoroso e empenhado na venda do meu imóvel e cumpriu cada palavra. Ao longo de todo o processo, o Carlos foi incansável, sempre disponível, prestável e atento a cada detalhe. Ajudou-me a reunir toda a documentação necessária e acompanhou-me passo a passo, transformando aquilo que poderia ser um desafio num percurso tranquilo e seguro. O resultado foi muito mais do que a concretização da venda: foi a certeza de que posso contar com alguém que coloca profissionalismo e humanidade lado a lado. Estou profundamente grato pelo trabalho desenvolvido e confiante de que, no futuro, o Carlos será sempre a minha primeira escolha."
+      review: t('testemunhos.francisco')
     },
     {
       name: "Família Gomes",
       image: "/testemonials/familia-gomes.jpg",
       platform: "Google",
-      review: "Entrámos em contacto com a Globalead depois de vermos um anúncio nas redes sociais, numa altura em que procurávamos apoio para tratar de um processo de crédito. Graças ao acompanhamento da Globalead, conseguimos alcançar uma prestação justa, confortável e totalmente adequada ao nosso orçamento familiar. Para além disso, ainda nos ajudaram a renegociar o seguro da casa e o seguro de vida. Um agradecimento muito especial ao Carlos, que esteve sempre ao nosso lado com profissionalismo, dedicação e uma enorme disponibilidade. Tornou todo o processo simples e sereno, e deixou-nos com a certeza de que podemos contar com ele no futuro."
+      review: t('testemunhos.familiaGomes')
     },
     {
       name: "Liliana da Silva",
       image: "/testemonials/liliana.jpg",
       platform: "Instagram",
-      review: "Grata Carlos, por toda a ajuda, dedicação e profissionalismo na concretização deste negócio. Ao longo do processo, demonstrou uma postura transparente, responsável e ética, explicando tudo com clareza. Soube ouvir as minhas preocupações e respeitar os meus tempos. Recomendo sem qualquer dúvida e acredito que voltaremos a trabalhar juntos. Votos de muito sucesso!"
+      review: t('testemunhos.liliana')
     },
     {
       name: "Wneres & Daiane",
       image: "/testemonials/Wneres.jpg",
       platform: "WhatsApp",
-      review: "Obrigada por toda a ajuda ao longo destes meses, Carlos. Foste um verdadeiro profissional. Após tanta insistência, documentação e burocracia, conseguimos finalmente comprar a nossa primeira casa em Portugal. Foste incansável em todo o processo, desde o apoio no crédito até à concretização da compra, acompanhando-nos sempre de forma próxima, do início até à escritura. Estamos muito gratos por te termos encontrado e por toda a dedicação demonstrada ao longo deste percurso."
+      review: t('testemunhos.wneres')
     },
     {
       name: "Ana Fernandes",
       image: "/testemonials/Ana.jpg",
       platform: "Facebook",
-      review: "Quero destacar o empenho prestado ao longo de todo o processo, especialmente a forma clara e transparente com que sempre esclareceu todas as questões. Para além disso, a vasta rede de serviços que disponibilizou para apoiar a venda revelou-se um fator diferenciador e, na minha opinião, contribuiu significativamente para o sucesso do negócio. Muito obrigada por todo o profissionalismo e dedicação."
+      review: t('testemunhos.ana')
     }
   ];
 
   const businessServices = [
     {
       icon: <CreditCard className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Crédito Habitação",
-      description: "A Globalead é especializada em oferecer soluções de Crédito Habitação personalizadas, graças à sua relação privilegiada e poder negocial com as principais instituições bancárias em Portugal, garantindo as melhores opções para o seu agregado familiar.",
+      title: t('home.creditoTitulo'),
+      description: t('home.creditoTexto'),
       link: "/credito"
     },
     {
       icon: <FileText className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Certificação Energética",
-      description: "O desempenho energético de um imóvel é classificado de A+ a F e deve ser indicado através de um certificado energético, obrigatório na venda. Com a Globalead, tratamos de todo o processo, garantindo todas as condições para a venda do seu imóvel.",
+      title: t('home.certificacaoTitulo'),
+      description: t('home.certificacaoTexto'),
       link: "/certificacao"
     },
     {
       icon: <Shield className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Seguros",
-      description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme condições da apólice.",
+      title: t('home.segurosTitulo'),
+      description: t('home.segurosTexto'),
       link: "/seguros"
     }
   ];
 
   const sellingSteps = [
   {
-    text: "Apresentação do imóvel através de tours virtuais de alta qualidade, permitindo que potenciais compradores explorem a propriedade à distância.",
+    text: t('vender.passo1'),
     icon: <Video className="h-12 w-12 text-[#79b2e9]" />
   },
   {
-    text: "Promoção do imóvel em todas as plataformas sociais e digitais, com campanhas segmentadas e uma estratégia detalhada para maximizar a visibilidade.",
+    text: t('vender.passo2'),
     icon: <Share2 className="h-12 w-12 text-[#79b2e9]" />
   },
   {
-    text: "Reportagem de imagens e vídeos promocionais para destacar as melhores características do imóvel.",
+    text: t('vender.passo3'),
     icon: <Camera className="h-12 w-12 text-[#79b2e9]" />
   },
   {
-    text: "Publicação do imóvel nos principais portais imobiliários em Portugal e no estrangeiro, ampliando o alcance da sua oferta.",
+    text: t('vender.passo4'),
     icon: <Globe className="h-12 w-12 text-[#79b2e9]" />
   },
   {
-    text: "Divulgação em zonas estratégicas para alcançar um público local relevante.",
+    text: t('vender.passo5'),
     icon: <MapPin className="h-12 w-12 text-[#79b2e9]" />
   },
   {
-    text: "Colocação de sinalética no local do imóvel para atrair potenciais compradores na área.",
+    text: t('vender.passo6'),
     icon: <Tag className="h-12 w-12 text-[#79b2e9]" />
   },
   {
-    text: "Divulgação direcionada a uma carteira exclusiva de clientes qualificados e a grupos privados da Globalead Portugal.",
+    text: t('vender.passo7'),
     icon: <Users className="h-12 w-12 text-[#79b2e9]" />
   },
   {
-    text: "Especialistas em decoração de interiores transformam o imóvel, destacando o seu potencial e alinhando-o às tendências e expectativas dos compradores.",
+    text: t('vender.passo8'),
     icon: <Paintbrush className="h-12 w-12 text-[#79b2e9]" />
   }
 ];
@@ -253,10 +255,10 @@ const ImoveisPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              O lugar a que<br />chamamos casa
+              {t('imoveis.heroLinha1')}<br />{t('imoveis.heroLinha2')}
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-             Vamos criar uma relação próxima e escutar com atenção todos os seus desejos e expectativas, garantindo que está acompanhado e que estamos consigo sempre
+             {t('imoveis.heroTexto')}
             </p>
           </div>
         </div>
@@ -271,7 +273,7 @@ const ImoveisPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              O melhor negócio para o seu imóvel começa aqui
+              {t('home.servicosTitulo')}
             </h2>
           </div>
 
@@ -292,7 +294,7 @@ const ImoveisPage: React.FC = () => {
                   onClick={() => navigate(service.link)} 
                   className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                 >
-                  Saber mais
+                  {t('home.saberMais')}
                 </button>
               </div>
             ))}
@@ -324,22 +326,16 @@ const ImoveisPage: React.FC = () => {
                     href="/carlos-goncalves" 
                     className="hover:underline cursor-pointer"
                   >
-                    Carlos Gonçalves
+                    {t('imoveis.carlosNome')}
                   </a>
                 </h2>
                 <h3 className="text-xl text-[#79b2e9] font-medium">
-                  A confiança que constrói o amanhã
+                  {t('imoveis.carlosLema')}
                 </h3>
               </div>
               
               <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                Sou um profissional apaixonado pelo setor imobiliário, dedicado a acompanhar
-                clientes, famílias e investidores na procura do imóvel certo. Acredito que cada propriedade tem
-                uma história e um potencial único para transformar vidas. Com anos de experiência, trabalho
-                com transparência, confiança e acompanhamento próximo em todas as etapas, pilares que
-                estão na base do sucesso. Se procura orientação e apoio e alguém que trate o seu projeto como
-                verdadeiramente único, conte comigo. Estou pronto para caminhar ao seu lado e garantir que o
-                futuro da sua casa começa com segurança, visão e tranquilidade.
+                {t('imoveis.carlosTexto')}
               </p>
               
               <div className="flex justify-center md:justify-start">
@@ -347,7 +343,7 @@ const ImoveisPage: React.FC = () => {
                   href="/carlos-goncalves"
                   className="bg-white text-[#0d2233] border border-[#0d2233] py-3 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors font-medium"
                 >
-                  Conhecer Carlos Gonçalves
+                  {t('imoveis.conhecerCarlos')}
                 </a>
               </div>
             </div>
@@ -365,7 +361,7 @@ const ImoveisPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Simplificamos a venda do seu imóvel
+              {t('vender.titulo')}
             </h2>
           </div>
 
@@ -390,7 +386,7 @@ const ImoveisPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              A burocracia é nossa, o futuro é seu
+              {t('imoveis.servicosTitulo')}
             </h2>
           </div>
 
@@ -427,7 +423,7 @@ const ImoveisPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              O que dizem os clientes sobre nós
+              {t('testemunhos.titulo')}
             </h2>
           </div>
 
@@ -465,7 +461,7 @@ const ImoveisPage: React.FC = () => {
                             className="ml-1 font-bold text-[#79b2e9] cursor-pointer"
                             onClick={() => toggleExpand(index)}
                           >
-                            ler mais
+                            {t('testemunhos.lerMais')}
                           </span>
                         )}
                       </p>
@@ -476,7 +472,7 @@ const ImoveisPage: React.FC = () => {
                         {testimonial.name}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Review: {testimonial.platform}
+                        {t('testemunhos.review', { plataforma: testimonial.platform })}
                       </p>
                     </div>
                   </div>
@@ -493,7 +489,7 @@ const ImoveisPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Venda o seu imóvel de forma rápida, segura e sem complicações!
+              {t('imoveis.formTitulo')}
             </h2>
           </div>
 
@@ -505,7 +501,7 @@ const ImoveisPage: React.FC = () => {
                 name="nome"
                 value={formData.nome}
                 onChange={handleInputChange}
-                placeholder="Nome:"
+                placeholder={t('formulario.nome')}
                 required
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -514,7 +510,7 @@ const ImoveisPage: React.FC = () => {
                 name="apelido"
                 value={formData.apelido}
                 onChange={handleInputChange}
-                placeholder="Apelido:"
+                placeholder={t('formulario.apelido')}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
@@ -524,7 +520,7 @@ const ImoveisPage: React.FC = () => {
                 name="telemovel"
                 value={formData.telemovel}
                 onChange={handleInputChange}
-                placeholder="Telemóvel:"
+                placeholder={t('formulario.telemovel')}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
@@ -532,7 +528,7 @@ const ImoveisPage: React.FC = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="Email:"
+                placeholder={t('formulario.email')}
                 required
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -544,11 +540,11 @@ const ImoveisPage: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Pretendo:</option>
-                <option>Vender</option>
-                <option>Arrendar</option>
-                <option>Comprar</option>
-                <option>Construir</option>
+                <option value="">{t('formulario.pretendo')}</option>
+                <option value="Vender">{t('formulario.optVender')}</option>
+                <option value="Arrendar">{t('formulario.optArrendar')}</option>
+                <option value="Comprar">{t('formulario.optComprar')}</option>
+                <option value="Construir">{t('formulario.optConstruir')}</option>
               </select>
 
               {/* Distrito */}
@@ -558,7 +554,7 @@ const ImoveisPage: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Distrito:</option>
+                <option value="">{t('formulario.distrito')}</option>
                 <option>Aveiro</option>
                 <option>Beja</option>
                 <option>Braga</option>
@@ -586,7 +582,7 @@ const ImoveisPage: React.FC = () => {
                 name="cod_postal"
                 value={formData.cod_postal}
                 onChange={handleInputChange}
-                placeholder="Código Postal:"
+                placeholder={t('formulario.codigoPostal')}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
@@ -597,17 +593,17 @@ const ImoveisPage: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Tipo de Imóvel:</option>
-                <option>Apartamento</option>
-                <option>Moradia</option>
-                <option>Quinta</option>
-                <option>Terreno</option>
-                <option>Prédio</option>
-                <option>Loja</option>
-                <option>Armazém</option>
-                <option>Escritório</option>
-                <option>Garagem</option>
-                <option>Outros</option>
+                <option value="">{t('formulario.tipoImovel')}</option>
+                <option value="Apartamento">{t('formulario.apartamento')}</option>
+                <option value="Moradia">{t('formulario.moradia')}</option>
+                <option value="Quinta">{t('formulario.quinta')}</option>
+                <option value="Terreno">{t('formulario.terreno')}</option>
+                <option value="Prédio">{t('formulario.predio')}</option>
+                <option value="Loja">{t('formulario.loja')}</option>
+                <option value="Armazém">{t('formulario.armazem')}</option>
+                <option value="Escritório">{t('formulario.escritorio')}</option>
+                <option value="Garagem">{t('formulario.garagem')}</option>
+                <option value="Outros">{t('formulario.outros')}</option>
               </select>
 
               {/* Preço Máximo */}
@@ -616,7 +612,7 @@ const ImoveisPage: React.FC = () => {
                 name="preço"
                 value={formData.preço}
                 onChange={handleInputChange}
-                placeholder="Preço Máx (€):"
+                placeholder={t('formulario.precoMax')}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
@@ -626,7 +622,7 @@ const ImoveisPage: React.FC = () => {
                 name="area_min"
                 value={formData.area_min}
                 onChange={handleInputChange}
-                placeholder="Área Mínima (m²):"
+                placeholder={t('formulario.areaMin')}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
@@ -637,7 +633,7 @@ const ImoveisPage: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Nº de Quartos:</option>
+                <option value="">{t('formulario.numQuartos')}</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -651,7 +647,7 @@ const ImoveisPage: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Nº de Casas de Banho:</option>
+                <option value="">{t('formulario.numCasasBanho')}</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -665,15 +661,15 @@ const ImoveisPage: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Meio de Contacto:</option>
-                <option>Telefone</option>
-                <option>WhatsApp</option>
-                <option>Email</option>
+                <option value="">{t('formulario.meioContacto')}</option>
+                <option value="Telefone">{t('formulario.telefone')}</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Email">Email</option>
               </select>
 
               {/* Horário de Contacto */}
               <select name="horário" value={formData.horario} onChange={handleInputChange} className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
-                  <option value="">Horário</option>
+                  <option value="">{t('formulario.horario')}</option>
                   <option>9h-12h30</option>
                   <option>12h30-16h</option>
                   <option>16h-19h30</option>
@@ -684,7 +680,7 @@ const ImoveisPage: React.FC = () => {
                 name="mensagem"
                 value={formData.mensagem}
                 onChange={handleInputChange}
-                placeholder="Mensagem (opcional):"
+                placeholder={t('formulario.mensagemOpcional')}
                 rows={3}
                 className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />

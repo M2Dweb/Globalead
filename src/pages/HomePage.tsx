@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Shield, Calendar, FileText, CreditCard } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
 import FeaturedProperties2 from '../components/FeaturedProperties2';
 import FeaturedEmpreendimentos from '../components/FeaturedEmpreendimentos';
 import { listR2Folder } from '../lib/r2';
+import { dateLocaleFor, type Lang } from '../i18n/languages';
 
 const HomePage: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const dateLocale = dateLocaleFor(i18n.language as Lang);
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
   const [latestPosts, setLatestPosts] = useState<any[]>([]);
@@ -101,20 +105,20 @@ const HomePage: React.FC = () => {
   const businessServices = [
     {
       icon: <CreditCard className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Crédito Habitação",
-      description: "A Globalead é especializada em oferecer soluções de Crédito Habitação personalizadas, graças à sua relação privilegiada e poder negocial com as principais instituições bancárias em Portugal, garantindo as melhores opções para o seu agregado familiar.",
+      title: t('home.creditoTitulo'),
+      description: t('home.creditoTexto'),
       link: "/credito"
     },
     {
       icon: <FileText className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Certificação Energética",
-      description: "O desempenho energético de um imóvel é classificado de A+ a F e deve ser indicado através de um certificado energético, obrigatório na venda. Com a Globalead, tratamos de todo o processo, garantindo todas as condições para a venda do seu imóvel.",
+      title: t('home.certificacaoTitulo'),
+      description: t('home.certificacaoTexto'),
       link: "/certificacao"
     },
     {
       icon: <Shield className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Seguros",
-      description: "Um seguro é um contrato legal entre dois intervenientes e tem como objetivo fornecer proteção financeira ao segurado em caso de perdas ou danos. O segurado paga uma quantia e a seguradora fornece apoio financeiro conforme condições da apólice.",
+      title: t('home.segurosTitulo'),
+      description: t('home.segurosTexto'),
       link: "/seguros"
     }
   ];
@@ -161,10 +165,10 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Caminhamos consigo<br />lado a lado
+              {t('home.heroLinha1')}<br />{t('home.heroLinha2')}
             </h1>
             <p className="text-xl text-gray-100 max-w-4xl mx-auto">
-A Globalead Portugal é uma empresa inovadora que atua como intermediária, oferecendo soluções personalizadas. Simplificamos processos e proporcionamos um apoio gratuito, garantindo um serviço adaptado às reais necessidades de cada cliente.
+{t('home.heroTexto')}
             </p>
           </div>
         </div>
@@ -183,7 +187,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              O melhor negócio para o seu imóvel começa aqui
+              {t('home.servicosTitulo')}
             </h2>
           </div>
 
@@ -204,7 +208,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
                   onClick={() => navigate(service.link)} 
                   className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
                 >
-                  Saber mais
+                  {t('home.saberMais')}
                 </button>
               </div>
             ))}
@@ -220,7 +224,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Compare as várias instituições em Portugal
+              {t('home.parceirosTitulo')}
             </h2>
           </div>
 
@@ -240,7 +244,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
                     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center justify-center h-32">
                       <img
                         src={logo}
-                        alt={`Parceiro ${index + 1}`}
+                        alt={t('home.parceiroAlt', { numero: index + 1 })}
                         className="max-h-20 object-contain"
                       />
                     </div>
@@ -257,7 +261,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Últimas Notícias
+              {t('home.noticiasTitulo')}
             </h2>
           </div>
 
@@ -285,9 +289,9 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
                 <div className="p-6">
                   <div className="flex items-center text-sm text-gray-500 mb-3">
                     <Calendar className="h-4 w-4 mr-1" />
-                    <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
+                    <span>{new Date(post.date).toLocaleDateString(dateLocale)}</span>
                     <span className="mx-2">•</span>
-                    <span>Por {post.author}</span>
+                    <span>{t('home.por', { autor: post.author })}</span>
                   </div>
 
                   <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
@@ -299,7 +303,7 @@ A Globalead Portugal é uma empresa inovadora que atua como intermediária, ofer
                   </p>
 
                   <div className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-4 rounded-lg group-hover:bg-[#79b2e9] group-hover:text-white group-hover:border-[#79b2e9] transition-colors text-center">
-                    Ler Mais
+                    {t('home.lerMais')}
                   </div>
                 </div>
               </Link>

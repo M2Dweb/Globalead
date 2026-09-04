@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, Cpu, Search, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { sendEmail , FormData } from '../utils/emailService';
 import FounderVideoSection from '../components/FounderVideoSection';
 import goncalo from "../../public/testemonials/goncalo-vinhas.jpg"
@@ -7,6 +8,7 @@ import fml from "../../public/testemonials/familia-gomes.jpg"
 import franc from "../../public/testemonials/francisco-gonçalves.jpg"
 
 const SobrePage: React.FC = () => {
+  const { t } = useTranslation();
   const [, setCurrentReview] = useState(0);
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
@@ -70,37 +72,37 @@ const SobrePage: React.FC = () => {
       name: "Gonçalo Vinhas",
       image: goncalo ,
       platform: "WhatsApp",
-      review: "Contactei a Globalead para encontrar soluções de seguro automóvel e fui atendido pelo Carlos Gonçalves. Desde o primeiro contacto, o Carlos mostrou-se extremamente profissional e prestável! Apresentou-me as melhores opções conforme as minhas necessidades, explicou-me detalhadamente cada proposta e tratou de todo o processo com grande eficiência. Em menos de 24 horas, o meu seguro já estava ativo. Fiquei muito satisfeito com o serviço e recomendo vivamente a Globalead pela rapidez, clareza e qualidade no atendimento."
+      review: t('testemunhos.goncalo')
     },
     {
       name: "Francisco Gonçalves",
       image: franc ,
       platform: "Facebook",
-      review: "Quando o Carlos, em representação da Globalead Portugal, entrou em contacto comigo, percebi de imediato a confiança e a dedicação com que se apresentou. Prometeu um trabalho rigoroso e empenhado na venda do meu imóvel e cumpriu cada palavra. Ao longo de todo o processo, o Carlos foi incansável, sempre disponível, prestável e atento a cada detalhe. Ajudou-me a reunir toda a documentação necessária e acompanhou-me passo a passo, transformando aquilo que poderia ser um desafio num percurso tranquilo e seguro. O resultado foi muito mais do que a concretização da venda: foi a certeza de que posso contar com alguém que coloca profissionalismo e humanidade lado a lado. Estou profundamente grato pelo trabalho desenvolvido e confiante de que, no futuro, o Carlos será sempre a minha primeira escolha."
+      review: t('testemunhos.francisco')
     },
     {
       name: "Família Gomes",
       image: fml ,
       platform: "Google",
-      review: "Entrámos em contacto com a Globalead depois de vermos um anúncio nas redes sociais, numa altura em que procurávamos apoio para tratar de um processo de crédito. Graças ao acompanhamento da Globalead, conseguimos alcançar uma prestação justa, confortável e totalmente adequada ao nosso orçamento familiar. Para além disso, ainda nos ajudaram a renegociar o seguro da casa e o seguro de vida. Um agradecimento muito especial ao Carlos, que esteve sempre ao nosso lado com profissionalismo, dedicação e uma enorme disponibilidade. Tornou todo o processo simples e sereno, e deixou-nos com a certeza de que podemos contar com ele no futuro."
+      review: t('testemunhos.familiaGomes')
     },
     {
       name: "Liliana da Silva",
       image: "/testemonials/liliana.jpg",
       platform: "Instagram",
-      review: "Grata Carlos, por toda a ajuda, dedicação e profissionalismo na concretização deste negócio. Ao longo do processo, demonstrou uma postura transparente, responsável e ética, explicando tudo com clareza. Soube ouvir as minhas preocupações e respeitar os meus tempos. Recomendo sem qualquer dúvida e acredito que voltaremos a trabalhar juntos. Votos de muito sucesso!"
+      review: t('testemunhos.liliana')
     },
     {
       name: "Wneres & Daiane",
       image: "/testemonials/Wneres.jpg",
       platform: "WhatsApp",
-      review: "Obrigada por toda a ajuda ao longo destes meses, Carlos. Foste um verdadeiro profissional. Após tanta insistência, documentação e burocracia, conseguimos finalmente comprar a nossa primeira casa em Portugal. Foste incansável em todo o processo, desde o apoio no crédito até à concretização da compra, acompanhando-nos sempre de forma próxima, do início até à escritura. Estamos muito gratos por te termos encontrado e por toda a dedicação demonstrada ao longo deste percurso."
+      review: t('testemunhos.wneres')
     },
     {
       name: "Ana Fernandes",
       image: "/testemonials/Ana.jpg",
       platform: "Facebook",
-      review: "Quero destacar o empenho prestado ao longo de todo o processo, especialmente a forma clara e transparente com que sempre esclareceu todas as questões. Para além disso, a vasta rede de serviços que disponibilizou para apoiar a venda revelou-se um fator diferenciador e, na minha opinião, contribuiu significativamente para o sucesso do negócio. Muito obrigada por todo o profissionalismo e dedicação."
+      review: t('testemunhos.ana')
     }
   ];
 
@@ -113,19 +115,19 @@ const SobrePage: React.FC = () => {
   };
 
   const reasons = [
-    { number: "1", title: "Soluções avançadas", description: "Garantimos acesso a soluções avançadas, fiáveis e eficazes, personalizadas para as suas reais necessidades.", icon: <Cpu className="w-7 h-7"/> },
-    { number: "2", title: "Estudamos o mercado", description: "Analisamos as suas exigências e recomendamos a solução ideal, sempre com a qualidade e garantia das marcas que representamos.", icon: <Search className="w-7 h-7" /> },
-    { number: "3", title: "Soluções de excelência", description: "Escolher a Globalead significa optar por uma experiência personalizada com acesso às melhores soluções do mercado.", icon: <Star className="w-7 h-7" /> },
-    { number: "4", title: "Selo de confiança", description: "Representamos a qualidade, a inovação e a confiança que as empresas oferecem para garantir que recebe o melhor suporte.", icon: <ShieldCheck className="w-7 h-7" /> },
+    { number: "1", title: t('sobre.razao1Titulo'), description: t('sobre.razao1Texto'), icon: <Cpu className="w-7 h-7"/> },
+    { number: "2", title: t('sobre.razao2Titulo'), description: t('sobre.razao2Texto'), icon: <Search className="w-7 h-7" /> },
+    { number: "3", title: t('sobre.razao3Titulo'), description: t('sobre.razao3Texto'), icon: <Star className="w-7 h-7" /> },
+    { number: "4", title: t('sobre.razao4Titulo'), description: t('sobre.razao4Texto'), icon: <ShieldCheck className="w-7 h-7" /> },
   ];
 
   const objectives = [
-    { number: "1", description: "Oferecer soluções personalizadas e integradas, adaptadas às necessidades específicas de cada cliente, com ênfase no setor imobiliário." },
-    { number: "2", description: "Atuar como intermediária, comparando créditos, telecomunicações, energia e seguros para apresentar as melhores opções aos clientes." },
-    { number: "3", description: "Simplificar e otimizar processos, oferecendo um acompanhamento personalizado, ágil, simples e gratuito." },
-    { number: "4", description: "Garantir conforto, segurança e eficiência através de uma gestão rigorosa, apoiada por uma equipa especializada e empenhada em obter os melhores resultados para cada cliente." },
-    { number: "5", description: "Estabelecer relações de confiança duradouras, fidelizando clientes através da qualidade do serviço, proximidade e transparência em todas as etapas do processo." },
-    { number: "6", description: "Acompanhar o cliente em todas as etapas da sua jornada, desde o primeiro contacto até à conclusão do processo, proporcionando uma experiência simples e centralizada num único ponto de contacto." }
+    { number: "1", description: t('sobre.objetivo1') },
+    { number: "2", description: t('sobre.objetivo2') },
+    { number: "3", description: t('sobre.objetivo3') },
+    { number: "4", description: t('sobre.objetivo4') },
+    { number: "5", description: t('sobre.objetivo5') },
+    { number: "6", description: t('sobre.objetivo6') }
   ];
 
 return (
@@ -146,10 +148,10 @@ return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Um pouco sobre nós
+              {t('sobre.heroTitulo')}
             </h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Conheça a nossa história, valores e compromisso com a excelência
+              {t('sobre.heroTexto')}
             </p>
           </div>
         </div>
@@ -160,29 +162,16 @@ return (
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-700 leading-relaxed mb-6">
-              A Globalead destaca-se pela sua abordagem integrada e inovadora, atuando como
-intermediária para oferecer soluções personalizadas que garantem conforto, segurança e
-eficiência em todos os processos. Fundada para preencher uma lacuna no mercado, a empresa
-é pioneira na gestão e acompanhamento de clientes em múltiplas áreas, colocando as
-necessidades de cada um no centro das suas operações.
+              {t('sobre.p1')}
             </p>
             <p className="text-gray-700 leading-relaxed mb-6">
-              Com um portfólio abrangente, a Globalead especializa-se no mercado imobiliário,
-complementado por serviços em seguros, créditos, alarmes, telecomunicações e energia. A
-empresa combina uma abordagem moderna com experiência consolidada, posicionando-se
-como referência no setor.
+              {t('sobre.p2')}
             </p>
             <p className="text-gray-700 leading-relaxed mb-6">
-              A equipa é composta por profissionais altamente qualificados e comprometidos, que oferecem
-um atendimento personalizado, baseado na inovação, criatividade e antecipação de
-necessidades. A Globalead simplifica a experiência do cliente, proporcionando um
-acompanhamento gratuito e centralizado desde o primeiro contacto até à conclusão dos
-processos.
+              {t('sobre.p3')}
             </p>
             <p className="text-gray-700 leading-relaxed mb-8">
-              Presente em todas as etapas da jornada do cliente, a Globalead eleva a experiência a um novo
-patamar de conveniência e satisfação, inspirando recomendações e fortalecendo a sua
-reputação como uma rede de intermediação e gestão de excelência.
+              {t('sobre.p4')}
             </p>
           </div>
         </div>
@@ -193,7 +182,7 @@ reputação como uma rede de intermediação e gestão de excelência.
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Ajudamos a tomar decisões inteligentes
+              {t('sobre.razoesTitulo')}
             </h2>
           </div>
 
@@ -226,7 +215,7 @@ reputação como uma rede de intermediação e gestão de excelência.
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Quais os objetivos da Globalead Portugal?
+              {t('sobre.objetivosTitulo')}
             </h2>
           </div>
 
@@ -254,7 +243,7 @@ reputação como uma rede de intermediação e gestão de excelência.
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              O que dizem os clientes sobre nós
+              {t('testemunhos.titulo')}
             </h2>
           </div>
 
@@ -292,7 +281,7 @@ reputação como uma rede de intermediação e gestão de excelência.
                             className="ml-1 font-bold text-[#79b2e9] cursor-pointer"
                             onClick={() => toggleExpand(index)}
                           >
-                            ler mais
+                            {t('testemunhos.lerMais')}
                           </span>
                         )}
                       </p>
@@ -303,7 +292,7 @@ reputação como uma rede de intermediação e gestão de excelência.
                         {testimonial.name}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Review: {testimonial.platform}
+                        {t('testemunhos.review', { plataforma: testimonial.platform })}
                       </p>
                     </div>
                   </div>
@@ -324,10 +313,10 @@ reputação como uma rede de intermediação e gestão de excelência.
           <div className="flex flex-col items-center">
             <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Tem dúvidas?
+                {t('sobre.ctaTitulo')}
               </h2>
               <h2 className="text-3xl md:text-2xl mb-2">
-                Entre em contacto
+                {t('sobre.ctaSubtitulo')}
               </h2>
             </div>
 
@@ -338,7 +327,7 @@ reputação como uma rede de intermediação e gestão de excelência.
                   name="nome"
                   value={formData.nome}
                   onChange={handleInputChange}
-                  placeholder="Nome:"
+                  placeholder={t('formulario.nome')}
                   required
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -347,7 +336,7 @@ reputação como uma rede de intermediação e gestão de excelência.
                   name="apelido"
                   value={formData.apelido}
                   onChange={handleInputChange}
-                  placeholder="Apelido:"
+                  placeholder={t('formulario.apelido')}
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
@@ -355,7 +344,7 @@ reputação como uma rede de intermediação e gestão de excelência.
                   name="telemovel"
                   value={formData.telemovel}
                   onChange={handleInputChange}
-                  placeholder="Telemóvel:"
+                  placeholder={t('formulario.telemovel')}
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
@@ -363,7 +352,7 @@ reputação como uma rede de intermediação e gestão de excelência.
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="Email:"
+                  placeholder={t('formulario.email')}
                   required
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -373,9 +362,9 @@ reputação como uma rede de intermediação e gestão de excelência.
                   onChange={handleInputChange}
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="">Meio de Contacto:</option>
+                  <option value="">{t('formulario.meioContacto')}</option>
                   <option value="Email">Email</option>
-                  <option value="Telefone">Telefone</option>
+                  <option value="Telefone">{t('formulario.telefone')}</option>
                   <option value="WhatsApp">WhatsApp</option>
                 </select>
                 
@@ -385,21 +374,21 @@ reputação como uma rede de intermediação e gestão de excelência.
                   onChange={handleInputChange}
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="">Assunto:</option>
-                  <option value="Esclarecimento de Dúvidas">Esclarecimento de Dúvidas</option>
-                  <option value="Pretendo Comprar um Imóvel">Pretendo Comprar um Imóvel</option>
-                  <option value="Pretendo Vender um Imóvel">Pretendo Vender um Imóvel</option>
-                  <option value="Pretendo Arrendar um Imóvel">Pretendo Arrendar um Imóvel</option>
-                  <option value="Pedido de Simulação para Créditos">Pedido de Simulação para Créditos</option>
-                  <option value="Pedido de Certificado Energético">Pedido de Certificado Energético</option>
-                  <option value="Pedido de Simulação Energia">Pedido de Simulação Energia</option>
-                  <option value="Pedido de Simulação TV NET VOZ">Pedido de Simulação TV NET VOZ</option>
-                  <option value="Pedido de Simulação Seguros">Pedido de Simulação Seguros</option>
-                  <option value="Pedido de Simulação Alarmes">Pedido de Simulação Alarmes</option>
+                  <option value="">{t('formulario.assunto')}</option>
+                  <option value="Esclarecimento de Dúvidas">{t('formulario.duvidas')}</option>
+                  <option value="Pretendo Comprar um Imóvel">{t('formulario.comprar')}</option>
+                  <option value="Pretendo Vender um Imóvel">{t('formulario.vender')}</option>
+                  <option value="Pretendo Arrendar um Imóvel">{t('formulario.arrendar')}</option>
+                  <option value="Pedido de Simulação para Créditos">{t('formulario.simCredito')}</option>
+                  <option value="Pedido de Certificado Energético">{t('formulario.certificado')}</option>
+                  <option value="Pedido de Simulação Energia">{t('formulario.simEnergia')}</option>
+                  <option value="Pedido de Simulação TV NET VOZ">{t('formulario.simTvNetVoz')}</option>
+                  <option value="Pedido de Simulação Seguros">{t('formulario.simSeguros')}</option>
+                  <option value="Pedido de Simulação Alarmes">{t('formulario.simAlarmes')}</option>
                 </select>
                 
                 <select name="horário" value={formData.horario} onChange={handleInputChange} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
-                  <option value="">Horário</option>
+                  <option value="">{t('formulario.horario')}</option>
                   <option>9h-12h30</option>
                   <option>12h30-16h</option>
                   <option>16h-19h30</option>
@@ -408,21 +397,21 @@ reputação como uma rede de intermediação e gestão de excelência.
                 <div className="md:col-span-2">
                   <label className="flex items-start text-sm text-gray-700 mb-4">
                     <input type="checkbox" className="mt-1 mr-2" required />
-                    Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                    {t('formulario.aceitoTermos')}
                   </label>
                   <p className="text-xs text-gray-600 mb-4">
-                    Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                    {t('formulario.rgpd')}
                   </p>
                   
                   {submitStatus === 'success' && (
                     <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                      Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                      {t('formulario.sucesso')}
                     </div>
                   )}
                   
                   {submitStatus === 'error' && (
                     <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                      Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
+                      {t('formulario.erro')}
                     </div>
                   )}
                   
@@ -431,7 +420,7 @@ reputação como uma rede de intermediação e gestão de excelência.
                     disabled={isSubmitting}
                     className="w-full bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isSubmitting ? 'Enviando...' : 'Entrar em contacto'}
+                    {isSubmitting ? t('formulario.aEnviar') : t('formulario.enviar')}
                   </button>
                 </div>
               </form>
