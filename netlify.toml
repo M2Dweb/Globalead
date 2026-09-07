@@ -114,6 +114,29 @@
     Pragma = "no-cache"
     Expires = "0"
 
+# A versão inglesa serve o mesmo index.html, mas noutro endereço: sem estas
+# regras, /en ficava sujeito ao cache por omissão enquanto / era sempre fresco.
+[[headers]]
+  for = "/en"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+[[headers]]
+  for = "/en/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# O service worker nunca pode ser servido de cache: se ficar preso, o browser
+# nunca chega a ver a versão nova e a limpeza da cache nunca acontece.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
 # CACHE ETERNO PARA OS ASSETS (imagens, JS e CSS com hash do Vite)
 [[headers]]
   for = "/assets/*"
