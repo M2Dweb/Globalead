@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import PropertyCardSothebys from './PropertyCardSothebys';
 
 const FeaturedEmpreendimentos: React.FC = () => {
   const [empreendimentos, setEmpreendimentos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,13 +69,13 @@ const FeaturedEmpreendimentos: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho estilo Sotheby's */}
         <div className="section-heading">
-          <h2 className="section-heading__title">Empreendimentos em destaque</h2>
+          <h2 className="section-heading__title">{t('comum.empreendimentosDestaque')}</h2>
           <span className="section-heading__divider" />
-          <span className="section-heading__subtitle">Descubra empreendimentos únicos</span>
+          <span className="section-heading__subtitle">{t('comum.empreendimentosDestaqueSub')}</span>
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-lg text-gray-500">A carregar empreendimentos...</div>
+          <div className="text-center py-12 text-lg text-gray-500">{t('comum.aCarregarEmpreendimentos')}</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {empreendimentos.map((property) => (

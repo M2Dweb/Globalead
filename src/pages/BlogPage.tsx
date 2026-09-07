@@ -1,10 +1,16 @@
+import { useTranslation } from 'react-i18next';
+import { dateLocaleFor } from '../i18n/languages';
 import React, { useState, useEffect } from 'react';
 import { Calendar, Search, Filter } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Link } from 'react-router-dom';
 import ContentRenderer from '../components/ContentRenderer';
+import { useTranslatedRow, translationSelect, withTranslations } from '../lib/translations';
 
 const BlogPage: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  // Artigos no idioma da página, com recurso ao português.
+  const tRow = useTranslatedRow();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
@@ -14,11 +20,11 @@ const BlogPage: React.FC = () => {
   const [postsPerPage] = useState(9);
 
   const categories = [
-    { id: 'all', name: 'Todos', count: 0 },
-    { id: 'imobiliario', name: 'Imobiliário', count: 0 },
-    { id: 'financas', name: 'Finanças', count: 0 },
-    { id: 'seguros', name: 'Seguros', count: 0 },
-    { id: 'ce', name: 'Certificação energetica', count: 0 },
+    { id: 'all', name: t('blog.todos'), count: 0 },
+    { id: 'imobiliario', name: t('blog.imobiliario'), count: 0 },
+    { id: 'financas', name: t('blog.financas'), count: 0 },
+    { id: 'seguros', name: t('blog.seguros'), count: 0 },
+    { id: 'ce', name: t('blog.certificacao'), count: 0 },
     //{ id: 'energia', name: 'Energia', count: 0 },
     //{ id: 'telecom', name: 'Telecomunicações', count: 0 },
     //{ id: 'alarmes', name: 'Alarmes', count: 0 },
@@ -27,10 +33,16 @@ const BlogPage: React.FC = () => {
   useEffect(() => {
     const fetchBlogPosts = async () => {
       try {
-        const { data, error } = await supabase
-          .from('blog_posts')
-          .select('*')
-          .order('date', { ascending: false });
+        // Só os campos que a listagem mostra. `content` fica de fora de
+        // propósito: com as imagens coladas no editor, esta consulta chegava a
+        // trazer megabytes para uma página que nem sequer mostra o artigo.
+        const CAMPOS = 'id, ref, title, excerpt, image, category, date, author, read_time';
+        const consulta = (select: string) =>
+          supabase.from('blog_posts').select(select).order('date', { ascending: false });
+
+        // Sem a coluna `translations` (migração por correr), repete sem ela.
+        let { data, error } = await consulta(`${CAMPOS}, ${translationSelect(['title', 'excerpt'])}`);
+        if (error) ({ data, error } = await consulta(CAMPOS));
 
         if (error) {
           console.error('Erro ao carregar posts:', error);
@@ -71,7 +83,7 @@ const BlogPage: React.FC = () => {
             }
           ]);
         } else {
-          setBlogPosts(data || []);
+          setBlogPosts(withTranslations(data as Record<string, unknown>[] | null));
         }
       } catch (error) {
         console.error('Erro ao carregar posts:', error);
@@ -91,8 +103,10 @@ const BlogPage: React.FC = () => {
 
   const filteredPosts = blogPosts.filter(post => {
     const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+    const titulo: string = tRow(post, 'title') || '';
+    const resumo: string = tRow(post, 'excerpt') || '';
+    const matchesSearch = titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      resumo.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -158,10 +172,10 @@ const BlogPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Últimas notícias
+              {t('blog.heroTitulo')}
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-              Mantenha-se atualizado das últimas novidades sobre os vários setores de atividade da Globalead Portugal
+              {t('blog.heroTexto')}
             </p>
           </div>
         </div>
@@ -179,7 +193,7 @@ const BlogPage: React.FC = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Pesquisar artigos..."
+                  placeholder={t('blog.pesquisar')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -227,7 +241,7 @@ const BlogPage: React.FC = () => {
                   <a href={`/blog/${post.ref || post.id}`}>
                     <img
                       src={post.image}
-                      alt={post.title}
+                      alt={tRow(post, 'title')}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </a>
@@ -245,24 +259,24 @@ const BlogPage: React.FC = () => {
                 <div className="flex flex-col flex-grow">
                   <div className="flex items-center text-sm text-gray-500 mb-3">
                     <Calendar className="h-4 w-4 mr-1" />
-                    <span>{new Date(post.date).toLocaleDateString('pt-PT')}</span>
+                    <span>{new Date(post.date).toLocaleDateString(dateLocaleFor(i18n.language))}</span>
                     <span className="mx-2">•</span>
-                    <span>Por {post.author}</span>
+                    <span>{t('home.por', { autor: post.author })}</span>
                   </div>
 
                   <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
-                    {post.title}
+                    {tRow(post, 'title')}
                   </h3>
 
                   <div className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
-                    <ContentRenderer content={post.excerpt} className="line-clamp-3" />
+                    <ContentRenderer content={tRow(post, 'excerpt')} className="line-clamp-3" />
                   </div>
 
                   <Link
                     to={`/blog/${post.ref || post.id}`}
                     className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-4 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors text-center inline-block font-medium"
                   >
-                    Saber mais
+                    {t('home.saberMais')}
                   </Link>
                 </div>
               </article>
@@ -274,8 +288,8 @@ const BlogPage: React.FC = () => {
             <div className="text-center py-12">
               <div className="text-gray-500 mb-4">
                 <Search className="h-12 w-12 mx-auto mb-4" />
-                <p className="text-lg">Nenhum artigo encontrado</p>
-                <p className="text-sm">Tente ajustar os filtros ou termo de pesquisa</p>
+                <p className="text-lg">{t('blog.nenhumArtigo')}</p>
+                <p className="text-sm">{t('blog.ajustarFiltros')}</p>
               </div>
             </div>
           )}
@@ -289,7 +303,7 @@ const BlogPage: React.FC = () => {
                   disabled={currentPage === 1}
                   className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span className="text-gray-600">Anterior</span>
+                  <span className="text-gray-600">{t('blog.anterior')}</span>
                 </button>
 
                 {/* Page Numbers */}
@@ -336,7 +350,7 @@ const BlogPage: React.FC = () => {
                   disabled={currentPage === totalPages}
                   className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span className="text-gray-600">Seguinte</span>
+                  <span className="text-gray-600">{t('blog.seguinte')}</span>
                 </button>
               </div>
             </div>

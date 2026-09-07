@@ -11,6 +11,37 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const SITE_URL = 'https://globalead.pt';
+
+// Idiomas do site. O português vive na raiz, cada idioma extra num prefixo.
+// Mantém-se alinhado com src/i18n/languages.ts.
+const LANGUAGES = ['pt', 'en'];
+const DEFAULT_LANG = 'pt';
+const HREFLANG = { pt: 'pt-PT', en: 'en' };
+
+const pathForLang = (lang, path) =>
+  lang === DEFAULT_LANG ? path : path === '/' ? `/${lang}` : `/${lang}${path}`;
+
+/**
+ * Há tradução utilizável neste idioma? Espelha src/lib/translations.ts.
+ *
+ * Um imóvel sem tradução continua a abrir em /en (com o texto português, como
+ * o site faz em qualquer campo por traduzir), mas não é declarado ao Google:
+ * pedir a indexação de uma página inglesa cheia de português é pedir para ser
+ * tratado como conteúdo duplicado.
+ */
+const temTraducao = (row, lang, campos) =>
+  lang !== DEFAULT_LANG &&
+  campos.some((campo) => {
+    const valor = row?.translations?.[lang]?.[campo];
+    return typeof valor === 'string' && valor.replace(/<[^>]*>/g, '').trim() !== '';
+  });
+
+const CAMPOS_IMOVEL = ['title', 'description'];
+const CAMPOS_ARTIGO = ['title', 'excerpt', 'content'];
+
+/** Idiomas em que esta linha merece entrar no sitemap. */
+const idiomasDe = (row, campos) =>
+  LANGUAGES.filter((lang) => lang === DEFAULT_LANG || temTraducao(row, lang, campos));
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
 
@@ -38,13 +69,29 @@ async function fetchRows(table, select, filter = '') {
     });
     if (!res.ok) {
       console.warn(`[sitemap] ${table}: HTTP ${res.status}`);
-      return [];
+      return null;
     }
     return await res.json();
   } catch (err) {
     console.warn(`[sitemap] ${table}: ${err?.message || err}`);
-    return [];
+    return null;
   }
+}
+
+/**
+ * Igual, mas a pedir também a coluna `translations`.
+ *
+ * Se a migração ainda não tiver corrido, o PostgREST responde 400 por causa da
+ * coluna que não existe. Repetimos então sem ela: o sitemap sai só em
+ * português, em vez de sair sem um único imóvel — que é o que aconteceria se
+ * um deploy chegasse antes da migração.
+ */
+async function fetchTraduziveis(table, select, filter = '') {
+  const comTraducoes = await fetchRows(table, `${select},translations`, filter);
+  if (comTraducoes) return comTraducoes;
+
+  console.warn(`[sitemap] ${table}: sem coluna "translations" — a gerar só a versão portuguesa.`);
+  return (await fetchRows(table, select, filter)) || [];
 }
 
 function toDate(value) {
@@ -53,55 +100,70 @@ function toDate(value) {
   return isNaN(d.getTime()) ? '' : d.toISOString().split('T')[0];
 }
 
-function urlEntry({ loc, lastmod, changefreq, priority }) {
-  return [
+/**
+ * Uma entrada por idioma, cada uma a declarar as alternativas via hreflang.
+ * É assim que o Google percebe que /imoveis e /en/imoveis são a mesma página
+ * noutra língua, em vez de conteúdo duplicado.
+ */
+function urlEntries({ loc, lastmod, changefreq, priority, langs = LANGUAGES }) {
+  const alternates = langs
+    .map((lang) =>
+      `    <xhtml:link rel="alternate" hreflang="${HREFLANG[lang]}" href="${SITE_URL}${pathForLang(lang, loc)}" />`)
+    .concat(
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${pathForLang(DEFAULT_LANG, loc)}" />`);
+
+  return langs.map((lang) => [
     '  <url>',
-    `    <loc>${SITE_URL}${loc}</loc>`,
+    `    <loc>${SITE_URL}${pathForLang(lang, loc)}</loc>`,
     lastmod ? `    <lastmod>${lastmod}</lastmod>` : '',
     changefreq ? `    <changefreq>${changefreq}</changefreq>` : '',
     priority ? `    <priority>${priority}</priority>` : '',
+    ...alternates,
     '  </url>',
-  ].filter(Boolean).join('\n');
+  ].filter(Boolean).join('\n')).join('\n');
 }
 
 async function run() {
-  const entries = STATIC_ROUTES.map(urlEntry);
+  const entries = STATIC_ROUTES.map(urlEntries);
 
   // Anúncios escondidos ficam fora do sitemap — senão o Google continuava a
   // indexar um URL que agora responde "Imóvel não encontrado".
-  const properties = await fetchRows('properties', 'ref,id,created_at', '&is_published=eq.true');
+  const properties = await fetchTraduziveis('properties', 'ref,id,created_at', '&is_published=eq.true');
   for (const p of properties) {
     const slug = p.ref || p.id;
     if (!slug) continue;
-    entries.push(urlEntry({
+    entries.push(urlEntries({
       loc: `/imoveis/${encodeURIComponent(slug)}`,
       lastmod: toDate(p.created_at),
       changefreq: 'weekly',
       priority: '0.8',
+      langs: idiomasDe(p, CAMPOS_IMOVEL),
     }));
   }
 
-  const posts = await fetchRows('blog_posts', 'ref,id,created_at');
+  const posts = await fetchTraduziveis('blog_posts', 'ref,id,created_at');
   for (const b of posts) {
     const slug = b.ref || b.id;
     if (!slug) continue;
-    entries.push(urlEntry({
+    entries.push(urlEntries({
       loc: `/blog/${encodeURIComponent(slug)}`,
       lastmod: toDate(b.created_at),
       changefreq: 'monthly',
       priority: '0.6',
+      langs: idiomasDe(b, CAMPOS_ARTIGO),
     }));
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${entries.join('\n')}
 </urlset>
 `;
 
   const out = resolve('dist', 'sitemap.xml');
   writeFileSync(out, xml, 'utf8');
-  console.log(`[sitemap] ${entries.length} URLs escritas em ${out}`);
+  const total = (xml.match(/<loc>/g) || []).length;
+  console.log(`[sitemap] ${total} URLs (${LANGUAGES.length} idiomas) escritas em ${out}`);
 }
 
 run().catch((err) => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { sendEmail, FormData } from '../utils/emailService';
 
 interface ContactFormProps {
@@ -14,6 +15,7 @@ const ContactForm2: React.FC<ContactFormProps> = ({
   showExtraFields = false,
   extraFields,
 }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
     apelido: '',
@@ -68,7 +70,7 @@ const ContactForm2: React.FC<ContactFormProps> = ({
                 name="nome"
                 value={formData.nome}
                 onChange={handleInputChange}
-                placeholder="Nome:"
+                placeholder={t('formulario.nome')}
                 required
                 className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
               />
@@ -77,7 +79,7 @@ const ContactForm2: React.FC<ContactFormProps> = ({
                 name="apelido"
                 value={formData.apelido}
                 onChange={handleInputChange}
-                placeholder="Apelido:"
+                placeholder={t('formulario.apelido')}
                 className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
               />
               <input
@@ -85,7 +87,7 @@ const ContactForm2: React.FC<ContactFormProps> = ({
                 name="telemovel"
                 value={formData.telemovel}
                 onChange={handleInputChange}
-                placeholder="Telemóvel:"
+                placeholder={t('formulario.telemovel')}
                 className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
               />
               <input
@@ -93,7 +95,7 @@ const ContactForm2: React.FC<ContactFormProps> = ({
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="Email:"
+                placeholder={t('formulario.email')}
                 required
                 className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
               />
@@ -104,9 +106,9 @@ const ContactForm2: React.FC<ContactFormProps> = ({
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
               >
-                <option value="">Meio de Contacto:</option>
+                <option value="">{t('formulario.meioContacto')}</option>
                 <option value="Email">Email</option>
-                <option value="Telefone">Telefone</option>
+                <option value="Telefone">{t('formulario.telefone')}</option>
                 <option value="WhatsApp">WhatsApp</option>
               </select>
 
@@ -116,17 +118,17 @@ const ContactForm2: React.FC<ContactFormProps> = ({
                 onChange={handleInputChange}
                 className="px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
               >
-                <option value="">Assunto:</option>
-                <option value="Esclarecimento de Dúvidas">Esclarecimento de Dúvidas</option>
-                <option value="Pretendo Comprar um Imóvel">Pretendo Comprar um Imóvel</option>
-                <option value="Pretendo Vender um Imóvel">Pretendo Vender um Imóvel</option>
-                <option value="Pretendo Arrendar um Imóvel">Pretendo Arrendar um Imóvel</option>
-                <option value="Pedido de Simulação para Créditos">Pedido de Simulação para Créditos</option>
-                <option value="Pedido de Certificado Energético">Pedido de Certificado Energético</option>
-                <option value="Pedido de Simulação Energia">Pedido de Simulação Energia</option>
-                <option value="Pedido de Simulação TV NET VOZ">Pedido de Simulação TV NET VOZ</option>
-                <option value="Pedido de Simulação Seguros">Pedido de Simulação Seguros</option>
-                <option value="Pedido de Simulação Alarmes">Pedido de Simulação Alarmes</option>
+                <option value="">{t('formulario.assunto')}</option>
+                <option value="Esclarecimento de Dúvidas">{t('formulario.duvidas')}</option>
+                <option value="Pretendo Comprar um Imóvel">{t('formulario.comprar')}</option>
+                <option value="Pretendo Vender um Imóvel">{t('formulario.vender')}</option>
+                <option value="Pretendo Arrendar um Imóvel">{t('formulario.arrendar')}</option>
+                <option value="Pedido de Simulação para Créditos">{t('formulario.simCredito')}</option>
+                <option value="Pedido de Certificado Energético">{t('formulario.certificado')}</option>
+                <option value="Pedido de Simulação Energia">{t('formulario.simEnergia')}</option>
+                <option value="Pedido de Simulação TV NET VOZ">{t('formulario.simTvNetVoz')}</option>
+                <option value="Pedido de Simulação Seguros">{t('formulario.simSeguros')}</option>
+                <option value="Pedido de Simulação Alarmes">{t('formulario.simAlarmes')}</option>
               </select>
 
               <select 
@@ -135,7 +137,7 @@ const ContactForm2: React.FC<ContactFormProps> = ({
                 onChange={handleInputChange}
                 className="md:col-span-2 px-4 py-3 border border-[#79b2e9] text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
               >
-                <option value="">Horário</option>
+                <option value="">{t('formulario.horario')}</option>
                 <option>9h-12h30</option>
                 <option>12h30-16h</option>
                 <option>16h-19h30</option>
@@ -146,21 +148,21 @@ const ContactForm2: React.FC<ContactFormProps> = ({
               <div className="md:col-span-2">
                 <label className="flex items-start text-sm text-gray-700 mb-4">
                   <input type="checkbox" className="mt-1 mr-2" required />
-                  Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                  {t('formulario.aceitoTermos')}
                 </label>
                 <p className="text-xs text-gray-600 mb-4">
-                  Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                  {t('formulario.rgpd')}
                 </p>
 
                 {submitStatus === 'success' && (
                   <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                    Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                    {t('formulario.sucesso')}
                   </div>
                 )}
 
                 {submitStatus === 'error' && (
                   <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                    Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
+                    {t('formulario.erro')}
                   </div>
                 )}
 
@@ -169,7 +171,7 @@ const ContactForm2: React.FC<ContactFormProps> = ({
                   disabled={isSubmitting}
                   className="w-full bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? 'Enviando...' : 'Entrar em contacto'}
+                  {isSubmitting ? t('formulario.aEnviar') : t('formulario.enviar')}
                 </button>
               </div>
             </form>

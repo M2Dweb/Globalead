@@ -108,7 +108,40 @@
     "areaMin": "Área Mínima (m²):",
     "numQuartos": "Nº de Quartos:",
     "numCasasBanho": "Nº de Casas de Banho:",
-    "mensagemOpcional": "Mensagem (opcional):"
+    "mensagemOpcional": "Mensagem (opcional):",
+    "nomeObr": "Nome*",
+    "apelidoObr": "Apelido*",
+    "emailObr": "Email*",
+    "contactoObr": "Contacto*",
+    "preferenciaObr": "Preferência*",
+    "assuntoSimples": "Assunto",
+    "pedidoSimulacao": "Pedido de Simulação",
+    "outro": "Outro",
+    "mensagem": "Mensagem",
+    "enviarContacto": "Entrar em Contacto",
+    "horarioPlaceholder": "Horário:",
+    "rgpdProtecao": "Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.",
+    "contacto": "Contacto:",
+    "enviarMensagem": "Enviar Mensagem",
+    "selecioneAssunto": "Selecione o assunto...",
+    "creditoNovo": "Quero adquirir um novo imóvel com crédito habitação",
+    "creditoMelhorar": "Quero melhorar as condições do meu crédito habitação atual",
+    "creditoConstruir": "Quero construir o meu imóvel",
+    "comoAjudar": "Em que podemos ajudar...",
+    "ajudaSimularImovel": "Simular que imóvel consigo comprar",
+    "ajudaSimulacao": "Obter simulação",
+    "ajudaAprovacao": "Conseguir aprovação de crédito",
+    "ajudaEscritura": "Aprovar crédito e ajuda até à escritura",
+    "escolhaImovel": "Escolha do imóvel...",
+    "jaTenhoImovel": "Já tenho imóvel escolhido",
+    "naoTenhoImovel": "Não tenho imóvel escolhido",
+    "vendeAtual": "Pensa vender o seu imóvel atual?",
+    "sim": "Sim",
+    "nao": "Não",
+    "numProponentes": "Número de proponentes...",
+    "maisDe2": "Mais de 2",
+    "rendimentoAgregado": "Rendimento total do agregado",
+    "rgpdSimples": "Os dados submetidos através deste formulário serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679."
   },
   "sobre": {
     "heroTitulo": "Um pouco sobre nós",
@@ -169,5 +202,1175 @@
     "juridicoTitulo": "Apoio Jurídico",
     "juridicoTexto": "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo.",
     "formTitulo": "Venda o seu imóvel de forma rápida, segura e sem complicações!"
+  },
+  "seguros": {
+    "heroTitulo": "Seguramos o seu futuro!",
+    "tiposTitulo": "Qual o seguro que realmente necessita?",
+    "autoTitulo": "Seguro Automóvel",
+    "autoTexto": "A Globalead oferece proteção abrangente para o seu automóvel.",
+    "saudeTitulo": "Seguro de Saúde",
+    "saudeTexto": "Cobertura para despesas médicas e tratamentos especializados.",
+    "vidaTitulo": "Seguro de Vida",
+    "vidaTexto": "Proteção financeira para os beneficiários em caso de falecimento ou invalidez.",
+    "habitacaoTitulo": "Multirriscos Habitação",
+    "habitacaoTexto": "Proteção contra danos no imóvel e bens pessoais.",
+    "acidentesTitulo": "Acidentes Pessoais",
+    "acidentesTexto": "Cobertura em caso de acidentes que resultem em despesas médicas.",
+    "trabalhoTitulo": "Acidentes de Trabalho",
+    "trabalhoTexto": "Obrigatório por lei, cobre custos associados a acidentes laborais.",
+    "juridicaTitulo": "Proteção Jurídica",
+    "juridicaTexto": "Cobre custos com ações judiciais e consultas legais.",
+    "comercialTitulo": "Multirriscos Comercial",
+    "comercialTexto": "Protege estabelecimentos comerciais contra danos e interrupções.",
+    "poupancaTitulo": "Poupança imediata",
+    "poupancaTexto": "Beneficie das vantagens que temos ao seu dispor!",
+    "aconselhamentoTitulo": "Aconselhamento total",
+    "aconselhamentoTexto": "Acompanhamento constante do cliente com experiência e confiança.",
+    "rapidezTitulo": "Rapidez na simulação",
+    "rapidezTexto": "Ampla oferta de soluções à medida das empresas e dos particulares.",
+    "comparamos1": "Comparamos as várias instituições",
+    "comparamos2": " em Portugal",
+    "formTitulo": "Faça uma simulação sem compromisso!",
+    "faqTitulo": "Tem alguma questão que não foi contemplada?",
+    "segup": "No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a SEGUP – Corretores de Seguros, S.A., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços prestados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica e ao sólido percurso da SEGUP no setor da mediação de seguros. Em conjunto, disponibilizamos um portefólio completo de soluções nos ramos Vida e Não Vida, com acesso às principais seguradoras do mercado. Através desta parceria, garantimos condições competitivas, acompanhamento especializado e um serviço de excelência, focado nas reais necessidades dos nossos clientes. Importa referir que a SEGUP – Corretores de Seguros, S.A., sociedade anónima com o número de pessoa coletiva 510670300, matriculada na Conservatória do Registo Comercial de Braga, encontra-se inscrita, desde 05/03/2024, na ASF – Autoridade de Supervisão de Seguros e Fundos de Pensões, como corretor de seguros, sob o n.º 624584421, com autorização para o exercício da atividade de mediação de seguros nos ramos Vida e Não Vida. O seu registo pode ser consultado em www.asf.com.pt, nos termos do artigo 32.º do Decreto-Lei n.º 144/2006, de 31 de julho."
+  },
+  "credito": {
+    "heroTitulo": "Ajudamos na compra da sua casa",
+    "p1": "Na Globalead Portugal, reconhecemos que a aquisição de um imóvel é um dos momentos mais significativos na vida de qualquer família e por isso oferecemos um serviço de crédito habitação totalmente personalizado.",
+    "p2": "A nossa equipa estabelece parcerias com as principais instituições financeiras para negociar condições de financiamento que reflitam o seu perfil, objetivos e necessidades reais, garantindo um acompanhamento próximo em todas as etapas.",
+    "p3": "Em vez de recorrer a simuladores genéricos, realizamos uma avaliação profunda e individualizada que projeta o valor das prestações com base no montante, no prazo e nas taxas aplicáveis. A consultoria gratuita e independente ajuda-o a escolher o banco que oferece o melhor equilíbrio entre custos e benefícios, maximizando a sua poupança mensal.",
+    "p4": "Tratamos de toda a burocracia, incluindo recolha de documentação, análise e renegociação de propostas até à assinatura da escritura, para que possa concretizar o sonho da casa própria com total transparência, tranquilidade e confiança.",
+    "beneficiosTitulo1": "Ajudamos a ",
+    "beneficiosTitulo2": "otimizar o seu orçamento familiar",
+    "beneficiosTitulo3": " e muito mais",
+    "beneficiosTexto": "Os nossos serviços de intermediação de crédito são completamente gratuitos e oferecem vantagens exclusivas",
+    "b1Titulo": "Consiga as melhores condições de mercado",
+    "b1Texto": "Comparamos ofertas de múltiplas instituições financeiras para garantir as taxas mais competitivas e condições mais vantajosas para o seu perfil.",
+    "b2Titulo": "Evite a burocracia. Tratamos de tudo por si",
+    "b2Texto": "Cuidamos de toda a documentação, negociações e procedimentos burocráticos, poupando-lhe tempo e eliminando o stress do processo.",
+    "b3Titulo": "Acompanhamento durante todo o processo",
+    "b3Texto": "Desde a primeira consulta até à assinatura da escritura, estamos sempre ao seu lado para esclarecer dúvidas e garantir o sucesso.",
+    "b4Titulo": "Os serviços de intermediação de crédito são gratuitos",
+    "b4Texto": "Não paga nada pelos nossos serviços. A nossa remuneração vem diretamente das instituições financeiras, sem qualquer custo adicional para si.",
+    "simuleTitulo1": "Simule o seu ",
+    "simuleTitulo2": "crédito habitação",
+    "simuleTexto": "Ajuste os valores e veja de imediato uma estimativa da sua prestação mensal",
+    "formTitulo": "Contratar um crédito habitação é a decisão financeira mais impactante da tua vida",
+    "faqTitulo": "Pedir um crédito habitação passo a passo",
+    "lacerda": "No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a Lacerda & Kiala Lda., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços financeiros disponibilizados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica da Lacerda & Kiala Lda. no setor da intermediação de crédito. A Lacerda & Kiala Lda. encontra-se registada no Banco de Portugal, sob o n.º 0007977, como intermediário de crédito vinculado, sem regime de exclusividade, dispondo de contratos celebrados com as seguintes instituições: Banco Santander Totta, S.A., Banco BPI, S.A., Caixa Geral de Depósitos, S.A., Banco CTT, S.A., Union de Créditos Inmobiliários, S.A. – Establecimiento Financiero de Crédito (Sociedad Unipersonal) – Sucursal em Portugal, Bankinter, S.A. – Sucursal em Portugal, Abanca Corporación Bancaria, S.A. – Sucursal em Portugal, Banco BIC Português, S.A., Novo Banco, S.A., e Sicam – Caixa Central e Caixas de Crédito Agrícola Mútuo.No âmbito da sua autorização, a Lacerda & Kiala Lda. está habilitada a: Apresentar ou propor contratos de crédito a consumidores; Prestar assistência a consumidores através da realização de atos preparatórios ou de gestão pré-contratual relativamente a contratos de crédito não apresentados por si; Celebrar contratos de crédito com consumidores em nome das instituições mutuantes; Prestar serviços de consultoria especializada. Importa referir que a marca Lacerda & Kiala Lda. é detida pela Doutor Finanças Unipessoal Lda. O registo da Lacerda & Kiala Lda. pode ser consultado no site oficial do Banco de Portugal, nos termos do Regime Jurídico dos Intermediários de Crédito."
+  },
+  "comum": {
+    "temDuvidas": "Tem dúvidas?",
+    "entreContacto": "Entre em contacto!",
+    "faqTitulo": "Tem alguma questão que não foi contemplada?",
+    "aCarregarImoveis": "A carregar imóveis...",
+    "aCarregar": "A carregar...",
+    "imoveisDestaque": "Imóveis em destaque",
+    "imoveisDestaqueSub": "A sua vida começa com uma casa que o inspira",
+    "todosImoveis": "Todos os Imóveis",
+    "verTodosImoveis": "Ver todos os imóveis",
+    "empreendimentosDestaque": "Empreendimentos em destaque",
+    "empreendimentosDestaqueSub": "Descubra empreendimentos únicos",
+    "aCarregarEmpreendimentos": "A carregar empreendimentos...",
+    "reservado": "Reservado",
+    "vendido": "Vendido",
+    "porqueGlobalead": "Porquê a Globalead Portugal?",
+    "proximidade": "Na Globalead, acreditamos que a chave para o sucesso está na proximidade com o cliente.",
+    "videoProximidade": "Vídeo Globalead - Proximidade com o cliente",
+    "videoRazoes": "Vídeo Globalead - Razões para escolher",
+    "emManutencao": "Estamos em manutenção",
+    "manutencaoTexto": "O site está a ser melhorado e volta muito em breve. Até lá, continuamos disponíveis para si.",
+    "escrevaConteudo": "Escreva o conteúdo aqui..."
+  },
+  "certificacao": {
+    "heroTitulo": "Ajudamos na obtenção do certificado energético",
+    "p1": "Na Globalead Portugal compreendemos que a venda ou arrendamento de um imóvel pode ser um processo complexo, repleto de detalhes que exigem atenção. Um dos passos indispensáveis para garantir a conformidade legal e valorizar o seu imóvel é a obtenção do certificado energético.",
+    "p2": "O certificado energético é um documento oficial que avalia a eficiência energética de um imóvel, indicando a classe energética (A+ a F) e recomendações para melhorias, com poupanças estimadas. Este certificado é emitido por peritos qualificados da ADENE no âmbito do Sistema de Certificação dos Edifícios (SCE) e regulado pelo Decreto-Lei n.º 101-D/2020.",
+    "p3": "Oferecemos suporte completo, desde o início do processo até à emissão do certificado, assegurando rapidez, simplicidade e tranquilidade para si. Confie na nossa experiência e concentre-se no que realmente importa: concretizar o negócio com sucesso.",
+    "processoTitulo1": "Como funciona a ",
+    "processoTitulo2": "emissão do certificado energético?",
+    "agendamentoTitulo": "Agendamento",
+    "agendamentoTexto": "Após o seu contacto, ligamos em menos de 24h para agendar a visita do técnico.",
+    "documentacaoTitulo": "Documentação",
+    "documentacaoTexto": "Antes da visita deverão ser reunidos os documentos necessários.",
+    "visitaTitulo": "Visita Técnica",
+    "visitaTexto": "Um técnico especializado irá recolher toda a informação necessária.",
+    "emissaoTitulo": "Emissão do Certificado",
+    "emissaoTexto": "Entregamos o teu certificado entre 48h a 72h após a visita.",
+    "tiposTitulo": "Quais os tipos de certificados?",
+    "apartamentosTitulo": "Apartamentos",
+    "apartamentosTexto": "Avaliamos o consumo de energia de apartamentos residenciais, prestamos informações sobre a eficiência energética e identificamos áreas para melhorias.",
+    "moradiasTitulo": "Moradias",
+    "moradiasTexto": "Realizamos avaliações detalhadas do consumo de energia em moradias unifamiliares, ajudamos os proprietários a compreender e melhorar a eficiência energética das suas casas.",
+    "comercioTitulo": "Comércio e Serviços",
+    "comercioTexto": "Para estabelecimentos comerciais e de serviços, destacamos o desempenho energético do edifício e sugerimos medidas para reduzir os custos de energia e melhorar a sustentabilidade."
+  },
+  "contactos": {
+    "heroTitulo": "Contactos",
+    "heroTexto": "Na Globalead Portugal colocamos sempre o cliente no centro. Estamos inteiramente disponíveis para lhe prestar o apoio que necessita.",
+    "p1": "Caso tenha dúvidas sobre os nossos serviços, precise de assistência técnica, pretenda informações adicionais ou procure uma solução totalmente personalizada, a nossa equipa está preparada para encontrar a resposta certa para si.",
+    "p2": "Entre em contacto connosco através do formulário abaixo, envie-nos um e-mail ou ligue para os contactos indicados. A nossa prioridade é prestar-lhe um atendimento célere e eficaz, garantindo a sua máxima satisfação.",
+    "telefone": "Telefone",
+    "email": "Email",
+    "horario": "Horário"
+  },
+  "faq": {
+    "geral": [
+      {
+        "question": "Como posso contactar a Globalead Portugal?",
+        "answer": "Pode contactar-nos através do telefone 910 647 620, email geral@globalead.pt, ou através do formulário de contacto no nosso website."
+      },
+      {
+        "question": "Que serviços oferece a Globalead?",
+        "answer": "Oferecemos serviços de mediação imobiliária, seguros, energia, alarmes e telecomunicações (TV, Net, Voz)."
+      }
+    ],
+    "imoveis": [
+      {
+        "question": "Como posso vender o meu imóvel com a Globalead?",
+        "answer": "Entre em contacto connosco para uma avaliação gratuita. Tratamos de todo o processo de marketing, visitas e negociação até à escritura."
+      },
+      {
+        "question": "Quanto tempo demora a vender um imóvel?",
+        "answer": "O tempo varia conforme o tipo de imóvel e localização, mas em média conseguimos vender imóveis entre 30 a 90 dias."
+      },
+      {
+        "question": "Que documentos preciso para vender o meu imóvel?",
+        "answer": "Precisa da caderneta predial, certidão permanente, certificado energético e licença de habitação (quando aplicável)."
+      }
+    ],
+    "tvNetVozFAQ": [
+      {
+        "question": "Qual é a melhor operadora de telemóvel?",
+        "answer": "Não existe uma melhor operadora para todos. A escolha depende das tuas necessidades: mais internet, chamadas/SMS ilimitados, apps incluídas ou o tarifário mais económico. A Globalead ajuda-te a comparar as opções e a escolher o tarifário ideal sempre sem custos para ti."
+      },
+      {
+        "question": "O que significam 2P, 3P, 4P e 5P nos pacotes das operadoras?",
+        "answer": "Estes termos indicam o número de serviços incluídos no pacote: 2P – TV + Internet; 3P – TV + Internet + Telefone fixo; 4P – TV + Internet + Telefone fixo + Telemóvel; 5P – TV + Internet + Telefone fixo + Telemóvel + Internet móvel. Quanto maior o número, mais completo é o pacote. A Globalead ajuda-te a escolher o que realmente faz sentido para ti."
+      },
+      {
+        "question": "Vale a pena juntar todos os serviços numa só operadora?",
+        "answer": "Sim. Muitos clientes têm internet, TV, telemóvel e telefone fixo contratados em operadoras diferentes e acabam por pagar mais. Ao escolher um pacote que agregue todos os serviços, consegues valores mais competitivos e ficas com tudo numa única fatura, tornando a gestão mais simples."
+      },
+      {
+        "question": "Ainda vale a pena ter telefone fixo?",
+        "answer": "Sim. Apesar de ser menos usado, o telefone fixo continua a ter vantagens. As operadoras oferecem chamadas nacionais e internacionais a preços muito mais baixos — muitas vezes com minutos incluídos. Além disso, adicionar telefone fixo ao pacote não tem custo extra e pode ajudar a poupar em chamadas para o estrangeiro."
+      },
+      {
+        "question": "Quais são os custos ao cancelar o contrato antes do fim da fidelização?",
+        "answer": "Se cancelares o contrato antes do término da fidelização, pagas apenas os encargos proporcionais às ofertas e benefícios que a operadora te deu. Esses valores têm de estar discriminados no contrato e não podem cobrar mais do que o previsto."
+      },
+      {
+        "question": "Posso subscrever um pacote sem fidelização?",
+        "answer": "Sim. Podes escolher contratos de 0, 6, 12 ou 24 meses. Optar por um pacote sem fidelização é vantajoso se pretendes mudar facilmente de operadora ou evitar compromissos longos."
+      },
+      {
+        "question": "Quais são as vantagens dos serviços de TV das operadoras?",
+        "answer": "A TV atual oferece mais de 200 canais, canais premium e funcionalidades como gravação, pausa, voltar atrás e multiscreen. Muitas operadoras incluem ainda videoclube. As funcionalidades variam por pacote e operadora, e também podes optar por TV sem fidelização."
+      },
+      {
+        "question": "Como escolher a melhor operadora de Internet?",
+        "answer": "Para escolher a melhor Internet, compara preço, velocidade e serviços incluídos. Pacotes 3P (Internet + TV + Telefone fixo) são competitivos e costumam ser mais económicos do que contratar serviços em separado. A Globalead ajuda-te a comparar todas as operadoras sem custos."
+      },
+      {
+        "question": "E se a velocidade da Internet não corresponder ao contratado?",
+        "answer": "No caso de Internet móvel, o contrato indica velocidades máxima e anunciada. Se a velocidade recebida for muito inferior ao contratado, pode ser incumprimento da operadora. Nesses casos, o cliente pode rescindir o contrato ou exigir solução. A Globalead ajuda-te a avaliar o teu caso."
+      },
+      {
+        "question": "Quais são as velocidades que a operadora é obrigada a indicar no contrato?",
+        "answer": "A operadora deve indicar: Velocidade mínima, máxima, anunciada e normalmente disponível. A velocidade real pode variar devido a distância ao router, paredes, equipamentos antigos, vírus, entre outros. A Globalead ajuda-te a encontrar a melhor solução para garantir a velocidade ideal."
+      },
+      {
+        "question": "O que é a velocidade de upload e porque é importante?",
+        "answer": "A velocidade de upload indica quantos dados consegues enviar por segundo. Afeta videochamadas, envio de ficheiros e publicação de conteúdos. O ideal é ter pelo menos 10 Mbps para garantir estabilidade."
+      },
+      {
+        "question": "O que é a latência (ping) e porque é importante?",
+        "answer": "A latência mede o tempo que os dados demoram a ir e voltar do servidor. Quanto mais baixa, melhor. A fibra ótica tem a menor latência. Valores típicos: até 20 ms (excelente) com cabo, até 30 ms (Wi-Fi), até 100 ms (móvel)."
+      },
+      {
+        "question": "Porque é que os testes de velocidade da Internet podem variar?",
+        "answer": "Vários fatores influenciam os resultados: navegador, dispositivo, servidor do teste e condições da rede da operadora. Por isso, os resultados podem variar e nem sempre refletem o desempenho real."
+      },
+      {
+        "question": "Como posso verificar a cobertura 4G da NOS?",
+        "answer": "Podes consultar a cobertura 4G da NOS no site da operadora, introduzindo a morada ou destino. Assim percebes a disponibilidade e velocidade possível da Internet móvel."
+      },
+      {
+        "question": "O que é a app NOS TV?",
+        "answer": "A app NOS TV permite ver canais da NOS no smartphone, tablet ou computador, funcionando como extensão da tua TV, dentro ou fora de casa."
+      },
+      {
+        "question": "O que inclui o serviço de televisão da MEO?",
+        "answer": "Inclui sempre uma Box e pode incluir 4K, MEO Videoclube, MEO Go, MEO Jogos, MEO Kanal, MEO Kids e apps interativas. A Globalead ajuda-te a comparar pacotes MEO."
+      },
+      {
+        "question": "O que é o MEO Go e quais as vantagens?",
+        "answer": "O MEO Go permite ver TV em qualquer lugar, com mais de 120 canais, videoclube e possibilidade de ver offline. Não gasta dados móveis na rede MEO. O MEO Go VR permite ver conteúdos em realidade virtual 360º."
+      },
+      {
+        "question": "O que é o multiscreen da MEO?",
+        "answer": "O multiscreen permite ver TV em até 3 dispositivos em simultâneo através do MEO Go, dentro ou fora de casa, em direto ou gravações."
+      },
+      {
+        "question": "Quais são as vantagens da fibra Vodafone?",
+        "answer": "A fibra da Vodafone destaca-se pela alta velocidade, estabilidade e qualidade de transmissão, garantindo uma experiência superior em Internet e TV."
+      },
+      {
+        "question": "O que é o Clube Viva da Vodafone?",
+        "answer": "O Clube Viva é o programa de pontos da Vodafone que permite trocar gastos por descontos em smartphones, smartwatches e outros equipamentos."
+      },
+      {
+        "question": "Que apps e serviços oferece a Vodafone?",
+        "answer": "A Vodafone disponibiliza apps como My Vodafone, Secure Net e Call+. Também oferece serviços adicionais em Música, TV, Desporto, Informação e Lazer, com alertas de jogos, golos em direto e conteúdos exclusivos."
+      }
+    ],
+    "seguros": [
+      {
+        "question": "O que é um seguro?",
+        "answer": "Um seguro é um acordo entre segurador e segurado, em que o segurador assume coberturas específicas em caso de sinistro, pagando indemnizações conforme o capital seguro. O segurado, responsável pelo pagamento do prémio, celebra o contrato formalizado na apólice do seguro, que define as coberturas e o custo. A indemnização pode ser paga ao segurado, a um beneficiário ou a terceiros afetados por prejuízos atribuídos ao segurado."
+      },
+      {
+        "question": "O que é a apólice de um seguro?",
+        "answer": "A apólice de seguro é o contrato celebrado entre a seguradora e o tomador do seguro, que inclui todas as condições gerais, particulares e especiais do seguro. As condições gerais são cláusulas padrão aplicáveis a riscos semelhantes, enquanto as condições particulares ou especiais são ajustadas de acordo com o tipo de seguro e as necessidades específicas do segurado."
+      },
+      {
+        "question": "Seguro Automóvel: Como Funciona?",
+        "answer": "O seguro automóvel é um contrato entre o tomador de seguro e a seguradora, transferindo a responsabilidade por danos causados pela utilização de um veículo. O seguro obrigatório por lei é o de responsabilidade civil, que cobre apenas danos a terceiros. Para proteção do próprio veículo, é necessário um seguro de danos próprios (\\\"contra todos os riscos\\\"). O prémio do seguro é influenciado por fatores como idade, experiência de condução, histórico de sinistros, características e utilização do veículo, local de parqueamento, quilometragem anual, dispositivos de segurança e outros elementos relacionados com o condutor e o veículo."
+      },
+      {
+        "question": "Que tipos de seguros existem?",
+        "answer": "O mercado de seguros oferece uma ampla variedade de opções, incluindo cerca de 200 seguros obrigatórios por lei para atividades profissionais específicas. Estes estão organizados em categorias como: acidentes de trabalho, acidentes em serviço, acidentes pessoais, assistência a pessoas, danos, doença, incêndio, seguro caução, responsabilidade civil, roubo e vida."
+      },
+      {
+        "question": "Seguro de Responsabilidade Civil: O que é?",
+        "answer": "O seguro de responsabilidade civil é obrigatório por lei e protege as pessoas transportadas e terceiros em caso de acidente, cobrindo lesões corporais ou materiais. A cobertura mínima estabelecida pela ASF é de 1.220.000 euros para danos materiais e 6.070.000 euros para danos corporais, com revisão a cada cinco anos. No entanto, o seguro não cobre lesões do condutor responsável pelo acidente, danos no seu veículo, ou danos resultantes de acidentes causados deliberadamente ou por negligência nas normas de segurança rodoviária."
+      },
+      {
+        "question": "É importante ter um seguro de vida?",
+        "answer": "O seguro de vida cobre o risco de morte ou, alternativamente, de sobrevivência. Em caso de falecimento, a seguradora paga um capital acordado aos beneficiários, e em caso de sobrevivência, paga um montante à pessoa segura no final do contrato. Existem modalidades mistas que combinam ambos os casos, e o seguro pode ser complementado com coberturas adicionais, como invalidez ou desemprego. Este tipo de seguro oferece segurança económica à família, especialmente em situações de perda de rendimento ou aumento de custos com a longevidade."
+      },
+      {
+        "question": "Sou obrigado a fazer um seguro de vida no crédito habitação?",
+        "answer": "Se um banco exigir a contratação de um seguro de vida ao contratar um crédito à habitação, isso não é obrigatório por lei. Segundo o Decreto-Lei n.º 222/2009, os bancos devem informar o cliente sobre a possibilidade de fazer o seguro de vida, mas o cliente tem a liberdade de escolher a instituição onde deseja contratar o seguro."
+      },
+      {
+        "question": "Qual é a utilidade de um Seguro Multirriscos-Habitação?",
+        "answer": "O seguro multirriscos-habitação oferece proteção indemnizatória, cobrindo danos causados ao imóvel e ao seu recheio por incidentes como catástrofes naturais, incêndios, explosões, roubo, danos por água, problemas elétricos, entre outros. Esta solução vai além da apólice obrigatória por lei, que apenas cobre danos causados por incêndios em edifícios em propriedade horizontal, oferecendo uma proteção mais abrangente para a casa."
+      }
+    ],
+    "certificacao": [
+      {
+        "question": "O que é um certificado energético?",
+        "answer": "O Certificado Energético é um documento que avalia a eficácia energética de um imóvel numa escala de A+ (muito eficiente) a F (pouco eficiente), emitido por técnicos autorizados pela Agência para a Energia (ADENE). No documento podes encontrar informação sobre o consumo energético relativo a climatização e águas quentes sanitárias, mas também medidas de melhoria para reduzir o consumo."
+      },
+      {
+        "question": "Para que serve um certificado energético?",
+        "answer": "O certificado energético é obrigatório desde 2013 para quem pretende vender ou arrendar um imóvel. O objetivo é que informe o proprietário sobre o desempenho energético do imóvel e quais as medidas de melhoria que pode implementar."
+      },
+      {
+        "question": "Quais as vantagens da certificação energética?",
+        "answer": "Para os proprietários que pretendem vender ou arrendar o imóvel, a obrigatoriedade da certificação energética apresenta vantagens. A certificação energética pode levar à valorização do imóvel e à redução do gasto de energia com soluções energéticas adequadas, resultando numa poupança energética. Além disso, através da certificação energética do imóvel podes ter acesso a benefícios fiscais. Se o imóvel possuir uma classificação energética igual ou superior a A pode existir uma redução até 25% do IMI."
+      },
+      {
+        "question": "Quais são os documentos necessários para a visita técnica?",
+        "answer": "Os documentos obrigatórios a apresentar na visita técnica são a Caderneta Predial Urbana e a Certidão de Registo Permanente. Porém, podes ainda apresentar documentos facultativos como a ficha técnica de habitação, a planta do imóvel e o corte construtivo, os quais contribuem para a otimização da Classificação do Certificado Energético do seu imóvel."
+      },
+      {
+        "question": "Quem pode atribuir um certificado energético?",
+        "answer": "O certificado energético apenas pode ser elaborado por um perito qualificado pela ADENE. Estes profissionais são arquitetos ou engenheiros, com experiência mínima de 5 anos, que atuam no âmbito do Sistema de Certificação Energética dos Edifícios (SCE), aprovado pelo Decreto-Lei nº 101-D/2020, de 7 de dezembro."
+      },
+      {
+        "question": "O certificado energético tem validade?",
+        "answer": "O certificado energético é válido por 10 anos para edifícios de habitação e pequenos edifícios de comércio e serviços. No caso de grandes edifícios de comércio e serviços, o prazo é de 6 anos para certificados emitidos até 30 de abril e 2015 e 8 anos para certificados emitidos após 30 de abril de 2015."
+      },
+      {
+        "question": "Posso usar o Certificado Energético para efeitos de escritura?",
+        "answer": "Os Certificados Energéticos emitidos apenas servem para efeitos de escritura, se acompanhados uma certidão de registo permanente válida para o efeito."
+      },
+      {
+        "question": "Em que situações é obrigatório o certificado energético?",
+        "answer": "O artigo 18 do Decreto-Lei n.º 101-D/2020 determina a obrigatoriedade do certificado energético nas seguintes situações: aluguer, venda, trespasse ou dação em cumprimento de imóveis; construção de novos edifícios; grandes renovações com custo superior a 25% do valor do imóvel; grandes edifícios comerciais ou de serviços (área >1000m² ou 500m² para certos usos), sujeitos a inspeções periódicas; e programas que exijam o certificado para acesso a financiamento ou benefícios fiscais."
+      },
+      {
+        "question": "Ter certificado energético nos estabelecimentos comerciais é obrigatório por lei?",
+        "answer": "Sim, o certificado energético é obrigatório para estabelecimentos comerciais, conforme o DL 101-D/2020, que se aplica a todos os edifícios destinados à utilização humana. Se o estabelecimento comercial for vendido, trespassado ou alugado por mais de 4 meses, a emissão do certificado energético é obrigatória. Se o seu estabelecimento tiver mais de 250m², é feito um diagnóstico inicial e, depois, um orçamento para a realização do certificado energético."
+      },
+      {
+        "question": "Coimas se vender ou arrendar sem Certificado Energético?",
+        "answer": "Caso um imóvel seja publicitado, vendido ou arrendado sem a emissão prévia do Certificado Energético, tal facto constitui contraordenação punível com coima até 3 750 €, no caso de pessoas singulares e de até 44 890 €, no caso de pessoas coletivas, conforme Artigo 35.º do DL 101-D/2020."
+      }
+    ],
+    "credito": [
+      {
+        "question": "Quanto posso pedir de crédito habitação?",
+        "answer": "Antes de procurar casa, o primeiro passo é calcular quanto de crédito habitação pode solicitar com base nas poupanças disponíveis e no rendimento mensal. Deve reservar-se entre 15% e 20% do preço do imóvel como entrada, pois o banco não financia 100% do valor e existem impostos e despesas extras. As prestações mensais ideais não devem ultrapassar 35% do rendimento mensal líquido."
+      },
+      {
+        "question": "Falar com um intermediário de crédito à habitação",
+        "answer": "Acesso a acompanhamento personalizado sem ter de visitar cada banco. Comparação consolidada das ofertas bancárias em vigor. Processo de contratação simplificado e possibilidade de condições mais favoráveis. Serviço gratuito prestado pelo idealista/créditohabitação."
+      },
+      {
+        "question": "Enviar a documentação necessária para pedir um crédito habitação",
+        "answer": "A apresentação de propostas personalizadas pelos bancos depende do envio prévio de documentação que comprove a situação financeira. Sem o envio antecipado, as ofertas tornam-se genéricas e pouco representativas do perfil real. As propostas personalizadas incluem taxa de juro, spread, comissões e custos de produtos adicionais exigidos. A análise detalhada de cada componente permite identificar margens de negociação. Acompanhamento da Globalead Portugal garante decisões informadas e vantajosas."
+      },
+      {
+        "question": "Receber ofertas de crédito habitação e compará-las",
+        "answer": "A apresentação de propostas personalizadas pelos bancos depende do envio prévio de documentação que comprove a situação financeira. Sem o envio antecipado, as ofertas tornam-se genéricas e pouco representativas do perfil real. As propostas personalizadas incluem taxa de juro, spread, comissões e custos de produtos adicionais exigidos. A análise detalhada de cada componente permite identificar margens de negociação. Acompanhamento da Globalead Portugal garante decisões informadas e vantajosas."
+      },
+      {
+        "question": "Pede uma avaliação imobiliária para o crédito à habitação",
+        "answer": "A avaliação oficial do imóvel é obrigatória para os bancos no processo de crédito habitação. Serve para determinar o valor real do imóvel e aferir o risco do empréstimo. O custo da avaliação situa-se entre 200€ e 350€, conforme a instituição bancária. A Globalead Portugal acompanha todo o procedimento, assegurando transparência e cumprimento dos prazos necessários."
+      },
+      {
+        "question": "Oferta definitiva de aprovação do crédito habitação: FINE",
+        "answer": "A emissão da FINE ocorre após a conclusão da avaliação do imóvel e validações complementares, caso o crédito seja aprovado. A FINE detalha montante do empréstimo, forma de disponibilização, taxa de juro, plano de amortização, comissões e outras despesas. Validade de 30 dias para análise cuidadosa e decisão sobre a aceitação da oferta. Antes da escritura, é essencial rever todas as condições e esclarecer dúvidas. A Globalead Portugal disponibiliza especialistas para apoiar o cliente nesta fase decisiva."
+      },
+      {
+        "question": "Assinar crédito à habitação e fazer a escritura de compra e venda",
+        "answer": "Ao aceitares a proposta de crédito habitação, o banco emite a FINE (Ficha de Informação Normalizada Europeia), que detalha montante, taxa de juro, comissões, amortização e demais encargos. Após a entrega da FINE, cumpre um período mínimo de 7 dias antes da escritura, para refletires e confirmares que a decisão está alinhada com o acordado. Este intervalo é essencial para garantir a plena compreensão de todos os termos contratuais. A Globalead Portugal recomenda que solicites informação detalhada e esclareças todas as dúvidas antes de assinar qualquer documento."
+      },
+      {
+        "question": "Em que consiste o Spread?",
+        "answer": "O spread é um elemento da taxa de juro que é definido individualmente por cada banco num empréstimo habitação. No fundo, trata-se da margem de lucro da instituição financeira. O spread que o banco atribui a um determinado cliente tem muito que ver com o seu risco (aferido através do historial de crédito, dos seus rendimentos, do montante de empréstimo que está a ser solicitado e das garantias apresentadas pelo consumidor, etc.) e, muitas vezes, com os produtos que podem ser contratados para baixar o spread."
+      },
+      {
+        "question": "Qual é a diferença entre taxa fixa e variável?",
+        "answer": "A taxa fixa mantém-se constante ao longo do empréstimo, nunca se alterando, sendo acordada com a instituição financeira aquando do pedido de financiamento. Já a taxa variável oscila de acordo com um indexante, o que significa que irá sofrer alterações ao longo do período de vida do empréstimo, o que, consequentemente, vai fazer com que a prestação mensal também se modifique. Isto significa que, caso optes por este tipo de taxa no crédito habitação, se o valor do indexante aumentar, a taxa aplicável também será mais elevada, enquanto que, se baixar, a taxa também descerá. Em Portugal, o indexante que normalmente se utiliza nos empréstimos habitação é a Euribor, que pode ser a 3, 6 ou 12 meses."
+      },
+      {
+        "question": "Taxa Anual Nominal (TAN): O que é?",
+        "answer": "Sendo aplicada a todo o tipo de operações, sejam aplicações financeiras ou empréstimos que impliquem o pagamento de juros, a Taxa Anual Nominal (TAN) é um indicador que permite comparar produtos entre si. No caso do crédito habitação com taxa de juro variável, esta resulta simplesmente da soma do spread com a da Euribor."
+      },
+      {
+        "question": "O que é a Taxa Euribor?",
+        "answer": "A Euribor ou, Euro Interbank Offered Rate, é um juro que os bancos pagam a outras instituições para financiar a sua atividade. A Euribor é calculada pela média das taxas de juros praticadas pelos 52 maiores bancos da zona euro, num determinado prazo. A Taxa Euribor não é fixa e encontra-se sujeita a oscilações diárias. Apesar de a Euribor sofrer flutuações diárias, o cliente pode decidir o momento em que a taxa é recalculada. Os prazos mais comuns são 3, 6 e 12 meses."
+      },
+      {
+        "question": "Como conseguir aprovação num empréstimo imobiliário?",
+        "answer": "Para se obter uma aprovação rápida nos empréstimos bancários para habitação é fundamental que o consumidor apresente o máximo de garantias à instituição de crédito, de forma a reduzir a perceção de risco. Para além do nível de rendimentos, um bom histórico de pagamentos de empréstimos anteriores é uma condição essencial. Outro fator que os bancos privilegiam é a estabilidade profissional. O ideal é que o encargo com a mensalidade não ultrapasse os 40% do rendimento do agregado familiar."
+      },
+      {
+        "question": "Que bancos vão aderir ao 100% financiamento?",
+        "answer": "Todos os bancos que concedem crédito habitação (17 instituições no geral) já aderiram à garantia pública, que incluem todos os nossos parceiros com os quais já trabalhamos."
+      },
+      {
+        "question": "Qual é o prazo para pedir a garantia?",
+        "answer": "Para beneficiar da garantia pública e ter 100% financiamento na habitação, terás de celebrar o contrato de crédito até ao dia 31 de dezembro de 2026."
+      },
+      {
+        "question": "Tenho de pagar comissões se falhar o pagamento da prestação de empréstimo da casa?",
+        "answer": "Quando o cliente bancário não paga as prestações na data estipulada, entra em mora. Nestas situações, a instituição bancária pode exigir o pagamento de juros moratórios e de uma comissão respeitante à recuperação de valores em dívida. Juros de mora: resultam da aplicação de uma sobretaxa anual máxima de 3%, que acresce à taxa de juros remuneratórios; Comissão de recuperação de valores em dívida: não pode ultrapassar 4% do valor da prestação, com um valor mínimo de 12 euros e um valor máximo de 150 euros."
+      },
+      {
+        "question": "O que acontece se falhar o pagamento da prestação do crédito habitação?",
+        "answer": "Entrar em incumprimento no empréstimo para comprar casa é uma situação indesejável para qualquer devedor. Caso falhes alguma mensalidade, e da primeira vez que isso acontecer, o banco tem 15 dias para entrar em contacto contigo. Entre o 31º e o 60º dia após o incumprimento, o caso é integrado no PERSI (Procedimento Extrajudicial de Regularização de Situações de Incumprimento), que visa chegar a um acordo entre o banco e o cliente."
+      },
+      {
+        "question": "Podes ainda ter isenção de impostos?",
+        "answer": "Sim. Tens a possibilidade de ainda usufruir da isenção do IMT (Imposto sobre Transmissões Onerosas de Imóveis) e Imposto de Selo que geram poupanças significativas no processo de compra de casa."
+      },
+      {
+        "question": "Quanto tempo dura a garantia do estado?",
+        "answer": "A garantia em questão irá vigorar durante dez anos após a data da escritura do contrato de crédito habitação."
+      },
+      {
+        "question": "A comissão de processamento da prestação, ainda é cobrada?",
+        "answer": "Cobrada a cada prestação liquidada pelo cliente (com acréscimo do Imposto do Selo) e ao longo de toda a vigência do crédito, a comissão de processamento aplica-se mensalmente aquando do pagamento da prestação mensal. Apesar de desde janeiro de 2021 ter sido decretado o fim da comissão de processamento, esta medida é apenas aplicável aos novos créditos."
+      },
+      {
+        "question": "Amortização Antecipada de Crédito: Direitos e Custos Associados?",
+        "answer": "Os consumidores têm direito a reembolsar antecipadamente o seu crédito, isto é, proceder à sua amortização antes da data prevista para a respetiva liquidação. Tal poderá na forma de um reembolso total ou apenas parcial. Porém, a amortização antecipada acarreta custos: Taxa variável: a comissão não pode ser superior a 0,5% do capital reembolsado; Taxa Fixa: a comissão não pode ultrapassar os 2% do capital amortizado."
+      },
+      {
+        "question": "Alterações no spread do crédito habitação: Como evitar surpresas?",
+        "answer": "Embora seja uma prática pouco comum, poderão verificar-se alterações no Spread do crédito habitação ao longo da vigência do contrato. Tal pode suceder, por exemplo, caso o cliente tenha acordado com o banco o cumprimento de determinadas condições para a obtenção de um Spread mais baixo, tais como a domiciliação do ordenado ou ter débitos diretos ativos associados à conta detida na instituição, mas, por algum motivo, deixar de cumprir essas mesmas condições."
+      },
+      {
+        "question": "Taxa Anual Efetiva Global (TAEG): O que é?",
+        "answer": "Representando o custo total do crédito habitação, a Taxa Anual Efetiva Global (TAEG) inclui todos os encargos associados ao contrato. Isto inclui juros, comissões, impostos, seguros associados ao crédito e encargos com a manutenção da conta à ordem associada ao empréstimo. Também inclui outros custos como emolumentos cobrados no registo da hipoteca."
+      }
+    ],
+    "energiaFAQ": [
+      {
+        "question": "O que é a Tarifa Social?",
+        "answer": "A Tarifa Social é um benefício destinado a famílias em dificuldades económicas, oferecendo descontos na fatura de energia. Os principais pontos são: Descontos: 33,8% na eletricidade e 31,2% no gás natural. Apoio a quem precisa: destinado a consumidores vulneráveis. Atribuição automática: o desconto é aplicado diretamente na fatura, se os requisitos forem atendidos."
+      },
+      {
+        "question": "Quais os procedimentos para mudar de fornecedor de energia?",
+        "answer": "Mudar de comercializador de energia é um processo simples e sem custos, que não envolve mudança de contadores ou interrupção no fornecimento. Pode ser feito a qualquer momento, por telefone, presencialmente ou online. Documentos necessários: NIF do titular (Cartão de Cidadão); Contrato de arrendamento ou escritura; Código CPE/CUI; Dados da morada da instalação; Dados de pagamento; Potência da energia elétrica ou escalão do gás natural a contratar."
+      },
+      {
+        "question": "Como contratar energia elétrica numa casa a estrear?",
+        "answer": "Para obter energia em uma casa nova, é necessário fazer a ligação à rede de distribuição elétrica, que em Portugal é exclusiva da E-REDES. O processo envolve solicitar ao operador a ligação à rede e o respetivo orçamento."
+      },
+      {
+        "question": "Como fazer a leitura de consumo no contador de eletricidade?",
+        "answer": "A leitura do consumo de energia elétrica depende do tipo de contador instalado: Contadores Eletromecânicos: leitura visível diretamente no ecrã, considerar apenas os algarismos à esquerda da vírgula. Contadores Estáticos: completamente eletrónicos, a leitura varia conforme a marca. Contadores Híbridos: combinam componente eletromecânica e digital. No caso do gás natural, a leitura é mais simples e uniforme."
+      },
+      {
+        "question": "O que é o CPE & CUI?",
+        "answer": "O Código de Ponto de Entrega (CPE) identifica a instalação de eletricidade, enquanto o Código Universal da Instalação (CUI) serve para identificar a instalação de gás natural. Ambos os códigos podem ser encontrados nas faturas de luz e gás da respetiva morada ou junto da distribuidora de energia."
+      },
+      {
+        "question": "Em que consiste a ficha informativa normalizada de energia?",
+        "answer": "A Ficha de Informação Normalizada (FIN) é um documento obrigatório para os comercializadores de eletricidade e gás natural, conforme regulamento da ERSE. Ela contém informações padronizadas sobre as condições contratuais, facilitando a comparação das ofertas disponíveis."
+      },
+      {
+        "question": "Quais as principais entidades no setor da energia em Portugal?",
+        "answer": "ERSE - Entidade Reguladora dos Serviços Energéticos: regula energia elétrica e gás natural. DGEG - Direção Geral de Energia e Geologia: políticas energéticas e recursos geológicos. ADENE - Agência para a Energia: eficiência energética e mobilidade sustentável."
+      },
+      {
+        "question": "Qual é o IVA da eletricidade em 2025?",
+        "answer": "Em 2025, o IVA aplicado à eletricidade varia: Componente variável (consumo) e potências superiores a 3,45 kVA: IVA de 23%. Componente fixa da tarifa com potências ≤ 3,45 kVA: IVA de 6%. Esta diferenciação visa reduzir custos para consumos menores."
+      },
+      {
+        "question": "Como poupar no consumo de eletricidade?",
+        "answer": "Para poupar eletricidade: optar por equipamentos classe AAA; usar iluminação LED; evitar standby; usar equipamentos na capacidade máxima; arejar a casa ao final do dia; desligar luzes desnecessárias. Estas ações reduzem o consumo e a fatura."
+      },
+      {
+        "question": "O que são painéis solares?",
+        "answer": "Os Painéis Solares convertem energia solar em eletricidade, utilizando células semicondutoras. A produção depende da intensidade solar, variando ao longo do dia e estações. Devem ser instalados em locais com boa exposição solar para otimizar a produção."
+      },
+      {
+        "question": "Onde podem ser instalados os painéis solares?",
+        "answer": "Os Painéis Solares são instalados no telhado, terrenos, quintais ou terraços, desde que sem sombreamento. É proibido instalar em locais com contadores provisórios. A instalação deve ser feita após o contador definitivo estar instalado."
+      },
+      {
+        "question": "Como funcionam os painéis solares?",
+        "answer": "A eletricidade gerada é corrente contínua, convertida para alternada através de inversor. Idealmente, toda energia deve ser consumida imediatamente ou armazenada em baterias. O excedente é injetado na rede através de UPAC, geralmente sem remuneração."
+      }
+    ]
+  },
+  "carlos": {
+    "heroTitulo": "Quem é o Carlos Gonçalves?",
+    "heroSubtitulo": "+10 anos de experiencia na area comercial",
+    "visaoTitulo": "A Visão por Trás da Globalead",
+    "bio1": "O meu nome é Carlos Gonçalves e sou o CEO da Globalead Portugal. Aos 19 anos iniciei o meu percurso no setor comercial, onde tive a oportunidade de aprender, crescer e consolidar competências necessárias para atuar em diversas areas e perceber o que realmente move as pessoas.",
+    "bio2": "Durante quase uma década estive ligado a diferentes setores que hoje servem de alicerce à Globalead Portugal.",
+    "bio3": "A minha missão sempre foi ajudar os clientes a encontrarem soluções reais para as suas necessidades.",
+    "bio4": "Acredito que, ao tomar decisões sobre serviços importantes é essencial contar com o apoio de um profissional especializado permitindo encontrar as melhores soluções, poupando tempo e dinheiro.",
+    "bio5": "Serei a ponte principal entre as marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.",
+    "resultadosTitulo": "Resultados que Falam por Si",
+    "resultadosTexto": "Números que refletem o compromisso com a excelência",
+    "expLabel": "Anos de Experiência",
+    "expTexto": "No mercado imobiliário e energético",
+    "clientesLabel": "Clientes Satisfeitos",
+    "clientesTexto": "Famílias e empresas servidas",
+    "volumeLabel": "Volume de Negócios",
+    "volumeTexto": "Em transações realizadas",
+    "avaliacaoLabel": "Avaliação Média",
+    "avaliacaoTexto": "Baseada em reviews de clientes",
+    "meusImoveis": "Os meus imóveis",
+    "meusImoveisSub": "Os imóveis que estou a acompanhar neste momento",
+    "vendidos": "Vendidos recentemente",
+    "vendidosSub": "Negócios fechados com acompanhamento do início à escritura",
+    "encontreTitulo": "Encontre o seu imóvel ideal",
+    "encontreTexto": "Diga-nos o que procura e encontraremos as melhores opções para si"
+  },
+  "popup": {
+    "titulo": "Não encontra o que procura?",
+    "subtitulo": "Indique-nos a sua preferência de imóvel.",
+    "fechar": "Fechar",
+    "sucesso": "Obrigado! Recebemos a sua preferência e entraremos em contacto em breve.",
+    "descreva": "Descreva o seu imóvel",
+    "descrevaPlaceholder": "Indique o tipo, localização e preço para o seu imóvel",
+    "seuEmail": "O seu email",
+    "emailPlaceholder": "Insira o seu email",
+    "aEnviar": "A enviar...",
+    "enviar": "Enviar",
+    "erro": "Ocorreu um erro ao enviar. Tente novamente.",
+    "rgpd": "Ao pedir informações está a autorizar a Globalead Portugal a guardar os seus dados para o informar sobre oportunidades de negócio, de acordo com a"
+  },
+  "cookies": {
+    "aria": "Consentimento de cookies",
+    "texto": "Utilizamos cookies para melhorar a sua experiência e analisar o tráfego do site (Google Analytics e Facebook Pixel).",
+    "recusar": "Recusar",
+    "aceitar": "Aceitar cookies"
+  },
+  "naoEncontrada": {
+    "titulo": "Página não encontrada",
+    "texto": "A página que procura não existe ou foi movida. Verifique o endereço ou volte ao início.",
+    "voltar": "Voltar ao início",
+    "verImoveis": "Ver imóveis"
+  },
+  "blog": {
+    "todos": "Todos",
+    "imobiliario": "Imobiliário",
+    "financas": "Finanças",
+    "seguros": "Seguros",
+    "certificacao": "Certificação energetica",
+    "creditoHabitacao": "Crédito Habitação",
+    "certificadoEnergetico": "Certificado Energético",
+    "artigoNaoEncontrado": "Artigo não encontrado.",
+    "outrasNoticias": "Outras notícias",
+    "heroTitulo": "Últimas notícias",
+    "heroTexto": "Mantenha-se atualizado das últimas novidades sobre os vários setores de atividade da Globalead Portugal",
+    "pesquisar": "Pesquisar artigos...",
+    "nenhumArtigo": "Nenhum artigo encontrado",
+    "ajustarFiltros": "Tente ajustar os filtros ou termo de pesquisa",
+    "anterior": "Anterior",
+    "seguinte": "Seguinte",
+    "blogNoticias": "Blog & Notícias",
+    "atualizado": "Mantenha-se atualizado com as últimas novidades do mercado",
+    "aCarregarArtigos": "A carregar artigos..."
+  },
+  "imovel": {
+    "apartamento": "Apartamento",
+    "moradia": "Moradia",
+    "terreno": "Terreno",
+    "empreendimento": "Empreendimento",
+    "trespasse": "Trespasse",
+    "quartos": "{{n}} Quartos",
+    "quartosIntervalo": "{{min}} a {{max}} Quartos",
+    "desde": "desde",
+    "favorito": "Adicionar aos favoritos",
+    "fotoAnterior": "Foto anterior",
+    "fotoSeguinte": "Foto seguinte",
+    "verImagem": "Ver imagem {{n}}",
+    "partilhar": "Partilhar",
+    "encontrados": "{{n}} imóveis encontrados",
+    "ordMaisRecentes": "Mais recentes",
+    "ordPrecoAsc": "Preço: menor para maior",
+    "ordPrecoDesc": "Preço: maior para menor",
+    "ordAreaAsc": "Área: menor para maior",
+    "ordAreaDesc": "Área: maior para menor",
+    "generico": "Imóvel",
+    "aCarregarDetalhes": "A carregar detalhes do imóvel...",
+    "naoEncontrado": "Imóvel não encontrado",
+    "sobConsulta": "Sob Consulta",
+    "voltar": "Voltar",
+    "agendarVisita": "Agendar Visita",
+    "tipologiasDisponiveis": "Tipologias Disponíveis",
+    "piso": "Piso {{n}}",
+    "semPiso": "Sem Piso",
+    "fracao": "Fração",
+    "tipologia": "Tipologia",
+    "pisoCol": "Piso",
+    "wc": "WC",
+    "area": "Área",
+    "garagem": "Garagem",
+    "precoDesde": "Preço desde",
+    "sim": "Sim",
+    "nao": "Não",
+    "descricao": "Descrição do Imóvel",
+    "localizacao": "Localização",
+    "partilhe": "Partilha este conteúdo",
+    "videoApresentacao": "Vídeo de Apresentação",
+    "contacteDiretamente": "Ou contacte-nos diretamente:",
+    "simuleCredito": "Simule o seu crédito habitação",
+    "interesseMensagem": "Interesse no imóvel: {{titulo}} (Ref: {{ref}})",
+    "listaTitulo": "Encontre o imóvel perfeito para si",
+    "nenhumEncontrado": "Nenhum imóvel encontrado",
+    "agendeReuniao": "Agende uma reunião connosco e fique a conhecer todos os detalhes deste empreendimento",
+    "agendeVisita": "Agende a sua visita",
+    "visitaSucesso": "Pedido de visita enviado com sucesso! Entraremos em contacto em breve.",
+    "visitaErro": "Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.",
+    "reservadoTexto": "Este imóvel está atualmente reservado. Se tiver interesse, podemos incluí-lo numa lista de espera.",
+    "querNotificado": "Quer ser notificado?",
+    "aviseMe": "Avise-me se ficar disponível",
+    "verDisponiveis": "Ver imóveis disponíveis",
+    "vendidoTexto": "Este imóvel já foi vendido. Mas temos outras opções que podem interessar-lhe!",
+    "descubraAlternativas": "Descubra alternativas",
+    "similares": "Imóveis similares",
+    "indisponivelTexto": "Este imóvel está temporariamente indisponível. Contacte-nos para mais informações.",
+    "verOutros": "Ver outros imóveis",
+    "tipologiaSimular": "Tipologia a simular",
+    "semelhantes": "Imóveis Semelhantes",
+    "partilhaTexto": "Encontrei este imóvel que talvez te possa interessar:"
+  },
+  "avaliacao": {
+    "passo": "Passo {{n}} de 7",
+    "continuar": "Continuar",
+    "finalidadeTitulo": "Qual a finalidade?",
+    "vender": "Vender",
+    "venderDesc": "Pretendo vender o imóvel",
+    "arrendar": "Arrendar",
+    "arrendarDesc": "Pretendo arrendar o imóvel",
+    "trespasse": "Trespasse",
+    "trespasseDesc": "Pretendo fazer trespasse",
+    "tipoTitulo": "Que tipo de imóvel pretende avaliar?",
+    "quintaHerdade": "Quinta ou Herdade",
+    "quarto": "Quarto",
+    "imovelNegocio": "Imóvel com Negócio",
+    "caracteristicasTitulo": "Características do imóvel",
+    "tipologia": "Tipologia",
+    "selecioneTipologia": "Selecione a tipologia",
+    "pequeno": "Pequeno",
+    "medio": "Médio",
+    "grande": "Grande",
+    "muitoGrande": "Muito Grande",
+    "areaUtil": "Área Útil (m²)",
+    "areaBruta": "Área Bruta (m²)",
+    "areaTerreno": "Área do Terreno (m²)",
+    "anoConstrucao": "Ano de Construção",
+    "quartosTitulo": "Quartos e casas de banho",
+    "quartos": "Quartos",
+    "casasBanho": "Casas de Banho",
+    "extrasTitulo": "Características Extras",
+    "garagem": "Garagem",
+    "elevador": "Elevador",
+    "terracoVaranda": "Terraço/Varanda",
+    "piscina": "Piscina",
+    "jardim": "Jardim",
+    "certificado": "Certificado Energético",
+    "selecioneClassificacao": "Selecione a classificação",
+    "isento": "Isento",
+    "emCurso": "Em curso",
+    "estacionamento": "Estacionamento",
+    "selecioneTipo": "Selecione o tipo",
+    "semEstacionamento": "Sem estacionamento",
+    "boxFechada": "Box fechada",
+    "garagemColetiva": "Garagem coletiva",
+    "lugarExterior": "Lugar exterior",
+    "outrasCaracteristicas": "Outras Características",
+    "outrasPlaceholder": "Descreva outras características relevantes (opcional)",
+    "outrasPlaceholder2": "Descreva características relevantes do imóvel (opcional)",
+    "adicionaisTitulo": "Características adicionais",
+    "estadoTitulo": "Estado do imóvel",
+    "novo": "Novo",
+    "novoDesc": "Imóvel novo ou em excelente estado",
+    "usado": "Usado",
+    "usadoDesc": "Imóvel usado em bom estado geral",
+    "renovado": "Renovado",
+    "renovadoDesc": "Imóvel recentemente renovado",
+    "construcao": "Construção",
+    "construcaoDesc": "Imóvel em fase de construção",
+    "planta": "Planta",
+    "plantaDesc": "Projeto aprovado, ainda não iniciado",
+    "localizacaoTitulo": "Localização do imóvel",
+    "cidade": "Cidade/Localidade *",
+    "cidadePlaceholder": "Ex: Lisboa, Porto, Braga...",
+    "rua": "Rua/Avenida",
+    "ruaPlaceholder": "Nome da rua (opcional)",
+    "codigoPostal": "Código Postal",
+    "codigoPostalPlaceholder": "XXXX-XXX",
+    "objetivoTitulo": "Qual o seu objetivo para {{acao}}?",
+    "aVenda": "a venda",
+    "oArrendamento": "o arrendamento",
+    "oTrespasse": "o trespasse",
+    "rapidoVender": "Vender Rapidamente",
+    "rapidoArrendar": "Arrendar Rapidamente",
+    "rapidoTrespasse": "Trespasse Rápido",
+    "rapidoDesc": "Preciso de {{acao}} o mais rápido possível",
+    "melhorPreco": "Obter o Melhor Preço",
+    "melhorPrecoDesc": "Quero maximizar o valor",
+    "avaliarOpcoes": "Avaliar Opções",
+    "avaliarOpcoesDesc": "Estou a considerar {{acao}}",
+    "dadosTitulo": "Os seus dados de contacto",
+    "nome": "Nome *",
+    "nomePlaceholder": "O seu nome",
+    "apelido": "Apelido *",
+    "apelidoPlaceholder": "O seu apelido",
+    "email": "Email *",
+    "emailPlaceholder": "o.seu.email@exemplo.com",
+    "telemovel": "Telemóvel *",
+    "telemovelPlaceholder": "9XX XXX XXX",
+    "meioPreferido": "Meio de Contacto Preferido",
+    "selecioneMeio": "Selecione o meio de contacto",
+    "selecioneHorario": "Selecione o horário",
+    "seguirTitulo": "O que acontece a seguir?",
+    "seguir1": "Análise detalhada do seu imóvel",
+    "seguir2": "Comparação com propriedades similares na zona",
+    "seguir3": "Contacto telefónico em 24h",
+    "seguir4": "Relatório de avaliação gratuito",
+    "sucesso": "Pedido de avaliação enviado com sucesso! O Carlos Gonçalves entrará em contacto consigo brevemente.",
+    "erro": "Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.",
+    "submeter": "Solicitar Avaliação Gratuita",
+    "camposObrigatorios": "Por favor, preencha todos os dados de contacto.",
+    "resumoTitulo": "Resumo da Avaliação",
+    "finalidade": "Finalidade",
+    "tipoImovel": "Tipo de Imóvel",
+    "areaUtilCurta": "Área Útil",
+    "areaBrutaCurta": "Área Bruta",
+    "terreno": "Terreno",
+    "ano": "Ano",
+    "divisoes": "Divisões",
+    "certCurto": "Cert. Energético",
+    "estado": "Estado",
+    "localizacao": "Localização",
+    "gratuitaTitulo": "Avaliação Gratuita",
+    "gratuitaTexto": "Receba uma avaliação profissional do seu imóvel sem qualquer custo",
+    "sub1": "Selecione o objetivo para o seu imóvel",
+    "sub2": "Selecione o tipo de propriedade que possui",
+    "sub3": "Indique as características principais",
+    "sub4": "Quantos quartos e casas de banho tem o imóvel?",
+    "sub5": "Informações adicionais sobre o imóvel",
+    "sub6": "Como classifica o estado atual do imóvel?",
+    "sub7": "Indique a localização para uma avaliação mais precisa",
+    "sub8": "Para que o Carlos Gonçalves possa contactá-lo com a avaliação",
+    "descAreaUtil": "Área útil do imóvel",
+    "descAreaBruta": "Área bruta de construção",
+    "descAreaTerreno": "Área total do terreno",
+    "descAno": "Quando foi construído",
+    "descQuartos": "Número de quartos",
+    "descCasasBanho": "Número de casas de banho",
+    "quartosCurto": "Quartos:",
+    "wcCurto": "WC:"
+  },
+  "calc": {
+    "titulo": "Simulador de Crédito Habitação",
+    "precoImovel": "Preço do imóvel",
+    "poupancas": "Poupanças",
+    "aviso10": "Lembre-se que os bancos normalmente pedem uma contribuição mínima de 10% mais despesas.",
+    "prazoAnos": "Prazo em anos",
+    "tipoTaxa": "Tipo de taxa de juros",
+    "fixa": "Fixa",
+    "variavel": "Variável",
+    "localizacao": "Localização do imóvel",
+    "tipoCasa": "Tipo de casa",
+    "principal": "Habitação principal",
+    "secundaria": "Secundária",
+    "jovem": "Tem 35 anos ou menos?",
+    "jovemInfo": "Isenção de IMT e Imposto de Selo na compra de habitação própria permanente até 316.772 €.",
+    "sim": "Sim",
+    "nao": "Não",
+    "indicativo1": "Valores meramente indicativos (impostos calculados para o Continente). O valor final varia",
+    "indicativo2": "conforme o perfil de cada cliente e depende de uma simulação baseada em necessidades reais.",
+    "prestacaoSeria": "A sua prestação mensal seria de",
+    "taxaFixa": "Taxa fixa",
+    "taxaVariavel": "Taxa variável",
+    "valorCredito": "Valor crédito habitação",
+    "valorCreditoInfo": "Montante a financiar pelo banco (custo total do imóvel menos as suas poupanças).",
+    "percentagem": "Percentagem de financiamento",
+    "percentagemInfo": "Valor do crédito em relação ao preço do imóvel (LTV).",
+    "impostos": "Impostos e despesas da compra",
+    "impostosInfo": "IMT + Imposto de Selo + registo e notário (estimativa).",
+    "custoTotal": "Custo total do imóvel",
+    "poupanca": "Poupança",
+    "credito": "Crédito",
+    "juros": "Juros",
+    "jurosCredito": "Juros crédito habitação",
+    "valorTotal": "Valor total com crédito habitação",
+    "ocultarTabela": "Ocultar tabela de amortização",
+    "verTabela": "Ver tabela de amortização",
+    "encontrarCredito": "Encontrar crédito habitação",
+    "tabelaTitulo": "Tabela de amortização (anual)",
+    "ano": "Ano",
+    "capitalAmortizado": "Capital amortizado",
+    "jurosPagos": "Juros pagos",
+    "capitalDivida": "Capital em dívida",
+    "pedirSimulacao": "Pedir simulação detalhada e gratuita",
+    "pedirTexto": "Deixe os seus contactos e um especialista da Globalead apresenta-lhe a melhor proposta do mercado.",
+    "nomeCompleto": "Nome completo"
+  },
+  "filtros": {
+    "pesquisar": "Pesquisar",
+    "pesquisarPlaceholder": "Localização, título...",
+    "tipoImovel": "Tipo de Imóvel",
+    "todosTipos": "Todos os tipos",
+    "distrito": "Distrito",
+    "todosDistritos": "Todos os distritos",
+    "quartos": "Quartos",
+    "casasBanho": "Casas de Banho",
+    "qualquer": "Qualquer",
+    "estadoImovel": "Estado do Imóvel",
+    "qualquerEstado": "Qualquer estado",
+    "classeEnergetica": "Classe Energética",
+    "qualquerClasse": "Qualquer classe",
+    "filtros": "Filtros",
+    "limpar": "Limpar",
+    "verResultados": "Ver resultados",
+    "fecharFiltros": "Fechar filtros",
+    "novo": "Novo",
+    "usado": "Usado",
+    "emConstrucao": "Em Construção",
+    "paraRemodelar": "Para Remodelar"
+  },
+  "comprar": {
+    "dadosPessoais": "Dados Pessoais",
+    "caracteristicas": "Características do Imóvel",
+    "orcamentoFinalidade": "Orçamento e Finalidade",
+    "preferenciasContacto": "Preferências de Contacto",
+    "observacoesTitulo": "Observações Adicionais",
+    "tipoImovelObr": "Tipo de Imóvel*",
+    "localizacaoObr": "Localização Pretendida*",
+    "areaMin": "Área Mínima (m²)",
+    "areaMax": "Área Máxima (m²)",
+    "numQuartos": "Nº de Quartos",
+    "numCasasBanho": "Nº de Casas de Banho",
+    "orcamentoObr": "Orçamento Máximo (€)*",
+    "finalidade": "Finalidade",
+    "habitacaoPropria": "Habitação Própria",
+    "investimento": "Investimento",
+    "habitacaoSecundaria": "Habitação Secundária",
+    "arrendamento": "Arrendamento",
+    "urgencia": "Urgência da Compra",
+    "muitoUrgente": "Muito Urgente (1-2 meses)",
+    "urgente": "Urgente (3-6 meses)",
+    "normal": "Normal (6-12 meses)",
+    "semPressa": "Sem Pressa",
+    "meioPreferido": "Meio de Contacto Preferido",
+    "horarioPreferido": "Horário Preferido",
+    "erro": "Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.",
+    "aEnviar": "Encontrando...",
+    "submeter": "Quero encontrar um imóvel"
+  },
+  "legal": {
+    "politicaPrivacidade": [
+      {
+        "tipo": "h1",
+        "texto": "Política de Privacidade"
+      },
+      {
+        "tipo": "p",
+        "texto": "Informação sobre o tratamento de dados pessoais"
+      },
+      {
+        "tipo": "p",
+        "texto": "Na Globalead Portugal, a privacidade e a proteção dos dados pessoais dos seus clientes e demais titulares de dados pessoais são uma prioridade."
+      },
+      {
+        "tipo": "p",
+        "texto": "A presente Política de Privacidade descreve a forma como tratamos os dados pessoais, com quem os partilhamos, durante quanto tempo os conservamos e de que modo o titular pode contactar o responsável pelo tratamento para exercer os seus direitos."
+      },
+      {
+        "tipo": "p",
+        "texto": "O acesso e a utilização do website da Globalead Portugal, bem como a subscrição dos serviços por este disponibilizados, implicam a aceitação e vinculação do utilizador à presente Política de Privacidade e Proteção de Dados."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Responsável pelo Tratamento"
+      },
+      {
+        "tipo": "p",
+        "texto": "A Globalead Portugal, enquanto responsável pelo tratamento dos dados pessoais dos seus Utilizadores e Clientes, determina as finalidades e os meios de tratamento dos dados pessoais."
+      },
+      {
+        "tipo": "p",
+        "texto": "Qualquer questão relacionada com o tratamento de dados pessoais deverá ser dirigida para: geral@globalead.pt"
+      },
+      {
+        "tipo": "h2",
+        "texto": "Licitude do Tratamento, Finalidades e Fundamento Jurídico"
+      },
+      {
+        "tipo": "p",
+        "texto": "Para efeitos da presente Política, considera-se dado pessoal qualquer informação relativa a uma pessoa singular identificada ou identificável."
+      },
+      {
+        "tipo": "p",
+        "texto": "A Globalead Portugal compromete-se a tratar os dados pessoais de forma lícita, leal e transparente, recolhendo apenas os dados estritamente necessários para a prestação de serviços de mediação imobiliária, nomeadamente para:"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Produção de estatísticas de utilização do website",
+          "Melhoria e desenvolvimento do website",
+          "Prestação de serviços de mediação imobiliária",
+          "Resposta a pedidos de contacto, informações ou esclarecimentos",
+          "Envio de newsletters, quando subscritas",
+          "Apresentação de oportunidades de negócio adequadas ao perfil do Utilizador",
+          "Análise agregada de dados para fins de gestão e melhoria da atividade",
+          "Execução de contratos ou diligências pré-contratuais",
+          "Cumprimento de obrigações legais e fiscais",
+          "Situações em que exista consentimento prévio e expresso do titular dos dados"
+        ]
+      },
+      {
+        "tipo": "h2",
+        "texto": "Dados Pessoais Recolhidos"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Nome, número de telefone e endereço de correio eletrónico",
+          "Dados fornecidos através dos formulários disponíveis no website",
+          "Preferências, interesses e informações de natureza comercial",
+          "Dados de identificação civil e fiscal necessários à celebração de contratos",
+          "Informações patrimoniais, quando aplicável, no caso de clientes vendedores"
+        ]
+      },
+      {
+        "tipo": "p",
+        "texto": "Os dados pessoais poderão ser recolhidos através do website, por contacto de correio eletrónico, contacto telefónico, presencialmente, ou durante visitas a imóveis no âmbito da atividade de mediação imobiliária."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Consentimento"
+      },
+      {
+        "tipo": "p",
+        "texto": "Ao submeter os seus dados pessoais através do website, o Utilizador declara que leu, compreendeu e aceita a presente Política de Privacidade, autorizando o respetivo tratamento."
+      },
+      {
+        "tipo": "p",
+        "texto": "Ao celebrar um contrato de mediação imobiliária, ou ao solicitar voluntariamente informações sobre imóveis, o Utilizador consente que a Globalead Portugal trate os seus dados pessoais para efeitos de comunicação, marketing e apresentação de oportunidades de negócio ajustadas ao seu perfil, podendo retirar esse consentimento a qualquer momento."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Recolha, Utilização e Destinatários dos Dados"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Os dados pessoais fornecidos integrem a base de dados da Globalead Portugal",
+          "Os dados possam ser utilizados para fins de comunicação comercial, marketing direto ou indireto",
+          "O tratamento dos dados seja efetuado por meios informáticos",
+          "O acesso aos dados seja restrito a colaboradores ou prestadores de serviços autorizados"
+        ]
+      },
+      {
+        "tipo": "p",
+        "texto": "O Utilizador poderá, a qualquer momento, solicitar a cessação da utilização dos seus dados pessoais para fins de marketing, através do contacto geral@globalead.pt."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Direitos do Titular dos Dados"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Direito de acesso",
+          "Direito de retificação",
+          "Direito ao apagamento",
+          "Direito à limitação do tratamento",
+          "Direito à portabilidade",
+          "Direito de oposição",
+          "Direito de retirar o consentimento"
+        ]
+      },
+      {
+        "tipo": "p",
+        "texto": "O exercício destes direitos pode ser efetuado através do email geral@globalead.pt."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Reclamações"
+      },
+      {
+        "tipo": "p",
+        "texto": "O titular tem o direito de apresentar reclamação junto da Comissão Nacional de Proteção de Dados (CNPD)."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Prazo de Conservação dos Dados"
+      },
+      {
+        "tipo": "p",
+        "texto": "Os dados pessoais serão conservados apenas durante o período necessário para as finalidades para as quais foram recolhidos ou durante o período exigido por lei."
+      },
+      {
+        "tipo": "p",
+        "texto": "No caso de subscrição de newsletters, os dados serão conservados até ao cancelamento da subscrição."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Alterações à Política de Privacidade"
+      },
+      {
+        "tipo": "p",
+        "texto": "A Globalead Portugal reserva-se o direito de alterar a presente Política de Privacidade sempre que tal se revele necessário."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Legislação Aplicável"
+      },
+      {
+        "tipo": "p",
+        "texto": "Regulamento (UE) 2016/679 (RGPD) e demais legislação nacional aplicável."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Contactos"
+      },
+      {
+        "tipo": "p",
+        "texto": "Email: geral@globalead.pt"
+      }
+    ],
+    "termosCondicoes": [
+      {
+        "tipo": "h1",
+        "texto": "Termos e Condições"
+      },
+      {
+        "tipo": "h2",
+        "texto": "Objeto e Aceitação"
+      },
+      {
+        "tipo": "p",
+        "texto": "O presente documento estabelece as Condições Gerais de Acesso e Utilização do website da Globalead Portugal, doravante designado por “website”."
+      },
+      {
+        "tipo": "p",
+        "texto": "A titularidade do website pertence à Globalead Portugal, exercendo atividade de mediação imobiliária nos termos da lei portuguesa."
+      },
+      {
+        "tipo": "p",
+        "texto": "A utilização do website pelo Utilizador implica o reconhecimento, aceitação e adesão plena aos presentes Termos e Condições."
+      },
+      {
+        "tipo": "p",
+        "texto": "A aceitação destes Termos é indispensável à utilização dos serviços e informações disponibilizados através do website. Caso o Utilizador não concorde, total ou parcialmente, com os presentes Termos e Condições, deverá cessar imediatamente a utilização do website."
+      },
+      {
+        "tipo": "p",
+        "texto": "A Globalead Portugal reserva-se o direito de, a qualquer momento e de forma unilateral, alterar os presentes Termos e Condições, sempre que tal se revele necessário para os adequar à legislação em vigor ou à atividade desenvolvida, devendo o Utilizador consultá-los sempre que aceder ao website."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Informação e Serviços"
+      },
+      {
+        "tipo": "p",
+        "texto": "Através do seu website, a Globalead Portugal presta serviços de promoção e divulgação de bens imóveis destinados a venda, arrendamento, permuta ou trespasse, divulgando as respetivas características e condições de negócio."
+      },
+      {
+        "tipo": "p",
+        "texto": "A informação disponibilizada tem caráter meramente informativo, podendo ser apresentada sob a forma de textos, imagens, fotografias, plantas, características, projetos de construção, preços e áreas, não constituindo, em caso algum, qualquer proposta contratual ou declaração de vontade, nem dispensando o contacto direto com a mediadora imobiliária."
+      },
+      {
+        "tipo": "p",
+        "texto": "Toda a informação publicada no website é da responsabilidade da Globalead Portugal, que envida os seus melhores esforços para garantir que a mesma seja verdadeira, transparente e atualizada."
+      },
+      {
+        "tipo": "p",
+        "texto": "Contudo, poderão existir lapsos ou informações que não se encontrem totalmente atualizadas. Caso tal seja detetado, o Utilizador poderá comunicar sugestões ou correções através do endereço de correio eletrónico: geral@globalead.pt"
+      },
+      {
+        "tipo": "p",
+        "texto": "A Globalead Portugal não se responsabiliza por quaisquer decisões ou ações tomadas com base nas informações disponibilizadas no website, não assumindo, em circunstância alguma, responsabilidade por danos diretos ou indiretos, patrimoniais ou não patrimoniais, resultantes da utilização ou impossibilidade de utilização do website, dos seus conteúdos ou de websites de terceiros a que este possa remeter."
+      },
+      {
+        "tipo": "p",
+        "texto": "O website poderá conter ligações para websites de terceiros, disponibilizadas apenas para conveniência do Utilizador, não assumindo a Globalead Portugal qualquer responsabilidade pelos conteúdos, exatidão da informação, políticas de privacidade ou termos de utilização desses websites."
+      },
+      {
+        "tipo": "p",
+        "texto": "A Globalead Portugal reserva-se o direito de alterar, modificar ou eliminar, a qualquer momento, os conteúdos do website, sem necessidade de aviso prévio."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Utilização do Website"
+      },
+      {
+        "tipo": "p",
+        "texto": "O acesso ao website é livre e não exige o fornecimento de dados pessoais para consulta dos conteúdos disponíveis."
+      },
+      {
+        "tipo": "p",
+        "texto": "No entanto, para solicitar informações adicionais sobre os imóveis divulgados ou serviços prestados, o Utilizador deverá preencher os formulários próprios, fornecendo dados como nome, contacto telefónico e endereço de correio eletrónico. Estes dados serão utilizados exclusivamente para responder ao pedido efetuado, nos termos da Política de Privacidade."
+      },
+      {
+        "tipo": "p",
+        "texto": "O Utilizador compromete-se a utilizar o website de forma adequada, lícita e conforme à lei, abstendo-se de:"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Utilizar o website para fins diferentes daqueles a que se destina",
+          "Praticar atos ilícitos, difamatórios, ofensivos ou lesivos da Globalead Portugal ou de terceiros",
+          "Interferir ou perturbar o normal funcionamento do website",
+          "Promover qualquer atividade comercial não autorizada",
+          "Enviar, publicar ou disponibilizar conteúdos pertencentes a terceiros sem autorização, nomeadamente conteúdos protegidos por direitos de autor, incluindo imagens e fotografias"
+        ]
+      },
+      {
+        "tipo": "h2",
+        "texto": "Contactos"
+      },
+      {
+        "tipo": "p",
+        "texto": "Para qualquer esclarecimento adicional relativo aos presentes Termos e Condições de Utilização, o Utilizador poderá contactar a Globalead Portugal através do seguinte endereço de correio eletrónico: geral@globalead.pt"
+      }
+    ],
+    "resolucaoLitigios": [
+      {
+        "tipo": "h1",
+        "texto": "Resolução de Litígios"
+      },
+      {
+        "tipo": "p",
+        "texto": "Em caso de litígio o consumidor pode recorrer a uma Entidade de Resolução Alternativa de Litígios de consumo:"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Centro de Arbitragem de Conflitos de Consumo de Lisboa\nwww.centroarbitragemlisboa.pt",
+          "Centro de Arbitragem de Conflitos de Consumo do Vale do Ave / Tribunal Arbitral\nwww.triave.pt",
+          "CIAB - Centro de Informação, Mediação e Arbitragem de Consumo (Tribunal Arbitral de Consumo)\nwww.ciab.pt",
+          "CNIACC - Centro Nacional de Informação e Arbitragem de Conflitos de Consumo\nwww.cniacc.pt",
+          "Centro de Arbitragem de Conflitos de Consumo do Distrito de Coimbra\nwww.centrodearbitragemdecoimbra.com",
+          "Centro de Informação, Mediação e Arbitragem de Conflitos de Consumo do Algarve\nwww.consumoalgarve.pt",
+          "Centro de Informação de Consumo e Arbitragem do Porto\nwww.cicap.pt",
+          "Centro de Arbitragem de Conflitos de Consumo da Madeira\nwww.madeira.gov.pt/cacc"
+        ]
+      },
+      {
+        "tipo": "p",
+        "texto": "Mais informações em Portal do Consumidor\nwww.consumidor.pt"
+      }
+    ],
+    "prevalencia": "Esta é uma tradução de cortesia. Em caso de divergência, prevalece a versão em português."
+  },
+  "seo": {
+    "sobre": {
+      "title": "Sobre Nós | Globalead Portugal",
+      "description": "Conheça a Globalead Portugal: a nossa história, valores e equipa especializada em imobiliário, crédito habitação, seguros e energia. Acompanhamento gratuito e personalizado."
+    },
+    "imoveis": {
+      "title": "Comprar e Vender Imóveis | Globalead Portugal",
+      "description": "Compre ou venda o seu imóvel com a Globalead Portugal. Apartamentos, moradias e empreendimentos com acompanhamento completo, do primeiro contacto à escritura.",
+      "keywords": "comprar casa, vender imóvel, apartamentos, moradias, empreendimentos, mediação imobiliária, Portugal"
+    },
+    "imoveisLista": {
+      "title": "Catálogo de Imóveis | Globalead Portugal",
+      "description": "Veja o catálogo de imóveis disponíveis da Globalead Portugal: apartamentos, moradias, terrenos e empreendimentos em todo o país."
+    },
+    "seguros": {
+      "title": "Seguros Auto, Vida e Habitação | Globalead Portugal",
+      "description": "Compare e contrate seguros automóvel, vida, habitação e saúde com a Globalead Portugal. Encontramos a melhor proteção ao melhor preço, sem custos para si.",
+      "keywords": "seguros, seguro automóvel, seguro de vida, seguro de saúde, seguro habitação, Portugal"
+    },
+    "credito": {
+      "title": "Crédito Habitação e Simulador | Globalead Portugal",
+      "description": "Simule o seu crédito habitação e descubra a prestação mensal. A Globalead negoceia com os principais bancos as melhores condições — intermediação de crédito gratuita.",
+      "keywords": "crédito habitação, simulador crédito habitação, prestação mensal, taxa de juro, intermediário de crédito, Portugal"
+    },
+    "certificacao": {
+      "title": "Certificação Energética | Globalead Portugal",
+      "description": "Certificação energética de imóveis com a Globalead Portugal. Tratamos de todo o processo do certificado energético, obrigatório na venda ou arrendamento."
+    },
+    "carlos": {
+      "title": "Carlos Gonçalves — Consultor | Globalead Portugal",
+      "description": "Carlos Gonçalves, consultor da Globalead Portugal com mais de 10 anos de experiência. Acompanhamento próximo na compra, venda e crédito do seu imóvel."
+    },
+    "blog": {
+      "title": "Blog | Globalead Portugal",
+      "description": "Blog da Globalead Portugal: notícias, dicas e guias sobre imobiliário, crédito habitação, seguros e energia para o ajudar a decidir melhor."
+    },
+    "contactos": {
+      "title": "Contactos | Globalead Portugal",
+      "description": "Entre em contacto com a Globalead Portugal. Fale com a nossa equipa sobre imóveis, crédito habitação, seguros e energia. Acompanhamento gratuito e personalizado."
+    },
+    "termos": {
+      "title": "Termos e Condições | Globalead Portugal",
+      "description": "Termos e condições de utilização do site da Globalead Portugal."
+    },
+    "privacidade": {
+      "title": "Política de Privacidade | Globalead Portugal",
+      "description": "Política de privacidade e tratamento de dados pessoais da Globalead Portugal, em conformidade com o RGPD."
+    },
+    "litigios": {
+      "title": "Resolução de Litígios | Globalead Portugal",
+      "description": "Informação sobre resolução alternativa de litígios de consumo da Globalead Portugal."
+    },
+    "admin": {
+      "title": "Administração | Globalead Portugal"
+    },
+    "default": {
+      "title": "Globalead Portugal | Imóveis, Crédito Habitação e Seguros",
+      "description": "Especialistas em imobiliário, crédito habitação, certificação energética e seguros. Apoiamos todo o processo para comprar ou vender a sua casa em segurança.",
+      "keywords": "imóveis, mediação imobiliária, crédito habitação, seguros, certificação energética, energia, alarmes, Portugal, Porto, Lisboa, casa, apartamento, moradia"
+    },
+    "servMediacao": "Mediação Imobiliária",
+    "servMediacaoDesc": "Compra, venda e arrendamento de imóveis",
+    "servCredito": "Crédito Habitação",
+    "servCreditoDesc": "Intermediação de crédito habitação com os principais bancos",
+    "servSeguros": "Seguros",
+    "servSegurosDesc": "Seguros automóvel, habitação, vida e saúde",
+    "servCertificacao": "Certificação Energética",
+    "servCertificacaoDesc": "Certificados energéticos para imóveis"
   }
 }

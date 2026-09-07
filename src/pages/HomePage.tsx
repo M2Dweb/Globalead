@@ -3,6 +3,7 @@ import { Shield, Calendar, FileText, CreditCard } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
+import { useTranslatedRow, translationSelect, withTranslations } from '../lib/translations';
 import ContentRenderer from '../components/ContentRenderer';
 import FeaturedProperties2 from '../components/FeaturedProperties2';
 import FeaturedEmpreendimentos from '../components/FeaturedEmpreendimentos';
@@ -11,6 +12,8 @@ import { dateLocaleFor, type Lang } from '../i18n/languages';
 
 const HomePage: React.FC = () => {
   const { t, i18n } = useTranslation();
+  // Artigos no idioma da página, com recurso ao português.
+  const tRow = useTranslatedRow();
   const dateLocale = dateLocaleFor(i18n.language as Lang);
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
@@ -20,17 +23,22 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchLatestPosts = async () => {
       try {
-        const { data, error } = await supabase
-          .from('blog_posts')
-          .select('*')
-          .order('date', { ascending: false })
-          .limit(6);
+        // Só os campos que a listagem mostra. `content` fica de fora de
+        // propósito: com as imagens coladas no editor, esta consulta chegava a
+        // trazer megabytes para uma página que nem sequer mostra o artigo.
+        const CAMPOS = 'id, ref, title, excerpt, image, category, date, author, read_time';
+        const consulta = (select: string) =>
+          supabase.from('blog_posts').select(select).order('date', { ascending: false }).limit(6);
+
+        // Sem a coluna `translations` (migração por correr), repete sem ela.
+        let { data, error } = await consulta(`${CAMPOS}, ${translationSelect(['title', 'excerpt'])}`);
+        if (error) ({ data, error } = await consulta(CAMPOS));
 
         if (error) {
           console.error('Erro ao carregar posts:', error);
           setLatestPosts([]);
         } else {
-          setLatestPosts(data || []);
+          setLatestPosts(withTranslations(data as Record<string, unknown>[] | null));
         }
       } catch (error) {
         console.error('Erro ao carregar posts:', error);
@@ -275,7 +283,7 @@ const HomePage: React.FC = () => {
                 <div className="relative">
                   <img
                     src={post.image}
-                    alt={post.title}
+                    alt={tRow(post, 'title')}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-4 left-4 bg-[#0d2233] text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -295,11 +303,11 @@ const HomePage: React.FC = () => {
                   </div>
 
                   <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#0d2233] transition-colors">
-                    {post.title}
+                    {tRow(post, 'title')}
                   </h3>
 
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    <ContentRenderer content={post.excerpt} className="line-clamp-3" />
+                    <ContentRenderer content={tRow(post, 'excerpt')} className="line-clamp-3" />
                   </p>
 
                   <div className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-4 rounded-lg group-hover:bg-[#79b2e9] group-hover:text-white group-hover:border-[#79b2e9] transition-colors text-center">

@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
+import { useTranslatedRow, translationSelect, withTranslations } from '../lib/translations';
 
 type BlogPost = {
   id: number;
@@ -18,6 +19,7 @@ type BlogPost = {
 
 const Footer: React.FC = () => {
   const { t } = useTranslation();
+  const tRow = useTranslatedRow();
   const [latestPosts, setLatestPosts] = useState<BlogPost[]>([]);
   const [newsletterData, setNewsletterData] = useState({
     nome: '',
@@ -31,13 +33,17 @@ const Footer: React.FC = () => {
   // Últimos posts
   useEffect(() => {
     const fetchLatestPosts = async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('id, title, ref')
-        .order('date', { ascending: false })
-        .limit(4);
+      const consulta = (select: string) =>
+        supabase.from('blog_posts').select(select).order('date', { ascending: false }).limit(4);
 
-      if (!error && data) setLatestPosts(data);
+      // Sem a coluna `translations` (migração por correr), repete sem ela em
+      // vez de deixar o rodapé sem notícias nenhumas.
+      let { data, error } = await consulta(`id, title, ref, ${translationSelect(['title'])}`);
+      if (error) ({ data, error } = await consulta('id, title, ref'));
+
+      if (!error && data) {
+        setLatestPosts(withTranslations(data as unknown as Record<string, unknown>[]) as unknown as BlogPost[]);
+      }
     };
 
     fetchLatestPosts();
@@ -141,7 +147,7 @@ const Footer: React.FC = () => {
                     to={`/blog/${post.ref || post.id}`}
                     className="block hover:text-[#79b2e9]"
                   >
-                    • {post.title}
+                    • {tRow(post, 'title')}
                   </Link>
                 ))
               ) : (

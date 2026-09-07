@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CreditCalculator from '../components/CreditCalculator';
 import ContactForm from '../components/ContactForm';
 import { listR2Folder } from '../lib/r2';
 import FAQ from '../components/FAQ';
 
 const CreditoPage: React.FC = () => {
+  const { t } = useTranslation();
   const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
   const [currentPartnerIndex, setCurrentPartnerIndex] = useState(0);
 
@@ -81,7 +83,7 @@ const CreditoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Ajudamos na compra da sua casa
+              {t('credito.heroTitulo')}
             </h1>
           </div>
         </div>
@@ -94,16 +96,16 @@ const CreditoPage: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="prose prose-lg max-w-none text-gray-700">
             <p className="leading-relaxed mb-6">
-              Na Globalead Portugal, reconhecemos que a aquisição de um imóvel é um dos momentos mais significativos na vida de qualquer família e por isso oferecemos um serviço de crédito habitação totalmente personalizado.
+              {t('credito.p1')}
             </p>
             <p className="leading-relaxed mb-6">
-              A nossa equipa estabelece parcerias com as principais instituições financeiras para negociar condições de financiamento que reflitam o seu perfil, objetivos e necessidades reais, garantindo um acompanhamento próximo em todas as etapas.
+              {t('credito.p2')}
             </p>
             <p className="leading-relaxed mb-6">
-              Em vez de recorrer a simuladores genéricos, realizamos uma avaliação profunda e individualizada que projeta o valor das prestações com base no montante, no prazo e nas taxas aplicáveis. A consultoria gratuita e independente ajuda-o a escolher o banco que oferece o melhor equilíbrio entre custos e benefícios, maximizando a sua poupança mensal.
+              {t('credito.p3')}
             </p>
             <p className="leading-relaxed">
-              Tratamos de toda a burocracia, incluindo recolha de documentação, análise e renegociação de propostas até à assinatura da escritura, para que possa concretizar o sonho da casa própria com total transparência, tranquilidade e confiança.
+              {t('credito.p4')}
             </p>
           </div>
         </div>
@@ -114,10 +116,10 @@ const CreditoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Ajudamos a <span className="text-[#79b2e9]">otimizar o seu orçamento familiar</span> e muito mais
+              {t('credito.beneficiosTitulo1')}<span className="text-[#79b2e9]">{t('credito.beneficiosTitulo2')}</span>{t('credito.beneficiosTitulo3')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Os nossos serviços de intermediação de crédito são completamente gratuitos e oferecem vantagens exclusivas
+              {t('credito.beneficiosTexto')}
             </p>
           </div>
 
@@ -133,10 +135,10 @@ const CreditoPage: React.FC = () => {
                   </div>
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">
-                  Consiga as melhores condições de mercado
+                  {t('credito.b1Titulo')}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                  Comparamos ofertas de múltiplas instituições financeiras para garantir as taxas mais competitivas e condições mais vantajosas para o seu perfil.
+                  {t('credito.b1Texto')}
                 </p>
               </div>
             </div>
@@ -152,10 +154,10 @@ const CreditoPage: React.FC = () => {
                   </div>
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">
-                  Evite a burocracia. Tratamos de tudo por si
+                  {t('credito.b2Titulo')}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                  Cuidamos de toda a documentação, negociações e procedimentos burocráticos, poupando-lhe tempo e eliminando o stress do processo.
+                  {t('credito.b2Texto')}
                 </p>
               </div>
             </div>
@@ -171,10 +173,10 @@ const CreditoPage: React.FC = () => {
                   </div>
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">
-                  Acompanhamento durante todo o processo
+                  {t('credito.b3Titulo')}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                  Desde a primeira consulta até à assinatura da escritura, estamos sempre ao seu lado para esclarecer dúvidas e garantir o sucesso.
+                  {t('credito.b3Texto')}
                 </p>
               </div>
             </div>
@@ -190,10 +192,10 @@ const CreditoPage: React.FC = () => {
                   </div>
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">
-                  Os serviços de intermediação de crédito são gratuitos
+                  {t('credito.b4Titulo')}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                  Não paga nada pelos nossos serviços. A nossa remuneração vem diretamente das instituições financeiras, sem qualquer custo adicional para si.
+                  {t('credito.b4Texto')}
                 </p>
               </div>
             </div>
@@ -209,10 +211,10 @@ const CreditoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Simule o seu <span className="text-[#79b2e9]">crédito habitação</span>
+              {t('credito.simuleTitulo1')}<span className="text-[#79b2e9]">{t('credito.simuleTitulo2')}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Ajuste os valores e veja de imediato uma estimativa da sua prestação mensal
+              {t('credito.simuleTexto')}
             </p>
           </div>
           <CreditCalculator />
@@ -224,7 +226,7 @@ const CreditoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Compare as várias instituições em Portugal
+              {t('home.parceirosTitulo')}
             </h2>
           </div>
 
@@ -262,7 +264,7 @@ const CreditoPage: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-              Contratar um crédito habitação é a decisão financeira mais impactante da tua vida
+              {t('credito.formTitulo')}
             </h2>
           </div>
 
@@ -280,7 +282,7 @@ const CreditoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Pedir um crédito habitação passo a passo
+              {t('credito.faqTitulo')}
             </h2>
           </div>
 
@@ -289,7 +291,7 @@ const CreditoPage: React.FC = () => {
           </div>
 
           <div className="bg-gray-900 shadow-sm text-gray-500 text-xs py-12 text-justify">
-             No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a Lacerda & Kiala Lda., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços financeiros disponibilizados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica da Lacerda & Kiala Lda. no setor da intermediação de crédito. A Lacerda & Kiala Lda. encontra-se registada no Banco de Portugal, sob o n.º 0007977, como intermediário de crédito vinculado, sem regime de exclusividade, dispondo de contratos celebrados com as seguintes instituições: Banco Santander Totta, S.A., Banco BPI, S.A., Caixa Geral de Depósitos, S.A., Banco CTT, S.A., Union de Créditos Inmobiliários, S.A. – Establecimiento Financiero de Crédito (Sociedad Unipersonal) – Sucursal em Portugal, Bankinter, S.A. – Sucursal em Portugal, Abanca Corporación Bancaria, S.A. – Sucursal em Portugal, Banco BIC Português, S.A., Novo Banco, S.A., e Sicam – Caixa Central e Caixas de Crédito Agrícola Mútuo.No âmbito da sua autorização, a Lacerda & Kiala Lda. está habilitada a: Apresentar ou propor contratos de crédito a consumidores; Prestar assistência a consumidores através da realização de atos preparatórios ou de gestão pré-contratual relativamente a contratos de crédito não apresentados por si; Celebrar contratos de crédito com consumidores em nome das instituições mutuantes; Prestar serviços de consultoria especializada. Importa referir que a marca Lacerda & Kiala Lda. é detida pela Doutor Finanças Unipessoal Lda. O registo da Lacerda & Kiala Lda. pode ser consultado no site oficial do Banco de Portugal, nos termos do Regime Jurídico dos Intermediários de Crédito.
+             {t('credito.lacerda')}
           </div>
         </div>
       </section>

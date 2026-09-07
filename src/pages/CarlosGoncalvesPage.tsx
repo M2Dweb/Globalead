@@ -8,69 +8,72 @@ import Footer from '../components/Footer';
 import goncalo from "../../public/testemonials/goncalo-vinhas.jpg"
 import fml from "../../public/testemonials/familia-gomes.jpg"
 import franc from "../../public/testemonials/francisco-gonçalves.jpg"
+import { useTranslation } from 'react-i18next';
 import FounderVideoSection2 from '../components/FounderVideoSection2';
 import AgentContactBar from '../components/AgentContactBar';
 import AgentProperties from '../components/AgentProperties';
 
 const CarlosGoncalvesPage: React.FC = () => {
+  const { t } = useTranslation();
+
   const achievements = [
     {
       icon: <Award className="h-8 w-8 text-[#0d2233]" />,
       number: "10+",
-      label: "Anos de Experiência",
-      description: "No mercado imobiliário e energético"
+      label: t('carlos.expLabel'),
+      description: t('carlos.expTexto')
     },
     {
       icon: <Users className="h-8 w-8 text-[#0d2233]" />,
       number: "500+",
-      label: "Clientes Satisfeitos",
-      description: "Famílias e empresas servidas"
+      label: t('carlos.clientesLabel'),
+      description: t('carlos.clientesTexto')
     },
     {
       icon: <TrendingUp className="h-8 w-8 text-[#0d2233]" />,
       number: "€2M+",
-      label: "Volume de Negócios",
-      description: "Em transações realizadas"
+      label: t('carlos.volumeLabel'),
+      description: t('carlos.volumeTexto')
     },
     {
       icon: <Star className="h-8 w-8 text-yellow-500" />,
       number: "4.9",
-      label: "Avaliação Média",
-      description: "Baseada em reviews de clientes"
+      label: t('carlos.avaliacaoLabel'),
+      description: t('carlos.avaliacaoTexto')
     }
   ];
 
   const sellingSteps = [
     {
-      text: "Apresentação do imóvel através de tours virtuais de alta qualidade, permitindo que potenciais compradores explorem a propriedade à distância.",
+      text: t('vender.passo1'),
       icon: <Video className="h-12 w-12 text-[#79b2e9]" />
     },
     {
-      text: "Promoção do imóvel em todas as plataformas sociais e digitais, com campanhas segmentadas e uma estratégia detalhada para maximizar a visibilidade.",
+      text: t('vender.passo2'),
       icon: <Share2 className="h-12 w-12 text-[#79b2e9]" />
     },
     {
-      text: "Reportagem de imagens e vídeos promocionais para destacar as melhores características do imóvel.",
+      text: t('vender.passo3'),
       icon: <Camera className="h-12 w-12 text-[#79b2e9]" />
     },
     {
-      text: "Publicação do imóvel nos principais portais imobiliários em Portugal e no estrangeiro, ampliando o alcance da sua oferta.",
+      text: t('vender.passo4'),
       icon: <Globe className="h-12 w-12 text-[#79b2e9]" />
     },
     {
-      text: "Divulgação em zonas estratégicas para alcançar um público local relevante.",
+      text: t('vender.passo5'),
       icon: <MapPin className="h-12 w-12 text-[#79b2e9]" />
     },
     {
-      text: "Colocação de sinalética no local do imóvel para atrair potenciais compradores na área.",
+      text: t('vender.passo6'),
       icon: <Tag className="h-12 w-12 text-[#79b2e9]" />
     },
     {
-      text: "Divulgação direcionada a uma carteira exclusiva de clientes qualificados e a grupos privados da Globalead Portugal.",
+      text: t('vender.passo7'),
       icon: <Users className="h-12 w-12 text-[#79b2e9]" />
     },
     {
-      text: "Especialistas em decoração de interiores transformam o imóvel, destacando o seu potencial e alinhando-o às tendências e expectativas dos compradores.",
+      text: t('vender.passo8'),
       icon: <Paintbrush className="h-12 w-12 text-[#79b2e9]" />
     }
   ];
@@ -80,37 +83,37 @@ const CarlosGoncalvesPage: React.FC = () => {
       name: "Gonçalo Vinhas",
       image: goncalo ,
       platform: "WhatsApp",
-      review: "Contactei a Globalead para encontrar soluções de seguro automóvel e fui atendido pelo Carlos Gonçalves. Desde o primeiro contacto, o Carlos mostrou-se extremamente profissional e prestável! Apresentou-me as melhores opções conforme as minhas necessidades, explicou-me detalhadamente cada proposta e tratou de todo o processo com grande eficiência. Em menos de 24 horas, o meu seguro já estava ativo. Fiquei muito satisfeito com o serviço e recomendo vivamente a Globalead pela rapidez, clareza e qualidade no atendimento."
+      review: t('testemunhos.goncalo')
     },
     {
       name: "Francisco Gonçalves",
       image: franc ,
       platform: "Facebook",
-      review: "Quando o Carlos, em representação da Globalead Portugal, entrou em contacto comigo, percebi de imediato a confiança e a dedicação com que se apresentou. Prometeu um trabalho rigoroso e empenhado na venda do meu imóvel e cumpriu cada palavra. Ao longo de todo o processo, o Carlos foi incansável, sempre disponível, prestável e atento a cada detalhe. Ajudou-me a reunir toda a documentação necessária e acompanhou-me passo a passo, transformando aquilo que poderia ser um desafio num percurso tranquilo e seguro. O resultado foi muito mais do que a concretização da venda: foi a certeza de que posso contar com alguém que coloca profissionalismo e humanidade lado a lado. Estou profundamente grato pelo trabalho desenvolvido e confiante de que, no futuro, o Carlos será sempre a minha primeira escolha."
+      review: t('testemunhos.francisco')
     },
     {
       name: "Família Gomes",
       image: fml ,
       platform: "Google",
-      review: "Entrámos em contacto com a Globalead depois de vermos um anúncio nas redes sociais, numa altura em que procurávamos apoio para tratar de um processo de crédito. Graças ao acompanhamento da Globalead, conseguimos alcançar uma prestação justa, confortável e totalmente adequada ao nosso orçamento familiar. Para além disso, ainda nos ajudaram a renegociar o seguro da casa e o seguro de vida. Um agradecimento muito especial ao Carlos, que esteve sempre ao nosso lado com profissionalismo, dedicação e uma enorme disponibilidade. Tornou todo o processo simples e sereno, e deixou-nos com a certeza de que podemos contar com ele no futuro."
+      review: t('testemunhos.familiaGomes')
     },
     {
       name: "Liliana da Silva",
       image: "/testemonials/liliana.jpg",
       platform: "Instagram",
-      review: "Grata Carlos, por toda a ajuda, dedicação e profissionalismo na concretização deste negócio. Ao longo do processo, demonstrou uma postura transparente, responsável e ética, explicando tudo com clareza. Soube ouvir as minhas preocupações e respeitar os meus tempos. Recomendo sem qualquer dúvida e acredito que voltaremos a trabalhar juntos. Votos de muito sucesso!"
+      review: t('testemunhos.liliana')
     },
     {
       name: "Wneres & Daiane",
       image: "/testemonials/Wneres.jpg",
       platform: "WhatsApp",
-      review: "Obrigada por toda a ajuda ao longo destes meses, Carlos. Foste um verdadeiro profissional. Após tanta insistência, documentação e burocracia, conseguimos finalmente comprar a nossa primeira casa em Portugal. Foste incansável em todo o processo, desde o apoio no crédito até à concretização da compra, acompanhando-nos sempre de forma próxima, do início até à escritura. Estamos muito gratos por te termos encontrado e por toda a dedicação demonstrada ao longo deste percurso."
+      review: t('testemunhos.wneres')
     },
     {
       name: "Ana Fernandes",
       image: "/testemonials/Ana.jpg",
       platform: "Facebook",
-      review: "Quero destacar o empenho prestado ao longo de todo o processo, especialmente a forma clara e transparente com que sempre esclareceu todas as questões. Para além disso, a vasta rede de serviços que disponibilizou para apoiar a venda revelou-se um fator diferenciador e, na minha opinião, contribuiu significativamente para o sucesso do negócio. Muito obrigada por todo o profissionalismo e dedicação."
+      review: t('testemunhos.ana')
     }
   ];
   
@@ -127,38 +130,38 @@ const CarlosGoncalvesPage: React.FC = () => {
   const services = [
     {
       icon: <Hammer className="h-12 w-12 text-[#0d2233]" />,
-      title: "Obras e Remodelações",
-      description: "Realizamos obras e remodelações de forma profissional, desde pequenas melhorias a renovações completas.",
+      title: t('imoveis.obrasTitulo'),
+      description: t('imoveis.obrasTexto'),
       image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Palette className="h-12 w-12 text-[#0d2233]" />,
-      title: "Design e Decoração",
-      description: "Criamos ambientes funcionais e elegantes, acompanhando desde o planeamento até à escolha do mobiliário e decoração.",
+      title: t('imoveis.designTitulo'),
+      description: t('imoveis.designTexto'),
       image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Building className="h-12 w-12 text-[#0d2233]" />,
-      title: "Promotora Imobiliária",
-      description: "Desenvolvemos projetos imobiliários inovadores, com design, funcionalidade e elevado potencial de valorização.",
+      title: t('imoveis.promotoraTitulo'),
+      description: t('imoveis.promotoraTexto'),
       image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Users className="h-12 w-12 text-[#0d2233]" />,
-      title: "Relocation",
-      description: "Apoiamos a sua mudança para Portugal com procura de imóvel, gestão documental e integração local.",
+      title: t('imoveis.relocationTitulo'),
+      description: t('imoveis.relocationTexto'),
       image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Compass className="h-12 w-12 text-[#0d2233]" />,
-      title: "Arquitetura",
-      description: "Projetamos espaços intemporais e autênticos, que refletem identidade e resistem ao tempo.",
+      title: t('imoveis.arquiteturaTitulo'),
+      description: t('imoveis.arquiteturaTexto'),
       image: "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       icon: <Scale className="h-12 w-12 text-[#0d2233]" />,
-      title: "Apoio Jurídico",
-      description: "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo.",
+      title: t('imoveis.juridicoTitulo'),
+      description: t('imoveis.juridicoTexto'),
       image: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=600"
     }
   ];
@@ -197,11 +200,11 @@ const CarlosGoncalvesPage: React.FC = () => {
             <animated.div style={heroTextSpring}>
               <div className="mb-8">
                 <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 leading-tight tracking-tight">
-                  Quem é o Carlos Gonçalves?
+                  {t('carlos.heroTitulo')}
                 </h1>
                 <div className="w-16 sm:w-20 md:w-24 h-1 bg-white mx-auto mb-4 sm:mb-6"></div>
                 <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
-                  +10 anos de experiencia na area comercial
+                  {t('carlos.heroSubtitulo')}
                 </p>
               </div>
             </animated.div>
@@ -226,21 +229,16 @@ const CarlosGoncalvesPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
               <div>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
-                  A Visão por Trás da Globalead
+                  {t('carlos.visaoTitulo')}
                 </h2>
                 <div className="space-y-4 sm:space-y-6 text-base mt-12 sm:text-lg text-gray-600">
                   <p>
-                    O meu nome é Carlos Gonçalves e sou o CEO da Globalead Portugal. Aos 19
-anos iniciei o meu percurso no setor comercial, onde tive a oportunidade de aprender, crescer e
-consolidar competências necessárias para atuar em diversas areas e perceber o que realmente
-move as pessoas. 
- <p></p>Durante quase uma década estive ligado a diferentes setores que hoje servem
-de alicerce à Globalead Portugal.<p></p> A minha missão sempre foi ajudar os clientes a encontrarem
-soluções reais para as suas necessidades. <p></p>Acredito que, ao tomar decisões sobre serviços
-importantes é essencial contar com o apoio de um profissional especializado permitindo
-encontrar as melhores soluções, poupando tempo e dinheiro. <p></p>Serei a ponte principal entre as
-marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
+                    {t('carlos.bio1')}
                   </p>
+                  <p>{t('carlos.bio2')}</p>
+                  <p>{t('carlos.bio3')}</p>
+                  <p>{t('carlos.bio4')}</p>
+                  <p>{t('carlos.bio5')}</p>
                 </div>
                 
                 
@@ -269,10 +267,10 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Resultados que Falam por Si
+                {t('carlos.resultadosTitulo')}
               </h2>
               <p className="text-lg sm:text-xl text-gray-600">
-                Números que refletem o compromisso com a excelência
+                {t('carlos.resultadosTexto')}
               </p>
             </div>
 
@@ -310,8 +308,8 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
       <AnimatedSectionSpring>
         <AgentProperties
           mode="ativos"
-          title="Os meus imóveis"
-          subtitle="Os imóveis que estou a acompanhar neste momento"
+          title={t('carlos.meusImoveis')}
+          subtitle={t('carlos.meusImoveisSub')}
           background="bg-gray-50"
         />
       </AnimatedSectionSpring>
@@ -319,8 +317,8 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
       <AnimatedSectionSpring>
         <AgentProperties
           mode="vendidos"
-          title="Vendidos recentemente"
-          subtitle="Negócios fechados com acompanhamento do início à escritura"
+          title={t('carlos.vendidos')}
+          subtitle={t('carlos.vendidosSub')}
           limit={3}
           background="bg-white"
         />
@@ -336,10 +334,10 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                     </div>
                   </div>
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                    Encontre o seu imóvel ideal
+                    {t('carlos.encontreTitulo')}
                   </h2>
                   <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-                    Diga-nos o que procura e encontraremos as melhores opções para si
+                    {t('carlos.encontreTexto')}
                   </p>
                 </div>
           <PropertyBuyForm />
@@ -352,7 +350,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Simplificamos a venda do seu imóvel
+                {t('vender.titulo')}
               </h2>
             </div>
 
@@ -378,7 +376,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                A burocracia é nossa, o futuro é seu
+                {t('imoveis.servicosTitulo')}
               </h2>
             </div>
 
@@ -418,7 +416,7 @@ marcas e o consumidor e estarei disponivel para o ajudar em qualquer ocasião.
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                   <div className="text-center mb-12 sm:mb-16">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                      O que dizem os clientes sobre nós
+                      {t('testemunhos.titulo')}
                     </h2>
                   </div>
         

@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { loadAnalytics } from './Analytics';
 
 const STORAGE_KEY = 'cookieConsent';
 
 const CookieBanner: React.FC = () => {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const CookieBanner: React.FC = () => {
   return (
     <div
       role="dialog"
-      aria-label="Consentimento de cookies"
+      aria-label={t('cookies.aria')}
       style={{
         position: 'fixed',
         bottom: 0,
@@ -68,12 +70,12 @@ const CookieBanner: React.FC = () => {
           fontSize: '14px',
           lineHeight: '1.6',
         }}>
-          🍪 Utilizamos <strong style={{ color: '#fff' }}>cookies</strong> para melhorar a sua experiência e analisar o tráfego do site (Google Analytics e Facebook Pixel).{' '}
+          🍪 {t('cookies.texto')}{' '}
           <a
             href="/politica-privacidade"
             style={{ color: '#7dd3fc', textDecoration: 'underline' }}
           >
-            Política de Privacidade
+            {t('footer.politicaPrivacidade')}
           </a>
         </p>
       </div>
@@ -96,7 +98,7 @@ const CookieBanner: React.FC = () => {
           onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
           onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
         >
-          Recusar
+          {t('cookies.recusar')}
         </button>
 
         <button
@@ -116,7 +118,7 @@ const CookieBanner: React.FC = () => {
           onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
         >
-          Aceitar cookies
+          {t('cookies.aceitar')}
         </button>
       </div>
     </div>

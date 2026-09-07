@@ -7,6 +7,7 @@ import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Calendar, User,
 import RichTextEditor from '../components/RichTextEditor';
 import ImageUploader from '../components/ImageUploader';
 import { MultiFileUploader } from '../components/MultiFileUploader';
+import { LANGUAGES, LANG_META, DEFAULT_LANG, type Lang } from '../i18n/languages';
 
 /**
  * Destaques da página inicial.
@@ -28,6 +29,60 @@ const GROUP_LABELS: Record<DestaqueGroup, string> = {
 
 const groupOf = (property: any): DestaqueGroup =>
   property?.type === 'empreendimento' ? 'empreendimento' : 'imovel';
+
+/**
+ * Mensagem de erro útil em vez de "Erro ao salvar".
+ *
+ * O caso mais provável é a migração das traduções ainda não ter corrido: o
+ * PostgREST responde a queixar-se da coluna `translations` que não existe.
+ * Sem isto, o Carlos via só "Erro ao salvar" e ninguém sabia porquê.
+ */
+const explicarErro = (error: any, acao: string): string => {
+  const detalhe = error?.message || String(error);
+  if (detalhe.includes('translations')) {
+    return `${acao}: falta correr a migração das traduções na base de dados (supabase/migrations/20260905_add_translations.sql).`;
+  }
+  return `${acao}: ${detalhe}`;
+};
+
+
+/**
+ * Separadores de idioma no topo dos formulários.
+ *
+ * O português é a versão de referência e vive nas colunas da tabela; os outros
+ * idiomas vivem na coluna `translations`. Trocar de separador troca apenas os
+ * campos de texto — preço, fotos, tipologias e categoria são os mesmos em
+ * qualquer idioma, por isso não se repetem.
+ */
+const LanguageTabs: React.FC<{
+  lang: Lang;
+  onChange: (lang: Lang) => void;
+}> = ({ lang, onChange }) => (
+  <div className="flex flex-wrap items-center gap-2 border-b border-gray-200 pb-3 mb-6">
+    {LANGUAGES.map((l) => (
+      <button
+        key={l}
+        type="button"
+        onClick={() => onChange(l)}
+        className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${
+          l === lang
+            ? 'bg-[#0d2233] text-white'
+            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+        }`}
+      >
+        {LANG_META[l].label}
+        {l === DEFAULT_LANG && <span className="ml-1 opacity-60">· original</span>}
+      </button>
+    ))}
+
+    <p className="w-full text-xs text-gray-500 mt-1">
+      {lang === DEFAULT_LANG
+        ? 'Versão de referência do site. É esta que aparece quando não há tradução.'
+        : 'Só os textos mudam de idioma — preço, fotos, tipologias e categoria são partilhados. O que deixar em branco aparece em português.'}
+    </p>
+  </div>
+);
+
 
 const AdminPage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -104,7 +159,9 @@ const AdminPage: React.FC = () => {
     stores: '',
     image_url: '',
     image_key: '',
-    video_poster: ''
+    video_poster: '',
+    // { en: { title, description } } — ver supabase/migrations/20260905_add_translations.sql
+    translations: {} as Record<string, Record<string, string>>
   });
 
 
@@ -344,8 +401,53 @@ const AdminPage: React.FC = () => {
     image: '',
     read_time: '5 min',
     image_url: '',
-    image_key: ''
+    image_key: '',
+    translations: {} as Record<string, Record<string, string>>
   });
+
+  // ---- Idioma do formulário -------------------------------------------------
+  // O português escreve nas colunas da tabela; os outros idiomas escrevem
+  // dentro de `translations`. Os campos do formulário são os mesmos — muda só
+  // onde o texto é guardado.
+  const [formLang, setFormLang] = useState<Lang>(DEFAULT_LANG);
+
+  const propertyField = (campo: 'title' | 'description'): string =>
+    formLang === DEFAULT_LANG
+      ? propertyForm[campo] || ''
+      : propertyForm.translations?.[formLang]?.[campo] || '';
+
+  const setPropertyField = (campo: 'title' | 'description', valor: string) => {
+    if (formLang === DEFAULT_LANG) {
+      setPropertyForm(prev => ({ ...prev, [campo]: valor } as typeof prev));
+      return;
+    }
+    setPropertyForm(prev => ({
+      ...prev,
+      translations: {
+        ...prev.translations,
+        [formLang]: { ...(prev.translations?.[formLang] || {}), [campo]: valor },
+      },
+    }));
+  };
+
+  const blogField = (campo: 'title' | 'excerpt' | 'content'): string =>
+    formLang === DEFAULT_LANG
+      ? blogForm[campo] || ''
+      : blogForm.translations?.[formLang]?.[campo] || '';
+
+  const setBlogField = (campo: 'title' | 'excerpt' | 'content', valor: string) => {
+    if (formLang === DEFAULT_LANG) {
+      setBlogForm(prev => ({ ...prev, [campo]: valor } as typeof prev));
+      return;
+    }
+    setBlogForm(prev => ({
+      ...prev,
+      translations: {
+        ...prev.translations,
+        [formLang]: { ...(prev.translations?.[formLang] || {}), [campo]: valor },
+      },
+    }));
+  };
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -482,7 +584,7 @@ const AdminPage: React.FC = () => {
       alert(editingProperty ? 'Propriedade atualizada!' : 'Propriedade criada!');
     } catch (error) {
       console.error('Erro ao salvar propriedade:', error);
-      alert('Erro ao salvar propriedade');
+      alert(explicarErro(error, 'Erro ao guardar a propriedade'));
     }
   };
 
@@ -516,7 +618,7 @@ const AdminPage: React.FC = () => {
       alert(editingPost ? 'Post atualizado!' : 'Post criado!');
     } catch (error) {
       console.error('Erro ao salvar post:', error);
-      alert('Erro ao salvar post');
+      alert(explicarErro(error, 'Erro ao guardar o artigo'));
     }
   };
 
@@ -675,11 +777,13 @@ const AdminPage: React.FC = () => {
       stores: '',
       image_url: '',
       image_key: '',
-      video_poster: ''
+      video_poster: '',
+      translations: {}
     });
 
     setEditingProperty(null);
     setShowForm(false);
+    setFormLang(DEFAULT_LANG);
   };
 
 
@@ -694,10 +798,12 @@ const AdminPage: React.FC = () => {
       image: '',
       read_time: '5 min',
       image_url: '',
-      image_key: ''
+      image_key: '',
+      translations: {}
     });
     setEditingPost(null);
     setShowForm(false);
+    setFormLang(DEFAULT_LANG);
   };
 
   const viewLeadDetails = (lead: any) => {
@@ -745,11 +851,13 @@ const AdminPage: React.FC = () => {
       stores: property.stores?.toString() || '',
       image_url: property.image_url || '',
       image_key: property.image_key || '',
-      video_poster: property.video_poster || ''
+      video_poster: property.video_poster || '',
+      translations: property.translations || {}
     });
 
     setEditingProperty(property);
     setShowForm(true);
+    setFormLang(DEFAULT_LANG);
   };
 
 
@@ -764,10 +872,12 @@ const AdminPage: React.FC = () => {
       image: post.image || '',
       read_time: post.read_time || '5 min',
       image_url: post.image_url || '',
-      image_key: post.image_key || ''
+      image_key: post.image_key || '',
+      translations: post.translations || {}
     });
     setEditingPost(post);
     setShowForm(true);
+    setFormLang(DEFAULT_LANG);
   };
 
   const addFeature = () => {
@@ -1181,13 +1291,15 @@ const AdminPage: React.FC = () => {
                   </button>
                 </div>
 
+                <LanguageTabs lang={formLang} onChange={setFormLang} />
+
                 <form onSubmit={handlePropertySubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <input
                       type="text"
-                      placeholder="Título"
-                      value={propertyForm.title}
-                      onChange={(e) => setPropertyForm({ ...propertyForm, title: e.target.value })}
+                      placeholder={`Título (${LANG_META[formLang].label})`}
+                      value={propertyField('title')}
+                      onChange={(e) => setPropertyField('title', e.target.value)}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <input
@@ -1338,10 +1450,13 @@ const AdminPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Descrição <span className="text-gray-400 font-normal">({LANG_META[formLang].label})</span>
+                    </label>
                     <RichTextEditor
-                      value={propertyForm.description}
-                      onChange={(value) => setPropertyForm({ ...propertyForm, description: value })}
+                      key={`prop-desc-${formLang}`}
+                      value={propertyField('description')}
+                      onChange={(value) => setPropertyField('description', value)}
                       placeholder="Descrição detalhada da propriedade..."
                       height="200px"
                     />
@@ -1605,15 +1720,17 @@ const AdminPage: React.FC = () => {
                   </button>
                 </div>
 
+                <LanguageTabs lang={formLang} onChange={setFormLang} />
+
                 <form onSubmit={handleBlogSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <input
                       type="text"
-                      placeholder="Título"
-                      value={blogForm.title}
-                      onChange={(e) => setBlogForm({ ...blogForm, title: e.target.value })}
+                      placeholder={`Título (${LANG_META[formLang].label})`}
+                      value={blogField('title')}
+                      onChange={(e) => setBlogField('title', e.target.value)}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
+                      required={formLang === DEFAULT_LANG}
                     />
                     <input
                       type="text"
@@ -1656,20 +1773,26 @@ const AdminPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Resumo</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Resumo <span className="text-gray-400 font-normal">({LANG_META[formLang].label})</span>
+                    </label>
                     <RichTextEditor
-                      value={blogForm.excerpt}
-                      onChange={(value) => setBlogForm({ ...blogForm, excerpt: value })}
+                      key={`blog-excerpt-${formLang}`}
+                      value={blogField('excerpt')}
+                      onChange={(value) => setBlogField('excerpt', value)}
                       placeholder="Resumo do artigo..."
                       height="150px"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Conteúdo</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Conteúdo <span className="text-gray-400 font-normal">({LANG_META[formLang].label})</span>
+                    </label>
                     <RichTextEditor
-                      value={blogForm.content}
-                      onChange={(value) => setBlogForm({ ...blogForm, content: value })}
+                      key={`blog-content-${formLang}`}
+                      value={blogField('content')}
+                      onChange={(value) => setBlogField('content', value)}
                       placeholder="Conteúdo completo do artigo..."
                       height="400px"
                     />

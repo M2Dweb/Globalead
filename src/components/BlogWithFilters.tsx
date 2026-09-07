@@ -1,20 +1,22 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Calendar, ArrowRight, Search, Filter } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const BlogWithFilters: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const categories = [
-    { id: 'all', name: 'Todos', count: 0 },
-    { id: 'imoveis', name: 'Imobiliário', count: 0 },
-    { id: 'credito', name: 'Crédito Habitação', count: 0 },
-    { id: 'certificacao', name: 'Certificado Energético', count: 0 },
-    { id: 'seguros', name: 'Seguros', count: 0 }
+    { id: 'all', name: t('blog.todos'), count: 0 },
+    { id: 'imoveis', name: t('blog.imobiliario'), count: 0 },
+    { id: 'credito', name: t('blog.creditoHabitacao'), count: 0 },
+    { id: 'certificacao', name: t('blog.certificadoEnergetico'), count: 0 },
+    { id: 'seguros', name: t('blog.seguros'), count: 0 }
   ];
 
   useEffect(() => {
@@ -41,7 +43,7 @@ const BlogWithFilters: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">A carregar artigos...</div>
+        <div className="text-xl text-gray-600">{t('blog.aCarregarArtigos')}</div>
       </div>
     );
   }
@@ -51,10 +53,10 @@ const BlogWithFilters: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Blog & Notícias
+            {t('blog.blogNoticias')}
           </h2>
           <p className="text-xl text-gray-600">
-            Mantenha-se atualizado com as últimas novidades do mercado
+            {t('blog.atualizado')}
           </p>
         </div>
 
@@ -66,7 +68,7 @@ const BlogWithFilters: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="Pesquisar artigos..."
+                placeholder={t('blog.pesquisar')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

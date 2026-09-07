@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface StatusBadgeProps {
   status: string;
@@ -14,16 +15,17 @@ interface StatusBadgeProps {
  * terem de ser removidos.
  */
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'sm' }) => {
+  const { t } = useTranslation();
   const config = {
     reservado: {
       bg: 'bg-[#79b2e9]',
       text: 'text-white',
-      label: 'Reservado',
+      label: 'comum.reservado',
     },
     vendido: {
       bg: 'bg-[#0d2233]',
       text: 'text-white',
-      label: 'Vendido',
+      label: 'comum.vendido',
     },
   };
 
@@ -45,7 +47,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'sm' }) => {
 
   return (
     <span className={`${baseClasses} ${current.bg} ${current.text}`}>
-      {current.label}
+      {t(current.label)}
     </span>
   );
 };

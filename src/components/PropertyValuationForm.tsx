@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Home, MapPin, ChevronRight, Plus, Minus, ArrowLeft, User, Phone, Mail, Building, Car, Euro, TreePine, Store, Warehouse, FileText, Shield, Zap } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
 import { sendEmail } from '../utils/emailService';
 
 interface PropertyData {
@@ -35,6 +36,7 @@ interface PropertyData {
 }
 
 const PropertyValuationForm: React.FC = () => {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -106,7 +108,7 @@ const PropertyValuationForm: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!data.nome || !data.email || !data.telemovel) {
-      alert('Por favor, preencha todos os dados de contacto.');
+      alert(t('avaliacao.camposObrigatorios'));
       return;
     }
 
@@ -301,8 +303,7 @@ const PropertyValuationForm: React.FC = () => {
     <div className="min-h-screen">
       <div className="text-center mb-8">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
-          Venda o seu imóvel de forma rápida,
-segura e sem complicações!  
+          {t('imoveis.formTitulo')}
         </h2>
       </div>
       {/* Header Navigation */}
@@ -349,7 +350,7 @@ segura e sem complicações!
               {/* Progress Bar */}
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-[#0d2233]">Passo {currentStep} de 7</span>
+                  <span className="text-sm font-medium text-[#0d2233]">{t('avaliacao.passo', { n: currentStep })}</span>
                   <span className="text-sm text-gray-500">{Math.round(getProgressPercentage())}% concluído</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 ">
@@ -363,14 +364,14 @@ segura e sem complicações!
               {/* Step 1: Finalidade */}
               {currentStep === 1 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Qual a finalidade?</h2>
-                  <p className="text-gray-600 mb-8">Selecione o objetivo para o seu imóvel</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">{t('avaliacao.finalidadeTitulo')}</h2>
+                  <p className="text-gray-600 mb-8">{t('avaliacao.sub1')}</p>
                   
                   <div className="space-y-4">
                     {[
-                      { key: 'vender', label: 'Vender', desc: 'Pretendo vender o imóvel', icon: Euro },
-                      { key: 'arrendar', label: 'Arrendar', desc: 'Pretendo arrendar o imóvel', icon: Home },
-                      { key: 'trespasse', label: 'Trespasse', desc: 'Pretendo fazer trespasse', icon: FileText }
+                      { key: 'vender', label: t('avaliacao.vender'), desc: t('avaliacao.venderDesc'), icon: Euro },
+                      { key: 'arrendar', label: t('avaliacao.arrendar'), desc: t('avaliacao.arrendarDesc'), icon: Home },
+                      { key: 'trespasse', label: t('avaliacao.trespasse'), desc: t('avaliacao.trespasseDesc'), icon: FileText }
                     ].map(({ key, label, desc, icon: Icon }) => (
                       <button
                         key={key}
@@ -396,22 +397,22 @@ segura e sem complicações!
               {/* Step 2: Tipo de Imóvel */}
               {currentStep === 2 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Que tipo de imóvel pretende avaliar?</h2>
-                  <p className="text-gray-600 mb-8">Selecione o tipo de propriedade que possui</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">{t('avaliacao.tipoTitulo')}</h2>
+                  <p className="text-gray-600 mb-8">{t('avaliacao.sub2')}</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
-                      { key: 'apartamento', label: 'Apartamento' },
-                      { key: 'moradia', label: 'Moradia' },
-                      { key: 'terreno', label: 'Terreno' },
-                      { key: 'quinta-herdade', label: 'Quinta ou Herdade' },
-                      { key: 'garagem', label: 'Garagem' },
-                      { key: 'predio', label: 'Prédio' },
-                      { key: 'quarto', label: 'Quarto' },
-                      { key: 'escritorio', label: 'Escritório' },
-                      { key: 'loja', label: 'Loja' },
-                      { key: 'armazem', label: 'Armazém' },
-                      { key: 'imovel-negocio', label: 'Imóvel com Negócio' }
+                      { key: 'apartamento', label: t('formulario.apartamento') },
+                      { key: 'moradia', label: t('formulario.moradia') },
+                      { key: 'terreno', label: t('formulario.terreno') },
+                      { key: 'quinta-herdade', label: t('avaliacao.quintaHerdade') },
+                      { key: 'garagem', label: t('formulario.garagem') },
+                      { key: 'predio', label: t('formulario.predio') },
+                      { key: 'quarto', label: t('avaliacao.quarto') },
+                      { key: 'escritorio', label: t('formulario.escritorio') },
+                      { key: 'loja', label: t('formulario.loja') },
+                      { key: 'armazem', label: t('formulario.armazem') },
+                      { key: 'imovel-negocio', label: t('avaliacao.imovelNegocio') }
                     ].map(({ key, label }) => {
                       const Icon = getPropertyIcon(key);
                       return (
@@ -437,22 +438,22 @@ segura e sem complicações!
               {/* Step 3: Características Básicas */}
               {currentStep === 3 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Características do imóvel</h2>
-                  <p className="text-gray-600 mb-8">Indique as características principais</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">{t('avaliacao.caracteristicasTitulo')}</h2>
+                  <p className="text-gray-600 mb-8">{t('avaliacao.sub3')}</p>
                   
                   <div className="space-y-6">
                     {/* Tipologia */}
                     {needsDetailed() && (
                       <div>
                         <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                          Tipologia
+                          {t('avaliacao.tipologia')}
                         </label>
                         <select
                           value={data.tipologia}
                           onChange={(e) => setData({ ...data, tipologia: e.target.value })}
                           className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                         >
-                          <option value="">Selecione a tipologia</option>
+                          <option value="">{t('avaliacao.selecioneTipologia')}</option>
                           {data.tipoImovel === 'apartamento' || data.tipoImovel === 'moradia' ? (
                             <>
                               <option value="T0">T0</option>
@@ -465,10 +466,10 @@ segura e sem complicações!
                             </>
                           ) : (
                             <>
-                              <option value="Pequeno">Pequeno</option>
-                              <option value="Médio">Médio</option>
-                              <option value="Grande">Grande</option>
-                              <option value="Muito Grande">Muito Grande</option>
+                              <option value="Pequeno">{t('avaliacao.pequeno')}</option>
+                              <option value="Médio">{t('avaliacao.medio')}</option>
+                              <option value="Grande">{t('avaliacao.grande')}</option>
+                              <option value="Muito Grande">{t('avaliacao.muitoGrande')}</option>
                             </>
                           )}
                         </select>
@@ -479,8 +480,8 @@ segura e sem complicações!
                     <div className="p-6 border-2 border-gray-200 rounded-2xl">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-semibold text-[#0d2233] mb-1">Área Útil (m²)</h3>
-                          <p className="text-sm text-gray-600">Área útil do imóvel</p>
+                          <h3 className="font-semibold text-[#0d2233] mb-1">{t('avaliacao.areaUtil')}</h3>
+                          <p className="text-sm text-gray-600">{t('avaliacao.descAreaUtil')}</p>
                         </div>
                         <div className="flex items-center space-x-4">
                           <button
@@ -519,8 +520,8 @@ segura e sem complicações!
                       <div className="p-6 border-2 border-gray-200 rounded-2xl">
                         <div className="flex items-center justify-between">
                           <div>
-                            <h3 className="font-semibold text-[#0d2233] mb-1">Área Bruta (m²)</h3>
-                            <p className="text-sm text-gray-600">Área bruta de construção</p>
+                            <h3 className="font-semibold text-[#0d2233] mb-1">{t('avaliacao.areaBruta')}</h3>
+                            <p className="text-sm text-gray-600">{t('avaliacao.descAreaBruta')}</p>
                           </div>
                           <div className="flex items-center space-x-4">
                             <button
@@ -560,8 +561,8 @@ segura e sem complicações!
                       <div className="p-6 border-2 border-gray-200 rounded-2xl">
                         <div className="flex items-center justify-between">
                           <div>
-                            <h3 className="font-semibold text-[#0d2233] mb-1">Área do Terreno (m²)</h3>
-                            <p className="text-sm text-gray-600">Área total do terreno</p>
+                            <h3 className="font-semibold text-[#0d2233] mb-1">{t('avaliacao.areaTerreno')}</h3>
+                            <p className="text-sm text-gray-600">{t('avaliacao.descAreaTerreno')}</p>
                           </div>
                           <div className="flex items-center space-x-4">
                             <button
@@ -601,8 +602,8 @@ segura e sem complicações!
                       <div className="p-6 border-2 border-gray-200 rounded-2xl">
                         <div className="flex items-center justify-between">
                           <div>
-                            <h3 className="font-semibold text-[#0d2233] mb-1">Ano de Construção</h3>
-                            <p className="text-sm text-gray-600">Quando foi construído</p>
+                            <h3 className="font-semibold text-[#0d2233] mb-1">{t('avaliacao.anoConstrucao')}</h3>
+                            <p className="text-sm text-gray-600">{t('avaliacao.descAno')}</p>
                           </div>
                           <div className="flex items-center space-x-4">
                             <button
@@ -641,7 +642,7 @@ segura e sem complicações!
                       onClick={() => setCurrentStep(4)}
                       className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-4 px-6 rounded-2xl hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-all duration-300 font-medium"
                     >
-                      Continuar
+                      {t('avaliacao.continuar')}
                     </button>
                   </div>
                 </div>
@@ -650,16 +651,16 @@ segura e sem complicações!
               {/* Step 4: Quartos e Casas de Banho */}
               {currentStep === 4 && needsRoomsAndBathrooms() && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Quartos e casas de banho</h2>
-                  <p className="text-gray-600 mb-8">Quantos quartos e casas de banho tem o imóvel?</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">{t('avaliacao.quartosTitulo')}</h2>
+                  <p className="text-gray-600 mb-8">{t('avaliacao.sub4')}</p>
                   
                   <div className="space-y-6">
                     {/* Quartos */}
                     <div className="p-6 border-2 border-gray-200 rounded-2xl">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-semibold text-[#0d2233] mb-1">Quartos</h3>
-                          <p className="text-sm text-gray-600">Número de quartos</p>
+                          <h3 className="font-semibold text-[#0d2233] mb-1">{t('avaliacao.quartos')}</h3>
+                          <p className="text-sm text-gray-600">{t('avaliacao.descQuartos')}</p>
                         </div>
                         <div className="flex items-center space-x-4">
                           <button
@@ -684,8 +685,8 @@ segura e sem complicações!
                     <div className="p-6 border-2 border-gray-200 rounded-2xl">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-semibold text-[#0d2233] mb-1">Casas de Banho</h3>
-                          <p className="text-sm text-gray-600">Número de casas de banho</p>
+                          <h3 className="font-semibold text-[#0d2233] mb-1">{t('avaliacao.casasBanho')}</h3>
+                          <p className="text-sm text-gray-600">{t('avaliacao.descCasasBanho')}</p>
                         </div>
                         <div className="flex items-center space-x-4">
                           <button
@@ -708,14 +709,14 @@ segura e sem complicações!
 
                     {/* Características Extras */}
                     <div className="p-6 border-2 border-gray-200 rounded-2xl">
-                      <h3 className="font-semibold text-[#0d2233] mb-4">Características Extras</h3>
+                      <h3 className="font-semibold text-[#0d2233] mb-4">{t('avaliacao.extrasTitulo')}</h3>
                       <div className="grid grid-cols-2 gap-4">
                         {[
-                          { key: 'garagem', label: 'Garagem', icon: Car },
-                          { key: 'elevador', label: 'Elevador', icon: Building },
-                          { key: 'terracoVaranda', label: 'Terraço/Varanda', icon: Home },
-                          { key: 'piscina', label: 'Piscina', icon: Home },
-                          { key: 'jardim', label: 'Jardim', icon: TreePine }
+                          { key: 'garagem', label: t('avaliacao.garagem'), icon: Car },
+                          { key: 'elevador', label: t('avaliacao.elevador'), icon: Building },
+                          { key: 'terracoVaranda', label: t('avaliacao.terracoVaranda'), icon: Home },
+                          { key: 'piscina', label: t('avaliacao.piscina'), icon: Home },
+                          { key: 'jardim', label: t('avaliacao.jardim'), icon: TreePine }
                         ].map(({ key, label, icon: Icon }) => (
                           <button
                             key={key}
@@ -736,14 +737,14 @@ segura e sem complicações!
                     {/* Certificado Energético */}
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Certificado Energético
+                        {t('avaliacao.certificado')}
                       </label>
                       <select
                         value={data.certificadoEnergetico}
                         onChange={(e) => setData({ ...data, certificadoEnergetico: e.target.value })}
                         className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                       >
-                        <option value="">Selecione a classificação</option>
+                        <option value="">{t('avaliacao.selecioneClassificacao')}</option>
                         <option value="A+">A+</option>
                         <option value="A">A</option>
                         <option value="B">B</option>
@@ -752,44 +753,44 @@ segura e sem complicações!
                         <option value="D">D</option>
                         <option value="E">E</option>
                         <option value="F">F</option>
-                        <option value="Isento">Isento</option>
-                        <option value="Em curso">Em curso</option>
+                        <option value="Isento">{t('avaliacao.isento')}</option>
+                        <option value="Em curso">{t('avaliacao.emCurso')}</option>
                       </select>
                     </div>
 
                     {/* Estacionamento */}
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Estacionamento
+                        {t('avaliacao.estacionamento')}
                       </label>
                       <select
                         value={data.estacionamento}
                         onChange={(e) => setData({ ...data, estacionamento: e.target.value })}
                         className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                       >
-                        <option value="">Selecione o tipo</option>
-                        <option value="Sem estacionamento">Sem estacionamento</option>
+                        <option value="">{t('avaliacao.selecioneTipo')}</option>
+                        <option value="Sem estacionamento">{t('avaliacao.semEstacionamento')}</option>
                         <option value="1 lugar">1 lugar</option>
                         <option value="2 lugares">2 lugares</option>
                         <option value="3 lugares">3 lugares</option>
                         <option value="4+ lugares">4+ lugares</option>
-                        <option value="Box fechada">Box fechada</option>
-                        <option value="Garagem coletiva">Garagem coletiva</option>
-                        <option value="Lugar exterior">Lugar exterior</option>
+                        <option value="Box fechada">{t('avaliacao.boxFechada')}</option>
+                        <option value="Garagem coletiva">{t('avaliacao.garagemColetiva')}</option>
+                        <option value="Lugar exterior">{t('avaliacao.lugarExterior')}</option>
                       </select>
                     </div>
 
                     {/* Outras Características */}
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Outras Características
+                        {t('avaliacao.outrasCaracteristicas')}
                       </label>
                       <textarea
                         value={data.outrasCaracteristicas}
                         onChange={(e) => setData({ ...data, outrasCaracteristicas: e.target.value })}
                         className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                         rows={3}
-                        placeholder="Descreva outras características relevantes (opcional)"
+                        placeholder={t('avaliacao.outrasPlaceholder')}
                       />
                     </div>
 
@@ -797,7 +798,7 @@ segura e sem complicações!
                       onClick={() => setCurrentStep(5)}
                       className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-4 px-6 rounded-2xl hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-all duration-300 font-medium"
                     >
-                      Continuar
+                      {t('avaliacao.continuar')}
                     </button>
                   </div>
                 </div>
@@ -806,22 +807,22 @@ segura e sem complicações!
               {/* Step 4 alternativo para tipos sem quartos */}
               {currentStep === 4 && !needsRoomsAndBathrooms() && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Características adicionais</h2>
-                  <p className="text-gray-600 mb-8">Informações adicionais sobre o imóvel</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">{t('avaliacao.adicionaisTitulo')}</h2>
+                  <p className="text-gray-600 mb-8">{t('avaliacao.sub5')}</p>
                   
                   <div className="space-y-6">
                     {/* Certificado Energético - se aplicável */}
                     {data.tipoImovel !== 'terreno' && (
                       <div>
                         <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                          Certificado Energético
+                          {t('avaliacao.certificado')}
                         </label>
                         <select
                           value={data.certificadoEnergetico}
                           onChange={(e) => setData({ ...data, certificadoEnergetico: e.target.value })}
                           className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                         >
-                          <option value="">Selecione a classificação</option>
+                          <option value="">{t('avaliacao.selecioneClassificacao')}</option>
                           <option value="A+">A+</option>
                           <option value="A">A</option>
                           <option value="B">B</option>
@@ -830,8 +831,8 @@ segura e sem complicações!
                           <option value="D">D</option>
                           <option value="E">E</option>
                           <option value="F">F</option>
-                          <option value="Isento">Isento</option>
-                          <option value="Em curso">Em curso</option>
+                          <option value="Isento">{t('avaliacao.isento')}</option>
+                          <option value="Em curso">{t('avaliacao.emCurso')}</option>
                         </select>
                       </div>
                     )}
@@ -839,14 +840,14 @@ segura e sem complicações!
                     {/* Outras Características */}
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Outras Características
+                        {t('avaliacao.outrasCaracteristicas')}
                       </label>
                       <textarea
                         value={data.outrasCaracteristicas}
                         onChange={(e) => setData({ ...data, outrasCaracteristicas: e.target.value })}
                         className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                         rows={4}
-                        placeholder="Descreva características relevantes do imóvel (opcional)"
+                        placeholder={t('avaliacao.outrasPlaceholder2')}
                       />
                     </div>
 
@@ -854,7 +855,7 @@ segura e sem complicações!
                       onClick={() => setCurrentStep(5)}
                       className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-4 px-6 rounded-2xl hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-all duration-300 font-medium"
                     >
-                      Continuar
+                      {t('avaliacao.continuar')}
                     </button>
                   </div>
                 </div>
@@ -863,16 +864,16 @@ segura e sem complicações!
               {/* Step 5: Estado de Conservação */}
               {currentStep === 5 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Estado do imóvel</h2>
-                  <p className="text-gray-600 mb-8">Como classifica o estado atual do imóvel?</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">{t('avaliacao.estadoTitulo')}</h2>
+                  <p className="text-gray-600 mb-8">{t('avaliacao.sub6')}</p>
                   
                   <div className="space-y-4">
                     {[
-                      { key: 'novo', label: 'Novo', desc: 'Imóvel novo ou em excelente estado', icon: Shield },
-                      { key: 'usado', label: 'Usado', desc: 'Imóvel usado em bom estado geral', icon: Home },
-                      { key: 'renovado', label: 'Renovado', desc: 'Imóvel recentemente renovado', icon: Zap },
-                      { key: 'construcao', label: 'Construção', desc: 'Imóvel em fase de construção', icon: Building },
-                      { key: 'planta', label: 'Planta', desc: 'Projeto aprovado, ainda não iniciado', icon: FileText }
+                      { key: 'novo', label: t('avaliacao.novo'), desc: t('avaliacao.novoDesc'), icon: Shield },
+                      { key: 'usado', label: t('avaliacao.usado'), desc: t('avaliacao.usadoDesc'), icon: Home },
+                      { key: 'renovado', label: t('avaliacao.renovado'), desc: t('avaliacao.renovadoDesc'), icon: Zap },
+                      { key: 'construcao', label: t('avaliacao.construcao'), desc: t('avaliacao.construcaoDesc'), icon: Building },
+                      { key: 'planta', label: t('avaliacao.planta'), desc: t('avaliacao.plantaDesc'), icon: FileText }
                     ].map(({ key, label, desc, icon: Icon }) => (
                       <button
                         key={key}
@@ -898,13 +899,13 @@ segura e sem complicações!
               {/* Step 6: Localização */}
               {currentStep === 6 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Localização do imóvel</h2>
-                  <p className="text-gray-600 mb-8">Indique a localização para uma avaliação mais precisa</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">{t('avaliacao.localizacaoTitulo')}</h2>
+                  <p className="text-gray-600 mb-8">{t('avaliacao.sub7')}</p>
                   
                   <div className="space-y-6">
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Cidade/Localidade *
+                        {t('avaliacao.cidade')}
                       </label>
                       <div className="relative">
                         <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -913,7 +914,7 @@ segura e sem complicações!
                           value={data.localizacao}
                           onChange={(e) => setData({ ...data, localizacao: e.target.value })}
                           className="w-full pl-12 p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
-                          placeholder="Ex: Lisboa, Porto, Braga..."
+                          placeholder={t('avaliacao.cidadePlaceholder')}
                           required
                         />
                       </div>
@@ -921,20 +922,20 @@ segura e sem complicações!
 
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Rua/Avenida
+                        {t('avaliacao.rua')}
                       </label>
                       <input
                         type="text"
                         value={data.rua}
                         onChange={(e) => setData({ ...data, rua: e.target.value })}
                         className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
-                        placeholder="Nome da rua (opcional)"
+                        placeholder={t('avaliacao.ruaPlaceholder')}
                       />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Código Postal
+                        {t('avaliacao.codigoPostal')}
                       </label>
                       <input
                         type="text"
@@ -946,25 +947,25 @@ segura e sem complicações!
                     </div>
 
                     <h3 className="text-lg font-semibold text-[#0d2233] mt-8 mb-4">
-                      Qual o seu objetivo para {data.finalidade === 'vender' ? 'a venda' : data.finalidade === 'arrendar' ? 'o arrendamento' : 'o trespasse'}?
+                      {t('avaliacao.objetivoTitulo', { acao: data.finalidade === 'vender' ? t('avaliacao.aVenda') : data.finalidade === 'arrendar' ? t('avaliacao.oArrendamento') : t('avaliacao.oTrespasse') })}
                     </h3>
                     
                     <div className="space-y-4">
                       {[
                         { 
                           key: 'vender-rapidamente', 
-                          label: data.finalidade === 'vender' ? 'Vender Rapidamente' : data.finalidade === 'arrendar' ? 'Arrendar Rapidamente' : 'Trespasse Rápido',
-                          desc: `Preciso ${data.finalidade === 'vender' ? 'vender' : data.finalidade === 'arrendar' ? 'arrendar' : 'fazer trespasse'} o mais rápido possível` 
+                          label: data.finalidade === 'vender' ? t('avaliacao.rapidoVender') : data.finalidade === 'arrendar' ? t('avaliacao.rapidoArrendar') : t('avaliacao.rapidoTrespasse'),
+                          desc: t('avaliacao.rapidoDesc', { acao: data.finalidade === 'vender' ? t('avaliacao.aVenda') : data.finalidade === 'arrendar' ? t('avaliacao.oArrendamento') : t('avaliacao.oTrespasse') }) 
                         },
                         { 
                           key: 'melhor-preco', 
-                          label: 'Obter o Melhor Preço', 
-                          desc: 'Quero maximizar o valor' 
+                          label: t('avaliacao.melhorPreco'), 
+                          desc: t('avaliacao.melhorPrecoDesc') 
                         },
                         { 
                           key: 'avaliar-opcoes', 
-                          label: 'Avaliar Opções', 
-                          desc: `Estou a considerar ${data.finalidade === 'vender' ? 'vender' : data.finalidade === 'arrendar' ? 'arrendar' : 'trespasse'}` 
+                          label: t('avaliacao.avaliarOpcoes'), 
+                          desc: t('avaliacao.avaliarOpcoesDesc', { acao: data.finalidade === 'vender' ? t('avaliacao.aVenda') : data.finalidade === 'arrendar' ? t('avaliacao.oArrendamento') : t('avaliacao.oTrespasse') }) 
                         }
                       ].map(({ key, label, desc }) => (
                         <button
@@ -992,13 +993,13 @@ segura e sem complicações!
               {/* Step 7: Dados de Contacto */}
               {currentStep === 7 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">Os seus dados de contacto</h2>
-                  <p className="text-gray-600 mb-8">Para que o Carlos Gonçalves possa contactá-lo com a avaliação</p>
+                  <h2 className="text-2xl font-bold text-[#0d2233] mb-2">{t('avaliacao.dadosTitulo')}</h2>
+                  <p className="text-gray-600 mb-8">{t('avaliacao.sub8')}</p>
                   
                   <div className="space-y-6">
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Nome *
+                        {t('avaliacao.nome')}
                       </label>
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -1007,7 +1008,7 @@ segura e sem complicações!
                           value={data.nome}
                           onChange={(e) => setData({ ...data, nome: e.target.value })}
                           className="w-full pl-12 p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
-                          placeholder="O seu nome"
+                          placeholder={t('avaliacao.nomePlaceholder')}
                           required
                         />
                       </div>
@@ -1015,7 +1016,7 @@ segura e sem complicações!
 
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Apelido *
+                        {t('avaliacao.apelido')}
                       </label>
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -1024,7 +1025,7 @@ segura e sem complicações!
                           value={data.apelido}
                           onChange={(e) => setData({ ...data, apelido: e.target.value })}
                           className="w-full pl-12 p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
-                          placeholder="O seu apelido"
+                          placeholder={t('avaliacao.apelidoPlaceholder')}
                           required
                         />
                       </div>
@@ -1032,7 +1033,7 @@ segura e sem complicações!
 
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Email *
+                        {t('avaliacao.email')}
                       </label>
                       <div className="relative">
                         <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -1041,7 +1042,7 @@ segura e sem complicações!
                           value={data.email}
                           onChange={(e) => setData({ ...data, email: e.target.value })}
                           className="w-full pl-12 p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
-                          placeholder="o.seu.email@exemplo.com"
+                          placeholder={t('avaliacao.emailPlaceholder')}
                           required
                         />
                       </div>
@@ -1049,7 +1050,7 @@ segura e sem complicações!
 
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Telemóvel *
+                        {t('avaliacao.telemovel')}
                       </label>
                       <div className="relative">
                         <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -1066,14 +1067,14 @@ segura e sem complicações!
 
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Meio de Contacto Preferido
+                        {t('avaliacao.meioPreferido')}
                       </label>
                       <select
                         value={data.meio_contacto}
                         onChange={(e) => setData({ ...data, meio_contacto: e.target.value })}
                         className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                       >
-                        <option value="">Selecione o meio de contacto</option>
+                        <option value="">{t('avaliacao.selecioneMeio')}</option>
                         <option value="Telefone">Telefone</option>
                         <option value="WhatsApp">WhatsApp</option>
                         <option value="Email">Email</option>
@@ -1082,14 +1083,14 @@ segura e sem complicações!
 
                     <div>
                       <label className="block text-sm font-medium text-[#0d2233] mb-2">
-                        Horário Preferido
+                        {t('avaliacao.selecioneHorario')}
                       </label>
                       <select
                         value={data.horario}
                         onChange={(e) => setData({ ...data, horario: e.target.value })}
                         className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-[#0d2233] focus:outline-none transition-all"
                       >
-                        <option value="">Selecione o horário</option>
+                        <option value="">{t('avaliacao.selecioneHorario')}</option>
                         <option value="9h-12h30">9h-12h30</option>
                         <option value="12h30-16h">12h30-16h</option>
                         <option value="16h-19h30">16h-19h30</option>
@@ -1097,12 +1098,12 @@ segura e sem complicações!
                     </div>
 
                     <div className="bg-blue-50 p-6 rounded-2xl">
-                      <h4 className="font-semibold text-[#0d2233] mb-2">O que acontece a seguir?</h4>
+                      <h4 className="font-semibold text-[#0d2233] mb-2">{t('avaliacao.seguirTitulo')}</h4>
                       <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Análise detalhada do seu imóvel</li>
-                        <li>• Comparação com propriedades similares na zona</li>
-                        <li>• Contacto telefónico em 24h</li>
-                        <li>• Relatório de avaliação gratuito</li>
+                        <li>• {t('avaliacao.seguir1')}</li>
+                        <li>• {t('avaliacao.seguir2')}</li>
+                        <li>• {t('avaliacao.seguir3')}</li>
+                        <li>• {t('avaliacao.seguir4')}</li>
                       </ul>
                     </div>
 
@@ -1110,21 +1111,21 @@ segura e sem complicações!
                     <div className="border-t pt-6">
                       <label className="flex items-start text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">
                         <input type="checkbox" className="mt-1 mr-2" required />
-                        Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                        {t('formulario.aceitoTermos')}
                       </label>
                       <p className="text-xs text-gray-600 mb-3 sm:mb-4">
-                        Os dados submetidos através deste formulário serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
+                        {t('formulario.rgpdSimples')}
                       </p>
                       
                       {submitStatus === 'success' && (
                         <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-green-100 border border-green-400 text-green-700 rounded text-xs sm:text-sm">
-                          Pedido de avaliação enviado com sucesso! O Carlos Gonçalves entrará em contacto consigo brevemente.
+                          {t('avaliacao.sucesso')}
                         </div>
                       )}
                       
                       {submitStatus === 'error' && (
                         <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-red-100 border border-red-400 text-red-700 rounded text-xs sm:text-sm">
-                          Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.
+                          {t('avaliacao.erro')}
                         </div>
                       )}
 
@@ -1133,7 +1134,7 @@ segura e sem complicações!
                         disabled={isSubmitting}
                         className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-4 px-6 rounded-2xl hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-all duration-300 font-medium shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {isSubmitting ? 'A enviar...' : 'Solicitar Avaliação Gratuita'}
+                        {isSubmitting ? t('popup.aEnviar') : t('avaliacao.submeter')}
                       </button>
                     </div>
                   </div>
@@ -1145,19 +1146,19 @@ segura e sem complicações!
           {/* Resumo - Lado Direito */}
           <div className="lg:col-span-1 hidden lg:block">
             <div className="bg-white rounded-3xl shadow-xl p-6 border border-gray-100 sticky top-8">
-              <h3 className="text-xl font-bold text-[#0d2233] mb-6">Resumo da Avaliação</h3>
+              <h3 className="text-xl font-bold text-[#0d2233] mb-6">{t('avaliacao.resumoTitulo')}</h3>
               
               <div className="space-y-4">
                 {data.finalidade && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Finalidade</span>
+                    <span className="text-sm text-gray-600">{t('avaliacao.finalidade')}</span>
                     <span className="font-medium text-[#0d2233] text-sm">{getFinalidadeLabel(data.finalidade)}</span>
                   </div>
                 )}
 
                 {data.tipoImovel && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Tipo de Imóvel</span>
+                    <span className="text-sm text-gray-600">{t('avaliacao.tipoImovel')}</span>
                     <span className="font-medium text-[#0d2233] text-sm">{getTipoImovelLabel(data.tipoImovel)}</span>
                   </div>
                 )}
@@ -1171,28 +1172,28 @@ segura e sem complicações!
 
                 {data.areaUtil > 0 && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Área Útil</span>
+                    <span className="text-sm text-gray-600">{t('avaliacao.areaUtilCurta')}</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.areaUtil}m²</span>
                   </div>
                 )}
 
                 {data.areaBruta > 0 && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Área Bruta</span>
+                    <span className="text-sm text-gray-600">{t('avaliacao.areaBrutaCurta')}</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.areaBruta}m²</span>
                   </div>
                 )}
 
                 {data.areaTerreno > 0 && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Terreno</span>
+                    <span className="text-sm text-gray-600">{t('avaliacao.terreno')}</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.areaTerreno}m²</span>
                   </div>
                 )}
 
                 {data.anoConstucao && data.tipoImovel !== 'terreno' && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600">Ano</span>
+                    <span className="text-sm text-gray-600">{t('avaliacao.ano')}</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.anoConstucao}</span>
                   </div>
                 )}
@@ -1200,15 +1201,15 @@ segura e sem complicações!
                 {needsRoomsAndBathrooms() && currentStep >= 4 && (
                   <div className="p-3 bg-[#f8fbff] rounded-xl">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm text-gray-600">Divisões</span>
+                      <span className="text-sm text-gray-600">{t('avaliacao.divisoes')}</span>
                     </div>
                     <div className="space-y-1">
                       <div className="flex justify-between">
-                        <span className="text-xs text-gray-500">Quartos:</span>
+                        <span className="text-xs text-gray-500">{t('avaliacao.quartosCurto')}</span>
                         <span className="text-xs font-medium text-[#0d2233]">{data.quartos}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-xs text-gray-500">WC:</span>
+                        <span className="text-xs text-gray-500">{t('avaliacao.wcCurto')}</span>
                         <span className="text-xs font-medium text-[#0d2233]">{data.casasBanho}</span>
                       </div>
                     </div>
@@ -1217,28 +1218,28 @@ segura e sem complicações!
 
                 {data.certificadoEnergetico && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600 block mb-1">Cert. Energético</span>
+                    <span className="text-sm text-gray-600 block mb-1">{t('avaliacao.certCurto')}</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.certificadoEnergetico}</span>
                   </div>
                 )}
 
                 {data.estacionamento && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600 block mb-1">Estacionamento</span>
+                    <span className="text-sm text-gray-600 block mb-1">{t('avaliacao.estacionamento')}</span>
                     <span className="font-medium text-[#0d2233] text-xs">{data.estacionamento}</span>
                   </div>
                 )}
 
                 {data.estadoConservacao && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600 block mb-1">Estado</span>
+                    <span className="text-sm text-gray-600 block mb-1">{t('avaliacao.estado')}</span>
                     <span className="font-medium text-[#0d2233] text-xs">{getEstadoLabel(data.estadoConservacao)}</span>
                   </div>
                 )}
 
                 {data.localizacao && (
                   <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-xl">
-                    <span className="text-sm text-gray-600 block mb-1">Localização</span>
+                    <span className="text-sm text-gray-600 block mb-1">{t('avaliacao.localizacao')}</span>
                     <span className="font-medium text-[#0d2233] text-sm">{data.localizacao}</span>
                   </div>
                 )}
@@ -1266,9 +1267,9 @@ segura e sem complicações!
               </div>
 
               <div className="mt-6 p-4 bg-[#0d2233] rounded-xl text-white text-center">
-                <h4 className="font-semibold mb-2">Avaliação Gratuita</h4>
+                <h4 className="font-semibold mb-2">{t('avaliacao.gratuitaTitulo')}</h4>
                 <p className="text-sm opacity-90">
-                  Receba uma avaliação profissional do seu imóvel sem qualquer custo
+                  {t('avaliacao.gratuitaTexto')}
                 </p>
               </div>
             </div>

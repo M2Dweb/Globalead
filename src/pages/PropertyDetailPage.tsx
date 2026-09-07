@@ -11,13 +11,16 @@ import CreditCalculator from '../components/CreditCalculator';
 import HoverVideo from '../components/HoverVideo';
 import { imageUrl } from '../lib/imageUrl';
 import { getPropertyImages } from '../lib/propertyImages';
+import { useTranslatedRow, hasTranslation, TRANSLATABLE_FIELDS } from '../lib/translations';
+import { pathForLang, type Lang } from '../i18n/languages';
+import { useTranslation } from 'react-i18next';
 
-const propertyTypeLabels: Record<string, string> = {
-  apartamento: 'Apartamento',
-  moradia: 'Moradia',
-  terreno: 'Terreno',
-  empreendimento: 'Empreendimento',
-  trespasse: 'Trespasse',
+const propertyTypeLabelKeys: Record<string, string> = {
+  apartamento: 'imovel.apartamento',
+  moradia: 'imovel.moradia',
+  terreno: 'imovel.terreno',
+  empreendimento: 'imovel.empreendimento',
+  trespasse: 'imovel.trespasse',
 };
 
 // Métrica da barra fixa superior do imóvel
@@ -32,6 +35,7 @@ const BarMetric: React.FC<{ icon: React.ReactNode; value: React.ReactNode; label
 );
 
 const PropertyDetailPage: React.FC = () => {
+  const { t: tr, i18n } = useTranslation();
   const { ref } = useParams<{ ref: string }>();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -57,6 +61,12 @@ const PropertyDetailPage: React.FC = () => {
 
   // Galeria com a Foto de Capa (definida no /admin) em primeiro lugar.
   const propertyImages = useMemo(() => getPropertyImages(property), [property]);
+
+  // Texto do anúncio no idioma da página. Sem tradução guardada, cai no
+  // português — é a versão de referência e nunca fica um campo em branco.
+  const tRow = useTranslatedRow();
+  const propertyTitle: string = tRow(property, 'title') || '';
+  const propertyDescription: string = tRow(property, 'description') || '';
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -163,7 +173,7 @@ const PropertyDetailPage: React.FC = () => {
 
   const shareContent = (platform: string) => {
     const url = window.location.href;
-    const text = `Encontrei este imóvel que talvez te possa interessar: ${property?.title}`;
+    const text = `${tr('imovel.partilhaTexto')} ${propertyTitle}`;
 
     switch (platform) {
       case 'facebook':
@@ -203,7 +213,7 @@ const PropertyDetailPage: React.FC = () => {
     try {
       const emailData = {
         ...formData,
-        mensagem: `Interesse no imóvel: ${property?.title} (Ref: ${ref})`
+        mensagem: tr('imovel.interesseMensagem', { titulo: property?.title, ref })
       };
       const success = await sendEmail(emailData as FormData);
       if (success) {
@@ -233,7 +243,7 @@ const PropertyDetailPage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">A carregar detalhes do imóvel...</div>
+        <div className="text-xl text-gray-600">{tr('imovel.aCarregarDetalhes')}</div>
       </div>
     );
   }
@@ -241,7 +251,7 @@ const PropertyDetailPage: React.FC = () => {
   if (!property) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-red-600">Imóvel não encontrado</div>
+        <div className="text-xl text-red-600">{tr('imovel.naoEncontrado')}</div>
       </div>
     );
   }
@@ -252,10 +262,17 @@ const PropertyDetailPage: React.FC = () => {
   const priceableTypes: any[] = property.type === 'empreendimento' && Array.isArray(property.property_types)
     ? property.property_types.filter((t: any) => Number(t.price) > 0)
     : [];
-  const plainDescription = typeof property.description === 'string'
-    ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 300)
-    : '';
-  const canonicalUrl = `https://globalead.pt/imoveis/${ref || property.ref || property.id}`;
+  const plainDescription = propertyDescription.replace(/<[^>]*>?/gm, '').substring(0, 300);
+  const metaDescription = propertyDescription.replace(/<[^>]*>?/gm, '').substring(0, 160);
+  // Sem tradução guardada, /en mostra o anúncio em português. O canonical
+  // aponta então para a versão portuguesa, para as duas páginas não
+  // competirem uma com a outra nos resultados de pesquisa.
+  const caminhoPt = `/imoveis/${ref || property.ref || property.id}`;
+  const canonicalUrl = `https://globalead.pt${
+    hasTranslation(property, i18n.language, TRANSLATABLE_FIELDS.properties)
+      ? pathForLang(i18n.language as Lang, caminhoPt)
+      : caminhoPt
+  }`;
   const isAvailable = !property.availability_status || property.availability_status === 'disponivel';
 
   const propertyStructuredData = {
@@ -263,7 +280,7 @@ const PropertyDetailPage: React.FC = () => {
     '@graph': [
       {
         '@type': 'Product',
-        name: property.title,
+        name: propertyTitle,
         description: plainDescription,
         image: propertyImages,
         url: canonicalUrl,
@@ -292,7 +309,7 @@ const PropertyDetailPage: React.FC = () => {
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Imóveis', item: 'https://globalead.pt/imoveis' },
           { '@type': 'ListItem', position: 2, name: 'Catálogo', item: 'https://globalead.pt/imoveis/lista' },
-          { '@type': 'ListItem', position: 3, name: property.title },
+          { '@type': 'ListItem', position: 3, name: propertyTitle },
         ],
       },
     ],
@@ -301,21 +318,22 @@ const PropertyDetailPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
-        <title>{`${property.title} | Globalead Portugal`}</title>
-        <meta name="description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
+        <title>{`${propertyTitle} | Globalead Portugal`}</title>
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={canonicalUrl} />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={window.location.href} />
-        <meta property="og:title" content={`${property.title} - ${formatPrice(selectedPropertyType?.price || property.price)}`} />
-        <meta property="og:description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={`${propertyTitle} - ${formatPrice(selectedPropertyType?.price || property.price)}`} />
+        <meta property="og:description" content={metaDescription} />
         <meta property="og:image" content={propertyImages[0]} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={window.location.href} />
-        <meta property="twitter:title" content={property.title} />
-        <meta property="twitter:description" content={typeof property.description === 'string' ? property.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : ''} />
+        <meta property="twitter:url" content={canonicalUrl} />
+        <meta property="twitter:title" content={propertyTitle} />
+        <meta property="twitter:description" content={metaDescription} />
         <meta property="twitter:image" content={propertyImages[0]} />
 
         {/* Dados estruturados do imóvel */}
@@ -332,7 +350,7 @@ const PropertyDetailPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => navigate(-1)}
-            aria-label="Voltar"
+            aria-label={tr('imovel.voltar')}
             className="flex-shrink-0 h-9 w-9 flex items-center justify-center border border-white/30 hover:bg-white/10 transition-colors"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -341,20 +359,20 @@ const PropertyDetailPage: React.FC = () => {
           <div className="min-w-0 flex-1">
             {/* Empreendimento → mostra o NOME; imóvel normal → mostra a localização */}
             <p className="text-sm font-medium truncate">
-              {property.type === 'empreendimento' ? property.title : property.location || property.title}
+              {property.type === 'empreendimento' ? propertyTitle : property.location || propertyTitle}
             </p>
             <p className="text-xs text-blue-200 truncate">
               <span className="font-semibold text-white">
                 {property.type === 'empreendimento'
                   ? priceValue > 0
                     ? `Desde ${formatPrice(priceValue)}`
-                    : 'Sob Consulta'
+                    : tr('imovel.sobConsulta')
                   : formatPrice(selectedPropertyType?.price || property.price)}
               </span>
               {property.type === 'empreendimento'
                 ? property.location && <> · {property.location}</>
                 : property.bedrooms != null && (
-                    <> · {propertyTypeLabels[property.type] || property.type} {property.bedrooms} Quartos</>
+                    <> · {propertyTypeLabelKeys[property.type] ? tr(propertyTypeLabelKeys[property.type]) : property.type} {tr('imovel.quartos', { n: property.bedrooms })}</>
                   )}
               {property.ref && <> (ref: {property.ref})</>}
             </p>
@@ -388,7 +406,7 @@ const PropertyDetailPage: React.FC = () => {
             </button>
             <button
               onClick={() => setIsFavorite((v) => !v)}
-              aria-label="Adicionar aos favoritos"
+              aria-label={tr('imovel.favorito')}
               className="h-9 w-9 flex items-center justify-center border border-white/30 hover:bg-white/10 transition-colors"
             >
               <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
@@ -420,7 +438,7 @@ const PropertyDetailPage: React.FC = () => {
                 <img
                   key={index}
                   src={imageUrl(image, { width: 1280 })}
-                  alt={`${property.title} ${index + 1}`}
+                  alt={`${propertyTitle} ${index + 1}`}
                   loading={index === 0 ? 'eager' : 'lazy'}
                   decoding="async"
                   fetchPriority={index === currentImageIndex ? 'high' : 'auto'}
@@ -460,7 +478,7 @@ const PropertyDetailPage: React.FC = () => {
               >
                 <img
                   src={imageUrl(image, { width: 160 })}
-                  alt={`${property.title} ${index + 1}`}
+                  alt={`${propertyTitle} ${index + 1}`}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover"
@@ -477,13 +495,13 @@ const PropertyDetailPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-white text-center sm:text-left">
               <p className="text-lg font-semibold">Interessado neste empreendimento?</p>
-              <p className="text-sm text-blue-200">Agende uma reunião connosco e fique a conhecer todos os detalhes deste empreendimento</p>
+              <p className="text-sm text-blue-200">{tr('imovel.agendeReuniao')}</p>
             </div>
             <button
               onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
               className="flex-shrink-0 bg-white text-[#0d2233] border border-[#0d2233] hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
             >
-              Agendar Visita
+              {tr('imovel.agendarVisita')}
             </button>
           </div>
         </div>
@@ -494,7 +512,7 @@ const PropertyDetailPage: React.FC = () => {
         // Group by piso
         const groups: Record<string, any[]> = {};
         property.property_types.forEach((t: any) => {
-          const key = t.piso ? `Piso ${t.piso}` : 'Sem Piso';
+          const key = t.piso ? tr('imovel.piso', { n: t.piso }) : tr('imovel.semPiso');
           if (!groups[key]) groups[key] = [];
           groups[key].push(t);
         });
@@ -505,7 +523,7 @@ const PropertyDetailPage: React.FC = () => {
         return (
           <section className="py-12 bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h3 className="text-2xl font-bold text-[#0d2233] mb-8 text-center">Tipologias Disponíveis</h3>
+              <h3 className="text-2xl font-bold text-[#0d2233] mb-8 text-center">{tr('imovel.tipologiasDisponiveis')}</h3>
 
               <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
                 {groupKeys.map((groupKey, gIdx) => (
@@ -530,13 +548,13 @@ const PropertyDetailPage: React.FC = () => {
                         <table className="w-full border-collapse hidden md:table">
                           <thead>
                             <tr className="bg-[#0d2233] text-white text-xs uppercase tracking-wider">
-                              <th className="px-3 py-3 text-center">Fração</th>
-                              <th className="px-3 py-3 text-center">Tipologia</th>
-                              <th className="px-3 py-3 text-center">Piso</th>
-                              <th className="px-3 py-3 text-center">WC</th>
-                              <th className="px-3 py-3 text-center">Área</th>
-                              <th className="px-3 py-3 text-center">Garagem</th>
-                              <th className="px-3 py-3 text-center">Preço desde</th>
+                              <th className="px-3 py-3 text-center">{tr('imovel.fracao')}</th>
+                              <th className="px-3 py-3 text-center">{tr('imovel.tipologia')}</th>
+                              <th className="px-3 py-3 text-center">{tr('imovel.pisoCol')}</th>
+                              <th className="px-3 py-3 text-center">{tr('imovel.wc')}</th>
+                              <th className="px-3 py-3 text-center">{tr('imovel.area')}</th>
+                              <th className="px-3 py-3 text-center">{tr('imovel.garagem')}</th>
+                              <th className="px-3 py-3 text-center">{tr('imovel.precoDesde')}</th>
                               <th className="px-3 py-3 text-center"></th>
                             </tr>
                           </thead>
@@ -602,7 +620,7 @@ const PropertyDetailPage: React.FC = () => {
                                 <div className="flex items-center gap-2 min-w-0">
                                   <span className="font-bold text-[#0d2233] text-sm">{type.name}</span>
                                   {type.fracao && <span className="text-xs text-gray-500">Fr.{type.fracao}</span>}
-                                  {type.piso && <span className="text-xs text-gray-500">Piso {type.piso}</span>}
+                                  {type.piso && <span className="text-xs text-gray-500">{tr('imovel.piso', { n: type.piso })}</span>}
                                 </div>
                                 <span className="font-bold text-[#0d2233] text-sm ml-2 whitespace-nowrap">{type.price ? formatPrice(type.price) : '-'}</span>
                               </div>
@@ -611,7 +629,7 @@ const PropertyDetailPage: React.FC = () => {
                                 <div className="flex items-center gap-3 text-xs text-gray-500">
                                   {type.bathrooms && <span>{type.bathrooms} WC</span>}
                                   {type.area && <span>{type.area} m²</span>}
-                                  <span>Garagem: {type.garage === 'sim' ? 'Sim' : 'Não'}</span>
+                                  <span>{tr('imovel.garagem')}: {type.garage === 'sim' ? tr('imovel.sim') : tr('imovel.nao')}</span>
                                 </div>
                                 {type.status === 'reservado' ? (
                                   <span className="text-xs font-semibold bg-[#0d2233] text-white px-2 py-0.5 rounded">Reservado</span>
@@ -642,9 +660,9 @@ const PropertyDetailPage: React.FC = () => {
             {/* Description (os detalhes passaram para a barra fixa no topo) */}
             <div className="lg:col-span-2">
               <div className="bg-gray-50 p-6 rounded-xl mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Descrição do Imóvel</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{tr('imovel.descricao')}</h3>
                 <div className="text-gray-700 leading-relaxed">
-                  <ContentRenderer content={property.description || ''} />
+                  <ContentRenderer content={propertyDescription} />
                 </div>
               </div>
 
@@ -652,7 +670,7 @@ const PropertyDetailPage: React.FC = () => {
               {property.map_url && property.map_url.trim() !== '' && (
                 <div className="bg-gray-50 p-6 rounded-xl mb-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <MapPin className="h-6 w-6 text-[#79b2e9]" /> Localização
+                    <MapPin className="h-6 w-6 text-[#79b2e9]" /> {tr('imovel.localizacao')}
                   </h3>
                   <div className="rounded-xl overflow-hidden h-72">
                     <iframe
@@ -676,7 +694,7 @@ const PropertyDetailPage: React.FC = () => {
               )}
 
               <div className="bg-gray-50 p-6 rounded-xl text-center">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Partilha este conteúdo</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{tr('imovel.partilhe')}</h3>
                 <div className="flex justify-center gap-4 flex-wrap">
                   <button
                     onClick={() => shareContent('facebook')}
@@ -736,7 +754,7 @@ const PropertyDetailPage: React.FC = () => {
                           scrolling="no"
                           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                           allowFullScreen
-                          title="Vídeo de Apresentação"
+                          title={tr('imovel.videoApresentacao')}
                         ></iframe>
                       ) : getYoutubeEmbedUrl(property.video_url) ? (
                         <iframe
@@ -745,7 +763,7 @@ const PropertyDetailPage: React.FC = () => {
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
-                          title="Vídeo de Apresentação"
+                          title={tr('imovel.videoApresentacao')}
                         ></iframe>
                       ) : (
                         <HoverVideo
@@ -772,7 +790,7 @@ const PropertyDetailPage: React.FC = () => {
                         <h3 className="text-xl font-bold text-[#333]">Carlos Gonçalves</h3>
                       </a>
                       <div className="mt-1 flex flex-col">
-                        <span className="text-sm text-gray-500">Ou contacte-nos diretamente:</span>
+                        <span className="text-sm text-gray-500">{tr('imovel.contacteDiretamente')}</span>
                         <a href="tel:+351910647620" className="font-bold text-gray-900 text-base hover:text-[#79b2e9]">
                           +351 910 647 620
                         </a>
@@ -783,7 +801,7 @@ const PropertyDetailPage: React.FC = () => {
                 {property.availability_status === 'disponivel' && (
                   <>
                     <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                      Agende a sua visita
+                      {tr('imovel.agendeVisita')}
                     </h3>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -792,7 +810,7 @@ const PropertyDetailPage: React.FC = () => {
                         name="nome"
                         value={formData.nome}
                         onChange={handleInputChange}
-                        placeholder="Nome:"
+                        placeholder={tr('formulario.nome')}
                         required
                         className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
@@ -801,7 +819,7 @@ const PropertyDetailPage: React.FC = () => {
                         name="apelido"
                         value={formData.apelido}
                         onChange={handleInputChange}
-                        placeholder="Apelido:"
+                        placeholder={tr('formulario.apelido')}
                         className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                       <input
@@ -809,7 +827,7 @@ const PropertyDetailPage: React.FC = () => {
                         name="telemovel"
                         value={formData.telemovel}
                         onChange={handleInputChange}
-                        placeholder="Telemóvel:"
+                        placeholder={tr('formulario.telemovel')}
                         className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                       <input
@@ -817,7 +835,7 @@ const PropertyDetailPage: React.FC = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        placeholder="Email:"
+                        placeholder={tr('formulario.email')}
                         required
                         className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
@@ -827,7 +845,7 @@ const PropertyDetailPage: React.FC = () => {
                         value={formData.horario}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
-                        <option value="">Horário</option>
+                        <option value="">{tr('formulario.horario')}</option>
                         <option value="9h">9h-12h30</option>
                         <option value="12h30">12h30-16h</option>
                         <option value="16h">16h-19h30</option>
@@ -838,30 +856,30 @@ const PropertyDetailPage: React.FC = () => {
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
-                        <option value="">Meio de Contacto:</option>
+                        <option value="">{tr('formulario.meioContacto')}</option>
                         <option value="Email">Email</option>
-                        <option value="Telefone">Telefone</option>
+                        <option value="Telefone">{tr('formulario.telefone')}</option>
                         <option value="WhatsApp">WhatsApp</option>
                       </select>
 
                       <label className="flex items-start text-sm text-gray-700">
                         <input type="checkbox" className="mt-1 mr-2" required />
-                        Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                        {tr('formulario.aceitoTermos')}
                       </label>
 
                       <p className="text-xs text-gray-600">
-                        Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
+                        {tr('formulario.rgpdProtecao')}
                       </p>
 
                       {submitStatus === 'success' && (
                         <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                          Pedido de visita enviado com sucesso! Entraremos em contacto em breve.
+                          {tr('imovel.visitaSucesso')}
                         </div>
                       )}
 
                       {submitStatus === 'error' && (
                         <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                          Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.
+                          {tr('imovel.visitaErro')}
                         </div>
                       )}
 
@@ -870,7 +888,7 @@ const PropertyDetailPage: React.FC = () => {
                         disabled={isSubmitting}
                         className="w-full bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {isSubmitting ? 'Enviando...' : 'Agendar Visita'}
+                        {isSubmitting ? tr('formulario.aEnviar') : tr('imovel.agendarVisita')}
                       </button>
                     </form>
                   </>
@@ -883,20 +901,20 @@ const PropertyDetailPage: React.FC = () => {
                         <Clock className="h-6 w-6 text-yellow-500 flex-shrink-0" />
                         <div className="ml-3">
                           <p className="text-yellow-700">
-                            Este imóvel está atualmente reservado. Se tiver interesse, podemos incluí-lo numa lista de espera.
+                            {tr('imovel.reservadoTexto')}
                           </p>
                         </div>
                       </div>
                     </div>
 
                     <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                      Quer ser notificado?
+                      {tr('imovel.querNotificado')}
                     </h3>
 
                     <div className="space-y-4">
                       <button className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600 transition flex items-center justify-center gap-2">
                         <Bell className="h-5 w-5" />
-                        Avise-me se ficar disponível
+                        {tr('imovel.aviseMe')}
                       </button>
 
                       <button
@@ -904,7 +922,7 @@ const PropertyDetailPage: React.FC = () => {
                         className="w-full border-2 border-[#79b2e9] text-[#0d2233] py-3 rounded-lg hover:bg-blue-50 transition flex items-center justify-center gap-2"
                       >
                         <Search className="h-5 w-5" />
-                        Ver imóveis disponíveis
+                        {tr('imovel.verDisponiveis')}
                       </button>
                     </div>
                   </>
@@ -917,14 +935,14 @@ const PropertyDetailPage: React.FC = () => {
                         <Heart className="h-6 w-6 text-red-500 flex-shrink-0" />
                         <div className="ml-3">
                           <p className="text-red-700">
-                            Este imóvel já foi vendido. Mas temos outras opções que podem interessar-lhe!
+                            {tr('imovel.vendidoTexto')}
                           </p>
                         </div>
                       </div>
                     </div>
 
                     <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                      Descubra alternativas
+                      {tr('imovel.descubraAlternativas')}
                     </h3>
 
                     <div className="space-y-4">
@@ -933,7 +951,7 @@ const PropertyDetailPage: React.FC = () => {
                         className="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2"
                       >
                         <Search className="h-5 w-5" />
-                        Ver imóveis disponíveis
+                        {tr('imovel.verDisponiveis')}
                       </button>
 
                       <button
@@ -944,7 +962,7 @@ const PropertyDetailPage: React.FC = () => {
                         className="w-full border-2 border-red-500 text-red-700 py-3 rounded-lg hover:bg-red-50 transition flex items-center justify-center gap-2"
                       >
                         <Heart className="h-5 w-5" />
-                        Imóveis similares
+                        {tr('imovel.similares')}
                       </button>
                     </div>
                   </>
@@ -957,7 +975,7 @@ const PropertyDetailPage: React.FC = () => {
                         <AlertCircle className="h-6 w-6 text-gray-500 flex-shrink-0" />
                         <div className="ml-3">
                           <p className="text-gray-700">
-                            Este imóvel está temporariamente indisponível. Contacte-nos para mais informações.
+                            {tr('imovel.indisponivelTexto')}
                           </p>
                         </div>
                       </div>
@@ -967,7 +985,7 @@ const PropertyDetailPage: React.FC = () => {
                       onClick={() => navigate('/imoveis/lista')}
                       className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-3 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition"
                     >
-                      Ver outros imóveis
+                      {tr('imovel.verOutros')}
                     </button>
                   </>
                 )}
@@ -984,7 +1002,7 @@ const PropertyDetailPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-gray-900">
-                Simule o seu crédito habitação
+                {tr('imovel.simuleCredito')}
               </h3>
             </div>
 
@@ -992,7 +1010,7 @@ const PropertyDetailPage: React.FC = () => {
             {priceableTypes.length > 1 && (
               <div className="max-w-md mx-auto mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2 text-center">
-                  Tipologia a simular
+                  {tr('imovel.tipologiaSimular')}
                 </label>
                 <select
                   value={Math.max(0, priceableTypes.findIndex((t) => t === selectedPropertyType))}
@@ -1021,7 +1039,7 @@ const PropertyDetailPage: React.FC = () => {
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-            Imóveis Semelhantes
+            {tr('imovel.semelhantes')}
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1040,10 +1058,10 @@ const PropertyDetailPage: React.FC = () => {
       <section className="py-16 sm:py-20 bg-gray-900">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
-            Encontre o seu imóvel ideal
+            {tr('carlos.encontreTitulo')}
           </h2>
           <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
-            Diga-nos o que procura e encontraremos as melhores opções para si
+            {tr('carlos.encontreTexto')}
           </p>
         </div>
         <PropertyBuyForm />

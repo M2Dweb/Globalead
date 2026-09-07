@@ -10,6 +10,7 @@ import LoadingSpinner from './components/LoadingSpinner';
 import PreferencePopup from './components/PreferencePopup';
 import MediaProtection from './components/MediaProtection';
 import MaintenancePage from './pages/MaintenancePage';
+import i18n from './i18n';
 import {
   LANGUAGES,
   basenameFor,
@@ -61,106 +62,54 @@ interface PageSeo {
   noindex?: boolean;
 }
 
-// SEO por página (título, descrição e canonical únicos por rota)
+// SEO por página. Os textos vivem nos ficheiros de tradução (secção "seo"),
+// por isso o /en tem títulos e descrições próprios em vez dos portugueses.
+const ROTA_SEO: Record<string, string> = {
+  '/sobre': 'sobre',
+  '/imoveis': 'imoveis',
+  '/imoveis/lista': 'imoveisLista',
+  '/seguros': 'seguros',
+  '/credito': 'credito',
+  '/certificacao': 'certificacao',
+  '/carlos-goncalves': 'carlos',
+  '/blog': 'blog',
+  '/contactos': 'contactos',
+  '/termos-condicoes': 'termos',
+  '/politica-privacidade': 'privacidade',
+  '/resolucao-litigios': 'litigios',
+  '/admin': 'admin',
+};
+
 const getSeo = (path: string): PageSeo => {
   const canonical = path === '/' || path === '/home' ? `${SITE_URL}/` : `${SITE_URL}${path}`;
 
-  switch (path) {
-    case '/':
-    case '/home':
-      return { url: `${SITE_URL}/` };
-    case '/sobre':
-      return {
-        url: canonical,
-        title: 'Sobre Nós | Globalead Portugal',
-        description:
-          'Conheça a Globalead Portugal: a nossa história, valores e equipa especializada em imobiliário, crédito habitação, seguros e energia. Acompanhamento gratuito e personalizado.',
-      };
-    case '/imoveis':
-      return {
-        url: canonical,
-        title: 'Comprar e Vender Imóveis | Globalead Portugal',
-        description:
-          'Compre ou venda o seu imóvel com a Globalead Portugal. Apartamentos, moradias e empreendimentos com acompanhamento completo, do primeiro contacto à escritura.',
-        keywords: 'comprar casa, vender imóvel, apartamentos, moradias, empreendimentos, mediação imobiliária, Portugal',
-      };
-    case '/imoveis/lista':
-      return {
-        url: canonical,
-        title: 'Catálogo de Imóveis | Globalead Portugal',
-        description:
-          'Veja o catálogo de imóveis disponíveis da Globalead Portugal: apartamentos, moradias, terrenos e empreendimentos em todo o país.',
-      };
-    case '/seguros':
-      return {
-        url: canonical,
-        title: 'Seguros Auto, Vida e Habitação | Globalead Portugal',
-        description:
-          'Compare e contrate seguros automóvel, vida, habitação e saúde com a Globalead Portugal. Encontramos a melhor proteção ao melhor preço, sem custos para si.',
-        keywords: 'seguros, seguro automóvel, seguro de vida, seguro de saúde, seguro habitação, Portugal',
-      };
-    case '/credito':
-      return {
-        url: canonical,
-        title: 'Crédito Habitação e Simulador | Globalead Portugal',
-        description:
-          'Simule o seu crédito habitação e descubra a prestação mensal. A Globalead negoceia com os principais bancos as melhores condições — intermediação de crédito gratuita.',
-        keywords: 'crédito habitação, simulador crédito habitação, prestação mensal, taxa de juro, intermediário de crédito, Portugal',
-      };
-    case '/certificacao':
-      return {
-        url: canonical,
-        title: 'Certificação Energética | Globalead Portugal',
-        description:
-          'Certificação energética de imóveis com a Globalead Portugal. Tratamos de todo o processo do certificado energético, obrigatório na venda ou arrendamento.',
-      };
-    case '/carlos-goncalves':
-      return {
-        url: canonical,
-        title: 'Carlos Gonçalves — Consultor | Globalead Portugal',
-        description:
-          'Carlos Gonçalves, consultor da Globalead Portugal com mais de 10 anos de experiência. Acompanhamento próximo na compra, venda e crédito do seu imóvel.',
-      };
-    case '/blog':
-      return {
-        url: canonical,
-        title: 'Blog | Globalead Portugal',
-        description:
-          'Blog da Globalead Portugal: notícias, dicas e guias sobre imobiliário, crédito habitação, seguros e energia para o ajudar a decidir melhor.',
-      };
-    case '/contactos':
-      return {
-        url: canonical,
-        title: 'Contactos | Globalead Portugal',
-        description:
-          'Entre em contacto com a Globalead Portugal. Fale com a nossa equipa sobre imóveis, crédito habitação, seguros e energia. Acompanhamento gratuito e personalizado.',
-      };
-    case '/termos-condicoes':
-      return {
-        url: canonical,
-        title: 'Termos e Condições | Globalead Portugal',
-        description: 'Termos e condições de utilização do site da Globalead Portugal.',
-      };
-    case '/politica-privacidade':
-      return {
-        url: canonical,
-        title: 'Política de Privacidade | Globalead Portugal',
-        description:
-          'Política de privacidade e tratamento de dados pessoais da Globalead Portugal, em conformidade com o RGPD.',
-      };
-    case '/resolucao-litigios':
-      return {
-        url: canonical,
-        title: 'Resolução de Litígios | Globalead Portugal',
-        description: 'Informação sobre resolução alternativa de litígios de consumo da Globalead Portugal.',
-      };
-    case '/admin':
-      return { url: canonical, title: 'Administração | Globalead Portugal', noindex: true };
-    default:
-      // Páginas dinâmicas (/imoveis/:ref, /blog/:ref) definem o próprio SEO;
-      // aqui garantimos apenas o canonical correto.
-      return { url: canonical };
+  if (path === '/' || path === '/home') {
+    // A home usa os valores por omissão do SEOHead.
+    return { url: `${SITE_URL}/` };
   }
+
+  const chave = ROTA_SEO[path];
+  if (!chave) {
+    // Páginas dinâmicas (/imoveis/:ref, /blog/:ref) definem o próprio SEO;
+    // aqui garantimos apenas o canonical correto.
+    return { url: canonical };
+  }
+
+  const title = i18n.t(`seo.${chave}.title`);
+  const description = i18n.exists(`seo.${chave}.description`)
+    ? i18n.t(`seo.${chave}.description`)
+    : undefined;
+  const keywords = i18n.exists(`seo.${chave}.keywords`)
+    ? i18n.t(`seo.${chave}.keywords`)
+    : undefined;
+
+  return {
+    url: canonical,
+    title,
+    description,
+    keywords,
+    noindex: path === '/admin',
+  };
 };
 
 const ScrollToTop: React.FC = () => {

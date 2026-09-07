@@ -108,7 +108,40 @@
     "areaMin": "Min area (m²):",
     "numQuartos": "Bedrooms:",
     "numCasasBanho": "Bathrooms:",
-    "mensagemOpcional": "Message (optional):"
+    "mensagemOpcional": "Message (optional):",
+    "nomeObr": "First name*",
+    "apelidoObr": "Last name*",
+    "emailObr": "Email*",
+    "contactoObr": "Phone*",
+    "preferenciaObr": "Preferred contact*",
+    "assuntoSimples": "Subject",
+    "pedidoSimulacao": "Quote request",
+    "outro": "Other",
+    "mensagem": "Message",
+    "enviarContacto": "Get in touch",
+    "horarioPlaceholder": "Best time to call:",
+    "rgpdProtecao": "Data submitted through this form is processed in accordance with applicable data protection law and the General Data Protection Regulation (EU) 2016/679.",
+    "contacto": "Phone:",
+    "enviarMensagem": "Send message",
+    "selecioneAssunto": "Choose a subject...",
+    "creditoNovo": "I want to buy a property with a mortgage",
+    "creditoMelhorar": "I want better terms on my current mortgage",
+    "creditoConstruir": "I want to build",
+    "comoAjudar": "How can we help...",
+    "ajudaSimularImovel": "Work out what I can afford",
+    "ajudaSimulacao": "Get a quote",
+    "ajudaAprovacao": "Get mortgage approval",
+    "ajudaEscritura": "Approval plus support through to the deed",
+    "escolhaImovel": "Property status...",
+    "jaTenhoImovel": "I have already chosen a property",
+    "naoTenhoImovel": "I have not chosen a property yet",
+    "vendeAtual": "Are you selling your current property?",
+    "sim": "Yes",
+    "nao": "No",
+    "numProponentes": "Number of applicants...",
+    "maisDe2": "More than 2",
+    "rendimentoAgregado": "Total household income",
+    "rgpdSimples": "Data submitted through this form is processed in accordance with applicable data protection law and the General Data Protection Regulation (EU) 2016/679."
   },
   "sobre": {
     "heroTitulo": "A little about us",
@@ -169,5 +202,1039 @@
     "juridicoTitulo": "Legal Support",
     "juridicoTexto": "We handle deeds, documentation and tax representation, keeping every step transparent.",
     "formTitulo": "Sell your property quickly, safely and without the headaches."
+  },
+  "seguros": {
+    "heroTitulo": "We insure your future",
+    "tiposTitulo": "Which cover do you actually need?",
+    "autoTitulo": "Car Insurance",
+    "autoTexto": "Comprehensive protection for your vehicle.",
+    "saudeTitulo": "Health Insurance",
+    "saudeTexto": "Cover for medical costs and specialist treatment.",
+    "vidaTitulo": "Life Insurance",
+    "vidaTexto": "Financial protection for your beneficiaries in the event of death or disability.",
+    "habitacaoTitulo": "Home Insurance",
+    "habitacaoTexto": "Cover against damage to the property and your possessions.",
+    "acidentesTitulo": "Personal Accident",
+    "acidentesTexto": "Cover for accidents that result in medical expenses.",
+    "trabalhoTitulo": "Employers' Liability",
+    "trabalhoTexto": "A legal requirement in Portugal; covers the costs arising from accidents at work.",
+    "juridicaTitulo": "Legal Expenses",
+    "juridicaTexto": "Covers the cost of legal proceedings and legal advice.",
+    "comercialTitulo": "Commercial Property",
+    "comercialTexto": "Protects commercial premises against damage and business interruption.",
+    "poupancaTitulo": "Immediate savings",
+    "poupancaTexto": "Take advantage of the terms we have available for you.",
+    "aconselhamentoTitulo": "Advice throughout",
+    "aconselhamentoTexto": "Continuous support, backed by experience and trust.",
+    "rapidezTitulo": "Fast quotes",
+    "rapidezTexto": "A wide range of solutions for businesses and individuals alike.",
+    "comparamos1": "We compare the providers",
+    "comparamos2": " across Portugal",
+    "formTitulo": "Get a quote, with no obligation",
+    "faqTitulo": "Still have a question we have not answered?",
+    "segup": "In the course of its business, Globalead Portugal has entered into a strategic partnership with SEGUP – Corretores de Seguros, S.A., to strengthen the quality, breadth and closeness of the service provided to its clients. The partnership combines Globalead’s experience in managing tailored solutions with SEGUP’s technical expertise and established record in insurance broking. Together we offer a full portfolio of Life and Non-Life solutions, with access to the market’s leading insurers, competitive terms and specialist support focused on what clients actually need. SEGUP – Corretores de Seguros, S.A. is a public limited company, corporate tax number 510670300, registered at the Braga Commercial Registry, and has been registered since 05/03/2024 with the ASF – Autoridade de Supervisão de Seguros e Fundos de Pensões (the Portuguese insurance and pension funds supervisory authority) as an insurance broker under no. 624584421, authorised to carry on insurance mediation in the Life and Non-Life branches. Its registration can be verified at www.asf.com.pt, under article 32 of Decree-Law no. 144/2006 of 31 July."
+  },
+  "credito": {
+    "heroTitulo": "We help you buy your home",
+    "p1": "At Globalead Portugal we know that buying a property is one of the most significant moments in any family’s life, which is why our mortgage service is built entirely around you.",
+    "p2": "Our team works with the leading financial institutions to negotiate terms that reflect your profile, your goals and what you actually need — with close support at every stage.",
+    "p3": "Rather than relying on generic calculators, we carry out a thorough, individual assessment that projects your monthly payment based on the amount, the term and the applicable rates. Our free, independent advice helps you pick the bank with the best balance of cost and benefit, so you keep more each month.",
+    "p4": "We handle all the paperwork — gathering documents, reviewing and renegotiating offers, right through to signing the deed — so you can get the keys with complete transparency and peace of mind.",
+    "beneficiosTitulo1": "We help you ",
+    "beneficiosTitulo2": "get more out of your household budget",
+    "beneficiosTitulo3": " — and a good deal more",
+    "beneficiosTexto": "Our credit intermediation service is completely free and comes with advantages you will not find on your own",
+    "b1Titulo": "Get the best terms on the market",
+    "b1Texto": "We compare offers from multiple lenders to secure the most competitive rates and the best terms for your profile.",
+    "b2Titulo": "Skip the paperwork. We handle it",
+    "b2Texto": "We take care of the documents, the negotiations and the administration, saving you time and taking the stress out of the process.",
+    "b3Titulo": "Support from start to finish",
+    "b3Texto": "From the first conversation to signing the deed, we are beside you to answer questions and make sure it goes through.",
+    "b4Titulo": "Our credit intermediation is free",
+    "b4Texto": "You pay us nothing. We are paid directly by the lenders, at no additional cost to you.",
+    "simuleTitulo1": "Estimate your ",
+    "simuleTitulo2": "mortgage payment",
+    "simuleTexto": "Adjust the figures and see an immediate estimate of your monthly payment",
+    "formTitulo": "Taking out a mortgage is the biggest financial decision you will make",
+    "faqTitulo": "Applying for a mortgage, step by step",
+    "lacerda": "In the course of its business, Globalead Portugal has entered into a strategic partnership with Lacerda & Kiala Lda. to strengthen the quality, breadth and closeness of the financial services offered to its clients. The partnership combines Globalead’s experience in managing tailored solutions with Lacerda & Kiala Lda.’s technical expertise in credit intermediation. Lacerda & Kiala Lda. is registered with the Banco de Portugal under no. 0007977 as a tied credit intermediary, on a non-exclusive basis, holding agreements with the following institutions: Banco Santander Totta, S.A., Banco BPI, S.A., Caixa Geral de Depósitos, S.A., Banco CTT, S.A., Union de Créditos Inmobiliários, S.A. – Establecimiento Financiero de Crédito (Sociedad Unipersonal) – Portuguese Branch, Bankinter, S.A. – Portuguese Branch, Abanca Corporación Bancaria, S.A. – Portuguese Branch, Banco BIC Português, S.A., Novo Banco, S.A., and Sicam – Caixa Central e Caixas de Crédito Agrícola Mútuo. Under its authorisation, Lacerda & Kiala Lda. may: present or propose credit agreements to consumers; assist consumers by carrying out preparatory or pre-contractual work in relation to credit agreements it has not itself presented; enter into credit agreements with consumers on behalf of lenders; and provide specialist advisory services. The Lacerda & Kiala Lda. brand is owned by Doutor Finanças Unipessoal Lda. Its registration can be verified on the official Banco de Portugal website, under the Portuguese Credit Intermediaries legal framework."
+  },
+  "comum": {
+    "temDuvidas": "Questions?",
+    "entreContacto": "Get in touch",
+    "faqTitulo": "Still have a question we have not answered?",
+    "aCarregarImoveis": "Loading properties...",
+    "aCarregar": "Loading...",
+    "imoveisDestaque": "Featured properties",
+    "imoveisDestaqueSub": "Your life begins with a home that inspires you",
+    "todosImoveis": "All properties",
+    "verTodosImoveis": "See all properties",
+    "empreendimentosDestaque": "Featured developments",
+    "empreendimentosDestaqueSub": "Discover something different",
+    "aCarregarEmpreendimentos": "Loading developments...",
+    "reservado": "Reserved",
+    "vendido": "Sold",
+    "porqueGlobalead": "Why Globalead Portugal?",
+    "proximidade": "At Globalead we believe the key to getting this right is staying close to the client.",
+    "videoProximidade": "Globalead video — staying close to the client",
+    "videoRazoes": "Globalead video — why choose us",
+    "emManutencao": "Down for maintenance",
+    "manutencaoTexto": "We are improving the site and will be back very soon. In the meantime, we are still here for you.",
+    "escrevaConteudo": "Write the content here..."
+  },
+  "certificacao": {
+    "heroTitulo": "We take care of your energy certificate",
+    "p1": "At Globalead Portugal we understand that selling or letting a property can be a complex process, full of details that need attention. One indispensable step — both for legal compliance and for the value of your property — is obtaining the energy certificate.",
+    "p2": "The energy certificate is an official document assessing a property’s energy efficiency. It states the energy rating (A+ to F) and sets out recommended improvements with estimated savings. It is issued by experts qualified by ADENE under the Portuguese Building Certification System (SCE) and governed by Decree-Law no. 101-D/2020.",
+    "p3": "We support you from the start of the process through to the certificate being issued — quickly, simply and without worry. Lean on our experience and concentrate on what actually matters: closing the deal.",
+    "processoTitulo1": "How the ",
+    "processoTitulo2": "energy certificate is issued",
+    "agendamentoTitulo": "Booking",
+    "agendamentoTexto": "Once you get in touch we call you within 24 hours to book the surveyor’s visit.",
+    "documentacaoTitulo": "Documents",
+    "documentacaoTexto": "The necessary paperwork needs to be gathered before the visit.",
+    "visitaTitulo": "Survey",
+    "visitaTexto": "A qualified surveyor collects everything needed on site.",
+    "emissaoTitulo": "Certificate issued",
+    "emissaoTexto": "We deliver your certificate 48 to 72 hours after the visit.",
+    "tiposTitulo": "Which certificates do we issue?",
+    "apartamentosTitulo": "Apartments",
+    "apartamentosTexto": "We assess energy use in residential apartments, report on efficiency and identify where improvements can be made.",
+    "moradiasTitulo": "Houses",
+    "moradiasTexto": "We carry out detailed energy assessments of detached and semi-detached homes, helping owners understand and improve their property’s efficiency.",
+    "comercioTitulo": "Retail & Commercial",
+    "comercioTexto": "For retail and service premises we report on the building’s energy performance and suggest measures to cut energy costs and improve sustainability."
+  },
+  "contactos": {
+    "heroTitulo": "Contact",
+    "heroTexto": "At Globalead Portugal the client always comes first. We are here to give you the support you need.",
+    "p1": "Whether you have questions about our services, need technical assistance, want more information or are looking for something built entirely around you, our team is ready to find the right answer.",
+    "p2": "Get in touch using the form below, send us an email, or call the numbers listed. Our priority is to respond quickly and effectively, and to leave you completely satisfied.",
+    "telefone": "Phone",
+    "email": "Email",
+    "horario": "Opening hours"
+  },
+  "faq": {
+    "geral": [
+      {
+        "question": "How do I contact Globalead Portugal?",
+        "answer": "You can reach us on 910 647 620, by email at geral@globalead.pt, or through the contact form on this website."
+      },
+      {
+        "question": "What services does Globalead offer?",
+        "answer": "We provide estate agency, insurance, energy, alarm systems and telecoms (TV, internet and phone) services."
+      }
+    ],
+    "imoveis": [
+      {
+        "question": "How do I sell my property with Globalead?",
+        "answer": "Get in touch for a free valuation. We handle the whole process — marketing, viewings and negotiation — right through to the deed."
+      },
+      {
+        "question": "How long does it take to sell a property?",
+        "answer": "It depends on the type of property and its location, but on average we sell within 30 to 90 days."
+      },
+      {
+        "question": "What documents do I need to sell my property?",
+        "answer": "You will need the caderneta predial (land registry record), the certidão permanente (permanent certificate), the energy certificate and, where applicable, the habitation licence."
+      }
+    ],
+    "seguros": [
+      {
+        "question": "What is insurance?",
+        "answer": "Insurance is an agreement between an insurer and a policyholder, under which the insurer takes on specific cover in the event of a claim and pays out according to the sum insured. The policyholder pays the premium, and the contract is set out in the policy document, which defines both the cover and the cost. The payout may go to the policyholder, to a named beneficiary, or to a third party who suffered loss attributable to the policyholder."
+      },
+      {
+        "question": "What is an insurance policy?",
+        "answer": "The policy is the contract between the insurer and the policyholder, and it contains the general, particular and special conditions of the cover. The general conditions are standard clauses applied to similar risks, while the particular and special conditions are adjusted to the type of insurance and the specific needs of the person insured."
+      },
+      {
+        "question": "How does car insurance work?",
+        "answer": "Car insurance is a contract between the policyholder and the insurer that transfers responsibility for damage caused by the use of a vehicle. Third-party liability cover is required by law and covers damage to others only. To protect your own vehicle you need own-damage cover (fully comprehensive). The premium is influenced by your age, driving experience and claims history, the vehicle’s characteristics and how it is used, where it is parked, annual mileage, safety equipment, and other factors relating to both driver and vehicle."
+      },
+      {
+        "question": "What types of insurance are there?",
+        "answer": "The market offers a wide range, including around 200 policies made compulsory by law for particular professions. They fall into categories such as: workplace accidents, accidents on duty, personal accident, personal assistance, damage, illness, fire, surety, civil liability, theft and life."
+      },
+      {
+        "question": "What is third-party liability insurance?",
+        "answer": "Third-party liability cover is required by law and protects passengers and third parties in the event of an accident, covering both injury and material damage. The minimum cover set by the ASF is €1,220,000 for material damage and €6,070,000 for bodily injury, reviewed every five years. It does not cover injuries to the driver responsible for the accident, damage to their own vehicle, or damage from accidents caused deliberately or through negligence of road safety rules."
+      },
+      {
+        "question": "Is life insurance important?",
+        "answer": "Life insurance covers the risk of death or, alternatively, of survival. On death, the insurer pays an agreed sum to the beneficiaries; on survival, it pays a sum to the insured person at the end of the contract. Mixed policies combine both, and cover can be extended with additions such as disability or unemployment. It provides financial security for the family, particularly where income is lost or where longevity increases costs."
+      },
+      {
+        "question": "Am I required to take life insurance with a mortgage?",
+        "answer": "If a bank requires life insurance when you take out a mortgage, that requirement is not imposed by law. Under Decree-Law no. 222/2009 the bank must inform you that life insurance is available, but you are free to choose which company you buy it from."
+      },
+      {
+        "question": "What is home multi-risk insurance for?",
+        "answer": "Home multi-risk insurance provides compensation for damage to the property and its contents from events such as natural disasters, fire, explosion, theft, water damage and electrical faults, among others. It goes well beyond the cover required by law, which only covers fire damage to buildings held in horizontal property (commonhold), giving the home much broader protection."
+      }
+    ],
+    "certificacao": [
+      {
+        "question": "What is an energy certificate?",
+        "answer": "The energy certificate is a document rating a property’s energy efficiency on a scale from A+ (very efficient) to F (inefficient). It is issued by experts authorised by ADENE, the Portuguese energy agency. It sets out the property’s energy consumption for heating, cooling and hot water, along with recommended improvements to reduce it."
+      },
+      {
+        "question": "What is an energy certificate for?",
+        "answer": "Since 2013 an energy certificate has been compulsory for anyone selling or letting a property. Its purpose is to tell the owner how the property performs and what improvements could be made."
+      },
+      {
+        "question": "What are the benefits of energy certification?",
+        "answer": "For owners selling or letting, certification brings real advantages. It can increase the property’s value and, by pointing to the right energy measures, reduce consumption and therefore cost. Certification can also open the door to tax benefits: a property rated A or above may qualify for a reduction of up to 25% in IMI (municipal property tax)."
+      },
+      {
+        "question": "What documents are needed for the survey?",
+        "answer": "The compulsory documents are the Caderneta Predial Urbana (urban property record) and the Certidão de Registo Permanente (permanent registry certificate). You may also provide optional documents such as the building’s technical data sheet, the floor plan and the construction cross-section, which help achieve the best possible rating for your property."
+      },
+      {
+        "question": "Who can issue an energy certificate?",
+        "answer": "Only an expert qualified by ADENE may produce an energy certificate. These are architects or engineers with at least five years’ experience, working under the Portuguese Building Energy Certification System (SCE), established by Decree-Law no. 101-D/2020 of 7 December."
+      },
+      {
+        "question": "How long is an energy certificate valid?",
+        "answer": "It is valid for 10 years for residential buildings and small commercial or service premises. For large commercial and service buildings the term is 6 years for certificates issued up to 30 April 2015, and 8 years for those issued after that date."
+      },
+      {
+        "question": "Can I use the energy certificate for the deed?",
+        "answer": "Energy certificates can be used for the purposes of the deed only when accompanied by a permanent registry certificate that is valid for that purpose."
+      },
+      {
+        "question": "When is an energy certificate compulsory?",
+        "answer": "Article 18 of Decree-Law no. 101-D/2020 makes the certificate compulsory when: letting, selling, transferring a business lease, or transferring property in lieu of payment; constructing new buildings; carrying out major renovations costing more than 25% of the property’s value; operating large commercial or service buildings (over 1,000 m², or 500 m² for certain uses), which are subject to periodic inspection; and applying to programmes that require the certificate for funding or tax benefits."
+      },
+      {
+        "question": "Do commercial premises legally need an energy certificate?",
+        "answer": "Yes. Decree-Law 101-D/2020 applies to all buildings intended for human occupation, commercial premises included. If the premises are sold, transferred or let for more than four months, a certificate must be issued. For premises over 250 m², an initial assessment is carried out first, followed by a quotation for producing the certificate."
+      },
+      {
+        "question": "What are the fines for selling or letting without a certificate?",
+        "answer": "Advertising, selling or letting a property without first obtaining the energy certificate is an administrative offence, punishable by a fine of up to €3,750 for individuals and up to €44,890 for companies, under article 35 of Decree-Law 101-D/2020."
+      }
+    ],
+    "credito": [
+      {
+        "question": "How much can I borrow?",
+        "answer": "Before you start looking at properties, work out how much you can borrow based on your savings and monthly income. Set aside 15% to 20% of the purchase price as a deposit — the bank will not lend the full value, and there are taxes and extra costs on top. Ideally, the monthly payment should not exceed 35% of your net monthly income."
+      },
+      {
+        "question": "Why talk to a credit intermediary?",
+        "answer": "You get personal guidance without having to visit every bank yourself, a single consolidated comparison of the offers currently available, a simpler application process, and often better terms than you would get alone."
+      },
+      {
+        "question": "Sending the documents needed for a mortgage application",
+        "answer": "Banks can only make you a personalised offer once you have sent documents evidencing your financial position. Without them, the offers are generic and tell you little about what you would actually get. A personalised proposal sets out the interest rate, the spread, the fees and the cost of any additional products required. Going through each component in detail is what reveals where there is room to negotiate. Globalead Portugal guides you through it so the decision is an informed one."
+      },
+      {
+        "question": "Receiving mortgage offers and comparing them",
+        "answer": "Banks can only make you a personalised offer once you have sent documents evidencing your financial position. Without them, the offers are generic and tell you little about what you would actually get. A personalised proposal sets out the interest rate, the spread, the fees and the cost of any additional products required. Going through each component in detail is what reveals where there is room to negotiate. Globalead Portugal guides you through it so the decision is an informed one."
+      },
+      {
+        "question": "Requesting the property valuation",
+        "answer": "Banks require an official valuation of the property as part of the mortgage process. It establishes the property’s real value and lets the lender assess the risk. The valuation costs between €200 and €350 depending on the bank. Globalead Portugal follows the whole procedure, keeping it transparent and on schedule."
+      },
+      {
+        "question": "The binding mortgage offer: the FINE",
+        "answer": "The FINE is issued once the valuation and any further checks are complete, assuming the mortgage is approved. It sets out the loan amount, how the funds will be released, the interest rate, the repayment schedule, the fees and any other costs. You have 30 days to review it and decide whether to accept. Before the deed, it is essential to go through every condition and clear up any doubts. Globalead Portugal has specialists on hand for this decisive stage."
+      },
+      {
+        "question": "Signing the mortgage and completing the purchase deed",
+        "answer": "When you accept the mortgage offer, the bank issues the FINE (European Standardised Information Sheet), detailing the amount, interest rate, fees, repayment schedule and other charges. After the FINE is delivered there is a minimum period of 7 days before the deed, so you can reflect and confirm the decision matches what was agreed. That interval exists to make sure you fully understand every contractual term. Globalead Portugal recommends asking for detailed information and resolving every question before signing anything."
+      },
+      {
+        "question": "What is the spread?",
+        "answer": "The spread is the part of the interest rate that each bank sets individually on a mortgage — essentially the lender’s profit margin. The spread you are offered depends largely on your risk profile (credit history, income, the amount you are borrowing, the guarantees you can provide) and, frequently, on which additional products you agree to take in order to bring it down."
+      },
+      {
+        "question": "What is the difference between a fixed and a variable rate?",
+        "answer": "A fixed rate stays the same for the life of the loan and is agreed with the lender when you apply. A variable rate moves with an index, so it changes over the life of the loan and your monthly payment changes with it: if the index rises, so does your rate; if it falls, your rate falls too. In Portugal the index normally used for mortgages is Euribor, at 3, 6 or 12 months."
+      },
+      {
+        "question": "What is the Nominal Annual Rate (TAN)?",
+        "answer": "The Nominal Annual Rate (TAN) applies to all operations involving interest, whether investments or loans, and lets you compare products against each other. On a variable-rate mortgage it is simply the spread added to Euribor."
+      },
+      {
+        "question": "What is Euribor?",
+        "answer": "Euribor — the Euro Interbank Offered Rate — is the interest banks pay other institutions to fund their activity. It is calculated as the average of the rates offered by the 52 largest banks in the euro area over a given term. Euribor is not fixed and moves daily, but you choose the point at which your rate is recalculated. The most common terms are 3, 6 and 12 months."
+      },
+      {
+        "question": "How do I get a mortgage approved?",
+        "answer": "To get approval quickly, give the lender as many guarantees as you can, so it perceives less risk. Beyond your income level, a good record of repaying previous loans is essential, and banks place a lot of weight on job stability. Ideally the monthly payment should not exceed 40% of the household’s income."
+      },
+      {
+        "question": "Which banks offer the 100% public guarantee?",
+        "answer": "Every bank that grants mortgages in Portugal — 17 institutions in total — has signed up to the public guarantee, including all the partners we already work with."
+      },
+      {
+        "question": "What is the deadline to apply for the guarantee?",
+        "answer": "To benefit from the public guarantee and 100% financing, the credit agreement must be signed by 31 December 2026."
+      },
+      {
+        "question": "Are there fees if I miss a mortgage payment?",
+        "answer": "If you do not pay on the due date you are in arrears, and the bank may charge default interest and a debt recovery fee. Default interest is a surcharge of up to 3% a year on top of the ordinary interest rate. The debt recovery fee cannot exceed 4% of the instalment, subject to a minimum of €12 and a maximum of €150."
+      },
+      {
+        "question": "What happens if I default on my mortgage?",
+        "answer": "Defaulting on a mortgage is a situation no borrower wants. The first time you miss a payment, the bank has 15 days to contact you. Between the 31st and 60th day after the default, the case enters PERSI (the out-of-court procedure for regularising defaults), which exists to reach an agreement between the bank and the customer."
+      },
+      {
+        "question": "Can I still get a tax exemption?",
+        "answer": "Yes. You may still benefit from exemption from IMT (property transfer tax) and Stamp Duty, which generate significant savings when buying a home."
+      },
+      {
+        "question": "How long does the state guarantee last?",
+        "answer": "The guarantee remains in force for ten years from the date of the mortgage deed."
+      },
+      {
+        "question": "Is the instalment processing fee still charged?",
+        "answer": "The processing fee is charged on each instalment paid (plus Stamp Duty) for the whole life of the loan, applied monthly when the payment is taken. Although the processing fee was abolished in January 2021, that only applies to new loans."
+      },
+      {
+        "question": "Early repayment: what are my rights and the costs?",
+        "answer": "You have the right to repay your loan early, in full or in part, before the scheduled date. Early repayment does carry a cost: on a variable rate the fee cannot exceed 0.5% of the capital repaid; on a fixed rate it cannot exceed 2%."
+      },
+      {
+        "question": "Can my mortgage spread change?",
+        "answer": "It is uncommon, but the spread can change during the life of the contract. This can happen where you agreed with the bank to meet certain conditions in exchange for a lower spread — such as having your salary paid into an account with them, or keeping direct debits active on it — and then stop meeting those conditions."
+      },
+      {
+        "question": "What is the Annual Percentage Rate of Charge (TAEG)?",
+        "answer": "The Annual Percentage Rate of Charge (TAEG) represents the total cost of the mortgage, including every charge attached to the contract: interest, fees, taxes, insurance linked to the loan, and the cost of maintaining the current account tied to it. It also covers other costs such as the fees charged for registering the mortgage."
+      }
+    ]
+  },
+  "carlos": {
+    "heroTitulo": "Who is Carlos Gonçalves?",
+    "heroSubtitulo": "10+ years in sales and client advisory",
+    "visaoTitulo": "The thinking behind Globalead",
+    "bio1": "My name is Carlos Gonçalves and I am the CEO of Globalead Portugal. I started out in sales at nineteen, and that is where I learned, grew, and built the skills to work across different fields — and to understand what actually moves people.",
+    "bio2": "For nearly a decade I worked across the sectors that now form the foundations of Globalead Portugal.",
+    "bio3": "My purpose has always been to help clients find solutions that genuinely fit what they need.",
+    "bio4": "When you are making decisions about services that matter, having a specialist beside you is what gets you to the best option — and saves you time and money along the way.",
+    "bio5": "I am the bridge between the providers and you, and I am available whenever you need me.",
+    "resultadosTitulo": "Results that speak for themselves",
+    "resultadosTexto": "Numbers that reflect a commitment to doing this properly",
+    "expLabel": "Years of experience",
+    "expTexto": "In property and energy",
+    "clientesLabel": "Satisfied clients",
+    "clientesTexto": "Families and businesses served",
+    "volumeLabel": "Transaction volume",
+    "volumeTexto": "In completed deals",
+    "avaliacaoLabel": "Average rating",
+    "avaliacaoTexto": "Based on client reviews",
+    "meusImoveis": "My properties",
+    "meusImoveisSub": "The properties I am handling right now",
+    "vendidos": "Recently sold",
+    "vendidosSub": "Deals closed with support from the first conversation to the deed",
+    "encontreTitulo": "Find the right property",
+    "encontreTexto": "Tell us what you are looking for and we will find the best options for you"
+  },
+  "popup": {
+    "titulo": "Not finding what you want?",
+    "subtitulo": "Tell us what kind of property you are after.",
+    "fechar": "Close",
+    "sucesso": "Thank you. We have your preferences and will be in touch shortly.",
+    "descreva": "Describe the property",
+    "descrevaPlaceholder": "Type, location and budget",
+    "seuEmail": "Your email",
+    "emailPlaceholder": "Enter your email",
+    "aEnviar": "Sending...",
+    "enviar": "Send",
+    "erro": "Something went wrong. Please try again.",
+    "rgpd": "By requesting information you authorise Globalead Portugal to keep your details in order to tell you about opportunities, in accordance with our"
+  },
+  "cookies": {
+    "aria": "Cookie consent",
+    "texto": "We use cookies to improve your experience and analyse site traffic (Google Analytics and Facebook Pixel).",
+    "recusar": "Decline",
+    "aceitar": "Accept cookies"
+  },
+  "naoEncontrada": {
+    "titulo": "Page not found",
+    "texto": "The page you are looking for does not exist or has moved. Check the address, or head back to the start.",
+    "voltar": "Back to home",
+    "verImoveis": "Browse properties"
+  },
+  "blog": {
+    "todos": "All",
+    "imobiliario": "Property",
+    "financas": "Finance",
+    "seguros": "Insurance",
+    "certificacao": "Energy certification",
+    "creditoHabitacao": "Mortgages",
+    "certificadoEnergetico": "Energy certificate",
+    "artigoNaoEncontrado": "Article not found.",
+    "outrasNoticias": "More news",
+    "heroTitulo": "Latest news",
+    "heroTexto": "Keep up with what is happening across the sectors Globalead Portugal works in",
+    "pesquisar": "Search articles...",
+    "nenhumArtigo": "No articles found",
+    "ajustarFiltros": "Try adjusting the filters or your search term",
+    "anterior": "Previous",
+    "seguinte": "Next",
+    "blogNoticias": "Blog & News",
+    "atualizado": "Keep up with the latest from the market",
+    "aCarregarArtigos": "Loading articles..."
+  },
+  "imovel": {
+    "apartamento": "Apartment",
+    "moradia": "House",
+    "terreno": "Land",
+    "empreendimento": "Development",
+    "trespasse": "Business transfer",
+    "quartos": "{{n}} bedrooms",
+    "quartosIntervalo": "{{min}} to {{max}} bedrooms",
+    "desde": "from",
+    "favorito": "Add to favourites",
+    "fotoAnterior": "Previous photo",
+    "fotoSeguinte": "Next photo",
+    "verImagem": "View image {{n}}",
+    "partilhar": "Share",
+    "encontrados": "{{n}} properties found",
+    "ordMaisRecentes": "Newest first",
+    "ordPrecoAsc": "Price: low to high",
+    "ordPrecoDesc": "Price: high to low",
+    "ordAreaAsc": "Area: small to large",
+    "ordAreaDesc": "Area: large to small",
+    "generico": "Property",
+    "aCarregarDetalhes": "Loading property details...",
+    "naoEncontrado": "Property not found",
+    "sobConsulta": "Price on application",
+    "voltar": "Back",
+    "agendarVisita": "Book a viewing",
+    "tipologiasDisponiveis": "Available units",
+    "piso": "Floor {{n}}",
+    "semPiso": "No floor specified",
+    "fracao": "Unit",
+    "tipologia": "Type",
+    "pisoCol": "Floor",
+    "wc": "Bath",
+    "area": "Area",
+    "garagem": "Garage",
+    "precoDesde": "From",
+    "sim": "Yes",
+    "nao": "No",
+    "descricao": "About this property",
+    "localizacao": "Location",
+    "partilhe": "Share this",
+    "videoApresentacao": "Property video",
+    "contacteDiretamente": "Or contact us directly:",
+    "simuleCredito": "Estimate your mortgage payment",
+    "interesseMensagem": "Interested in: {{titulo}} (Ref: {{ref}})",
+    "listaTitulo": "Find the right property for you",
+    "nenhumEncontrado": "No properties found",
+    "agendeReuniao": "Book a meeting with us and get all the details of this development",
+    "agendeVisita": "Book your viewing",
+    "visitaSucesso": "Your viewing request has been sent. We will be in touch shortly.",
+    "visitaErro": "Your request could not be sent. Please try again or contact us directly.",
+    "reservadoTexto": "This property is currently reserved. If you are interested, we can add you to a waiting list.",
+    "querNotificado": "Want to be notified?",
+    "aviseMe": "Let me know if it becomes available",
+    "verDisponiveis": "See available properties",
+    "vendidoTexto": "This property has been sold — but we have others that may interest you.",
+    "descubraAlternativas": "Find alternatives",
+    "similares": "Similar properties",
+    "indisponivelTexto": "This property is temporarily unavailable. Get in touch for more information.",
+    "verOutros": "See other properties",
+    "tipologiaSimular": "Unit to base the estimate on",
+    "semelhantes": "Similar properties",
+    "partilhaTexto": "I found this property you might like:"
+  },
+  "avaliacao": {
+    "passo": "Step {{n}} of 7",
+    "continuar": "Continue",
+    "finalidadeTitulo": "What do you want to do?",
+    "vender": "Sell",
+    "venderDesc": "I want to sell the property",
+    "arrendar": "Let",
+    "arrendarDesc": "I want to let the property",
+    "trespasse": "Transfer a business lease",
+    "trespasseDesc": "I want to transfer a business lease",
+    "tipoTitulo": "What kind of property is it?",
+    "quintaHerdade": "Country estate or farm",
+    "quarto": "Room",
+    "imovelNegocio": "Property with a business",
+    "caracteristicasTitulo": "About the property",
+    "tipologia": "Layout",
+    "selecioneTipologia": "Choose the layout",
+    "pequeno": "Small",
+    "medio": "Medium",
+    "grande": "Large",
+    "muitoGrande": "Very large",
+    "areaUtil": "Usable area (m²)",
+    "areaBruta": "Gross area (m²)",
+    "areaTerreno": "Plot size (m²)",
+    "anoConstrucao": "Year built",
+    "quartosTitulo": "Bedrooms and bathrooms",
+    "quartos": "Bedrooms",
+    "casasBanho": "Bathrooms",
+    "extrasTitulo": "Extra features",
+    "garagem": "Garage",
+    "elevador": "Lift",
+    "terracoVaranda": "Terrace / balcony",
+    "piscina": "Pool",
+    "jardim": "Garden",
+    "certificado": "Energy certificate",
+    "selecioneClassificacao": "Choose the rating",
+    "isento": "Exempt",
+    "emCurso": "In progress",
+    "estacionamento": "Parking",
+    "selecioneTipo": "Choose the type",
+    "semEstacionamento": "No parking",
+    "boxFechada": "Private garage",
+    "garagemColetiva": "Shared garage",
+    "lugarExterior": "Outdoor space",
+    "outrasCaracteristicas": "Anything else",
+    "outrasPlaceholder": "Describe anything else worth knowing (optional)",
+    "outrasPlaceholder2": "Describe any relevant features of the property (optional)",
+    "adicionaisTitulo": "Additional details",
+    "estadoTitulo": "Condition",
+    "novo": "New",
+    "novoDesc": "New, or in excellent condition",
+    "usado": "Used",
+    "usadoDesc": "Previously owned, in good general condition",
+    "renovado": "Renovated",
+    "renovadoDesc": "Recently renovated",
+    "construcao": "Under construction",
+    "construcaoDesc": "Currently being built",
+    "planta": "Off-plan",
+    "plantaDesc": "Approved project, not yet started",
+    "localizacaoTitulo": "Where is it?",
+    "cidade": "Town or city *",
+    "cidadePlaceholder": "e.g. Lisbon, Porto, Braga...",
+    "rua": "Street",
+    "ruaPlaceholder": "Street name (optional)",
+    "codigoPostal": "Postcode",
+    "codigoPostalPlaceholder": "XXXX-XXX",
+    "objetivoTitulo": "What matters most to you when it comes to {{acao}}?",
+    "aVenda": "selling",
+    "oArrendamento": "letting",
+    "oTrespasse": "transferring the lease",
+    "rapidoVender": "Sell quickly",
+    "rapidoArrendar": "Let quickly",
+    "rapidoTrespasse": "Transfer quickly",
+    "rapidoDesc": "I need to get this done as fast as possible",
+    "melhorPreco": "Get the best price",
+    "melhorPrecoDesc": "I want to maximise the value",
+    "avaliarOpcoes": "Weigh up my options",
+    "avaliarOpcoesDesc": "I am still considering it",
+    "dadosTitulo": "Your contact details",
+    "nome": "First name *",
+    "nomePlaceholder": "Your first name",
+    "apelido": "Last name *",
+    "apelidoPlaceholder": "Your last name",
+    "email": "Email *",
+    "emailPlaceholder": "your.email@example.com",
+    "telemovel": "Phone *",
+    "telemovelPlaceholder": "9XX XXX XXX",
+    "meioPreferido": "Preferred way to reach you",
+    "selecioneMeio": "Choose how we contact you",
+    "selecioneHorario": "Choose a time",
+    "seguirTitulo": "What happens next",
+    "seguir1": "A detailed assessment of your property",
+    "seguir2": "Comparison with similar properties nearby",
+    "seguir3": "A phone call within 24 hours",
+    "seguir4": "A free valuation report",
+    "sucesso": "Your valuation request has been sent. Carlos Gonçalves will be in touch shortly.",
+    "erro": "Your request could not be sent. Please try again or contact us directly.",
+    "submeter": "Request a free valuation",
+    "camposObrigatorios": "Please fill in all your contact details.",
+    "resumoTitulo": "Your valuation so far",
+    "finalidade": "Purpose",
+    "tipoImovel": "Property type",
+    "areaUtilCurta": "Usable area",
+    "areaBrutaCurta": "Gross area",
+    "terreno": "Plot",
+    "ano": "Year",
+    "divisoes": "Rooms",
+    "certCurto": "Energy rating",
+    "estado": "Condition",
+    "localizacao": "Location",
+    "gratuitaTitulo": "Free valuation",
+    "gratuitaTexto": "Get a professional valuation of your property at no cost",
+    "sub1": "Tell us what you want to do with the property",
+    "sub2": "Select the type of property you own",
+    "sub3": "Give us the main details",
+    "sub4": "How many bedrooms and bathrooms does it have?",
+    "sub5": "Any further details about the property",
+    "sub6": "How would you describe its current condition?",
+    "sub7": "Tell us where it is, for a more accurate valuation",
+    "sub8": "So that Carlos Gonçalves can get back to you with the valuation",
+    "descAreaUtil": "Usable floor area",
+    "descAreaBruta": "Gross built area",
+    "descAreaTerreno": "Total plot size",
+    "descAno": "When it was built",
+    "descQuartos": "Number of bedrooms",
+    "descCasasBanho": "Number of bathrooms",
+    "quartosCurto": "Bedrooms:",
+    "wcCurto": "Baths:"
+  },
+  "calc": {
+    "titulo": "Mortgage calculator",
+    "precoImovel": "Property price",
+    "poupancas": "Savings",
+    "aviso10": "Remember that banks usually require a minimum contribution of 10%, plus costs.",
+    "prazoAnos": "Term in years",
+    "tipoTaxa": "Interest rate type",
+    "fixa": "Fixed",
+    "variavel": "Variable",
+    "localizacao": "Property location",
+    "tipoCasa": "Type of home",
+    "principal": "Main home",
+    "secundaria": "Second home",
+    "jovem": "Are you 35 or under?",
+    "jovemInfo": "Exemption from IMT and Stamp Duty when buying a permanent main home up to €316,772.",
+    "sim": "Yes",
+    "nao": "No",
+    "indicativo1": "Figures are indicative only (taxes calculated for mainland Portugal). The final amount varies",
+    "indicativo2": "with each client’s profile and depends on a quote based on real requirements.",
+    "prestacaoSeria": "Your monthly payment would be",
+    "taxaFixa": "Fixed rate",
+    "taxaVariavel": "Variable rate",
+    "valorCredito": "Loan amount",
+    "valorCreditoInfo": "The amount financed by the bank (total cost of the property less your savings).",
+    "percentagem": "Loan to value",
+    "percentagemInfo": "The loan as a proportion of the property price (LTV).",
+    "impostos": "Taxes and purchase costs",
+    "impostosInfo": "IMT + Stamp Duty + registration and notary (estimate).",
+    "custoTotal": "Total cost of the property",
+    "poupanca": "Savings",
+    "credito": "Loan",
+    "juros": "Interest",
+    "jurosCredito": "Interest on the loan",
+    "valorTotal": "Total paid with the mortgage",
+    "ocultarTabela": "Hide amortisation table",
+    "verTabela": "Show amortisation table",
+    "encontrarCredito": "Find me a mortgage",
+    "tabelaTitulo": "Amortisation table (yearly)",
+    "ano": "Year",
+    "capitalAmortizado": "Principal repaid",
+    "jurosPagos": "Interest paid",
+    "capitalDivida": "Outstanding balance",
+    "pedirSimulacao": "Request a detailed, free quote",
+    "pedirTexto": "Leave your details and a Globalead specialist will bring you the best offer on the market.",
+    "nomeCompleto": "Full name"
+  },
+  "filtros": {
+    "pesquisar": "Search",
+    "pesquisarPlaceholder": "Location, title...",
+    "tipoImovel": "Property type",
+    "todosTipos": "All types",
+    "distrito": "District",
+    "todosDistritos": "All districts",
+    "quartos": "Bedrooms",
+    "casasBanho": "Bathrooms",
+    "qualquer": "Any",
+    "estadoImovel": "Condition",
+    "qualquerEstado": "Any condition",
+    "classeEnergetica": "Energy rating",
+    "qualquerClasse": "Any rating",
+    "filtros": "Filters",
+    "limpar": "Clear",
+    "verResultados": "Show results",
+    "fecharFiltros": "Close filters",
+    "novo": "New",
+    "usado": "Used",
+    "emConstrucao": "Under construction",
+    "paraRemodelar": "Needs renovation"
+  },
+  "comprar": {
+    "dadosPessoais": "Your details",
+    "caracteristicas": "What you are looking for",
+    "orcamentoFinalidade": "Budget and purpose",
+    "preferenciasContacto": "Contact preferences",
+    "observacoesTitulo": "Anything else",
+    "tipoImovelObr": "Property type*",
+    "localizacaoObr": "Preferred location*",
+    "areaMin": "Min area (m²)",
+    "areaMax": "Max area (m²)",
+    "numQuartos": "Bedrooms",
+    "numCasasBanho": "Bathrooms",
+    "orcamentoObr": "Max budget (€)*",
+    "finalidade": "Purpose",
+    "habitacaoPropria": "Main home",
+    "investimento": "Investment",
+    "habitacaoSecundaria": "Second home",
+    "arrendamento": "To let out",
+    "urgencia": "How soon",
+    "muitoUrgente": "Very soon (1–2 months)",
+    "urgente": "Soon (3–6 months)",
+    "normal": "Within a year",
+    "semPressa": "No rush",
+    "meioPreferido": "Preferred contact method",
+    "horarioPreferido": "Preferred time",
+    "erro": "Your request could not be sent. Please try again or contact us directly.",
+    "aEnviar": "Searching...",
+    "submeter": "Find me a property"
+  },
+  "legal": {
+    "prevalencia": "This is a courtesy translation. In the event of any discrepancy, the Portuguese version prevails.",
+    "politicaPrivacidade": [
+      {
+        "tipo": "h1",
+        "texto": "Privacy Policy"
+      },
+      {
+        "tipo": "p",
+        "texto": "Information on the processing of personal data"
+      },
+      {
+        "tipo": "p",
+        "texto": "At Globalead Portugal, the privacy and protection of the personal data of our clients and of all other data subjects is a priority."
+      },
+      {
+        "tipo": "p",
+        "texto": "This Privacy Policy describes how we process personal data, who we share it with, how long we keep it, and how the data subject can contact the controller to exercise their rights."
+      },
+      {
+        "tipo": "p",
+        "texto": "Accessing and using the Globalead Portugal website, and subscribing to the services offered through it, means the user accepts and is bound by this Privacy and Data Protection Policy."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Data Controller"
+      },
+      {
+        "tipo": "p",
+        "texto": "Globalead Portugal, as the controller of the personal data of its Users and Clients, determines the purposes and means of processing that data."
+      },
+      {
+        "tipo": "p",
+        "texto": "Any question relating to the processing of personal data should be addressed to: geral@globalead.pt"
+      },
+      {
+        "tipo": "h2",
+        "texto": "Lawfulness of Processing, Purposes and Legal Basis"
+      },
+      {
+        "tipo": "p",
+        "texto": "For the purposes of this Policy, personal data means any information relating to an identified or identifiable natural person."
+      },
+      {
+        "tipo": "p",
+        "texto": "Globalead Portugal undertakes to process personal data lawfully, fairly and transparently, collecting only the data strictly necessary to provide estate agency services, namely to:"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Produce statistics on how the website is used",
+          "Improve and develop the website",
+          "Provide estate agency services",
+          "Respond to requests for contact, information or clarification",
+          "Send newsletters, where subscribed to",
+          "Present business opportunities suited to the User's profile",
+          "Analyse aggregated data in order to manage and improve the business",
+          "Perform contracts or take steps prior to entering into a contract",
+          "Comply with legal and tax obligations",
+          "Situations in which the data subject has given prior, express consent"
+        ]
+      },
+      {
+        "tipo": "h2",
+        "texto": "Personal Data Collected"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Name, telephone number and email address",
+          "Data provided through the forms available on the website",
+          "Preferences, interests and commercial information",
+          "Civil and tax identification data required to enter into contracts",
+          "Where applicable, information about assets, in the case of selling clients"
+        ]
+      },
+      {
+        "tipo": "p",
+        "texto": "Personal data may be collected through the website, by email, by telephone, in person, or during property viewings carried out as part of our estate agency activity."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Consent"
+      },
+      {
+        "tipo": "p",
+        "texto": "By submitting personal data through the website, the User declares that they have read, understood and accepted this Privacy Policy, and authorises the corresponding processing."
+      },
+      {
+        "tipo": "p",
+        "texto": "By entering into an estate agency contract, or by voluntarily requesting information about properties, the User consents to Globalead Portugal processing their personal data for the purposes of communication, marketing and presenting business opportunities suited to their profile. That consent may be withdrawn at any time."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Collection, Use and Recipients of the Data"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "The personal data provided forms part of the Globalead Portugal database",
+          "The data may be used for commercial communication and direct or indirect marketing",
+          "The data is processed by electronic means",
+          "Access to the data is restricted to authorised staff or service providers"
+        ]
+      },
+      {
+        "tipo": "p",
+        "texto": "The User may at any time ask for their personal data to stop being used for marketing purposes, by writing to geral@globalead.pt."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Data Subject's Rights"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Right of access",
+          "Right to rectification",
+          "Right to erasure",
+          "Right to restriction of processing",
+          "Right to data portability",
+          "Right to object",
+          "Right to withdraw consent"
+        ]
+      },
+      {
+        "tipo": "p",
+        "texto": "These rights may be exercised by email to geral@globalead.pt."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Complaints"
+      },
+      {
+        "tipo": "p",
+        "texto": "The data subject has the right to lodge a complaint with the Portuguese Data Protection Authority (Comissão Nacional de Proteção de Dados, CNPD)."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Data Retention Period"
+      },
+      {
+        "tipo": "p",
+        "texto": "Personal data is kept only for as long as necessary for the purposes for which it was collected, or for as long as the law requires."
+      },
+      {
+        "tipo": "p",
+        "texto": "Where a newsletter has been subscribed to, the data is kept until that subscription is cancelled."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Changes to this Privacy Policy"
+      },
+      {
+        "tipo": "p",
+        "texto": "Globalead Portugal reserves the right to amend this Privacy Policy whenever necessary."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Applicable Law"
+      },
+      {
+        "tipo": "p",
+        "texto": "Regulation (EU) 2016/679 (GDPR) and other applicable Portuguese legislation."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Contact"
+      },
+      {
+        "tipo": "p",
+        "texto": "Email: geral@globalead.pt"
+      }
+    ],
+    "termosCondicoes": [
+      {
+        "tipo": "h1",
+        "texto": "Terms & Conditions"
+      },
+      {
+        "tipo": "h2",
+        "texto": "Purpose and Acceptance"
+      },
+      {
+        "tipo": "p",
+        "texto": "This document sets out the General Conditions of Access and Use of the Globalead Portugal website, referred to below as “the website”."
+      },
+      {
+        "tipo": "p",
+        "texto": "The website belongs to Globalead Portugal, which carries on estate agency activity under Portuguese law."
+      },
+      {
+        "tipo": "p",
+        "texto": "By using the website, the User acknowledges, accepts and fully agrees to these Terms & Conditions."
+      },
+      {
+        "tipo": "p",
+        "texto": "Accepting these Terms is essential to using the services and information made available through the website. If the User does not agree, in whole or in part, with these Terms & Conditions, they must stop using the website immediately."
+      },
+      {
+        "tipo": "p",
+        "texto": "Globalead Portugal reserves the right to amend these Terms & Conditions at any time and unilaterally, whenever necessary to bring them into line with applicable law or with the activity carried on. Users should therefore consult them each time they visit the website."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Information and Services"
+      },
+      {
+        "tipo": "p",
+        "texto": "Through its website, Globalead Portugal promotes and advertises properties for sale, letting, exchange or business-lease transfer, setting out their characteristics and the terms of the deal."
+      },
+      {
+        "tipo": "p",
+        "texto": "The information provided is for information purposes only. It may take the form of text, images, photographs, floor plans, specifications, construction projects, prices and areas, and does not in any circumstances constitute a contractual offer or a declaration of intent, nor does it remove the need to contact the estate agency directly."
+      },
+      {
+        "tipo": "p",
+        "texto": "All information published on the website is the responsibility of Globalead Portugal, which uses its best efforts to ensure it is accurate, transparent and up to date."
+      },
+      {
+        "tipo": "p",
+        "texto": "Errors or information that is not fully up to date may nonetheless occur. If the User notices any, they may send suggestions or corrections to: geral@globalead.pt"
+      },
+      {
+        "tipo": "p",
+        "texto": "Globalead Portugal is not responsible for any decisions or actions taken on the basis of information published on the website, and accepts no liability in any circumstances for direct or indirect loss, financial or otherwise, arising from the use of, or inability to use, the website, its contents, or any third-party websites it may link to."
+      },
+      {
+        "tipo": "p",
+        "texto": "The website may contain links to third-party websites, provided purely for the convenience of the User. Globalead Portugal accepts no responsibility for the content, accuracy of information, privacy policies or terms of use of those websites."
+      },
+      {
+        "tipo": "p",
+        "texto": "Globalead Portugal reserves the right to change, modify or remove the contents of the website at any time, without prior notice."
+      },
+      {
+        "tipo": "h2",
+        "texto": "Use of the Website"
+      },
+      {
+        "tipo": "p",
+        "texto": "Access to the website is free and does not require personal data in order to browse the available content."
+      },
+      {
+        "tipo": "p",
+        "texto": "However, to request further information about the properties advertised or the services provided, the User must complete the relevant forms, giving details such as their name, telephone number and email address. This data is used solely to respond to the request made, in accordance with the Privacy Policy."
+      },
+      {
+        "tipo": "p",
+        "texto": "The User undertakes to use the website appropriately and lawfully, and to refrain from:"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Using the website for purposes other than those it is intended for",
+          "Carrying out unlawful, defamatory, offensive acts, or acts harmful to Globalead Portugal or to third parties",
+          "Interfering with or disrupting the normal operation of the website",
+          "Promoting any unauthorised commercial activity",
+          "Sending, publishing or making available third-party content without authorisation, in particular content protected by copyright, including images and photographs"
+        ]
+      },
+      {
+        "tipo": "h2",
+        "texto": "Contact"
+      },
+      {
+        "tipo": "p",
+        "texto": "For any further clarification regarding these Terms & Conditions of Use, the User may contact Globalead Portugal at the following email address: geral@globalead.pt"
+      }
+    ],
+    "resolucaoLitigios": [
+      {
+        "tipo": "h1",
+        "texto": "Dispute Resolution"
+      },
+      {
+        "tipo": "p",
+        "texto": "In the event of a dispute, consumers may refer the matter to one of the following Portuguese alternative consumer dispute resolution bodies:"
+      },
+      {
+        "tipo": "ul",
+        "itens": [
+          "Centro de Arbitragem de Conflitos de Consumo de Lisboa\nwww.centroarbitragemlisboa.pt",
+          "Centro de Arbitragem de Conflitos de Consumo do Vale do Ave / Tribunal Arbitral\nwww.triave.pt",
+          "CIAB - Centro de Informação, Mediação e Arbitragem de Consumo (Tribunal Arbitral de Consumo)\nwww.ciab.pt",
+          "CNIACC - Centro Nacional de Informação e Arbitragem de Conflitos de Consumo\nwww.cniacc.pt",
+          "Centro de Arbitragem de Conflitos de Consumo do Distrito de Coimbra\nwww.centrodearbitragemdecoimbra.com",
+          "Centro de Informação, Mediação e Arbitragem de Conflitos de Consumo do Algarve\nwww.consumoalgarve.pt",
+          "Centro de Informação de Consumo e Arbitragem do Porto\nwww.cicap.pt",
+          "Centro de Arbitragem de Conflitos de Consumo da Madeira\nwww.madeira.gov.pt/cacc"
+        ]
+      },
+      {
+        "tipo": "p",
+        "texto": "More information at the Portuguese Consumer Portal\nwww.consumidor.pt"
+      }
+    ]
+  },
+  "seo": {
+    "sobre": {
+      "title": "About Us | Globalead Portugal",
+      "description": "Get to know Globalead Portugal: our story, our values, and a team that specialises in property, mortgages, insurance and energy. Free, personal support throughout."
+    },
+    "imoveis": {
+      "title": "Buy and Sell Property in Portugal | Globalead Portugal",
+      "description": "Buy or sell your property with Globalead Portugal. Apartments, houses and new developments, with full support from the first conversation to the deed.",
+      "keywords": "buy property portugal, sell property, apartments, houses, new developments, estate agent, Portugal"
+    },
+    "imoveisLista": {
+      "title": "Property Listings | Globalead Portugal",
+      "description": "Browse the properties available through Globalead Portugal: apartments, houses, land and new developments across Portugal."
+    },
+    "seguros": {
+      "title": "Car, Life and Home Insurance | Globalead Portugal",
+      "description": "Compare and arrange car, life, home and health insurance with Globalead Portugal. We find the best cover at the best price, at no cost to you.",
+      "keywords": "insurance portugal, car insurance, life insurance, health insurance, home insurance"
+    },
+    "credito": {
+      "title": "Mortgages and Calculator | Globalead Portugal",
+      "description": "Estimate your mortgage and see the monthly payment. Globalead negotiates the best terms with the leading Portuguese banks — credit intermediation at no cost.",
+      "keywords": "mortgage portugal, mortgage calculator, monthly payment, interest rate, credit intermediary"
+    },
+    "certificacao": {
+      "title": "Energy Certification | Globalead Portugal",
+      "description": "Energy certificates for property with Globalead Portugal. We handle the whole process for the certificate that is required by law when selling or letting."
+    },
+    "carlos": {
+      "title": "Carlos Gonçalves — Consultant | Globalead Portugal",
+      "description": "Carlos Gonçalves, consultant at Globalead Portugal with over 10 years of experience. Close support when buying, selling or financing your property."
+    },
+    "blog": {
+      "title": "Blog | Globalead Portugal",
+      "description": "The Globalead Portugal blog: news, tips and guides on property, mortgages, insurance and energy, to help you decide well."
+    },
+    "contactos": {
+      "title": "Contact | Globalead Portugal",
+      "description": "Get in touch with Globalead Portugal. Talk to our team about property, mortgages, insurance and energy. Free, personal support."
+    },
+    "termos": {
+      "title": "Terms & Conditions | Globalead Portugal",
+      "description": "Terms and conditions of use for the Globalead Portugal website."
+    },
+    "privacidade": {
+      "title": "Privacy Policy | Globalead Portugal",
+      "description": "Privacy policy and personal data processing at Globalead Portugal, in line with the GDPR."
+    },
+    "litigios": {
+      "title": "Dispute Resolution | Globalead Portugal",
+      "description": "Information on alternative consumer dispute resolution at Globalead Portugal."
+    },
+    "admin": {
+      "title": "Administration | Globalead Portugal"
+    },
+    "default": {
+      "title": "Globalead Portugal | Property, Mortgages and Insurance",
+      "description": "Specialists in property, mortgages, energy certification and insurance. We support the whole process of buying or selling your home safely.",
+      "keywords": "property portugal, estate agent, mortgage, insurance, energy certificate, Porto, Lisbon, house, apartment"
+    },
+    "servMediacao": "Estate Agency",
+    "servMediacaoDesc": "Buying, selling and letting property",
+    "servCredito": "Mortgages",
+    "servCreditoDesc": "Mortgage intermediation with the leading banks",
+    "servSeguros": "Insurance",
+    "servSegurosDesc": "Car, home, life and health insurance",
+    "servCertificacao": "Energy Certification",
+    "servCertificacaoDesc": "Energy certificates for property"
   }
 }

@@ -4,6 +4,7 @@ import InsuranceComparator from '../components/InsuranceComparator';
 import FAQ from '../components/FAQ';
 import AnimatedSection from '../components/AnimatedSection';
 import { listR2Folder } from '../lib/r2';
+import { useTranslation } from 'react-i18next';
 import { sendEmail, FormData } from '../utils/emailService';
 
 const SeguroPage: React.FC = () => {
@@ -21,37 +22,38 @@ const SeguroPage: React.FC = () => {
     mensagem: '',
     page: 'seguros'
   });
+  const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   
 
   const insuranceTypes = [
-    { icon: <Car className="h-12 w-12 text-[#79b2e9]" />, title: "Seguro Automóvel", description: "A Globalead oferece proteção abrangente para o seu automóvel." },
-    { icon: <Heart className="h-12 w-12 text-[#79b2e9]" />, title: "Seguro de Saúde", description: "Cobertura para despesas médicas e tratamentos especializados." },
-    { icon: <Shield className="h-12 w-12 text-[#79b2e9]" />, title: "Seguro de Vida", description: "Proteção financeira para os beneficiários em caso de falecimento ou invalidez." },
-    { icon: <Home className="h-12 w-12 text-[#79b2e9]" />, title: "Multirriscos Habitação", description: "Proteção contra danos no imóvel e bens pessoais." },
-    { icon: <Users className="h-12 w-12 text-[#79b2e9]" />, title: "Acidentes Pessoais", description: "Cobertura em caso de acidentes que resultem em despesas médicas." },
-    { icon: <Briefcase className="h-12 w-12 text-[#79b2e9]" />, title: "Acidentes de Trabalho", description: "Obrigatório por lei, cobre custos associados a acidentes laborais." },
-    { icon: <Scale className="h-12 w-12 text-[#79b2e9]" />, title: "Proteção Jurídica", description: "Cobre custos com ações judiciais e consultas legais." },
-    { icon: <Building className="h-12 w-12 text-[#79b2e9]" />, title: "Multirriscos Comercial", description: "Protege estabelecimentos comerciais contra danos e interrupções." }
+    { icon: <Car className="h-12 w-12 text-[#79b2e9]" />, title: t('seguros.autoTitulo'), description: t('seguros.autoTexto') },
+    { icon: <Heart className="h-12 w-12 text-[#79b2e9]" />, title: t('seguros.saudeTitulo'), description: t('seguros.saudeTexto') },
+    { icon: <Shield className="h-12 w-12 text-[#79b2e9]" />, title: t('seguros.vidaTitulo'), description: t('seguros.vidaTexto') },
+    { icon: <Home className="h-12 w-12 text-[#79b2e9]" />, title: t('seguros.habitacaoTitulo'), description: t('seguros.habitacaoTexto') },
+    { icon: <Users className="h-12 w-12 text-[#79b2e9]" />, title: t('seguros.acidentesTitulo'), description: t('seguros.acidentesTexto') },
+    { icon: <Briefcase className="h-12 w-12 text-[#79b2e9]" />, title: t('seguros.trabalhoTitulo'), description: t('seguros.trabalhoTexto') },
+    { icon: <Scale className="h-12 w-12 text-[#79b2e9]" />, title: t('seguros.juridicaTitulo'), description: t('seguros.juridicaTexto') },
+    { icon: <Building className="h-12 w-12 text-[#79b2e9]" />, title: t('seguros.comercialTitulo'), description: t('seguros.comercialTexto') }
   ];
 
   const benefits = [
   { 
     icon: <Shield className="h-8 w-8 text-white" />, 
-    title: "Poupança imediata", 
-    description: "Beneficie das vantagens que temos ao seu dispor!" 
+    title: t('seguros.poupancaTitulo'), 
+    description: t('seguros.poupancaTexto') 
   },
   { 
     icon: <Users className="h-8 w-8 text-white" />, 
-    title: "Aconselhamento total", 
-    description: "Acompanhamento constante do cliente com experiência e confiança." 
+    title: t('seguros.aconselhamentoTitulo'), 
+    description: t('seguros.aconselhamentoTexto') 
   },
   { 
     icon: <Shield className="h-8 w-8 text-white" />, 
-    title: "Rapidez na simulação", 
-    description: "Ampla oferta de soluções à medida das empresas e dos particulares." 
+    title: t('seguros.rapidezTitulo'), 
+    description: t('seguros.rapidezTexto') 
   }
 ];
 
@@ -118,7 +120,7 @@ const SeguroPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Seguramos o seu futuro!
+              {t('seguros.heroTitulo')}
             </h1>
           </div>
         </div>
@@ -129,7 +131,7 @@ const SeguroPage: React.FC = () => {
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Qual o seguro que realmente necessita?</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">{t('seguros.tiposTitulo')}</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {insuranceTypes.map((i, idx) => (
@@ -154,7 +156,7 @@ const SeguroPage: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-               <span className="text-[#79b2e9]"> Comparamos as várias instituições</span> em Portugal
+               <span className="text-[#79b2e9]"> {t('seguros.comparamos1')}</span>{t('seguros.comparamos2')}
               </h2>
             </div>
 
@@ -198,7 +200,7 @@ const SeguroPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Compare as várias instituições em Portugal
+              {t('home.parceirosTitulo')}
             </h2>
           </div>
 
@@ -235,46 +237,46 @@ const SeguroPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             <div className="text-center mb-8">
-              <h2 className="text-4xl font-bold mb-6">Faça uma simulação sem compromisso!</h2>
+              <h2 className="text-4xl font-bold mb-6">{t('seguros.formTitulo')}</h2>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
               {/* Título "Tem dúvidas" removido */}
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" name="nome" value={formData.nome} onChange={handleInputChange} placeholder="Nome*" required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
-                <input type="text" name="apelido" value={formData.apelido} onChange={handleInputChange} placeholder="Apelido*" required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
-                <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email*" required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
-                <input type="tel" name="telemovel" value={formData.telemovel} onChange={handleInputChange} placeholder="Contacto*" className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
+                <input type="text" name="nome" value={formData.nome} onChange={handleInputChange} placeholder={t('formulario.nomeObr')} required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
+                <input type="text" name="apelido" value={formData.apelido} onChange={handleInputChange} placeholder={t('formulario.apelidoObr')} required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
+                <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder={t('formulario.emailObr')} required className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
+                <input type="tel" name="telemovel" value={formData.telemovel} onChange={handleInputChange} placeholder={t('formulario.contactoObr')} className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]" />
                 <select name="meio_contacto" value={formData.meio_contacto} onChange={handleInputChange} className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
-                  <option value="">Preferência*</option>
-                  <option>Email</option>
-                  <option>Whatsapp</option>
-                  <option>Telefone</option>
+                  <option value="">{t('formulario.preferenciaObr')}</option>
+                  <option value="Email">Email</option>
+                  <option value="Whatsapp">Whatsapp</option>
+                  <option value="Telefone">{t('formulario.telefone')}</option>
                 </select>
                 <select name="assunto" value={formData.assunto} onChange={handleInputChange} className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
-                  <option value="">Assunto</option>
-                  <option>Pedido de Simulação</option>
-                  <option>Esclarecimento de Dúvidas</option>
-                  <option>Outro</option>
+                  <option value="">{t('formulario.assuntoSimples')}</option>
+                  <option value="Pedido de Simulação">{t('formulario.pedidoSimulacao')}</option>
+                  <option value="Esclarecimento de Dúvidas">{t('formulario.duvidas')}</option>
+                  <option value="Outro">{t('formulario.outro')}</option>
                 </select>
                 <select name="horário" value={formData.horario} onChange={handleInputChange} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
-                  <option value="">Horário</option>
+                  <option value="">{t('formulario.horario')}</option>
                   <option>9h-12h30</option>
                   <option>12h30-16h</option>
                   <option>16h-19h30</option>
                 </select>
-                <textarea name="mensagem" value={formData.mensagem} onChange={handleInputChange} placeholder="Mensagem" rows={4} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"></textarea>
+                <textarea name="mensagem" value={formData.mensagem} onChange={handleInputChange} placeholder={t('formulario.mensagem')} rows={4} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"></textarea>
                 <div className="md:col-span-2">
                   <label className="flex items-start text-sm text-gray-700 mb-4">
                     <input type="checkbox" className="mt-1 mr-2" required />
-                    Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                    {t('formulario.aceitoTermos')}
                   </label>
                   <p className="text-xs text-gray-600 mb-4">
-                    Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                    {t('formulario.rgpd')}
                   </p>
-                  {submitStatus === 'success' && <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">Mensagem enviada com sucesso! Entraremos em contacto em breve.</div>}
-                  {submitStatus === 'error' && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.</div>}
+                  {submitStatus === 'success' && <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">{t('formulario.sucesso')}</div>}
+                  {submitStatus === 'error' && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">{t('formulario.erro')}</div>}
                   <button type="submit" disabled={isSubmitting} className="w-full bg-[#79b2e9] text-white font-semibold py-3 px-8 rounded-lg hover:[#0d2233] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                    {isSubmitting ? 'Enviando...' : 'Entrar em Contacto'}
+                    {isSubmitting ? t('formulario.aEnviar') : t('formulario.enviarContacto')}
                   </button>
                 </div>
               </form>
@@ -289,14 +291,14 @@ const SeguroPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center text-white mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Tem alguma questão que não foi contemplada?
+                {t('seguros.faqTitulo')}
               </h2>
             </div>
             <div className="bg-gray-900"><FAQ category="seguros" /></div>
             
             {/* Texto ajustado com padding equilibrado */}
             <div className="bg-gray-900 shadow-sm text-gray-500 text-xs py-12 text-justify">
-              No exercício da sua atividade, a Globalead Portugal estabeleceu uma parceria estratégica com a SEGUP – Corretores de Seguros, S.A., com o objetivo de reforçar a qualidade, a abrangência e a proximidade dos serviços prestados aos seus clientes. Esta colaboração alia a experiência da Globalead na gestão integrada de soluções personalizadas à competência técnica e ao sólido percurso da SEGUP no setor da mediação de seguros. Em conjunto, disponibilizamos um portefólio completo de soluções nos ramos Vida e Não Vida, com acesso às principais seguradoras do mercado. Através desta parceria, garantimos condições competitivas, acompanhamento especializado e um serviço de excelência, focado nas reais necessidades dos nossos clientes. Importa referir que a SEGUP – Corretores de Seguros, S.A., sociedade anónima com o número de pessoa coletiva 510670300, matriculada na Conservatória do Registo Comercial de Braga, encontra-se inscrita, desde 05/03/2024, na ASF – Autoridade de Supervisão de Seguros e Fundos de Pensões, como corretor de seguros, sob o n.º 624584421, com autorização para o exercício da atividade de mediação de seguros nos ramos Vida e Não Vida. O seu registo pode ser consultado em www.asf.com.pt, nos termos do artigo 32.º do Decreto-Lei n.º 144/2006, de 31 de julho.
+              {t('seguros.segup')}
             </div>
           </div>
         </section>

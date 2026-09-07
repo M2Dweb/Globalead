@@ -689,7 +689,7 @@ const ImoveisPage: React.FC = () => {
               <div className="md:col-span-2">
                 <label className="flex items-start text-sm text-gray-700 mb-4">
                   <input type="checkbox" className="mt-1 mr-2" required />
-                  Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                  {t('formulario.aceitoTermos')}
                 </label>
                 <p className="text-xs text-gray-600 mb-6">
                   Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { Search, Home, Euro, Users, Clock, MessageSquare } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -23,6 +24,7 @@ interface PropertyBuyData {
 }
 
 const PropertyBuyForm: React.FC = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<PropertyBuyData>({
     nome: '',
     apelido: '',
@@ -121,7 +123,7 @@ const PropertyBuyForm: React.FC = () => {
           <div>
             <div className="flex items-center mb-4">
               <Users className="h-5 w-5 text-[#79b2e9] mr-2" />
-              <h3 className="text-lg font-semibold text-gray-900">Dados Pessoais</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('comprar.dadosPessoais')}</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <input
@@ -129,7 +131,7 @@ const PropertyBuyForm: React.FC = () => {
                 name="nome"
                 value={formData.nome}
                 onChange={handleInputChange}
-                placeholder="Nome*"
+                placeholder={t('formulario.nomeObr')}
                 required
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               />
@@ -139,7 +141,7 @@ const PropertyBuyForm: React.FC = () => {
                 name="apelido"
                 value={formData.apelido}
                 onChange={handleInputChange}
-                placeholder="Apelido*"
+                placeholder={t('formulario.apelidoObr')}
                 required
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               />
@@ -149,7 +151,7 @@ const PropertyBuyForm: React.FC = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="Email*"
+                placeholder={t('formulario.emailObr')}
                 required
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               />
@@ -159,7 +161,7 @@ const PropertyBuyForm: React.FC = () => {
                 name="telemovel"
                 value={formData.telemovel}
                 onChange={handleInputChange}
-                placeholder="Telemóvel*"
+                placeholder={t('formulario.contactoObr')}
                 required
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               />
@@ -170,7 +172,7 @@ const PropertyBuyForm: React.FC = () => {
           <div>
             <div className="flex items-center mb-4">
               <Home className="h-5 w-5 text-[#79b2e9] mr-2" />
-              <h3 className="text-lg font-semibold text-gray-900">Características do Imóvel</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('comprar.caracteristicas')}</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <select
@@ -180,17 +182,17 @@ const PropertyBuyForm: React.FC = () => {
                 required
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
-                <option value="">Tipo de Imóvel*</option>
-                <option value="Apartamento">Apartamento</option>
-                <option value="Moradia">Moradia</option>
-                <option value="Quinta">Quinta</option>
-                <option value="Terreno">Terreno</option>
-                <option value="Prédio">Prédio</option>
-                <option value="Loja">Loja</option>
-                <option value="Armazém">Armazém</option>
-                <option value="Escritório">Escritório</option>
-                <option value="Garagem">Garagem</option>
-                <option value="Outros">Outros</option>
+                <option value="">{t('comprar.tipoImovelObr')}</option>
+                <option value="Apartamento">{t('formulario.apartamento')}</option>
+                <option value="Moradia">{t('formulario.moradia')}</option>
+                <option value="Quinta">{t('formulario.quinta')}</option>
+                <option value="Terreno">{t('formulario.terreno')}</option>
+                <option value="Prédio">{t('formulario.predio')}</option>
+                <option value="Loja">{t('formulario.loja')}</option>
+                <option value="Armazém">{t('formulario.armazem')}</option>
+                <option value="Escritório">{t('formulario.escritorio')}</option>
+                <option value="Garagem">{t('formulario.garagem')}</option>
+                <option value="Outros">{t('formulario.outros')}</option>
               </select>
 
               <input
@@ -198,7 +200,7 @@ const PropertyBuyForm: React.FC = () => {
                 name="localizacao"
                 value={formData.localizacao}
                 onChange={handleInputChange}
-                placeholder="Localização Pretendida*"
+                placeholder={t('comprar.localizacaoObr')}
                 required
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               />
@@ -208,7 +210,7 @@ const PropertyBuyForm: React.FC = () => {
                 name="area_min"
                 value={formData.area_min}
                 onChange={handleInputChange}
-                placeholder="Área Mínima (m²)"
+                placeholder={t('comprar.areaMin')}
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               />
 
@@ -217,7 +219,7 @@ const PropertyBuyForm: React.FC = () => {
                 name="area_max"
                 value={formData.area_max}
                 onChange={handleInputChange}
-                placeholder="Área Máxima (m²)"
+                placeholder={t('comprar.areaMax')}
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               />
 
@@ -227,7 +229,7 @@ const PropertyBuyForm: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
-                <option value="">Nº de Quartos</option>
+                <option value="">{t('comprar.numQuartos')}</option>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -242,7 +244,7 @@ const PropertyBuyForm: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
-                <option value="">Nº de Casas de Banho</option>
+                <option value="">{t('comprar.numCasasBanho')}</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -255,7 +257,7 @@ const PropertyBuyForm: React.FC = () => {
           <div>
             <div className="flex items-center mb-4">
               <Euro className="h-5 w-5 text-[#79b2e9] mr-2" />
-              <h3 className="text-lg font-semibold text-gray-900">Orçamento e Finalidade</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('comprar.orcamentoFinalidade')}</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <input
@@ -263,7 +265,7 @@ const PropertyBuyForm: React.FC = () => {
                 name="preco_max"
                 value={formData.preco_max}
                 onChange={handleInputChange}
-                placeholder="Orçamento Máximo (€)*"
+                placeholder={t('comprar.orcamentoObr')}
                 required
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               />
@@ -274,11 +276,11 @@ const PropertyBuyForm: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
-                <option value="">Finalidade</option>
-                <option value="Habitação Própria">Habitação Própria</option>
-                <option value="Investimento">Investimento</option>
-                <option value="Habitação Secundária">Habitação Secundária</option>
-                <option value="Arrendamento">Arrendamento</option>
+                <option value="">{t('comprar.finalidade')}</option>
+                <option value="Habitação Própria">{t('comprar.habitacaoPropria')}</option>
+                <option value="Investimento">{t('comprar.investimento')}</option>
+                <option value="Habitação Secundária">{t('comprar.habitacaoSecundaria')}</option>
+                <option value="Arrendamento">{t('comprar.arrendamento')}</option>
               </select>
 
               <select
@@ -287,11 +289,11 @@ const PropertyBuyForm: React.FC = () => {
                 onChange={handleInputChange}
                 className="sm:col-span-2 px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
-                <option value="">Urgência da Compra</option>
-                <option value="Muito Urgente (1-2 meses)">Muito Urgente (1-2 meses)</option>
-                <option value="Urgente (3-6 meses)">Urgente (3-6 meses)</option>
-                <option value="Normal (6-12 meses)">Normal (6-12 meses)</option>
-                <option value="Sem Pressa">Sem Pressa</option>
+                <option value="">{t('comprar.urgencia')}</option>
+                <option value="Muito Urgente (1-2 meses)">{t('comprar.muitoUrgente')}</option>
+                <option value="Urgente (3-6 meses)">{t('comprar.urgente')}</option>
+                <option value="Normal (6-12 meses)">{t('comprar.normal')}</option>
+                <option value="Sem Pressa">{t('comprar.semPressa')}</option>
               </select>
             </div>
           </div>
@@ -300,7 +302,7 @@ const PropertyBuyForm: React.FC = () => {
           <div>
             <div className="flex items-center mb-4">
               <Clock className="h-5 w-5 text-[#79b2e9] mr-2" />
-              <h3 className="text-lg font-semibold text-gray-900">Preferências de Contacto</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('comprar.preferenciasContacto')}</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <select
@@ -309,8 +311,8 @@ const PropertyBuyForm: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
-                <option value="">Meio de Contacto Preferido</option>
-                <option value="Telefone">Telefone</option>
+                <option value="">{t('comprar.meioPreferido')}</option>
+                <option value="Telefone">{t('formulario.telefone')}</option>
                 <option value="WhatsApp">WhatsApp</option>
                 <option value="Email">Email</option>
               </select>
@@ -321,7 +323,7 @@ const PropertyBuyForm: React.FC = () => {
                 onChange={handleInputChange}
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
-                <option value="">Horário Preferido</option>
+                <option value="">{t('comprar.horarioPreferido')}</option>
                 <option value="9h-12h30">9h-12h30</option>
                 <option value="12h30-16h">12h30-16h</option>
                 <option value="16h-19h30">16h-19h30</option>
@@ -333,7 +335,7 @@ const PropertyBuyForm: React.FC = () => {
           <div>
             <div className="flex items-center mb-4">
               <MessageSquare className="h-5 w-5 text-[#79b2e9] mr-2" />
-              <h3 className="text-lg font-semibold text-gray-900">Observações Adicionais</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('comprar.observacoesTitulo')}</h3>
             </div>
             <textarea
               name="observacoes"
@@ -349,7 +351,7 @@ const PropertyBuyForm: React.FC = () => {
           <div className="border-t pt-6">
             <label className="flex items-start text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">
               <input type="checkbox" className="mt-1 mr-2" required />
-              Sim, aceito os termos e condições indicados pela Globalead Portugal.
+              {t('formulario.aceitoTermos')}
             </label>
             <p className="text-xs text-gray-600 mb-3 sm:mb-4">
               Os dados submetidos através deste formulário serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
@@ -363,7 +365,7 @@ const PropertyBuyForm: React.FC = () => {
             
             {submitStatus === 'error' && (
               <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-red-100 border border-red-400 text-red-700 rounded text-xs sm:text-sm">
-                Erro ao enviar pedido. Tente novamente ou contacte-nos diretamente.
+                {t('comprar.erro')}
               </div>
             )}
             
@@ -373,7 +375,7 @@ const PropertyBuyForm: React.FC = () => {
               className="w-full bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base inline-flex items-center justify-center"
             >
               <Search className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              {isSubmitting ? 'Encontrando...' : 'Quero encontrar um imóvel'}
+              {isSubmitting ? t('comprar.aEnviar') : t('comprar.submeter')}
             </button>
           </div>
         </form>

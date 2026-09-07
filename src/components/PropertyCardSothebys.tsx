@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Bed, Bath, Maximize, Heart, ArrowRight, Share2, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { imageUrl } from '../lib/imageUrl';
 import { getPropertyImages } from '../lib/propertyImages';
+import { useTranslatedRow } from '../lib/translations';
 import StatusBadge from './StatusBadge';
 
 interface PropertyCardSothebysProps {
@@ -10,12 +12,14 @@ interface PropertyCardSothebysProps {
   variant?: 'imovel' | 'empreendimento';
 }
 
-const typeLabels: Record<string, string> = {
-  apartamento: 'Apartamento',
-  moradia: 'Moradia',
-  terreno: 'Terreno',
-  empreendimento: 'Empreendimento',
-  trespasse: 'Trespasse',
+// A etiqueta do tipo vem das traduções; o valor guardado na base de dados
+// mantém-se em português.
+const typeLabelKeys: Record<string, string> = {
+  apartamento: 'imovel.apartamento',
+  moradia: 'imovel.moradia',
+  terreno: 'imovel.terreno',
+  empreendimento: 'imovel.empreendimento',
+  trespasse: 'imovel.trespasse',
 };
 
 const formatPrice = (price: number) =>
@@ -26,7 +30,7 @@ const formatPrice = (price: number) =>
   }).format(price);
 
 // Para empreendimentos: intervalo de quartos a partir das tipologias (ex.: "0 a 2 Quartos")
-const getBedroomsRange = (property: any): string | null => {
+const getBedroomsRange = (property: any, t: (k: string, o?: any) => string): string | null => {
   const types: any[] = Array.isArray(property.property_types) ? property.property_types : [];
   const nums = types
     .map((t) => {
@@ -38,10 +42,10 @@ const getBedroomsRange = (property: any): string | null => {
   if (nums.length > 0) {
     const min = Math.min(...nums);
     const max = Math.max(...nums);
-    return min === max ? `${min} Quartos` : `${min} a ${max} Quartos`;
+    return min === max ? t('imovel.quartos', { n: min }) : t('imovel.quartosIntervalo', { min, max });
   }
   if (property.bedrooms != null && property.bedrooms !== '') {
-    return `${property.bedrooms} Quartos`;
+    return t('imovel.quartos', { n: property.bedrooms });
   }
   return null;
 };
@@ -56,6 +60,10 @@ const getFromPrice = (property: any): number => {
 
 const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, variant = 'imovel' }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  // Título do anúncio no idioma da página (cai no português se não houver tradução).
+  const tr = useTranslatedRow();
+  const propertyTitle: string = tr(property, 'title');
   const [imgIdx, setImgIdx] = useState(0);
   const [fav, setFav] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -75,7 +83,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
     const shareUrl = `${window.location.origin}${href}`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: property.title, text: property.title, url: shareUrl });
+        await navigator.share({ title: propertyTitle, text: propertyTitle, url: shareUrl });
       } else {
         await navigator.clipboard.writeText(shareUrl);
         setCopied(true);
@@ -97,7 +105,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
     <div className="relative overflow-hidden bg-gray-100">
       <img
         src={cover ? imageUrl(cover, { width: 700 }) : '/placeholder.jpg'}
-        alt={property.title}
+        alt={propertyTitle}
         loading="lazy"
         decoding="async"
         className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
@@ -117,7 +125,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
           e.stopPropagation();
           setFav((v) => !v);
         }}
-        aria-label="Adicionar aos favoritos"
+        aria-label={t('imovel.favorito')}
         className="absolute top-3 right-3 text-white/90 hover:text-white drop-shadow"
       >
         <Heart className={`h-5 w-5 ${fav ? 'fill-current text-white' : ''}`} />
@@ -130,7 +138,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
           <button
             type="button"
             onClick={(e) => step(e, -1)}
-            aria-label="Foto anterior"
+            aria-label={t('imovel.fotoAnterior')}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/45 hover:bg-black/70 text-white p-1.5 transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -138,7 +146,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
           <button
             type="button"
             onClick={(e) => step(e, 1)}
-            aria-label="Foto seguinte"
+            aria-label={t('imovel.fotoSeguinte')}
             className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/45 hover:bg-black/70 text-white p-1.5 transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
           >
             <ChevronRight className="h-5 w-5" />
@@ -157,7 +165,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
                 e.stopPropagation();
                 setImgIdx(i);
               }}
-              aria-label={`Ver imagem ${i + 1}`}
+              aria-label={t('imovel.verImagem', { n: i + 1 })}
               className={`h-1.5 w-1.5 rounded-full transition-all ${
                 i === imgIdx ? 'bg-white w-4' : 'bg-white/60'
               }`}
@@ -169,7 +177,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
   );
 
   if (variant === 'empreendimento') {
-    const bedrooms = getBedroomsRange(property);
+    const bedrooms = getBedroomsRange(property, t);
     const fromPrice = getFromPrice(property);
 
     return (
@@ -180,14 +188,14 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
         {ImageArea}
         <div className="flex items-end justify-between gap-4 p-4">
           <div className="min-w-0">
-            <h3 className="font-sans text-sm font-semibold text-[#0d2233] truncate">{property.title}</h3>
+            <h3 className="font-sans text-sm font-semibold text-[#0d2233] truncate">{propertyTitle}</h3>
             {property.location && (
               <p className="text-xs text-gray-500 truncate mt-0.5">{property.location}</p>
             )}
           </div>
           <div className="flex items-end gap-3 flex-shrink-0">
             <div className="text-right">
-              {bedrooms && <p className="text-[11px] text-gray-500 leading-tight">{bedrooms} desde</p>}
+              {bedrooms && <p className="text-[11px] text-gray-500 leading-tight">{bedrooms} {t('imovel.desde')}</p>}
               <p className="text-sm font-semibold text-[#0d2233] whitespace-nowrap">
                 {fromPrice > 0 ? formatPrice(fromPrice) : 'Sob Consulta'}
               </p>
@@ -203,7 +211,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
 
   // variant === 'imovel'
   const price = Number(selectedPrice(property));
-  const title = `${typeLabels[property.type] || property.type || 'Imóvel'}${
+  const title = `${typeLabelKeys[property.type] ? t(typeLabelKeys[property.type]) : property.type || t('imovel.generico')}${
     property.location ? `, ${property.location}` : ''
   }`;
 
@@ -237,7 +245,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
             <button
               type="button"
               onClick={handleShare}
-              aria-label="Partilhar"
+              aria-label={t('imovel.partilhar')}
               title={copied ? 'Link copiado' : 'Partilhar'}
               className="flex items-center justify-center h-8 w-8 border border-gray-300 text-gray-500 hover:border-[#0d2233] hover:text-[#0d2233] transition-colors"
             >

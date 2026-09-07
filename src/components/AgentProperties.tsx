@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import PropertyCardSothebys from './PropertyCardSothebys';
 
@@ -31,6 +32,7 @@ const AgentProperties: React.FC<AgentPropertiesProps> = ({
 }) => {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -78,7 +80,7 @@ const AgentProperties: React.FC<AgentPropertiesProps> = ({
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-lg text-gray-500">A carregar imóveis...</div>
+          <div className="text-center py-12 text-lg text-gray-500">{t('comum.aCarregarImoveis')}</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {properties.map((property) => (
@@ -94,7 +96,7 @@ const AgentProperties: React.FC<AgentPropertiesProps> = ({
         {mode === 'ativos' && !loading && (
           <div className="flex justify-center mt-12">
             <button onClick={() => navigate('/imoveis/lista')} className="btn-outline">
-              Ver todos os imóveis
+              {t('comum.verTodosImoveis')}
             </button>
           </div>
         )}

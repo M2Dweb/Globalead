@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import FilterDropdown from '../components/FilterDropdown';
 import PropertyCardSothebys from '../components/PropertyCardSothebys';
+import { useTranslatedRow } from '../lib/translations';
 
 const PropertyListPage: React.FC = () => {
+  const { t } = useTranslation();
+  // A pesquisa corre sobre o título no idioma da página: quem procura
+  // "sea view" em /en tem de encontrar o anúncio pela versão inglesa.
+  const tRow = useTranslatedRow();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000000]);
@@ -94,7 +100,7 @@ const PropertyListPage: React.FC = () => {
   }, [searchTerm, selectedType, priceRange, bedrooms, bathrooms, selectedDistrict, selectedState, selectedFeatures, energyClass, areaRange]);
 
   const filteredProperties = properties.filter(property => {
-    const title = property.title || '';
+    const title: string = tRow(property, 'title') || '';
     const location = property.location || '';
     const matchesSearch = !searchTerm || title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       location.toLowerCase().includes(searchTerm.toLowerCase());
@@ -159,7 +165,7 @@ const PropertyListPage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">A carregar imóveis...</div>
+        <div className="text-xl text-gray-600">{t('comum.aCarregarImoveis')}</div>
       </div>
     );
   }
@@ -176,7 +182,7 @@ const PropertyListPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative text-center z-10">
             <h1 className="text-4xl md:text-5xl font-bold mt-12 ">
-              Encontre o imóvel perfeito para si
+              {t('imovel.listaTitulo')}
             </h1>
 
           </div>
@@ -220,18 +226,18 @@ const PropertyListPage: React.FC = () => {
             <div className="lg:col-span-4">
               <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 md:mb-0">
-                  {filteredProperties.length} imóveis encontrados
+                  {t('imovel.encontrados', { n: filteredProperties.length })}
                 </h2>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9] w-full md:w-auto"
                 >
-                  <option value="newest">Mais recentes</option>
-                  <option value="price-asc">Preço: menor para maior</option>
-                  <option value="price-desc">Preço: maior para menor</option>
-                  <option value="area-asc">Área: menor para maior</option>
-                  <option value="area-desc">Área: maior para menor</option>
+                  <option value="newest">{t('imovel.ordMaisRecentes')}</option>
+                  <option value="price-asc">{t('imovel.ordPrecoAsc')}</option>
+                  <option value="price-desc">{t('imovel.ordPrecoDesc')}</option>
+                  <option value="area-asc">{t('imovel.ordAreaAsc')}</option>
+                  <option value="area-desc">{t('imovel.ordAreaDesc')}</option>
                 </select>
               </div>
 
@@ -249,7 +255,7 @@ const PropertyListPage: React.FC = () => {
               {currentProperties.length === 0 && filteredProperties.length === 0 && (
                 <div className="text-center py-12">
                   <div className="text-gray-500 mb-4">
-                    <p className="text-lg">Nenhum imóvel encontrado</p>
+                    <p className="text-lg">{t('imovel.nenhumEncontrado')}</p>
                     <p className="text-sm">Tente ajustar os filtros de pesquisa</p>
                   </div>
                 </div>

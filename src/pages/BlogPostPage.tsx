@@ -1,8 +1,12 @@
+import { useTranslation } from 'react-i18next';
+import { dateLocaleFor } from '../i18n/languages';
 import React, { useState, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { supabase, getBlogPostByRef } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
+import { useTranslatedRow, hasTranslation, TRANSLATABLE_FIELDS } from '../lib/translations';
+import { pathForLang, type Lang } from '../i18n/languages';
 import SEOHead from '../components/SEOHead';
 
 
@@ -17,6 +21,9 @@ const categories = [
 ];
 
 const BlogPostPage: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  // Artigo no idioma da página, com recurso ao português.
+  const tRow = useTranslatedRow();
   const { ref } = useParams<{ ref: string }>();
   const [post, setPost] = useState<any>(null);
   const [otherPosts, setOtherPosts] = useState<any[]>([]);
@@ -46,16 +53,28 @@ const BlogPostPage: React.FC = () => {
     fetchPost();
   }, [ref]);
 
-  if (loading) return <p className="text-center py-20">A carregar...</p>;
-  if (!post) return <p className="text-center py-20">Artigo não encontrado.</p>;
+  if (loading) return <p className="text-center py-20">{t('comum.aCarregar')}</p>;
+  if (!post) return <p className="text-center py-20">{t('blog.artigoNaoEncontrado')}</p>;
+
+  const postTitle: string = tRow(post, 'title') || '';
+  const postExcerpt: string = tRow(post, 'excerpt') || '';
+
+  // Artigo sem tradução: /en mostra o texto português, por isso o canonical
+  // aponta para a versão portuguesa em vez de criar um duplicado.
+  const caminhoPt = `/blog/${ref}`;
+  const canonicalUrl = `https://globalead.pt${
+    hasTranslation(post, i18n.language, TRANSLATABLE_FIELDS.blog_posts)
+      ? pathForLang(i18n.language as Lang, caminhoPt)
+      : caminhoPt
+  }`;
 
   return (
     <div className="min-h-screen bg-white">
       <SEOHead
-        title={`${post.title} | Globalead Portugal`}
-        description={post.excerpt ? post.excerpt.replace(/<[^>]*>/g, '').substring(0, 200) : undefined}
+        title={`${postTitle} | Globalead Portugal`}
+        description={postExcerpt ? postExcerpt.replace(/<[^>]*>/g, '').substring(0, 200) : undefined}
         image={post.image?.startsWith('http') ? post.image : `https://globalead.pt${post.image}`}
-        url={`https://globalead.pt/blog/${ref}`}
+        url={canonicalUrl}
         type="article"
       />
       {/* Banner */}
@@ -69,7 +88,7 @@ const BlogPostPage: React.FC = () => {
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         {/* Não usamos h1 aqui — o título é o H1 dentro do conteúdo do artigo (sem duplicação para SEO) */}
-        <div className="text-3xl mt-10 font-bold relative z-10 text-center px-4 text-white">{post.title}</div>
+        <div className="text-3xl mt-10 font-bold relative z-10 text-center px-4 text-white">{postTitle}</div>
       </section>
 
       {/* Conteúdo + Sidebar */}
@@ -77,17 +96,17 @@ const BlogPostPage: React.FC = () => {
         {/* Artigo */}
         <article className="lg:col-span-2 space-y-6">
           <div className="flex items-center text-sm text-gray-500 space-x-4">
-            <span><Calendar className="inline mr-1" /> {new Date(post.date).toLocaleDateString('pt-PT')}</span>
+            <span><Calendar className="inline mr-1" /> {new Date(post.date).toLocaleDateString(dateLocaleFor(i18n.language))}</span>
             <span>•</span>
-            <span>Por {post.author}</span>
+            <span>{t('home.por', { autor: post.author })}</span>
           </div>
 
-          <ContentRenderer content={post.content} className="prose-headings:text-gray-900 prose-p:text-gray-700" />
+          <ContentRenderer content={tRow(post, 'content')} className="prose-headings:text-gray-900 prose-p:text-gray-700" />
         </article>
 
         {/* Sidebar com outras notícias */}
         <aside className="space-y-6">
-          <h3 className="text-lg font-semibold mb-4">Outras notícias</h3>
+          <h3 className="text-lg font-semibold mb-4">{t('blog.outrasNoticias')}</h3>
           <div className="grid grid-cols-1 gap-6">
             {otherPosts.map(op => (
               <Link
@@ -98,7 +117,7 @@ const BlogPostPage: React.FC = () => {
                 <div className="relative h-32">
                   <img
                     src={op.image}
-                    alt={op.title}
+                    alt={tRow(op, 'title')}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-2 left-2 bg-[#79b2e9] text-white px-2 py-0.5 rounded text-xs font-medium">
@@ -110,13 +129,13 @@ const BlogPostPage: React.FC = () => {
                 </div>
                 <div className="p-4">
                   <h4 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-700 transition-colors">
-                    {op.title}
+                    {tRow(op, 'title')}
                   </h4>
                   <div className="text-gray-600 text-sm line-clamp-2 mt-1">
-                    <ContentRenderer content={op.excerpt} />
+                    <ContentRenderer content={tRow(op, 'excerpt')} />
                   </div>
                   <div className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-4 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors text-center inline-block font-medium mt-2">
-                    Saber mais
+                    {t('home.saberMais')}
                   </div>
                 </div>
               </Link>

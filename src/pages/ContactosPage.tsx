@@ -1,8 +1,10 @@
 import React from 'react';
 import { Phone, Mail, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { sendEmail, FormData } from '../utils/emailService';
 
 const ContactosPage: React.FC = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = React.useState<Partial<FormData>>({
     nome: '',
     apelido: '',
@@ -75,10 +77,10 @@ const ContactosPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Contactos
+              {t('contactos.heroTitulo')}
             </h1>
             <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-              Na Globalead Portugal colocamos sempre o cliente no centro. Estamos inteiramente disponíveis para lhe prestar o apoio que necessita.
+              {t('contactos.heroTexto')}
             </p>
           </div>
         </div>
@@ -89,15 +91,11 @@ const ContactosPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              Caso tenha dúvidas sobre os nossos serviços, precise de assistência técnica, pretenda
-              informações adicionais ou procure uma solução totalmente personalizada, a nossa equipa está
-              preparada para encontrar a resposta certa para si.
+              {t('contactos.p1')}
             </p>
             <br />
             <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              Entre em contacto connosco através do formulário abaixo, envie-nos um e-mail ou ligue para os
-              contactos indicados. A nossa prioridade é prestar-lhe um atendimento célere e eficaz,
-              garantindo a sua máxima satisfação.
+              {t('contactos.p2')}
             </p>
           </div>
 
@@ -108,7 +106,7 @@ const ContactosPage: React.FC = () => {
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Phone className="h-8 w-8 text-[#0d2233]" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Telefone</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('contactos.telefone')}</h3>
               <p className="text-gray-600">910 647 620</p>
             </div>
 
@@ -124,7 +122,7 @@ const ContactosPage: React.FC = () => {
               <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Clock className="h-8 w-8 text-[#0d2233]" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Horário</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('contactos.horario')}</h3>
               <p className="text-gray-600">10h00 - 21h00</p>
             </div>
           </div>
@@ -137,10 +135,10 @@ const ContactosPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Tem dúvidas?
+              {t('comum.temDuvidas')}
             </h2>
             <p className="text-xl text-blue-100">
-              Entre em contacto!
+              {t('comum.entreContacto')}
             </p>
           </div>
           <div className="flex flex-col items-center">
@@ -153,7 +151,7 @@ const ContactosPage: React.FC = () => {
                   name="nome"
                   value={formData.nome}
                   onChange={handleInputChange}
-                  placeholder="Nome:"
+                  placeholder={t('formulario.nome')}
                   required
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
@@ -162,7 +160,7 @@ const ContactosPage: React.FC = () => {
                   name="apelido"
                   value={formData.apelido}
                   onChange={handleInputChange}
-                  placeholder="Apelido:"
+                  placeholder={t('formulario.apelido')}
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
                 <input
@@ -170,7 +168,7 @@ const ContactosPage: React.FC = () => {
                   name="telemovel"
                   value={formData.telemovel}
                   onChange={handleInputChange}
-                  placeholder="Telemóvel:"
+                  placeholder={t('formulario.telemovel')}
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
                 <input
@@ -178,7 +176,7 @@ const ContactosPage: React.FC = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="Email:"
+                  placeholder={t('formulario.email')}
                   required
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
@@ -188,17 +186,17 @@ const ContactosPage: React.FC = () => {
                   onChange={handleInputChange}
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="">Assunto:</option>
-                  <option>Esclarecimento de Dúvidas</option>
-                  <option>Pretendo Comprar um Imóvel</option>
-                  <option>Pretendo Vender um Imóvel</option>
-                  <option>Pretendo Arrendar um Imóvel</option>
-                  <option>Pedido de Simulação para Créditos</option>
-                  <option>Pedido de Certificado Energético</option>
-                  <option>Pedido de Simulação Energia</option>
-                  <option>Pedido de Simulação TV NET VOZ</option>
-                  <option>Pedido de Simulação Seguros</option>
-                  <option>Pedido de Simulação Alarmes</option>
+                  <option value="">{t('formulario.assunto')}</option>
+                  <option value="Esclarecimento de Dúvidas">{t('formulario.duvidas')}</option>
+                  <option value="Pretendo Comprar um Imóvel">{t('formulario.comprar')}</option>
+                  <option value="Pretendo Vender um Imóvel">{t('formulario.vender')}</option>
+                  <option value="Pretendo Arrendar um Imóvel">{t('formulario.arrendar')}</option>
+                  <option value="Pedido de Simulação para Créditos">{t('formulario.simCredito')}</option>
+                  <option value="Pedido de Certificado Energético">{t('formulario.certificado')}</option>
+                  <option value="Pedido de Simulação Energia">{t('formulario.simEnergia')}</option>
+                  <option value="Pedido de Simulação TV NET VOZ">{t('formulario.simTvNetVoz')}</option>
+                  <option value="Pedido de Simulação Seguros">{t('formulario.simSeguros')}</option>
+                  <option value="Pedido de Simulação Alarmes">{t('formulario.simAlarmes')}</option>
                 </select>
 
                 <select
@@ -207,40 +205,40 @@ const ContactosPage: React.FC = () => {
                   onChange={handleInputChange}
                   className="px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 >
-                  <option value="">Meio de Contacto:</option>
-                  <option>Email</option>
-                  <option>Telefone</option>
-                  <option>WhatsApp</option>
-                  <option>Telegram</option>
-                  <option>Messenger</option>
+                  <option value="">{t('formulario.meioContacto')}</option>
+                  <option value="Email">Email</option>
+                  <option value="Telefone">{t('formulario.telefone')}</option>
+                  <option value="WhatsApp">WhatsApp</option>
+                  <option value="Telegram">Telegram</option>
+                  <option value="Messenger">Messenger</option>
                 </select>
                 <input
                   type="text"
                   name="horario"
                   value={formData.horario}
                   onChange={handleInputChange}
-                  placeholder="Horário:"
+                  placeholder={t('formulario.horarioPlaceholder')}
                   className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
 
                 <div className="md:col-span-2">
                   <label className="flex items-start text-sm text-gray-700 mb-4">
                     <input type="checkbox" className="mt-1 mr-2" required />
-                    Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                    {t('formulario.aceitoTermos')}
                   </label>
                   <p className="text-xs text-gray-600 mb-6">
-                    Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a legislação em vigor sobre dados pessoais e o Regulamento Geral da Proteção de Dados (UE) 2016/679.
+                    {t('formulario.rgpdProtecao')}
                   </p>
 
                   {submitStatus === 'success' && (
                     <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                      Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                      {t('formulario.sucesso')}
                     </div>
                   )}
 
                   {submitStatus === 'error' && (
                     <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                      Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
+                      {t('formulario.erro')}
                     </div>
                   )}
 
@@ -249,7 +247,7 @@ const ContactosPage: React.FC = () => {
                     disabled={isSubmitting}
                     className="w-full bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300"
                   >
-                    {isSubmitting ? 'Enviando...' : 'Entrar em contacto'}
+                    {isSubmitting ? t('formulario.aEnviar') : t('formulario.enviar')}
                   </button>
                 </div>
               </form>

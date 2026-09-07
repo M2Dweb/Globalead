@@ -1,33 +1,36 @@
 import React from 'react';
 import { FileText, Clock, CheckCircle, Home, Building, Store } from 'lucide-react';
 
+import { useTranslation } from 'react-i18next';
 import ContactForm2 from '../components/ContactForm2';
 import FAQ from '../components/FAQ';
 
 const CertificacaoPage: React.FC = () => {
+  const { t } = useTranslation();
+
   const steps = [
     {
       
-      title: "Agendamento",
-      description: "Após o seu contacto, ligamos em menos de 24h para agendar a visita do técnico.",
+      title: t('certificacao.agendamentoTitulo'),
+      description: t('certificacao.agendamentoTexto'),
       icon: <Clock className="h-8 w-8 text-white" />
     },
     {
       
-      title: "Documentação",
-      description: "Antes da visita deverão ser reunidos os documentos necessários.",
+      title: t('certificacao.documentacaoTitulo'),
+      description: t('certificacao.documentacaoTexto'),
       icon: <FileText className="h-8 w-8 text-white" />
     },
     {
       
-      title: "Visita Técnica",
-      description: "Um técnico especializado irá recolher toda a informação necessária.",
+      title: t('certificacao.visitaTitulo'),
+      description: t('certificacao.visitaTexto'),
       icon: <CheckCircle className="h-8 w-8 text-white" />
     },
     {
       
-      title: "Emissão do Certificado",
-      description: "Entregamos o teu certificado entre 48h a 72h após a visita.",
+      title: t('certificacao.emissaoTitulo'),
+      description: t('certificacao.emissaoTexto'),
       icon: <FileText className="h-8 w-8 text-white" />
     }
   ];
@@ -36,18 +39,18 @@ const CertificacaoPage: React.FC = () => {
   const certificateTypes = [
     {
       icon: <Home className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Apartamentos",
-      description: "Avaliamos o consumo de energia de apartamentos residenciais, prestamos informações sobre a eficiência energética e identificamos áreas para melhorias."
+      title: t('certificacao.apartamentosTitulo'),
+      description: t('certificacao.apartamentosTexto')
     },
     {
       icon: <Building className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Moradias",
-      description: "Realizamos avaliações detalhadas do consumo de energia em moradias unifamiliares, ajudamos os proprietários a compreender e melhorar a eficiência energética das suas casas."
+      title: t('certificacao.moradiasTitulo'),
+      description: t('certificacao.moradiasTexto')
     },
     {
       icon: <Store className="h-12 w-12 text-[#79b2e9]" />,
-      title: "Comércio e Serviços",
-      description: "Para estabelecimentos comerciais e de serviços, destacamos o desempenho energético do edifício e sugerimos medidas para reduzir os custos de energia e melhorar a sustentabilidade."
+      title: t('certificacao.comercioTitulo'),
+      description: t('certificacao.comercioTexto')
     }
   ];
 
@@ -69,7 +72,7 @@ const CertificacaoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Ajudamos na obtenção do certificado energético
+              {t('certificacao.heroTitulo')}
             </h1>
           </div>
         </div>
@@ -80,13 +83,13 @@ const CertificacaoPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none text-gray-700">
             <p className="leading-relaxed mb-6">
-             Na Globalead Portugal compreendemos que a venda ou arrendamento de um imóvel pode ser um processo complexo, repleto de detalhes que exigem atenção. Um dos passos indispensáveis para garantir a conformidade legal e valorizar o seu imóvel é a obtenção do certificado energético.
+             {t('certificacao.p1')}
             </p>
             <p className="leading-relaxed mb-6">
-              O certificado energético é um documento oficial que avalia a eficiência energética de um imóvel, indicando a classe energética (A+ a F) e recomendações para melhorias, com poupanças estimadas. Este certificado é emitido por peritos qualificados da ADENE no âmbito do Sistema de Certificação dos Edifícios (SCE) e regulado pelo Decreto-Lei n.º 101-D/2020.
+              {t('certificacao.p2')}
             </p>
             <p className="leading-relaxed ">
-              Oferecemos suporte completo, desde o início do processo até à emissão do certificado, assegurando rapidez, simplicidade e tranquilidade para si. Confie na nossa experiência e concentre-se no que realmente importa: concretizar o negócio com sucesso.
+              {t('certificacao.p3')}
             </p>
           </div>
         </div>
@@ -98,7 +101,7 @@ const CertificacaoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Como funciona a <span className="text-[#79b2e9]">emissão do certificado energético?</span>
+              {t('certificacao.processoTitulo1')}<span className="text-[#79b2e9]">{t('certificacao.processoTitulo2')}</span>
             </h2>
           </div>
 
@@ -132,7 +135,7 @@ const CertificacaoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Quais os tipos de certificados?
+              {t('certificacao.tiposTitulo')}
             </h2>
           </div>
 
@@ -159,10 +162,10 @@ const CertificacaoPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Tem dúvidas?
+              {t('comum.temDuvidas')}
             </h2>
             <p className="text-xl text-blue-100">
-              Entre em contacto!
+              {t('comum.entreContacto')}
             </p>
           </div>
 
@@ -177,7 +180,7 @@ const CertificacaoPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Tem alguma questão que não foi contemplada?
+              {t('comum.faqTitulo')}
             </h2>
           </div>
           

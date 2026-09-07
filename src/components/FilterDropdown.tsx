@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronDown, ListFilter as Filter, X } from 'lucide-react';
@@ -49,6 +50,8 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
   areaRange,
   setAreaRange
 }) => {
+  const { t } = useTranslation();
+
   const districts = [
     'Aveiro', 'Beja', 'Braga', 'Bragança', 'Castelo Branco', 'Coimbra',
     'Évora', 'Faro', 'Guarda', 'Leiria', 'Lisboa', 'Portalegre',
@@ -56,23 +59,23 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
   ];
 
   const propertyTypes = [
-    { value: 'apartamento', label: 'Apartamento' },
-    { value: 'moradia', label: 'Moradia' },
-    { value: 'empreendimento', label: 'Empreendimento' },
-    { value: 'terreno', label: 'Terreno' },
-    { value: 'escritorio', label: 'Escritório' },
-    { value: 'loja', label: 'Loja' },
-    { value: 'armazem', label: 'Armazém' },
-    { value: 'quinta', label: 'Quinta' },
-    { value: 'predio', label: 'Prédio' },
-    { value: 'trespasse', label: 'Trespasse' }
+    { value: 'apartamento', label: t('formulario.apartamento') },
+    { value: 'moradia', label: t('formulario.moradia') },
+    { value: 'empreendimento', label: t('imovel.empreendimento') },
+    { value: 'terreno', label: t('formulario.terreno') },
+    { value: 'escritorio', label: t('formulario.escritorio') },
+    { value: 'loja', label: t('formulario.loja') },
+    { value: 'armazem', label: t('formulario.armazem') },
+    { value: 'quinta', label: t('formulario.quinta') },
+    { value: 'predio', label: t('formulario.predio') },
+    { value: 'trespasse', label: t('imovel.trespasse') }
   ];
 
   const propertyStates = [
-    { value: 'novo', label: 'Novo' },
-    { value: 'usado', label: 'Usado' },
-    { value: 'em_construcao', label: 'Em Construção' },
-    { value: 'para_remodelar', label: 'Para Remodelar' }
+    { value: 'novo', label: t('filtros.novo') },
+    { value: 'usado', label: t('filtros.usado') },
+    { value: 'em_construcao', label: t('filtros.emConstrucao') },
+    { value: 'para_remodelar', label: t('filtros.paraRemodelar') }
   ];
 
   const energyClasses = ['A+', 'A', 'B', 'B-', 'C', 'D', 'E', 'F'];
@@ -106,11 +109,11 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
       {/* Search */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Pesquisar
+          {t('filtros.pesquisar')}
         </label>
         <input
           type="text"
-          placeholder="Localização, título..."
+          placeholder={t('filtros.pesquisarPlaceholder')}
           value={searchTerm}
           onChange={handleSearchChange}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
@@ -120,14 +123,14 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
       {/* Property Type */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Tipo de Imóvel
+          {t('filtros.tipoImovel')}
         </label>
         <select
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
         >
-          <option value="all">Todos os tipos</option>
+          <option value="all">{t('filtros.todosTipos')}</option>
           {propertyTypes.map(type => (
             <option key={type.value} value={type.value}>{type.label}</option>
           ))}
@@ -137,14 +140,14 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
       {/* District */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Distrito
+          {t('filtros.distrito')}
         </label>
         <select
           value={selectedDistrict}
           onChange={(e) => setSelectedDistrict(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
         >
-          <option value="all">Todos os distritos</option>
+          <option value="all">{t('filtros.todosDistritos')}</option>
           {districts.map(district => (
             <option key={district} value={district}>{district}</option>
           ))}
@@ -209,14 +212,14 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Quartos
+            {t('filtros.quartos')}
           </label>
           <select
             value={bedrooms}
             onChange={(e) => setBedrooms(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
           >
-            <option value="all">Qualquer</option>
+            <option value="all">{t('filtros.qualquer')}</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -225,14 +228,14 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Casas de Banho
+            {t('filtros.casasBanho')}
           </label>
           <select
             value={bathrooms}
             onChange={(e) => setBathrooms(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
           >
-            <option value="all">Qualquer</option>
+            <option value="all">{t('filtros.qualquer')}</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -244,14 +247,14 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
       {/* Property State */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Estado do Imóvel
+          {t('filtros.estadoImovel')}
         </label>
         <select
           value={selectedState}
           onChange={(e) => setSelectedState(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
         >
-          <option value="all">Qualquer estado</option>
+          <option value="all">{t('filtros.qualquerEstado')}</option>
           {propertyStates.map(state => (
             <option key={state.value} value={state.value}>{state.label}</option>
           ))}
@@ -261,14 +264,14 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
       {/* Energy Class */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Classe Energética
+          {t('filtros.classeEnergetica')}
         </label>
         <select
           value={energyClass}
           onChange={(e) => setEnergyClass(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
         >
-          <option value="all">Qualquer classe</option>
+          <option value="all">{t('filtros.qualquerClasse')}</option>
           {energyClasses.map(cls => (
             <option key={cls} value={cls}>{cls}</option>
           ))}
@@ -280,6 +283,7 @@ const FilterContent: React.FC<FilterDropdownProps> = ({
 };
 
 const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   // Bloqueia o scroll do fundo enquanto o painel de filtros (mobile) está aberto
@@ -316,7 +320,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
       >
         <div className="flex items-center">
           <Filter className="h-5 w-5 mr-2" />
-          <span>Filtros</span>
+          <span>{t('filtros.filtros')}</span>
           {getActiveFiltersCount() > 0 && (
             <span className="ml-2 bg-[#79b2e9] text-white text-xs px-2 py-1 rounded-full">
               {getActiveFiltersCount()}
@@ -330,14 +334,14 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
       <div className="hidden md:block">
         <div className="bg-white p-4 rounded-xl shadow-lg max-w-sm">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Filtros</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('filtros.filtros')}</h3>
             {getActiveFiltersCount() > 0 && (
               <button
                 onClick={props.onClearFilters}
                 className="text-[#79b2e9] hover:text-[#0d2233] text-sm flex items-center"
               >
                 <X className="h-4 w-4 mr-1" />
-                Limpar ({getActiveFiltersCount()})
+                {t('filtros.limpar')} ({getActiveFiltersCount()})
               </button>
             )}
           </div>
@@ -357,7 +361,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
           {/* Painel ancorado ao fundo */}
           <div className="relative mt-auto bg-white rounded-t-2xl shadow-2xl max-h-[85vh] flex flex-col">
             <div className="flex justify-between items-center p-4 border-b border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900">Filtros</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('filtros.filtros')}</h3>
               <div className="flex items-center space-x-2">
                 {getActiveFiltersCount() > 0 && (
                   <button
@@ -365,13 +369,13 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
                     className="text-[#79b2e9] hover:text-[#0d2233] text-sm flex items-center"
                   >
                     <X className="h-4 w-4 mr-1" />
-                    Limpar ({getActiveFiltersCount()})
+                    {t('filtros.limpar')} ({getActiveFiltersCount()})
                   </button>
                 )}
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-gray-500 hover:text-gray-700"
-                  aria-label="Fechar filtros"
+                  aria-label={t('filtros.fecharFiltros')}
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -383,7 +387,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
                 onClick={() => setIsOpen(false)}
                 className="w-full mt-6 bg-white text-[#0d2233] border border-[#0d2233] py-3 rounded-lg font-semibold hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
               >
-                Ver resultados
+                {t('filtros.verResultados')}
               </button>
             </div>
           </div>

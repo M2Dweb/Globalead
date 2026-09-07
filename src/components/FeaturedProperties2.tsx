@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import PropertyCardSothebys from './PropertyCardSothebys';
 
 const FeaturedProperties2: React.FC = () => {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,13 +74,13 @@ const FeaturedProperties2: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho estilo Sotheby's */}
         <div className="section-heading">
-          <h2 className="section-heading__title">Imóveis em destaque</h2>
+          <h2 className="section-heading__title">{t('comum.imoveisDestaque')}</h2>
           <span className="section-heading__divider" />
-          <span className="section-heading__subtitle">A sua vida começa com uma casa que o inspira</span>
+          <span className="section-heading__subtitle">{t('comum.imoveisDestaqueSub')}</span>
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-lg text-gray-500">A carregar imóveis...</div>
+          <div className="text-center py-12 text-lg text-gray-500">{t('comum.aCarregarImoveis')}</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {properties.map((property) => (
@@ -89,7 +91,7 @@ const FeaturedProperties2: React.FC = () => {
 
         <div className="flex justify-center mt-12">
           <button onClick={() => navigate('/imoveis/lista')} className="btn-outline">
-            Todos os Imóveis
+            {t('comum.todosImoveis')}
           </button>
         </div>
       </div>

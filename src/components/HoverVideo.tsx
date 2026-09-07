@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useRef, useState } from 'react';
 import { Play } from 'lucide-react';
 
@@ -14,6 +15,7 @@ interface HoverVideoProps {
  * - Ao clicar, "abre" o vídeo (com som e controlos) e deixa de reagir ao rato.
  */
 const HoverVideo: React.FC<HoverVideoProps> = ({ src, poster }) => {
+  const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activated, setActivated] = useState(false);
 
@@ -60,7 +62,7 @@ const HoverVideo: React.FC<HoverVideoProps> = ({ src, poster }) => {
         playsInline
         preload="none"
         controls={activated}
-        title="Vídeo de Apresentação"
+        title={t('imovel.videoApresentacao')}
       />
       {!activated && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/0 pointer-events-none">

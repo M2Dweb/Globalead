@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Calculator, Home, Wallet, Percent, CalendarClock, Info, Minus, Plus, MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { sendEmail, FormData } from '../utils/emailService';
 
 /* ------------------------------------------------------------------ *
@@ -88,6 +89,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
   initialSavings,
   initialLocation,
 }) => {
+  const { t } = useTranslation();
   const startProperty = Math.min(Math.max(initialPropertyValue ?? 200000, 25000), 2000000);
   const startSavings = Math.min(
     Math.max(
@@ -232,7 +234,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
               <Calculator className="h-5 w-5 text-[#79b2e9]" />
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-              Simulador de Crédito Habitação
+              {t('calc.titulo')}
             </h3>
           </div>
 
@@ -242,7 +244,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
               <div className="flex items-center justify-between mb-2">
                 <label className={labelCls}>
                   <Home className="h-4 w-4 text-[#79b2e9]" />
-                  <span className="ml-2">Preço do imóvel</span>
+                  <span className="ml-2">{t('calc.precoImovel')}</span>
                 </label>
                 <div className={boxCls}>
                   <input
@@ -268,7 +270,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
               <div className="flex items-center justify-between mb-2">
                 <label className={labelCls}>
                   <Wallet className="h-4 w-4 text-[#79b2e9]" />
-                  <span className="ml-2">Poupanças</span>
+                  <span className="ml-2">{t('calc.poupancas')}</span>
                 </label>
                 <div className={boxCls}>
                   <input
@@ -296,7 +298,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
             <div className="flex items-start gap-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2.5">
               <Info className="h-4 w-4 text-[#79b2e9] mt-0.5 flex-shrink-0" />
               <p className="text-xs text-gray-600">
-                Lembre-se que os bancos normalmente pedem uma contribuição mínima de 10% mais despesas.
+                {t('calc.aviso10')}
               </p>
             </div>
 
@@ -305,7 +307,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
               <div className="flex items-center justify-between mb-2">
                 <label className={labelCls}>
                   <CalendarClock className="h-4 w-4 text-[#79b2e9]" />
-                  <span className="ml-2">Prazo em anos</span>
+                  <span className="ml-2">{t('calc.prazoAnos')}</span>
                 </label>
                 <div className="flex items-center rounded-lg border border-gray-200 overflow-hidden">
                   <button type="button" onClick={() => setTerm(loanTerm - 1)} className="px-2.5 py-1.5 text-gray-500 hover:bg-gray-50">
@@ -329,12 +331,12 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
             <div>
               <label className={`${labelCls} mb-2`}>
                 <Percent className="h-4 w-4 text-[#79b2e9]" />
-                <span className="ml-2">Tipo de taxa de juros</span>
+                <span className="ml-2">{t('calc.tipoTaxa')}</span>
               </label>
               <div className="flex flex-col sm:flex-row gap-2">
                 <div className="flex gap-2 flex-1">
-                  <button type="button" onClick={() => selectRateType('fixa')} className={toggle(rateType === 'fixa')}>Fixa</button>
-                  <button type="button" onClick={() => selectRateType('variavel')} className={toggle(rateType === 'variavel')}>Variável</button>
+                  <button type="button" onClick={() => selectRateType('fixa')} className={toggle(rateType === 'fixa')}>{t('calc.fixa')}</button>
+                  <button type="button" onClick={() => selectRateType('variavel')} className={toggle(rateType === 'variavel')}>{t('calc.variavel')}</button>
                 </div>
                 <div className="flex items-center rounded-lg border border-gray-200 overflow-hidden">
                   <button type="button" onClick={() => setRate(interestRate - 0.05)} className="px-2.5 py-1.5 text-gray-500 hover:bg-gray-50">
@@ -354,7 +356,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
             <div>
               <label className={`${labelCls} mb-2`}>
                 <MapPin className="h-4 w-4 text-[#79b2e9]" />
-                <span className="ml-2">Localização do imóvel</span>
+                <span className="ml-2">{t('calc.localizacao')}</span>
               </label>
               <select
                 value={location}
@@ -367,49 +369,49 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
 
             {/* Tipo de casa */}
             <div>
-              <label className={`${labelCls} mb-2`}>Tipo de casa</label>
+              <label className={`${labelCls} mb-2`}>{t('calc.tipoCasa')}</label>
               <div className="flex gap-2">
-                <button type="button" onClick={() => setHouseType('principal')} className={toggle(houseType === 'principal')}>Habitação principal</button>
-                <button type="button" onClick={() => setHouseType('secundaria')} className={toggle(houseType === 'secundaria')}>Secundária</button>
+                <button type="button" onClick={() => setHouseType('principal')} className={toggle(houseType === 'principal')}>{t('calc.principal')}</button>
+                <button type="button" onClick={() => setHouseType('secundaria')} className={toggle(houseType === 'secundaria')}>{t('calc.secundaria')}</button>
               </div>
             </div>
 
             {/* Tens 35 anos ou menos */}
             <div>
               <label className={`${labelCls} mb-2`}>
-                Tem 35 anos ou menos?
-                <span title="Isenção de IMT e Imposto de Selo na compra de habitação própria permanente até 316.772 €.">
+                {t('calc.jovem')}
+                <span title={t('calc.jovemInfo')}>
                   <Info className="h-3.5 w-3.5 text-gray-400 ml-1.5" />
                 </span>
               </label>
               <div className="flex gap-2">
-                <button type="button" onClick={() => setYoung(true)} className={toggle(young)}>Sim</button>
-                <button type="button" onClick={() => setYoung(false)} className={toggle(!young)}>Não</button>
+                <button type="button" onClick={() => setYoung(true)} className={toggle(young)}>{t('calc.sim')}</button>
+                <button type="button" onClick={() => setYoung(false)} className={toggle(!young)}>{t('calc.nao')}</button>
               </div>
             </div>
           </div>
 
           <p className="text-xs text-gray-400 mt-7 leading-relaxed">
-            Valores meramente indicativos (impostos calculados para o Continente). O valor final varia
-            conforme o perfil de cada cliente e depende de uma simulação baseada em necessidades reais.
+            {t('calc.indicativo1')}
+            {t('calc.indicativo2')}
           </p>
         </div>
 
         {/* =========================== RESULTADO ========================== */}
         <div className="bg-gradient-to-br from-[#0d2233] to-[#1a3a5c] text-white p-6 sm:p-8 flex flex-col">
           <div className="text-center pb-5 border-b border-white/10">
-            <p className="text-blue-100 text-sm">A sua prestação mensal seria de</p>
+            <p className="text-blue-100 text-sm">{t('calc.prestacaoSeria')}</p>
             <div className="mt-1 text-4xl sm:text-5xl font-bold">{formatCurrency(monthlyPayment)}</div>
             <p className="text-blue-200/80 text-xs mt-1">
-              {rateType === 'fixa' ? 'Taxa fixa' : 'Taxa variável'} · {loanTerm} anos · {interestRate.toFixed(2).replace('.', ',')}%
+              {rateType === 'fixa' ? t('calc.taxaFixa') : t('calc.taxaVariavel')} · {loanTerm} anos · {interestRate.toFixed(2).replace('.', ',')}%
             </p>
           </div>
 
           <div className="py-4 space-y-2 text-sm border-b border-white/10">
             <div className="flex items-center justify-between">
               <span className="text-blue-100 flex items-center">
-                Valor crédito habitação
-                <span title="Montante a financiar pelo banco (custo total do imóvel menos as suas poupanças).">
+                {t('calc.valorCredito')}
+                <span title={t('calc.valorCreditoInfo')}>
                   <Info className="h-3.5 w-3.5 text-blue-200/60 ml-1" />
                 </span>
               </span>
@@ -417,8 +419,8 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
             </div>
             <div className="flex items-center justify-between">
               <span className="text-blue-100 flex items-center">
-                Percentagem de financiamento
-                <span title="Valor do crédito em relação ao preço do imóvel (LTV).">
+                {t('calc.percentagem')}
+                <span title={t('calc.percentagemInfo')}>
                   <Info className="h-3.5 w-3.5 text-blue-200/60 ml-1" />
                 </span>
               </span>
@@ -429,20 +431,20 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
           {/* Custo total do imóvel */}
           <div className="py-4 space-y-2 text-sm border-b border-white/10">
             <div className="flex items-center justify-between">
-              <span className="text-blue-100">Preço do imóvel</span>
+              <span className="text-blue-100">{t('calc.precoImovel')}</span>
               <span>{formatCurrency(propertyValue)}</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-blue-100 flex items-center">
-                Impostos e despesas da compra
-                <span title="IMT + Imposto de Selo + registo e notário (estimativa).">
+                {t('calc.impostos')}
+                <span title={t('calc.impostosInfo')}>
                   <Info className="h-3.5 w-3.5 text-blue-200/60 ml-1" />
                 </span>
               </span>
               <span>{formatCurrency(impostos)}</span>
             </div>
             <div className="flex items-center justify-between font-bold pt-1">
-              <span>Custo total do imóvel</span>
+              <span>{t('calc.custoTotal')}</span>
               <span>{formatCurrency(custoTotal)}</span>
             </div>
           </div>
@@ -455,28 +457,28 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
               <div className="bg-orange-400" style={{ width: `${wInterest}%` }} />
             </div>
             <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-blue-100">
-              <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-[#cdb892] mr-1.5" />Poupança</span>
-              <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-[#79b2e9] mr-1.5" />Crédito</span>
-              <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-orange-400 mr-1.5" />Juros</span>
+              <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-[#cdb892] mr-1.5" />{t('calc.poupanca')}</span>
+              <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-[#79b2e9] mr-1.5" />{t('calc.credito')}</span>
+              <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-orange-400 mr-1.5" />{t('calc.juros')}</span>
             </div>
           </div>
 
           {/* Total com crédito */}
           <div className="py-4 space-y-2 text-sm">
             <div className="flex items-center justify-between">
-              <span className="text-blue-100">Poupanças</span>
+              <span className="text-blue-100">{t('calc.poupancas')}</span>
               <span>{formatCurrency(savings)}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-blue-100">Valor crédito habitação</span>
+              <span className="text-blue-100">{t('calc.valorCredito')}</span>
               <span>{formatCurrency(credito)}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-blue-100">Juros crédito habitação</span>
+              <span className="text-blue-100">{t('calc.jurosCredito')}</span>
               <span>{formatCurrency(totalInterest)}</span>
             </div>
             <div className="flex items-center justify-between font-bold pt-1">
-              <span>Valor total com crédito habitação</span>
+              <span>{t('calc.valorTotal')}</span>
               <span>{formatCurrency(totalWithCredit)}</span>
             </div>
           </div>
@@ -485,7 +487,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
             onClick={() => setShowAmortization((v) => !v)}
             className="text-sm text-blue-200 hover:text-white underline underline-offset-2 self-start mb-6"
           >
-            {showAmortization ? 'Ocultar tabela de amortização' : 'Ver tabela de amortização'}
+            {showAmortization ? t('calc.ocultarTabela') : t('calc.verTabela')}
           </button>
 
           {!showForm && (
@@ -493,7 +495,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
               onClick={() => setShowForm(true)}
               className="mt-auto w-full bg-white text-[#0d2233] font-semibold py-3 rounded-lg hover:bg-blue-50 transition-colors duration-300"
             >
-              Encontrar crédito habitação
+              {t('calc.encontrarCredito')}
             </button>
           )}
         </div>
@@ -502,15 +504,15 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
       {/* ===================== TABELA DE AMORTIZAÇÃO ===================== */}
       {showAmortization && (
         <div className="border-t border-gray-100 p-6 sm:p-8">
-          <h4 className="font-bold text-gray-900 mb-4">Tabela de amortização (anual)</h4>
+          <h4 className="font-bold text-gray-900 mb-4">{t('calc.tabelaTitulo')}</h4>
           <div className="overflow-x-auto max-h-96 overflow-y-auto">
             <table className="w-full text-sm">
               <thead className="sticky top-0 bg-white">
                 <tr className="text-left text-gray-500 border-b border-gray-200">
-                  <th className="py-2 pr-4">Ano</th>
-                  <th className="py-2 pr-4 text-right">Capital amortizado</th>
-                  <th className="py-2 pr-4 text-right">Juros pagos</th>
-                  <th className="py-2 text-right">Capital em dívida</th>
+                  <th className="py-2 pr-4">{t('calc.ano')}</th>
+                  <th className="py-2 pr-4 text-right">{t('calc.capitalAmortizado')}</th>
+                  <th className="py-2 pr-4 text-right">{t('calc.jurosPagos')}</th>
+                  <th className="py-2 text-right">{t('calc.capitalDivida')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -531,50 +533,49 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
       {/* ====================== FORMULÁRIO DE PEDIDO ===================== */}
       {showForm && (
         <div className="border-t border-gray-100 p-6 sm:p-8 bg-gray-50">
-          <h4 className="text-lg font-bold text-gray-900 mb-1">Pedir simulação detalhada e gratuita</h4>
+          <h4 className="text-lg font-bold text-gray-900 mb-1">{t('calc.pedirSimulacao')}</h4>
           <p className="text-sm text-gray-600 mb-5">
-            Deixe os seus contactos e um especialista da Globalead apresenta-lhe a melhor proposta do mercado.
+            {t('calc.pedirTexto')}
           </p>
           <form onSubmit={handleSimulationRequest} className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
               type="text" name="nome" value={formData.nome} onChange={handleFormInputChange}
-              placeholder="Nome completo" required
+              placeholder={t('calc.nomeCompleto')} required
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
             />
             <input
               type="email" name="email" value={formData.email} onChange={handleFormInputChange}
-              placeholder="Email" required
+              placeholder={t('footer.email')} required
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
             />
             <input
               type="tel" name="telemovel" value={formData.telemovel} onChange={handleFormInputChange}
-              placeholder="Telemóvel"
+              placeholder={t('formulario.telemovel')}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
             />
             <div className="md:col-span-3">
               <label className="flex items-start text-sm text-gray-700 mb-4">
                 <input type="checkbox" className="mt-1 mr-2" required />
-                Sim, aceito os termos e condições indicados pela Globalead Portugal.
+                {t('formulario.aceitoTermos')}
               </label>
               <p className="text-xs text-gray-500 mb-4">
-                Os dados submetidos através deste formulário de contacto serão tratados em conformidade com a
-                legislação em vigor sobre dados pessoais e o Regulamento Geral da Protecção de Dados (UE) 2016/679.
+                {t('formulario.rgpd')}
               </p>
               {submitStatus === 'success' && (
                 <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                  Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                  {t('formulario.sucesso')}
                 </div>
               )}
               {submitStatus === 'error' && (
                 <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                  Erro ao enviar mensagem. Tente novamente ou contacte-nos diretamente.
+                  {t('formulario.erro')}
                 </div>
               )}
               <button
                 type="submit" disabled={isSubmitting}
                 className="w-full md:w-auto bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Enviando...' : 'Entrar em contacto'}
+                {isSubmitting ? t('formulario.aEnviar') : t('formulario.enviar')}
               </button>
             </div>
           </form>

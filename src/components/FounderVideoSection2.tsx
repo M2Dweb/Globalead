@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 
 const FounderVideoSection: React.FC = () => {
+  const { t } = useTranslation();
   const [videoId, setVideoId] = useState('uVtR70dhKCI'); // horizontal (desktop)
 
   const youtubeParams = {
@@ -44,10 +46,10 @@ const FounderVideoSection: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Porquê a Globalead Portugal?
+            {t('comum.porqueGlobalead')}
           </h2>
           <p className="text-xl text-gray-600">
-            Na Globalead, acreditamos que a chave para o sucesso está na proximidade com o cliente.
+            {t('comum.proximidade')}
           </p>
         </div>
 
@@ -58,7 +60,7 @@ const FounderVideoSection: React.FC = () => {
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             allowFullScreen
-            title="Vídeo Globalead - Proximidade com o cliente"
+            title={t('comum.videoProximidade')}
             loading="lazy"
           ></iframe>
         </div>

@@ -20,6 +20,10 @@
   function = "og-blog"
   path = "/blog/*"
 
+[[edge_functions]]
+  function = "og-blog"
+  path = "/en/blog/*"
+
 # OG tags por página para crawlers sociais (WhatsApp, Facebook, LinkedIn, etc.)
 [[edge_functions]]
   function = "og-pages"
@@ -56,6 +60,44 @@
 [[edge_functions]]
   function = "og-pages"
   path = "/contactos"
+
+# Mesmas rotas na versão inglesa, para as partilhas de /en também terem
+# título e descrição corretos no WhatsApp, Facebook e LinkedIn.
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en/sobre"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en/imoveis"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en/imoveis/*"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en/seguros"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en/credito"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en/certificacao"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en/carlos-goncalves"
+
+[[edge_functions]]
+  function = "og-pages"
+  path = "/en/contactos"
 
 # PREVINE O CACHE DO HTML (obrigando o browser a pedir sempre a versão mais recente)
 [[headers]]

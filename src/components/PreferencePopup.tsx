@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { sendEmail, FormData } from '../utils/emailService';
@@ -6,6 +7,7 @@ const STORAGE_KEY = 'preferencePopupShown';
 const DELAY_MS = 15000; // 15 segundos de utilização
 
 const PreferencePopup: React.FC = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [descricao, setDescricao] = useState('');
   const [email, setEmail] = useState('');
@@ -73,7 +75,7 @@ const PreferencePopup: React.FC = () => {
     <div
       className="fixed z-[90] bottom-4 right-4 left-4 sm:left-auto sm:w-[27rem] max-w-[calc(100vw-2rem)]"
       role="dialog"
-      aria-label="Não encontra o que procura?"
+      aria-label={t('popup.titulo')}
     >
       <div
         className="relative bg-white shadow-2xl border border-gray-200 p-6 sm:p-7"
@@ -82,42 +84,42 @@ const PreferencePopup: React.FC = () => {
         <button
           type="button"
           onClick={() => setOpen(false)}
-          aria-label="Fechar"
+          aria-label={t('popup.fechar')}
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 transition-colors"
         >
           <X className="h-5 w-5" />
         </button>
 
         <h2 className="font-serif text-xl sm:text-2xl text-[#0d2233] font-semibold mb-1 pr-6">
-          Não encontra o que procura?
+          {t('popup.titulo')}
         </h2>
-        <p className="text-sm text-gray-500 mb-5">Indique-nos a sua preferência de imóvel.</p>
+        <p className="text-sm text-gray-500 mb-5">{t('popup.subtitulo')}</p>
 
         {status === 'success' ? (
           <div className="py-6 text-center">
             <p className="text-[#0d2233] font-medium">
-              Obrigado! Recebemos a sua preferência e entraremos em contacto em breve.
+              {t('popup.sucesso')}
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            <label className="block text-sm text-gray-600 mb-2">Descreva o seu imóvel</label>
+            <label className="block text-sm text-gray-600 mb-2">{t('popup.descreva')}</label>
             <textarea
               value={descricao}
               onChange={(e) => setDescricao(e.target.value)}
-              placeholder="Indique o tipo, localização e preço para o seu imóvel"
+              placeholder={t('popup.descrevaPlaceholder')}
               rows={2}
               className="w-full border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:border-[#0d2233] mb-5 resize-none"
             />
 
-            <label className="block text-sm text-gray-600 mb-2">O seu email</label>
+            <label className="block text-sm text-gray-600 mb-2">{t('popup.seuEmail')}</label>
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Insira o seu email"
+                placeholder={t('popup.emailPlaceholder')}
                 className="flex-grow min-w-0 border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:border-[#0d2233]"
               />
               <button
@@ -125,21 +127,20 @@ const PreferencePopup: React.FC = () => {
                 disabled={isSubmitting}
                 className="flex-shrink-0 bg-[#0d2233] text-white px-6 py-3 font-medium tracking-wide hover:bg-[#79b2e9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
               >
-                {isSubmitting ? 'A enviar...' : 'Enviar'}
+                {isSubmitting ? t('popup.aEnviar') : t('popup.enviar')}
               </button>
             </div>
 
             {status === 'error' && (
               <p className="text-sm text-red-600 mt-3">
-                Ocorreu um erro ao enviar. Tente novamente.
+                {t('popup.erro')}
               </p>
             )}
 
             <p className="text-xs text-gray-400 mt-6 leading-relaxed">
-              Ao pedir informações está a autorizar a Globalead Portugal a guardar os seus dados para o
-              informar sobre oportunidades de negócio, de acordo com a{' '}
+              {t('popup.rgpd')}{' '}
               <a href="/politica-privacidade" className="underline hover:text-gray-600">
-                Política de Privacidade
+                {t('footer.politicaPrivacidade')}
               </a>
               .
             </p>
