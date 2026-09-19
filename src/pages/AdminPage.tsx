@@ -164,6 +164,11 @@ const AdminPage: React.FC = () => {
     translations: {} as Record<string, Record<string, string>>
   });
 
+  // Marca de água "GLOBALEAD PORTUGAL" nas fotos do imóvel. Fica fora do
+  // propertyForm porque esse objeto vai inteiro para a base de dados; isto é
+  // só uma opção de upload (a marca é gravada no JPEG no momento do envio).
+  const [watermarkEnabled, setWatermarkEnabled] = useState(true);
+
 
 
 
@@ -781,6 +786,7 @@ const AdminPage: React.FC = () => {
       translations: {}
     });
 
+    setWatermarkEnabled(true);
     setEditingProperty(null);
     setShowForm(false);
     setFormLang(DEFAULT_LANG);
@@ -1494,6 +1500,22 @@ const AdminPage: React.FC = () => {
 
 
                   <div>
+                    <label className="flex items-start gap-3 p-4 mb-4 border border-gray-300 rounded-lg bg-gray-50 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={watermarkEnabled}
+                        onChange={(e) => setWatermarkEnabled(e.target.checked)}
+                        className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span>
+                        <span className="block text-sm font-medium text-gray-900">Marca de água</span>
+                        <span className="block text-xs text-gray-500">
+                          Grava "<strong>GLOBALEAD</strong> PORTUGAL" no centro de cada foto (capa e imagens)
+                          no momento do carregamento. Desmarque antes de escolher os ficheiros se não quiser.
+                        </span>
+                      </span>
+                    </label>
+
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Foto de Capa (Imagem Principal)
                     </label>
@@ -1506,6 +1528,7 @@ const AdminPage: React.FC = () => {
                       }
                       onUploadComplete={(data) => setPropertyForm(prev => ({ ...prev, image_url: data.url, image_key: data.key }))}
                       adminPassword={password}
+                      watermark={watermarkEnabled}
                     />
                     <label className="block text-sm font-medium text-gray-700 mb-2">Imagens</label>
                     <MultiFileUploader
@@ -1514,6 +1537,7 @@ const AdminPage: React.FC = () => {
                       onUpload={(urls) => setPropertyForm({ ...propertyForm, images: urls })}
                       accept="image/*"
                       adminPassword={password}
+                      watermark={watermarkEnabled}
                     />
                   </div>
 

@@ -9,6 +9,8 @@ interface MultiFileUploaderProps {
   onUpload: (urls: string[]) => void;
   accept: 'image/*' | 'video/*';
   adminPassword?: string;
+  /** Grava a marca de água "GLOBALEAD PORTUGAL" em cada foto antes de subir (ignorado em vídeos). */
+  watermark?: boolean;
 }
 
 export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
@@ -17,6 +19,7 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
   onUpload,
   accept,
   adminPassword = '',
+  watermark = false,
 }) => {
   const [uploading, setUploading] = useState(false);
 
@@ -29,9 +32,10 @@ export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
     try {
       for (let i = 0; i < e.target.files.length; i++) {
         let file = e.target.files[i];
-        // Imagens são comprimidas/redimensionadas no browser antes de subir (vídeos passam intactos)
+        // Imagens são comprimidas/redimensionadas no browser antes de subir, com
+        // marca de água se pedida (vídeos passam intactos)
         if (accept.startsWith('image')) {
-          file = await compressImage(file);
+          file = await compressImage(file, { watermark });
         }
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}_${i}.${fileExt}`;

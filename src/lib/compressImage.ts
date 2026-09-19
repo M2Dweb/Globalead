@@ -7,18 +7,25 @@
  * tipicamente em 150–500KB sem perda visível de qualidade.
  *
  * Só afeta imagens — vídeos e outros ficheiros passam ao lado.
+ *
+ * Opcionalmente desenha a marca de água "GLOBALEAD PORTUGAL" no mesmo canvas
+ * (ver watermark.ts), para não haver uma segunda codificação JPEG.
  */
+
+import { drawWatermark } from './watermark';
 
 interface CompressOptions {
   /** Maior lado da imagem, em pixéis (default 1920). */
   maxDimension?: number;
   /** Qualidade JPEG 0–1 (default 0.82). */
   quality?: number;
+  /** Grava a marca de água "GLOBALEAD PORTUGAL" por cima da imagem (default false). */
+  watermark?: boolean;
 }
 
 export const compressImage = async (
   file: File,
-  { maxDimension = 1920, quality = 0.82 }: CompressOptions = {}
+  { maxDimension = 1920, quality = 0.82, watermark = false }: CompressOptions = {}
 ): Promise<File> => {
   // Só comprime imagens rasterizadas. SVG/GIF ou não-imagens passam intactos.
   if (!file.type.startsWith('image/') || file.type === 'image/svg+xml' || file.type === 'image/gif') {
@@ -44,12 +51,21 @@ export const compressImage = async (
     ctx.drawImage(bitmap, 0, 0, targetW, targetH);
     bitmap.close?.();
 
+    if (watermark) {
+      drawWatermark(ctx, targetW, targetH);
+    }
+
     const blob = await new Promise<Blob | null>((resolve) =>
       canvas.toBlob(resolve, 'image/jpeg', quality)
     );
 
-    // Se algo correr mal ou o resultado ficar maior, mantém o original.
-    if (!blob || blob.size >= file.size) {
+    if (!blob) {
+      return file;
+    }
+
+    // Se o resultado ficar maior, mantém o original — exceto com marca de
+    // água, em que o ficheiro gerado é obrigatoriamente o que tem de subir.
+    if (!watermark && blob.size >= file.size) {
       return file;
     }
 

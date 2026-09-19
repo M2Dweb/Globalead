@@ -9,9 +9,18 @@ interface ImageUploaderProps {
   onUploadComplete?: (data: { url: string; key: string }) => void;
   value?: string;
   adminPassword?: string;
+  /** Grava a marca de água "GLOBALEAD PORTUGAL" na foto antes de subir. */
+  watermark?: boolean;
 }
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploadComplete, value, adminPassword = '' }) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({
+  folder,
+  onUpload,
+  onUploadComplete,
+  value,
+  adminPassword = '',
+  watermark = false,
+}) => {
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(value || '');
 
@@ -28,8 +37,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ folder, onUpload, onUploa
     setUploading(true);
 
     try {
-      // Comprime/redimensiona a imagem no browser antes de subir
-      file = await compressImage(file);
+      // Comprime/redimensiona a imagem no browser antes de subir (e aplica a
+      // marca de água, se pedida)
+      file = await compressImage(file, { watermark });
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `${folder}/${fileName}`;
