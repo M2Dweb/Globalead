@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Bed, Bath, Maximize, Heart, ArrowRight, Share2, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { imageUrl } from '../lib/imageUrl';
+import { imageUrl, onImageCdnError } from '../lib/imageUrl';
 import { getPropertyImages } from '../lib/propertyImages';
 import { useTranslatedRow } from '../lib/translations';
 import StatusBadge from './StatusBadge';
@@ -108,6 +108,7 @@ const PropertyCardSothebys: React.FC<PropertyCardSothebysProps> = ({ property, v
         alt={propertyTitle}
         loading="lazy"
         decoding="async"
+        onError={onImageCdnError}
         className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
       />
 

@@ -9,7 +9,7 @@ import PropertyCardSothebys from '../components/PropertyCardSothebys';
 import PropertyBuyForm from '../components/PropertyBuyForm';
 import CreditCalculator from '../components/CreditCalculator';
 import HoverVideo from '../components/HoverVideo';
-import { imageUrl } from '../lib/imageUrl';
+import { imageUrl, onImageCdnError } from '../lib/imageUrl';
 import { getPropertyImages } from '../lib/propertyImages';
 import { useTranslatedRow, hasTranslation, TRANSLATABLE_FIELDS } from '../lib/translations';
 import { pathForLang, type Lang } from '../i18n/languages';
@@ -441,6 +441,7 @@ const PropertyDetailPage: React.FC = () => {
                   alt={`${propertyTitle} ${index + 1}`}
                   loading={index === 0 ? 'eager' : 'lazy'}
                   decoding="async"
+                  onError={onImageCdnError}
                   fetchPriority={index === currentImageIndex ? 'high' : 'auto'}
                   className={`
                     w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000
@@ -481,6 +482,7 @@ const PropertyDetailPage: React.FC = () => {
                   alt={`${propertyTitle} ${index + 1}`}
                   loading="lazy"
                   decoding="async"
+                  onError={onImageCdnError}
                   className="w-full h-full object-cover"
                 />
               </button>
