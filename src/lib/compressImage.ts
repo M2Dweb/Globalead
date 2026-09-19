@@ -52,7 +52,7 @@ export const compressImage = async (
     bitmap.close?.();
 
     if (watermark) {
-      drawWatermark(ctx, targetW, targetH);
+      await drawWatermark(ctx, targetW, targetH);
     }
 
     const blob = await new Promise<Blob | null>((resolve) =>
