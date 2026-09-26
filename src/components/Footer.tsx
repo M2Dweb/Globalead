@@ -295,7 +295,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            © 2026 <Link to="/Admin" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</Link> Portugal · {t('footer.direitos')}
+            © 2026 <a href="https://crm.globalead.pt/admin/" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</a> Portugal · {t('footer.direitos')}
           </div>
         </div>
       </div>

@@ -27,21 +27,3 @@ export const listR2Folder = async (folder: string): Promise<string[]> => {
     return [];
   }
 };
-
-/**
- * Devolve métricas de storage do bucket.
- * Chama a Netlify Function r2-metrics.
- */
-export const getBucketMetrics = async (): Promise<{ usedBytes: number; fileCount: number }> => {
-  try {
-    const res = await fetch('/.netlify/functions/r2-metrics');
-    if (!res.ok) {
-      console.error(`r2-metrics HTTP ${res.status}`);
-      return { usedBytes: 0, fileCount: 0 };
-    }
-    return await res.json();
-  } catch (err) {
-    console.error('getBucketMetrics error:', err);
-    return { usedBytes: 0, fileCount: 0 };
-  }
-};
