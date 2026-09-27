@@ -27,6 +27,9 @@ export interface FormData {
   num_casas_banho?: string;
   /** Imóvel do pedido (formulários das páginas de imóvel). */
   imovel?: { id?: string; ref?: string; titulo?: string; url?: string };
+  /** A pessoa marcou a caixa opcional da newsletter; newsletter_texto = o texto que viu. */
+  newsletter?: boolean;
+  newsletter_texto?: string;
 }
 
 // Função para obter o prefixo de categoria baseado na página
@@ -97,6 +100,10 @@ const saveSubmission = async (formData: FormData): Promise<void> => {
     if (formData.imovel?.id)          extraData.imovel_id          = formData.imovel.id;
     if (formData.imovel?.titulo)      extraData.imovel_titulo      = formData.imovel.titulo;
     if (formData.imovel?.url)         extraData.imovel_url         = formData.imovel.url;
+    if (formData.newsletter) {
+      extraData.newsletter = true;
+      extraData.newsletter_texto = formData.newsletter_texto || '';
+    }
     const origem = origemDaVisita();
     if (origem)                       extraData.origem             = origem;
 

@@ -8,6 +8,7 @@ import ContentRenderer from '../components/ContentRenderer';
 import PropertyCardSothebys from '../components/PropertyCardSothebys';
 import PropertyBuyForm from '../components/PropertyBuyForm';
 import CreditCalculator from '../components/CreditCalculator';
+import NewsletterCheckbox, { useTextoNewsletter } from '../components/NewsletterCheckbox';
 import HoverVideo from '../components/HoverVideo';
 import { imageUrl, onImageCdnError } from '../lib/imageUrl';
 import { getPropertyImages } from '../lib/propertyImages';
@@ -58,6 +59,8 @@ const PropertyDetailPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [querNewsletter, setQuerNewsletter] = useState(false);
+  const textoNewsletter = useTextoNewsletter();
 
   // Galeria com a Foto de Capa (definida no /admin) em primeiro lugar.
   const propertyImages = useMemo(() => getPropertyImages(property), [property]);
@@ -220,7 +223,9 @@ const PropertyDetailPage: React.FC = () => {
       const emailData = {
         ...formData,
         mensagem: tr('imovel.interesseMensagem', { titulo: property?.title, ref }),
-        imovel: imovelDoPedido
+        imovel: imovelDoPedido,
+        newsletter: querNewsletter,
+        newsletter_texto: querNewsletter ? textoNewsletter : undefined
       };
       const success = await sendEmail(emailData as FormData);
       if (success) {
@@ -236,6 +241,7 @@ const PropertyDetailPage: React.FC = () => {
           mensagem: '',
           page: 'property-detail'
         });
+        setQuerNewsletter(false);
       } else {
         setSubmitStatus('error');
       }
@@ -875,6 +881,8 @@ const PropertyDetailPage: React.FC = () => {
                         <input type="checkbox" className="mt-1 mr-2" required />
                         {tr('formulario.aceitoTermos')}
                       </label>
+
+                      <NewsletterCheckbox checked={querNewsletter} onChange={setQuerNewsletter} />
 
                       <p className="text-xs text-gray-600">
                         {tr('formulario.rgpdProtecao')}

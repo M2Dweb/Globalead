@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calculator, Home, Wallet, Percent, CalendarClock, Info, Minus, Plus, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sendEmail, FormData } from '../utils/emailService';
+import NewsletterCheckbox, { useTextoNewsletter } from './NewsletterCheckbox';
 
 /* ------------------------------------------------------------------ *
  * Tabelas de IMT — Continente (valores indicativos)
@@ -123,6 +124,8 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [querNewsletter, setQuerNewsletter] = useState(false);
+  const textoNewsletter = useTextoNewsletter();
 
   /* ----------------------------- helpers ---------------------------- */
   const formatCurrency = (a: number) =>
@@ -187,6 +190,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
       const emailData = {
         ...formData,
         ...(imovel ? { imovel } : {}),
+        ...(querNewsletter ? { newsletter: true, newsletter_texto: textoNewsletter } : {}),
         assunto: 'Pedido de Simulação Detalhada de Crédito',
         mensagem: `Simulação de crédito habitação:
         - Preço do imóvel: ${formatCurrency(propertyValue)}
@@ -207,6 +211,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
       if (ok) {
         setSubmitStatus('success');
         setFormData({ nome: '', email: '', telemovel: '', page: 'credit-calculator' });
+        setQuerNewsletter(false);
       } else {
         setSubmitStatus('error');
       }
@@ -562,6 +567,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
                 <input type="checkbox" className="mt-1 mr-2" required />
                 {t('formulario.aceitoTermos')}
               </label>
+              <NewsletterCheckbox checked={querNewsletter} onChange={setQuerNewsletter} className="flex items-start text-sm text-gray-700 mb-4" />
               <p className="text-xs text-gray-500 mb-4">
                 {t('formulario.rgpd')}
               </p>
