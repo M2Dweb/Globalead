@@ -205,6 +205,12 @@ const PropertyDetailPage: React.FC = () => {
     }));
   };
 
+  // Imóvel desta página, gravado em cada pedido feito aqui (visita ou simulação de crédito).
+  const refDoImovel = property?.ref || ref;
+  const imovelDoPedido: FormData['imovel'] = refDoImovel
+    ? { id: property?.id, ref: refDoImovel, titulo: property?.title, url: `https://www.globalead.pt/imoveis/${encodeURIComponent(refDoImovel)}` }
+    : undefined;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -213,7 +219,8 @@ const PropertyDetailPage: React.FC = () => {
     try {
       const emailData = {
         ...formData,
-        mensagem: tr('imovel.interesseMensagem', { titulo: property?.title, ref })
+        mensagem: tr('imovel.interesseMensagem', { titulo: property?.title, ref }),
+        imovel: imovelDoPedido
       };
       const success = await sendEmail(emailData as FormData);
       if (success) {
@@ -1032,6 +1039,7 @@ const PropertyDetailPage: React.FC = () => {
               key={priceValue}
               initialPropertyValue={priceValue}
               initialLocation={property.location || undefined}
+              imovel={imovelDoPedido}
             />
           </div>
         </section>
