@@ -11,6 +11,17 @@
 [images]
   remote_images = ["https://pub-5f573f26090442adbdeb6739a1e97fa9.r2.dev/.*"]
 
+# Landing pages do CRM (30/09/2026): www.globalead.pt/lp/<endereço> é servido pelo CRM (crm.globalead.pt/lp/…), incluindo o
+# formulário (/lp/<endereço>/enviar), o clique no WhatsApp, as imagens (/lp/img/…) e o mapa /lp/sitemap.xml. Tem de ficar ANTES
+# da regra geral abaixo. O cabeçalho X-Globalead-Site diz ao CRM que o pedido veio pelo site: só assim uma página publicada e
+# marcada «Aparece no Google» fica indexável (rascunhos e páginas de teste nunca). Não há chaves nem dados neste encaminhamento.
+[[redirects]]
+  from = "/lp/*"
+  to = "https://crm.globalead.pt/lp/:splat"
+  status = 200
+  force = true
+  headers = {X-Globalead-Site = "www"}
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
