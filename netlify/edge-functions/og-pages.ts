@@ -217,7 +217,8 @@ async function fetchProperty(ref: string, lang: Lang): Promise<{ title: string; 
     // PostgREST responde 400. Repetimos sem ela em vez de deixar o WhatsApp
     // sem pré-visualização do imóvel.
     const base = `${supabaseUrl}/rest/v1/properties?ref=eq.${encodeURIComponent(ref)}&is_published=eq.true&limit=1&select=title,description,images,location,cover_image`;
-    const headers = { apikey: supabaseAnonKey, Authorization: `Bearer ${supabaseAnonKey}` };
+    // Chaves novas do Supabase (sb_publishable_…) só no cabeçalho apikey; Authorization só com a antiga (JWT).
+    const headers: Record<string, string> = { apikey: supabaseAnonKey, ...(supabaseAnonKey.startsWith("eyJ") ? { Authorization: `Bearer ${supabaseAnonKey}` } : {}) };
 
     let response = await fetch(`${base},translations`, { headers });
     if (!response.ok) response = await fetch(base, { headers });
