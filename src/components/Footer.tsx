@@ -185,16 +185,6 @@ const Footer: React.FC = () => {
                 className="w-full px-3 py-2 rounded text-black"
               />
 
-              <div className="flex items-start text-left">
-                <input type="checkbox" required className="mt-1 mr-2" />
-                <span className="text-xs text-gray-400">
-                  {t('footer.consentimento')}{' '}
-                  <Link to="/politica-privacidade" className="underline hover:text-white">
-                    {t('footer.politicaPrivacidade')}
-                  </Link>.
-                </span>
-              </div>
-
               {submitStatus === 'success' && (
                 <p className="text-green-500 text-xs">
                   {t('footer.sucesso')}

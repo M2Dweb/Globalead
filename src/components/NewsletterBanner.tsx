@@ -1,5 +1,4 @@
 import React, { useId, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 interface NewsletterBannerProps {
@@ -89,22 +88,12 @@ const NewsletterBanner: React.FC<NewsletterBannerProps> = ({ source }) => {
             </button>
           </form>
 
-          {/* Subscrever é o próprio ato de consentimento (é só para a
-              newsletter, nada mais), por isso não leva checkbox — mas a pessoa
-              tem de saber onde está a política antes de carregar no botão. */}
-          <p className="mt-3 text-xs text-gray-500 leading-relaxed">
-            {t('newsletter.aviso')}{' '}
-            <Link to="/politica-privacidade" className="underline whitespace-nowrap hover:text-white">
-              {t('footer.politicaPrivacidade')}
-            </Link>.
-          </p>
-
           <div aria-live="polite">
             {submitStatus === 'success' && (
-              <p className="mt-2 text-sm text-green-400">{t('footer.sucesso')}</p>
+              <p className="mt-3 text-sm text-green-400">{t('footer.sucesso')}</p>
             )}
             {submitStatus === 'error' && (
-              <p className="mt-2 text-sm text-red-400">{t('footer.erro')}</p>
+              <p className="mt-3 text-sm text-red-400">{t('footer.erro')}</p>
             )}
           </div>
         </div>

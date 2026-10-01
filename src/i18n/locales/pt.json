@@ -21,7 +21,6 @@
     "nome": "Nome",
     "apelido": "Apelido",
     "email": "Email",
-    "consentimento": "Autorizo o tratamento dos meus dados nos termos da",
     "sucesso": "Subscrição realizada com sucesso.",
     "erro": "Erro ao subscrever. Tente novamente.",
     "aEnviar": "A enviar...",
@@ -36,8 +35,7 @@
   "newsletter": {
     "titulo": "Fique a par das novidades",
     "texto": "Subscreva a nossa newsletter e receba em primeira mão os novos imóveis, os lançamentos de empreendimentos e as tendências do mercado imobiliário.",
-    "placeholder": "o.seu@email.pt",
-    "aviso": "Ao subscrever, autoriza o tratamento dos seus dados nos termos da"
+    "placeholder": "o.seu@email.pt"
   },
   "home": {
     "heroLinha1": "Caminhamos consigo",

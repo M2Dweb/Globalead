@@ -21,7 +21,6 @@
     "nome": "First name",
     "apelido": "Last name",
     "email": "Email",
-    "consentimento": "I agree to my data being processed under the",
     "sucesso": "You're subscribed.",
     "erro": "Something went wrong. Please try again.",
     "aEnviar": "Sending...",
@@ -36,8 +35,7 @@
   "newsletter": {
     "titulo": "Stay up to date",
     "texto": "Subscribe to our newsletter and be the first to hear about new properties, new development launches and real estate market trends.",
-    "placeholder": "your@email.com",
-    "aviso": "By subscribing, you agree to your data being processed under the"
+    "placeholder": "your@email.com"
   },
   "home": {
     "heroLinha1": "We walk beside you,",
