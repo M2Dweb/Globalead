@@ -26,7 +26,6 @@ const SeguroPage = lazy(() => import('./pages/SeguroPage'));
 const ContactosPage = lazy(() => import('./pages/ContactosPage'));
 const PropertyListPage = lazy(() => import('./pages/PropertyListPage'));
 const PropertyDetailPage = lazy(() => import('./pages/PropertyDetailPage'));
-const AdminPage = lazy(() => import('./pages/AdminPage'));
 const CreditoPage = lazy(() => import('./pages/CreditoPage'));
 const CertificacaoPage = lazy(() => import('./pages/CertificacaoPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
@@ -44,7 +43,8 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 // #  true  → o site inteiro mostra a tela de manutenção.     #
 // #  false → o site volta ao normal.                         #
 // #                                                          #
-// #  O /admin fica sempre acessível, mesmo com isto a true.  #
+// #  A gestão do site vive no CRM (crm.globalead.pt/admin)   #
+// #  e continua acessível, mesmo com isto a true.            #
 // ############################################################
 const MAINTENANCE_MODE = false;
 
@@ -77,7 +77,6 @@ const ROTA_SEO: Record<string, string> = {
   '/termos-condicoes': 'termos',
   '/politica-privacidade': 'privacidade',
   '/resolucao-litigios': 'litigios',
-  '/admin': 'admin',
 };
 
 const getSeo = (path: string): PageSeo => {
@@ -108,7 +107,6 @@ const getSeo = (path: string): PageSeo => {
     title,
     description,
     keywords,
-    noindex: path === '/admin',
   };
 };
 
@@ -164,7 +162,6 @@ const AppLayout: React.FC = () => {
      if (path === '/termos-condicoes') return [{ label: 'Termos e Condições', current: true }];
      if (path === '/politica-privacidade') return [{ label: 'Política de Privacidade', current: true }];
      if (path === '/resolucao-litigios') return [{ label: 'Resolução de Litígios', current: true }];
-     if (path === '/admin') return [{ label: 'Administração', current: true }];
      // Detalhe de imóvel: sem breadcrumbs — a barra azul do imóvel já fica
      // encostada ao header e faz o papel de navegação (botão "voltar").
      if (path.startsWith('/imoveis/') && path !== '/imoveis/lista') {
@@ -181,7 +178,6 @@ const AppLayout: React.FC = () => {
 
    const breadcrumbs = getBreadcrumbs();
    const isCarlosGoncalvesPage = location.pathname === '/carlos-goncalves';
-   const isAdminPage = location.pathname === '/admin';
    const baseSeo = getSeo(location.pathname);
 
    // O react-router corre com basename, por isso `location.pathname` vem sempre
@@ -197,8 +193,8 @@ const AppLayout: React.FC = () => {
      })),
    };
 
-   // Manutenção: substitui o site todo, menos o /admin.
-   if (MAINTENANCE_MODE && !isAdminPage) {
+   // Manutenção: substitui o site todo.
+   if (MAINTENANCE_MODE) {
      return <MaintenancePage />;
    }
 
@@ -236,20 +232,18 @@ const AppLayout: React.FC = () => {
           <Route path="/resolucao-litigios" element={<ResolucaoLitigios />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:ref" element={<BlogPostPage />} />
-          <Route path="/admin" element={<AdminPage />} />
           <Route path="/contactos" element={<ContactosPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         </Suspense>
       </main>
       
-       {!(isCarlosGoncalvesPage || isAdminPage ) && <Footer />}
+       {!isCarlosGoncalvesPage && <Footer />}
        <StickyCtaButton />
        <CookieBanner />
-       {!isAdminPage && <PreferencePopup />}
-       {/* Bloqueia botão direito / arrastar / toque longo nas fotos.
-           No /admin fica desligado para não atrapalhar a gestão de conteúdos. */}
-       {!isAdminPage && <MediaProtection />}
+       <PreferencePopup />
+       {/* Bloqueia botão direito / arrastar / toque longo nas fotos. */}
+       <MediaProtection />
     </div>
   );
 };

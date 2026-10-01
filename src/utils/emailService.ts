@@ -1,5 +1,6 @@
 import emailjs from '@emailjs/browser';
 import { supabase } from '../lib/supabase';
+import { origemDaVisita } from '../lib/origemVisita';
 
 export interface FormData {
   nome: string;
@@ -24,6 +25,8 @@ export interface FormData {
   area_max?: string;
   num_quartos?: string;
   num_casas_banho?: string;
+  /** Imóvel do pedido (formulários das páginas de imóvel). */
+  imovel?: { id?: string; ref?: string; titulo?: string; url?: string };
 }
 
 // Função para obter o prefixo de categoria baseado na página
@@ -87,6 +90,15 @@ const saveSubmission = async (formData: FormData): Promise<void> => {
     if (formData.area_max)            extraData.area_max           = formData.area_max;
     if (formData.num_quartos)         extraData.num_quartos        = formData.num_quartos;
     if (formData.num_casas_banho)     extraData.num_casas_banho    = formData.num_casas_banho;
+
+    // Imóvel do pedido e origem da visita em campos próprios: o CRM deixa de depender do texto da
+    // mensagem (que muda com o idioma) para saber de que imóvel é o pedido e de onde veio a pessoa.
+    if (formData.imovel?.ref)         extraData.imovel_ref         = formData.imovel.ref;
+    if (formData.imovel?.id)          extraData.imovel_id          = formData.imovel.id;
+    if (formData.imovel?.titulo)      extraData.imovel_titulo      = formData.imovel.titulo;
+    if (formData.imovel?.url)         extraData.imovel_url         = formData.imovel.url;
+    const origem = origemDaVisita();
+    if (origem)                       extraData.origem             = origem;
 
     await supabase.from('contact_submissions').insert([{
       nome:          formData.nome,

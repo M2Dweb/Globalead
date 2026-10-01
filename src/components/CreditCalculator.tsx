@@ -82,12 +82,15 @@ interface CreditCalculatorProps {
   initialSavings?: number;
   /** Pré-seleciona a localização (distrito). */
   initialLocation?: string;
+  /** Imóvel da página onde está a calculadora: fica gravado no pedido de simulação. */
+  imovel?: FormData['imovel'];
 }
 
 const CreditCalculator: React.FC<CreditCalculatorProps> = ({
   initialPropertyValue,
   initialSavings,
   initialLocation,
+  imovel,
 }) => {
   const { t } = useTranslation();
   const startProperty = Math.min(Math.max(initialPropertyValue ?? 200000, 25000), 2000000);
@@ -183,6 +186,7 @@ const CreditCalculator: React.FC<CreditCalculatorProps> = ({
     try {
       const emailData = {
         ...formData,
+        ...(imovel ? { imovel } : {}),
         assunto: 'Pedido de Simulação Detalhada de Crédito',
         mensagem: `Simulação de crédito habitação:
         - Preço do imóvel: ${formatCurrency(propertyValue)}

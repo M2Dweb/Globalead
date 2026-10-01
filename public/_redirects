@@ -10,5 +10,10 @@
 /*.woff     /:splat   200
 /*.woff2    /:splat   200
 
+# A gestão do site passou para o CRM. Tem de vir antes da regra da SPA.
+/admin       https://crm.globalead.pt/admin/   301
+/admin/*     https://crm.globalead.pt/admin/   301
+/Admin       https://crm.globalead.pt/admin/   301
+
 # Qualquer outra rota (SPA) → index.html
 /*           /index.html   200

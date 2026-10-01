@@ -6,6 +6,10 @@ import App from './App.tsx';
 import './i18n';
 import './index.css';
 import Analytics from './components/Analytics';
+import { guardarOrigemDaVisita } from './lib/origemVisita';
+
+// De onde veio esta visita (Instagram, Google…), para juntar aos pedidos dos formulários.
+guardarOrigemDaVisita();
 
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {
