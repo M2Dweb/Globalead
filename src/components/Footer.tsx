@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white">
       {/* pb-24 no telemóvel: no fim da página, o botão flutuante de contacto
-          (StickyCtaButton) tapava a última linha — a identificação legal. */}
+          (StickyCtaButton) tapava as últimas linhas do rodapé. */}
       <div className="max-w-7xl mx-auto px-4 pt-12 pb-24 md:pb-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
@@ -250,9 +250,19 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Legal */}
-        <div className="pt-8 text-center text-sm text-gray-400 space-y-6">
-          <div className="flex flex-wrap justify-center gap-4">
+        {/* Legal — três linhas com o mesmo espaço (curto) entre elas. O espaço
+            vem só do line-height, sem margens: assim fica igual também quando
+            uma linha parte em duas no telemóvel. */}
+        <div className="pt-8 text-center text-sm leading-6 text-gray-400">
+          {/* Identificação legal da empresa. No telemóvel a linha parte em
+              duas: cada parte fica inteira e a quebra só cai depois de um "·". */}
+          <p>
+            <span className="whitespace-nowrap">Globalead Portugal</span>&nbsp;·{' '}
+            <span className="whitespace-nowrap">NIPC 519632583</span>&nbsp;·{' '}
+            <span className="whitespace-nowrap">{t('footer.licencaAmi')} 28058</span>
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-x-4">
             <Link to="/politica-privacidade" className="hover:text-white">
               {t('footer.politicaPrivacidade')}
             </Link>
@@ -272,19 +282,9 @@ const Footer: React.FC = () => {
             </a>
           </div>
 
-          <div className="space-y-2">
-            <p>
-              © 2026 <a href="https://crm.globalead.pt/admin/" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</a> Portugal · {t('footer.direitos')}
-            </p>
-
-            {/* Identificação legal da empresa. No telemóvel a linha parte em
-                duas: cada parte fica inteira e a quebra só cai depois de um "·". */}
-            <p>
-              <span className="whitespace-nowrap">Globalead Portugal Unipessoal Lda.</span>&nbsp;·{' '}
-              <span className="whitespace-nowrap">NIPC 519632583</span>&nbsp;·{' '}
-              <span className="whitespace-nowrap">{t('footer.licencaAmi')} 28058</span>
-            </p>
-          </div>
+          <p>
+            © 2026 <a href="https://crm.globalead.pt/admin/" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</a> Portugal · {t('footer.direitos')}
+          </p>
         </div>
       </div>
     </footer>
