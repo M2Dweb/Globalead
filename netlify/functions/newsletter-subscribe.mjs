@@ -39,6 +39,16 @@ const getSupabase = () =>
   );
 
 /**
+ * Só os campos de nome que vieram preenchidos.
+ *
+ * O banner da newsletter pede apenas o email. Sem este filtro, quem já estava
+ * na lista com nome (vindo do rodapé) e voltasse a subscrever pelo banner
+ * ficava sem ele — cá e no Brevo.
+ */
+const definedOnly = (fields) =>
+  Object.fromEntries(Object.entries(fields).filter(([, value]) => value));
+
+/**
  * Cria/atualiza o contacto no Brevo e junta-o à lista.
  * Devolve true se ficou sincronizado.
  */
@@ -57,7 +67,7 @@ const syncToBrevo = async ({ email, nome, apelido }) => {
       headers: { 'api-key': apiKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email,
-        attributes: { FIRSTNAME: nome || '', LASTNAME: apelido || '' },
+        attributes: definedOnly({ FIRSTNAME: nome, LASTNAME: apelido }),
         // Sem isto o Brevo devolve erro quando o contacto já existe.
         updateEnabled: true,
         ...(listId ? { listIds: [listId] } : {}),
@@ -113,8 +123,7 @@ export const handler = async (event) => {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .update({
-          nome,
-          apelido,
+          ...definedOnly({ nome, apelido }),
           status: 'ativo',
           unsubscribed_at: null,
           consent_at: now,
