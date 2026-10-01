@@ -33,6 +33,12 @@
     "direitos": "All rights reserved.",
     "licencaAmi": "AMI Licence"
   },
+  "newsletter": {
+    "titulo": "Stay up to date",
+    "texto": "Subscribe to our newsletter and be the first to hear about new properties, new development launches and real estate market trends.",
+    "placeholder": "your@email.com",
+    "aviso": "By subscribing, you agree to your data being processed under the"
+  },
   "home": {
     "heroLinha1": "We walk beside you,",
     "heroLinha2": "every step of the way",

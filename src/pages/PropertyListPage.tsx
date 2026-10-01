@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import FilterDropdown from '../components/FilterDropdown';
 import PropertyCardSothebys from '../components/PropertyCardSothebys';
+import NewsletterBanner from '../components/NewsletterBanner';
 import { useTranslatedRow } from '../lib/translations';
 
 const PropertyListPage: React.FC = () => {
@@ -331,6 +332,9 @@ const PropertyListPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Newsletter */}
+      <NewsletterBanner source="catalogo" />
     </div>
   );
 };

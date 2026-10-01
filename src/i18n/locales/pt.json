@@ -33,6 +33,12 @@
     "direitos": "Todos os direitos reservados.",
     "licencaAmi": "Licença AMI"
   },
+  "newsletter": {
+    "titulo": "Fique a par das novidades",
+    "texto": "Subscreva a nossa newsletter e receba em primeira mão os novos imóveis, os lançamentos de empreendimentos e as tendências do mercado imobiliário.",
+    "placeholder": "o.seu@email.pt",
+    "aviso": "Ao subscrever, autoriza o tratamento dos seus dados nos termos da"
+  },
   "home": {
     "heroLinha1": "Caminhamos consigo",
     "heroLinha2": "lado a lado",

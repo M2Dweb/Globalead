@@ -5,6 +5,7 @@ import { Calendar } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { supabase, getBlogPostByRef } from '../lib/supabase';
 import ContentRenderer from '../components/ContentRenderer';
+import NewsletterBanner from '../components/NewsletterBanner';
 import { useTranslatedRow, hasTranslation, TRANSLATABLE_FIELDS } from '../lib/translations';
 import { pathForLang, type Lang } from '../i18n/languages';
 import SEOHead from '../components/SEOHead';
@@ -152,6 +153,9 @@ const BlogPostPage: React.FC = () => {
           </div>
         </aside>
       </div>
+
+      {/* Newsletter */}
+      <NewsletterBanner source="artigo" />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { Calendar, Search, Filter } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Link } from 'react-router-dom';
 import ContentRenderer from '../components/ContentRenderer';
+import NewsletterBanner from '../components/NewsletterBanner';
 import { useTranslatedRow, translationSelect, withTranslations } from '../lib/translations';
 
 const BlogPage: React.FC = () => {
@@ -357,6 +358,9 @@ const BlogPage: React.FC = () => {
           )}
         </div>
       </section>
+
+      {/* Newsletter */}
+      <NewsletterBanner source="blog" />
     </div>
   );
 };

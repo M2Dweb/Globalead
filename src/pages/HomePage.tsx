@@ -7,6 +7,7 @@ import { useTranslatedRow, translationSelect, withTranslations } from '../lib/tr
 import ContentRenderer from '../components/ContentRenderer';
 import FeaturedProperties2 from '../components/FeaturedProperties2';
 import FeaturedEmpreendimentos from '../components/FeaturedEmpreendimentos';
+import NewsletterBanner from '../components/NewsletterBanner';
 import { listR2Folder } from '../lib/r2';
 import { dateLocaleFor, type Lang } from '../i18n/languages';
 
@@ -187,6 +188,9 @@ const HomePage: React.FC = () => {
 
       {/* Empreendimentos em destaque */}
       <FeaturedEmpreendimentos />
+
+      {/* Newsletter */}
+      <NewsletterBanner source="homepage" />
 
 
       {/* Services Section */}
