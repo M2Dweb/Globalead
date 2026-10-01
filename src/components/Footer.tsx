@@ -89,7 +89,9 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      {/* pb-24 no telemóvel: no fim da página, o botão flutuante de contacto
+          (StickyCtaButton) tapava a última linha — a identificação legal. */}
+      <div className="max-w-7xl mx-auto px-4 pt-12 pb-24 md:pb-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
           {/* Redes sociais - SECÇÃO ESQUERDA (VISÍVEL APENAS NO DESKTOP) */}
@@ -101,13 +103,6 @@ const Footer: React.FC = () => {
                 onClick={() => window.open('https://www.instagram.com/globalead.pt/', '_blank')}
                 alt="Globalead Logo"
               />
-            </div>
-
-            {/* Identificação legal — licença de mediação imobiliária e seguro de RC */}
-            <div className="text-center text-xs text-gray-300 leading-relaxed space-y-1">
-              <p className="font-medium tracking-wide">Globalead Portugal</p>
-              <p>Licença AMI: 27908 – IMPIC, I.P.</p>
-              <p>Seguro de RC: Apólice n.º 209032170</p>
             </div>
 
             {/* ÍCONES CENTRADOS VERTICALMENTE EM RELAÇÃO À LOGO */}
@@ -238,13 +233,6 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            {/* Identificação legal — licença de mediação imobiliária e seguro de RC */}
-            <div className="text-center text-xs text-gray-300 leading-relaxed space-y-1">
-              <p className="font-medium tracking-wide">Globalead Portugal</p>
-              <p>Licença AMI: 27908 – IMPIC, I.P.</p>
-              <p>Seguro de RC: Apólice n.º 209032170</p>
-            </div>
-
             {/* ÍCONES ABAIXO DA LINHA NO MOBILE */}
             <div className="flex space-x-6">
               <a href="https://www.facebook.com/globalead.pt" target="_blank" rel="noreferrer">
@@ -294,8 +282,18 @@ const Footer: React.FC = () => {
             </a>
           </div>
 
-          <div>
-            © 2026 <Link to="/Admin" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</Link> Portugal · {t('footer.direitos')}
+          <div className="space-y-2">
+            <p>
+              © 2026 <Link to="/Admin" className="no-underline text-gray-400 cursor-default" style={{ textDecoration: 'none' }}>Globalead</Link> Portugal · {t('footer.direitos')}
+            </p>
+
+            {/* Identificação legal da empresa. No telemóvel a linha parte em
+                duas: cada parte fica inteira e a quebra só cai depois de um "·". */}
+            <p>
+              <span className="whitespace-nowrap">Globalead Portugal Unipessoal Lda.</span>&nbsp;·{' '}
+              <span className="whitespace-nowrap">NIPC 519632583</span>&nbsp;·{' '}
+              <span className="whitespace-nowrap">{t('footer.licencaAmi')} 28058</span>
+            </p>
           </div>
         </div>
       </div>
