@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 interface NewsletterBannerProps {
   /**
    * Onde está o banner ('homepage', 'blog', ...). Fica gravado com o
-   * subscritor e aparece na coluna "Origem" do separador Newsletter do /admin.
+   * subscritor (newsletter_subscribers.source), para se saber de que página
+   * vêm as subscrições.
    */
   source: string;
 }
