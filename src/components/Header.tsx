@@ -29,7 +29,8 @@ const Header: React.FC = () => {
     { key: 'nav.contactos', path: '/contactos' },
   ];
 
-  const isHeroPage = ['/', '/sobre', '/imoveis', '/blog', '/contactos'].includes(location.pathname);
+  // A página Sobre fica de fora: o banner é baixo e começa por baixo do cabeçalho
+  const isHeroPage = ['/', '/imoveis', '/blog', '/contactos'].includes(location.pathname);
   const shouldBeTransparent = isHeroPage && !isScrolled;
 
   // Função para scroll direto para o formulário

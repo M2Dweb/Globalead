@@ -1,71 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Star, Cpu, Search, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { sendEmail , FormData } from '../utils/emailService';
-import FounderVideoSection from '../components/FounderVideoSection';
+import TeamSection from '../components/TeamSection';
+import GoogleReviews from '../components/GoogleReviews';
 import goncalo from "../../public/testemonials/goncalo-vinhas.jpg"
 import fml from "../../public/testemonials/familia-gomes.jpg"
 import franc from "../../public/testemonials/francisco-gonçalves.jpg"
 
 const SobrePage: React.FC = () => {
   const { t } = useTranslation();
-  const [, setCurrentReview] = useState(0);
-  const [formData, setFormData] = useState<Partial<FormData>>({
-    nome: '',
-    apelido: '',
-    telemovel: '',
-    email: '',
-    assunto: '',
-    meio_contacto: '',
-    horario: '',
-    page: 'home'
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>([false, false, false, false, false, false]); // controlar "ler mais" por testimonial
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const success = await sendEmail(formData as FormData);
-      if (success) {
-        setSubmitStatus('success');
-        setFormData({
-          nome: '',
-          apelido: '',
-          telemovel: '',
-          email: '',
-          assunto: '',
-          meio_contacto: '',
-          horario: '',
-          page: 'home'
-        });
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentReview(prev => (prev + 1) % testimonials.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   const testimonials = [
     {
@@ -114,6 +60,8 @@ const SobrePage: React.FC = () => {
     });
   };
 
+  const aboutParagraphs = [1, 2, 3, 4, 5, 6].map((n) => t(`sobre.p${n}`));
+
   const reasons = [
     { number: "1", title: t('sobre.razao1Titulo'), description: t('sobre.razao1Texto'), icon: <Cpu className="w-7 h-7"/> },
     { number: "2", title: t('sobre.razao2Titulo'), description: t('sobre.razao2Texto'), icon: <Search className="w-7 h-7" /> },
@@ -132,25 +80,27 @@ const SobrePage: React.FC = () => {
 
 return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white py-20 flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
-          poster="/fotos/SobrePage-foto.png"
-        >
-          <source src="/videos/SobrePage-video(1).mp4" type="video/mp4" />
-        </video>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+      {/* Banner baixo — começa por baixo do cabeçalho, que é fixo */}
+      <section className="pt-[72px]">
+        <div className="relative h-[260px] md:h-[300px] bg-gradient-to-br from-blue-900 to-[#79b2e9] text-white flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-black opacity-40"></div>
+          {/* As caras estão na metade de cima do vídeo: o enquadramento sobe para as manter à vista */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+            style={{ objectPosition: 'center 15%' }}
+            poster="/fotos/SobrePage-foto.png"
+          >
+            <source src="/videos/SobrePage-video(1).mp4" type="video/mp4" />
+          </video>
+          <div className="relative z-10 text-center px-4">
+            <h1 className="text-3xl md:text-5xl font-bold mb-3">
               {t('sobre.heroTitulo')}
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+            <p className="text-base md:text-xl text-blue-100 max-w-3xl mx-auto">
               {t('sobre.heroTexto')}
             </p>
           </div>
@@ -161,18 +111,11 @@ return (
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
-            <p className="text-gray-700 leading-relaxed mb-6">
-              {t('sobre.p1')}
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              {t('sobre.p2')}
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              {t('sobre.p3')}
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-8">
-              {t('sobre.p4')}
-            </p>
+            {aboutParagraphs.map((paragraph, index) => (
+              <p key={index} className="text-gray-700 leading-relaxed mb-6">
+                {paragraph}
+              </p>
+            ))}
           </div>
         </div>
       </section>
@@ -208,7 +151,52 @@ return (
         </div>
       </section>
 
-      <FounderVideoSection />
+      {/* Quem é o Carlos Gonçalves? */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center">
+              <img
+                className="rounded-2xl shadow-lg object-cover"
+                style={{ aspectRatio: "9/16", width: "100%", maxWidth: "350px" }}
+                src="/carlos/sentado-sorrir2.jpg"
+                alt="Carlos Gonçalves"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <div className="mb-6 text-center md:text-left">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                  {t('sobre.carlos.titulo')}
+                </h2>
+                <h3 className="text-xl text-[#79b2e9] font-medium">
+                  {t('sobre.carlos.lema')}
+                </h3>
+              </div>
+
+              {(['p1', 'p2', 'p3'] as const).map((key) => (
+                <p key={key} className="text-gray-700 leading-relaxed text-lg mb-6">
+                  {t(`sobre.carlos.${key}`)}
+                </p>
+              ))}
+
+              <div className="flex justify-center md:justify-start mt-2">
+                <Link
+                  to="/carlos-goncalves"
+                  className="bg-white text-[#0d2233] border border-[#0d2233] py-3 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors font-medium"
+                >
+                  {t('sobre.carlos.botao')}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* A nossa equipa */}
+      <TeamSection />
 
       {/* Objetivos da Globalead */}
       <section className="py-20 bg-white">
@@ -303,133 +291,10 @@ return (
         </div>
       </section>
 
-
-
-
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                {t('sobre.ctaTitulo')}
-              </h2>
-              <h2 className="text-3xl md:text-2xl mb-2">
-                {t('sobre.ctaSubtitulo')}
-              </h2>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-2xl">
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input
-                  type="text"
-                  name="nome"
-                  value={formData.nome}
-                  onChange={handleInputChange}
-                  placeholder={t('formulario.nome')}
-                  required
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  type="text"
-                  name="apelido"
-                  value={formData.apelido}
-                  onChange={handleInputChange}
-                  placeholder={t('formulario.apelido')}
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  type="tel"
-                  name="telemovel"
-                  value={formData.telemovel}
-                  onChange={handleInputChange}
-                  placeholder={t('formulario.telemovel')}
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder={t('formulario.email')}
-                  required
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <select 
-                  name="meio_contacto"
-                  value={formData.meio_contacto}
-                  onChange={handleInputChange}
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">{t('formulario.meioContacto')}</option>
-                  <option value="Email">Email</option>
-                  <option value="Telefone">{t('formulario.telefone')}</option>
-                  <option value="WhatsApp">WhatsApp</option>
-                </select>
-                
-                <select 
-                  name="assunto"
-                  value={formData.assunto}
-                  onChange={handleInputChange}
-                  className="px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">{t('formulario.assunto')}</option>
-                  <option value="Esclarecimento de Dúvidas">{t('formulario.duvidas')}</option>
-                  <option value="Pretendo Comprar um Imóvel">{t('formulario.comprar')}</option>
-                  <option value="Pretendo Vender um Imóvel">{t('formulario.vender')}</option>
-                  <option value="Pretendo Arrendar um Imóvel">{t('formulario.arrendar')}</option>
-                  <option value="Pedido de Simulação para Créditos">{t('formulario.simCredito')}</option>
-                  <option value="Pedido de Certificado Energético">{t('formulario.certificado')}</option>
-                  <option value="Pedido de Simulação Energia">{t('formulario.simEnergia')}</option>
-                  <option value="Pedido de Simulação TV NET VOZ">{t('formulario.simTvNetVoz')}</option>
-                  <option value="Pedido de Simulação Seguros">{t('formulario.simSeguros')}</option>
-                  <option value="Pedido de Simulação Alarmes">{t('formulario.simAlarmes')}</option>
-                </select>
-                
-                <select name="horário" value={formData.horario} onChange={handleInputChange} className="md:col-span-2 px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#79b2e9]">
-                  <option value="">{t('formulario.horario')}</option>
-                  <option>9h-12h30</option>
-                  <option>12h30-16h</option>
-                  <option>16h-19h30</option>
-                </select>
-
-                <div className="md:col-span-2">
-                  <label className="flex items-start text-sm text-gray-700 mb-4">
-                    <input type="checkbox" className="mt-1 mr-2" required />
-                    {t('formulario.aceitoTermos')}
-                  </label>
-                  <p className="text-xs text-gray-600 mb-4">
-                    {t('formulario.rgpd')}
-                  </p>
-                  
-                  {submitStatus === 'success' && (
-                    <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-                      {t('formulario.sucesso')}
-                    </div>
-                  )}
-                  
-                  {submitStatus === 'error' && (
-                    <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                      {t('formulario.erro')}
-                    </div>
-                  )}
-                  
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-white text-[#0d2233] border border-[#0d2233] font-semibold py-3 px-8 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? t('formulario.aEnviar') : t('formulario.enviar')}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      
+      {/* Avaliações Google */}
+      <div className="pb-16">
+        <GoogleReviews />
+      </div>
     </div>
   );
 };

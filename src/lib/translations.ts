@@ -26,6 +26,8 @@ import { DEFAULT_LANG, LANGUAGES } from '../i18n/languages';
 export const TRANSLATABLE_FIELDS = {
   properties: ['title', 'description'],
   blog_posts: ['title', 'excerpt', 'content'],
+  // Equipa da página Sobre: o cargo em inglês, preenchido no painel do CRM
+  team_members: ['role'],
 } as const;
 
 /** Etiqueta de cada campo no /admin. */

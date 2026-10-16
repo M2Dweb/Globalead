@@ -52,9 +52,10 @@ const NewsletterBanner: React.FC<NewsletterBannerProps> = ({ source }) => {
   };
 
   return (
-    <section className="bg-[#070d19] text-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-14 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-        <div className="lg:max-w-lg">
+    // Mesmo fundo do rodapé (bg-gray-900). No telemóvel o conteúdo fica centrado.
+    <section className="bg-gray-900 text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-14 flex flex-col items-center lg:flex-row lg:items-center lg:justify-between gap-8">
+        <div className="text-center lg:text-left lg:max-w-lg">
           <h2 className="text-2xl md:text-3xl font-bold uppercase">
             {t('newsletter.titulo')}
           </h2>
@@ -88,7 +89,7 @@ const NewsletterBanner: React.FC<NewsletterBannerProps> = ({ source }) => {
             </button>
           </form>
 
-          <div aria-live="polite">
+          <div aria-live="polite" className="text-center lg:text-left">
             {submitStatus === 'success' && (
               <p className="mt-3 text-sm text-green-400">{t('footer.sucesso')}</p>
             )}
