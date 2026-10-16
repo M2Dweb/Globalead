@@ -2,6 +2,7 @@ import React from 'react';
 import { Phone, Mail, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sendEmail, FormData } from '../utils/emailService';
+import OfficeLocation from '../components/OfficeLocation';
 
 const ContactosPage: React.FC = () => {
   const { t } = useTranslation();
@@ -129,6 +130,9 @@ const ContactosPage: React.FC = () => {
         </div>
 
       </section>
+
+      {/* Escritório na Trofa */}
+      <OfficeLocation />
 
       {/* Contact Form */}
       <section className="py-20 bg-gray-900 text-white">

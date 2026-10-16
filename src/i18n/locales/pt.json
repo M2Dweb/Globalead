@@ -176,23 +176,19 @@
   },
   "vender": {
     "titulo": "Simplificamos a venda do seu imóvel",
-    "passo1": "Apresentação do imóvel através de tours virtuais de alta qualidade, permitindo que potenciais compradores explorem a propriedade à distância.",
-    "passo2": "Promoção do imóvel em todas as plataformas sociais e digitais, com campanhas segmentadas e uma estratégia detalhada para maximizar a visibilidade.",
-    "passo3": "Reportagem de imagens e vídeos promocionais para destacar as melhores características do imóvel.",
-    "passo4": "Publicação do imóvel nos principais portais imobiliários em Portugal e no estrangeiro, ampliando o alcance da sua oferta.",
-    "passo5": "Divulgação em zonas estratégicas para alcançar um público local relevante.",
-    "passo6": "Colocação de sinalética no local do imóvel para atrair potenciais compradores na área.",
-    "passo7": "Divulgação direcionada a uma carteira exclusiva de clientes qualificados e a grupos privados da Globalead Portugal.",
-    "passo8": "Especialistas em decoração de interiores transformam o imóvel, destacando o seu potencial e alinhando-o às tendências e expectativas dos compradores."
+    "passo1": "Criamos visitas virtuais de alta qualidade, permitindo que potenciais compradores conheçam o imóvel em detalhe, a qualquer hora e a partir de qualquer lugar.",
+    "passo2": "Desenvolvemos uma estratégia de comunicação personalizada, com divulgação nas principais plataformas digitais e campanhas segmentadas para chegar ao público certo.",
+    "passo3": "Produzimos fotografias e vídeos promocionais de elevada qualidade, concebidos para valorizar cada espaço e destacar as características únicas do imóvel.",
+    "passo4": "Publicamos o imóvel nos principais portais imobiliários em Portugal e em plataformas internacionais selecionadas, ampliando o seu alcance junto de compradores nacionais e estrangeiros.",
+    "passo5": "Reforçamos a divulgação em zonas criteriosamente selecionadas, alcançando potenciais compradores com interesse real na localização do imóvel.",
+    "passo6": "Instalamos sinalética visível e profissional no local, aumentando a exposição da venda e captando potenciais compradores na área envolvente.",
+    "passo7": "Apresentamos o imóvel à nossa carteira de clientes, rede de contactos e grupos privados, promovendo-o diretamente junto de potenciais compradores previamente identificados.",
+    "passo8": "Com o apoio de profissionais especializados, preparamos e valorizamos a apresentação do imóvel, destacando o seu potencial e aproximando-o das expectativas atuais dos compradores."
   },
   "imoveis": {
     "heroLinha1": "O lugar a que",
     "heroLinha2": "chamamos casa",
     "heroTexto": "Vamos criar uma relação próxima e escutar com atenção todos os seus desejos e expectativas, garantindo que está acompanhado e que estamos consigo sempre",
-    "carlosNome": "Carlos Gonçalves",
-    "carlosLema": "A confiança que constrói o amanhã",
-    "carlosTexto": "Sou um profissional apaixonado pelo setor imobiliário, dedicado a acompanhar clientes, famílias e investidores na procura do imóvel certo. Acredito que cada propriedade tem uma história e um potencial único para transformar vidas. Com anos de experiência, trabalho com transparência, confiança e acompanhamento próximo em todas as etapas, pilares que estão na base do sucesso. Se procura orientação e apoio e alguém que trate o seu projeto como verdadeiramente único, conte comigo. Estou pronto para caminhar ao seu lado e garantir que o futuro da sua casa começa com segurança, visão e tranquilidade.",
-    "conhecerCarlos": "Conhecer Carlos Gonçalves",
     "servicosTitulo": "A burocracia é nossa, o futuro é seu",
     "obrasTitulo": "Obras e Remodelações",
     "obrasTexto": "Realizamos obras e remodelações de forma profissional, desde pequenas melhorias a renovações completas.",
@@ -206,7 +202,23 @@
     "arquiteturaTexto": "Projetamos espaços intemporais e autênticos, que refletem identidade e resistem ao tempo.",
     "juridicoTitulo": "Apoio Jurídico",
     "juridicoTexto": "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo.",
-    "formTitulo": "Venda o seu imóvel de forma rápida, segura e sem complicações!"
+    "formTitulo": "Venda o seu imóvel de forma rápida, segura e sem complicações!",
+    "videos": {
+      "etiqueta": "Portefólio em vídeo",
+      "titulo": "Veja o nosso trabalho em ação.",
+      "intro": "Conheça a qualidade das apresentações que criamos para valorizar cada imóvel e captar a atenção dos compradores certos.",
+      "navegacao": "Navegação do carrossel",
+      "anteriores": "Ver vídeos anteriores",
+      "seguintes": "Ver vídeos seguintes",
+      "verVideo": "Ver vídeo de {{titulo}}, {{local}}",
+      "videoCompleto": "Vídeo completo",
+      "fechar": "Fechar vídeo",
+      "moradiaT3": "Moradia T3",
+      "restauranteGengibre": "Restaurante Gengibre",
+      "moradiaPiscina": "Moradia com piscina",
+      "moradiaT4": "Moradia T4",
+      "apartamentoT2": "Apartamento T2"
+    }
   },
   "seguros": {
     "heroTitulo": "Seguramos o seu futuro!",
@@ -317,7 +329,16 @@
     "p2": "Entre em contacto connosco através do formulário abaixo, envie-nos um e-mail ou ligue para os contactos indicados. A nossa prioridade é prestar-lhe um atendimento célere e eficaz, garantindo a sua máxima satisfação.",
     "telefone": "Telefone",
     "email": "Email",
-    "horario": "Horário"
+    "horario": "Horário",
+    "escritorio": {
+      "etiqueta": "Visite-nos",
+      "titulo": "A Globalead agora também tem uma morada.",
+      "intro": "Estamos mais perto de si. Estamos à sua espera no nosso novo escritório na Trofa!",
+      "tipo": "Escritório",
+      "mapaTitulo": "Localização do escritório da Globalead Portugal na Trofa",
+      "direcoes": "Obter direções",
+      "direcoesAria": "Obter direções para o escritório da Globalead Portugal no Google Maps"
+    }
   },
   "faq": {
     "geral": [
@@ -763,7 +784,6 @@
     "partilhe": "Partilha este conteúdo",
     "videoApresentacao": "Vídeo de Apresentação",
     "contacteDiretamente": "Ou contacte-nos diretamente:",
-    "simuleCredito": "Simule o seu crédito habitação",
     "interesseMensagem": "Interesse no imóvel: {{titulo}} (Ref: {{ref}})",
     "listaTitulo": "Encontre o imóvel perfeito para si",
     "nenhumEncontrado": "Nenhum imóvel encontrado",
@@ -780,7 +800,6 @@
     "similares": "Imóveis similares",
     "indisponivelTexto": "Este imóvel está temporariamente indisponível. Contacte-nos para mais informações.",
     "verOutros": "Ver outros imóveis",
-    "tipologiaSimular": "Tipologia a simular",
     "semelhantes": "Imóveis Semelhantes",
     "partilhaTexto": "Encontrei este imóvel que talvez te possa interessar:"
   },

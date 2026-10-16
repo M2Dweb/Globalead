@@ -7,7 +7,6 @@ import { sendEmail, FormData } from '../utils/emailService';
 import ContentRenderer from '../components/ContentRenderer';
 import PropertyCardSothebys from '../components/PropertyCardSothebys';
 import PropertyBuyForm from '../components/PropertyBuyForm';
-import CreditCalculator from '../components/CreditCalculator';
 import HoverVideo from '../components/HoverVideo';
 import { imageUrl, onImageCdnError } from '../lib/imageUrl';
 import { getPropertyImages } from '../lib/propertyImages';
@@ -205,7 +204,7 @@ const PropertyDetailPage: React.FC = () => {
     }));
   };
 
-  // Imóvel desta página, gravado em cada pedido feito aqui (visita ou simulação de crédito).
+  // Imóvel desta página, gravado em cada pedido de visita feito aqui.
   const refDoImovel = property?.ref || ref;
   const imovelDoPedido: FormData['imovel'] = refDoImovel
     ? { id: property?.id, ref: refDoImovel, titulo: property?.title, url: `https://www.globalead.pt/imoveis/${encodeURIComponent(refDoImovel)}` }
@@ -265,10 +264,6 @@ const PropertyDetailPage: React.FC = () => {
 
   // Dados estruturados (Schema.org) do imóvel para resultados ricos no Google
   const priceValue = Number(selectedPropertyType?.price || property.price) || 0;
-  // Tipologias com preço (empreendimentos) — permite escolher qual simular no crédito
-  const priceableTypes: any[] = property.type === 'empreendimento' && Array.isArray(property.property_types)
-    ? property.property_types.filter((t: any) => Number(t.price) > 0)
-    : [];
   const plainDescription = propertyDescription.replace(/<[^>]*>?/gm, '').substring(0, 300);
   const metaDescription = propertyDescription.replace(/<[^>]*>?/gm, '').substring(0, 160);
   // Sem tradução guardada, /en mostra o anúncio em português. O canonical
@@ -1004,46 +999,6 @@ const PropertyDetailPage: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Simulador de Crédito — pré-preenchido com o valor deste imóvel */}
-      {priceValue > 0 && (
-        <section className="py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900">
-                {tr('imovel.simuleCredito')}
-              </h3>
-            </div>
-
-            {/* Seletor de tipologia — só para empreendimentos com várias tipologias com preço */}
-            {priceableTypes.length > 1 && (
-              <div className="max-w-md mx-auto mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-center">
-                  {tr('imovel.tipologiaSimular')}
-                </label>
-                <select
-                  value={Math.max(0, priceableTypes.findIndex((t) => t === selectedPropertyType))}
-                  onChange={(e) => setSelectedPropertyType(priceableTypes[Number(e.target.value)])}
-                  className="w-full px-4 py-3 border border-[#79b2e9] rounded-lg text-gray-900 bg-white text-center focus:outline-none focus:ring-2 focus:ring-[#79b2e9]"
-                >
-                  {priceableTypes.map((t, i) => (
-                    <option key={i} value={i} className="text-center">
-                      {t.name}{t.fracao ? ` · Fr. ${t.fracao}` : ''}{t.piso ? ` · Piso ${t.piso}` : ''} — {formatPrice(Number(t.price))}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-
-            <CreditCalculator
-              key={priceValue}
-              initialPropertyValue={priceValue}
-              initialLocation={property.location || undefined}
-              imovel={imovelDoPedido}
-            />
-          </div>
-        </section>
-      )}
 
       {/* Similar Properties */}
       <section className="py-12 bg-gray-50">

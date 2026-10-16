@@ -1,0 +1,412 @@
+/* Carrossel "Portefólio em vídeo" (página de imóveis), a partir do bloco
+   globalead-carrossel-videos.html. O modal é renderizado num portal no
+   <body>, por isso tem o seu próprio âmbito (.glvc-modal) e as suas cores. */
+
+#globalead-video-carousel,
+.glvc-modal {
+  --glvc-blue: #1689cd;
+  --glvc-text: #102a45;
+  --glvc-muted: #687a8b;
+  --glvc-line: #dce6ed;
+}
+
+#globalead-video-carousel {
+  --glvc-container: 1200px;
+  --glvc-background: #ffffff;
+  --glvc-visible: 3;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--glvc-background);
+  color: var(--glvc-text);
+  font-family: inherit;
+}
+
+#globalead-video-carousel,
+#globalead-video-carousel *,
+.glvc-modal,
+.glvc-modal * {
+  box-sizing: border-box;
+}
+
+#globalead-video-carousel .glvc-section {
+  width: 100%;
+  padding: 64px 24px 48px;
+  background:
+    radial-gradient(circle at 92% 4%, rgba(22, 137, 205, 0.09), transparent 29%),
+    var(--glvc-background);
+}
+
+#globalead-video-carousel .glvc-inner {
+  width: min(var(--glvc-container), 100%);
+  margin: 0 auto;
+}
+
+#globalead-video-carousel .glvc-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 28px;
+}
+
+#globalead-video-carousel .glvc-eyebrow {
+  margin: 0 0 9px;
+  color: var(--glvc-blue);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+#globalead-video-carousel .glvc-title {
+  max-width: 720px;
+  margin: 0;
+  color: var(--glvc-text);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+#globalead-video-carousel .glvc-intro {
+  max-width: 690px;
+  margin: 12px 0 0;
+  color: var(--glvc-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+#globalead-video-carousel .glvc-navigation {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+}
+
+#globalead-video-carousel .glvc-arrow {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--glvc-line);
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--glvc-text);
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+#globalead-video-carousel .glvc-arrow:last-child {
+  border-color: var(--glvc-blue);
+  background: var(--glvc-blue);
+  color: #ffffff;
+}
+
+#globalead-video-carousel .glvc-arrow:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+#globalead-video-carousel .glvc-arrow:disabled {
+  cursor: default;
+  opacity: 0.32;
+}
+
+#globalead-video-carousel .glvc-arrow:focus-visible,
+#globalead-video-carousel .glvc-video:focus-visible,
+.glvc-modal .glvc-modal-close:focus-visible {
+  outline: 3px solid rgba(22, 137, 205, 0.35);
+  outline-offset: 3px;
+}
+
+#globalead-video-carousel .glvc-viewport {
+  width: 100%;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+#globalead-video-carousel .glvc-track {
+  display: flex;
+  gap: 18px;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.42s ease;
+  will-change: transform;
+}
+
+#globalead-video-carousel .glvc-video {
+  position: relative;
+  flex: 0 0 calc((100% - 36px) / 3);
+  min-width: 0;
+  aspect-ratio: 9 / 13.3;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #0a2947, #1689cd);
+  box-shadow: 0 16px 34px rgba(10, 41, 71, 0.14);
+  color: #ffffff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+#globalead-video-carousel .glvc-video-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.42s ease;
+}
+
+#globalead-video-carousel .glvc-video:hover .glvc-video-image {
+  transform: scale(1.025);
+}
+
+#globalead-video-carousel .glvc-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 17, 29, 0.03) 25%,
+    rgba(4, 17, 29, 0.08) 48%,
+    rgba(4, 17, 29, 0.92) 100%
+  );
+}
+
+#globalead-video-carousel .glvc-video-copy {
+  position: absolute;
+  right: 74px;
+  bottom: 20px;
+  left: 20px;
+  display: block;
+}
+
+#globalead-video-carousel .glvc-video-title {
+  display: block;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.22;
+}
+
+#globalead-video-carousel .glvc-video-subtitle {
+  display: block;
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+#globalead-video-carousel .glvc-play {
+  position: absolute;
+  right: 18px;
+  bottom: 22px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  border-radius: 50%;
+  background: rgba(7, 27, 48, 0.34);
+  color: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(4px);
+}
+
+#globalead-video-carousel .glvc-play::before {
+  content: "";
+  width: 0;
+  height: 0;
+  margin-left: 3px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid currentColor;
+}
+
+#globalead-video-carousel .glvc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+#globalead-video-carousel .glvc-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+#globalead-video-carousel .glvc-dot {
+  width: 24px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--glvc-line);
+}
+
+#globalead-video-carousel .glvc-dot.is-active {
+  background: var(--glvc-blue);
+}
+
+#globalead-video-carousel .glvc-counter {
+  color: var(--glvc-muted);
+  font-size: 13px;
+}
+
+#globalead-video-carousel .glvc-counter strong {
+  color: var(--glvc-text);
+  font-weight: 600;
+}
+
+/* Modal */
+
+.glvc-modal {
+  position: fixed;
+  z-index: 99999;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(4, 17, 29, 0.9);
+  backdrop-filter: blur(8px);
+}
+
+.glvc-modal .glvc-modal-dialog {
+  position: relative;
+  width: min(860px, 100%);
+  max-height: calc(100vh - 48px);
+  display: grid;
+  grid-template-columns: minmax(260px, 390px) minmax(260px, 1fr);
+  overflow: auto;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+}
+
+.glvc-modal .glvc-player {
+  width: 100%;
+  min-height: 560px;
+  background: #071b30;
+}
+
+.glvc-modal .glvc-player iframe,
+.glvc-modal .glvc-player video {
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  display: block;
+  border: 0;
+}
+
+.glvc-modal .glvc-player video {
+  object-fit: contain;
+  background: #071b30;
+}
+
+.glvc-modal .glvc-modal-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px 38px;
+}
+
+.glvc-modal .glvc-modal-label {
+  color: var(--glvc-blue);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.glvc-modal .glvc-modal-title {
+  margin: 12px 0 5px;
+  color: var(--glvc-text);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.glvc-modal .glvc-modal-location {
+  margin: 0;
+  color: var(--glvc-muted);
+  font-size: 14px;
+}
+
+.glvc-modal .glvc-modal-close {
+  align-self: flex-start;
+  margin-top: 26px;
+  padding: 11px 16px;
+  border: 1px solid var(--glvc-line);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--glvc-text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 820px) {
+  #globalead-video-carousel {
+    --glvc-visible: 2;
+  }
+
+  #globalead-video-carousel .glvc-video {
+    flex-basis: calc((100% - 18px) / 2);
+  }
+}
+
+@media (max-width: 580px) {
+  #globalead-video-carousel {
+    --glvc-visible: 1;
+  }
+
+  #globalead-video-carousel .glvc-section {
+    padding: 48px 18px 38px;
+  }
+
+  #globalead-video-carousel .glvc-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  #globalead-video-carousel .glvc-navigation {
+    align-self: flex-end;
+  }
+
+  #globalead-video-carousel .glvc-video {
+    flex-basis: 100%;
+    aspect-ratio: 9 / 12.8;
+  }
+
+  .glvc-modal {
+    padding: 14px;
+  }
+
+  .glvc-modal .glvc-modal-dialog {
+    grid-template-columns: 1fr;
+    max-height: calc(100vh - 28px);
+  }
+
+  .glvc-modal .glvc-player,
+  .glvc-modal .glvc-player iframe,
+  .glvc-modal .glvc-player video {
+    min-height: 62vh;
+  }
+
+  .glvc-modal .glvc-modal-copy {
+    padding: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #globalead-video-carousel .glvc-track,
+  #globalead-video-carousel .glvc-video-image,
+  #globalead-video-carousel .glvc-arrow {
+    transition: none;
+  }
+}

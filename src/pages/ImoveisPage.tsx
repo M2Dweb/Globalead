@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   Hammer, Palette, Building, Users, Compass, Scale, CreditCard,
   FileText, Shield, MapPin, Camera, Globe, Paintbrush,
-  Share2, Tag, Video, Star} from 'lucide-react';
+  Share2, Tag, Video} from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 import { sendEmail, FormData } from '../utils/emailService';
 import FeaturedProperties from '../components/FeaturedProperties';
+import FeaturedEmpreendimentos from '../components/FeaturedEmpreendimentos';
+import VideoPortfolioCarousel from '../components/VideoPortfolioCarousel';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -27,15 +29,6 @@ const ImoveisPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [expandedTestimonials, setExpandedTestimonials] = useState<boolean[]>(new Array(6).fill(false));
-
-  const toggleExpand = (index: number) => {
-    setExpandedTestimonials(prev => {
-      const copy = [...prev];
-      copy[index] = !copy[index];
-      return copy;
-    });
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -142,45 +135,6 @@ const ImoveisPage: React.FC = () => {
     }
   ];
 
-  const testimonials = [
-    {
-      name: "Gonçalo Vinhas",
-      image: "/testemonials/goncalo-vinhas.jpg",
-      platform: "WhatsApp",
-      review: t('testemunhos.goncalo')
-    },
-    {
-      name: "Francisco Gonçalves",
-      image: "/testemonials/francisco-gonçalves.jpg",
-      platform: "Facebook",
-      review: t('testemunhos.francisco')
-    },
-    {
-      name: "Família Gomes",
-      image: "/testemonials/familia-gomes.jpg",
-      platform: "Google",
-      review: t('testemunhos.familiaGomes')
-    },
-    {
-      name: "Liliana da Silva",
-      image: "/testemonials/liliana.jpg",
-      platform: "Instagram",
-      review: t('testemunhos.liliana')
-    },
-    {
-      name: "Wneres & Daiane",
-      image: "/testemonials/Wneres.jpg",
-      platform: "WhatsApp",
-      review: t('testemunhos.wneres')
-    },
-    {
-      name: "Ana Fernandes",
-      image: "/testemonials/Ana.jpg",
-      platform: "Facebook",
-      review: t('testemunhos.ana')
-    }
-  ];
-
   const businessServices = [
     {
       icon: <CreditCard className="h-12 w-12 text-[#79b2e9]" />,
@@ -268,6 +222,9 @@ const ImoveisPage: React.FC = () => {
       {/* Featured Properties */}
       <FeaturedProperties />
 
+      {/* Empreendimentos em destaque */}
+      <FeaturedEmpreendimentos />
+
       {/* Business Services Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -303,59 +260,6 @@ const ImoveisPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Exemplo de foto na vertical */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            
-            {/* Foto ou Vídeo Vertical */}
-            <div className="flex justify-center">
-              <img
-                className="rounded-2xl shadow-lg object-cover"
-                style={{ aspectRatio: "9/16", width: "100%", maxWidth: "350px" }}
-                src='/carlos/sentado-sorrir2.jpg'
-              >
-              </img>
-            </div>
-
-            {/* Texto */}
-            <div className="flex flex-col mt-20">
-              <div className="mb-6 text-center md:text-left">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                  <a
-                    href="/carlos-goncalves" 
-                    className="hover:underline cursor-pointer"
-                  >
-                    {t('imoveis.carlosNome')}
-                  </a>
-                </h2>
-                <h3 className="text-xl text-[#79b2e9] font-medium">
-                  {t('imoveis.carlosLema')}
-                </h3>
-              </div>
-              
-              <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                {t('imoveis.carlosTexto')}
-              </p>
-              
-              <div className="flex justify-center md:justify-start">
-                <a
-                  href="/carlos-goncalves"
-                  className="bg-white text-[#0d2233] border border-[#0d2233] py-3 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors font-medium"
-                >
-                  {t('imoveis.conhecerCarlos')}
-                </a>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-      </section>
-
-
-
-
       {/* Selling Process Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -380,6 +284,8 @@ const ImoveisPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Portefólio em vídeo */}
+      <VideoPortfolioCarousel />
 
       {/* Services Grid */}
       <section className="py-20 bg-gray-50">
@@ -417,72 +323,6 @@ const ImoveisPage: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {t('testemunhos.titulo')}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => {
-              const words = testimonial.review.split(' ');
-              const isExpanded = expandedTestimonials[index];
-              const maxWords = 35;
-              const displayText = isExpanded || words.length <= maxWords 
-                ? testimonial.review 
-                : words.slice(0, maxWords).join(' ') + '...';
-
-              return (
-                <div
-                  key={index}
-                  className="bg-white rounded-xl shadow-lg w-full text-center flex flex-col justify-between overflow-hidden border border-gray-100"
-                >
-                  <div className="flex justify-center">
-                    <img src={testimonial.image} alt="testimonial" className="w-full h-64 object-cover" />
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex justify-center mb-4">
-                      <div className="flex text-yellow-400">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-5 w-5 fill-current" />
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="flex-grow flex items-center justify-center mb-4">
-                      <p className="text-gray-600 italic">
-                        "{displayText}"
-                        {words.length > maxWords && !isExpanded && (
-                          <span 
-                            className="ml-1 font-bold text-[#79b2e9] cursor-pointer"
-                            onClick={() => toggleExpand(index)}
-                          >
-                            {t('testemunhos.lerMais')}
-                          </span>
-                        )}
-                      </p>
-                    </div>
-
-                    <div className="border-t pt-4 mt-6">
-                      <p className="font-semibold text-gray-900">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {t('testemunhos.review', { plataforma: testimonial.platform })}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
 
       {/* Contact Form */}
       <section className="py-20 bg-gray-900 text-white">

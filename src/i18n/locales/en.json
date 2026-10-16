@@ -176,23 +176,19 @@
   },
   "vender": {
     "titulo": "We make selling your property simple",
-    "passo1": "High-quality virtual tours, so potential buyers can explore the property from anywhere.",
-    "passo2": "Promotion across every social and digital platform, with targeted campaigns and a detailed strategy to maximise visibility.",
-    "passo3": "Professional photography and video to show the property at its best.",
-    "passo4": "Listings on the main property portals in Portugal and abroad, widening the reach of your offer.",
-    "passo5": "Local advertising in the areas most likely to reach the right buyers.",
-    "passo6": "Signage at the property itself, to catch buyers already looking in the area.",
-    "passo7": "Direct outreach to an exclusive list of qualified buyers and to Globalead Portugal’s private groups.",
-    "passo8": "Interior styling specialists prepare the property, bringing out its potential and matching what buyers expect."
+    "passo1": "We create high-quality virtual tours, so potential buyers can get to know the property in detail, at any time and from anywhere.",
+    "passo2": "We build a tailored communication strategy, promoting the property across the main digital platforms with targeted campaigns that reach the right audience.",
+    "passo3": "We produce high-quality photos and promotional videos, designed to show every space at its best and highlight what makes the property unique.",
+    "passo4": "We list the property on the main property portals in Portugal and on selected international platforms, widening its reach among buyers at home and abroad.",
+    "passo5": "We step up promotion in carefully chosen areas, reaching potential buyers with a real interest in where the property is.",
+    "passo6": "We put up clear, professional signage at the property, giving the sale more exposure and attracting potential buyers in the surrounding area.",
+    "passo7": "We present the property to our client base, network of contacts and private groups, promoting it directly to potential buyers we have already identified.",
+    "passo8": "With the help of specialist professionals, we prepare and enhance how the property is presented, bringing out its potential and bringing it closer to what today’s buyers expect."
   },
   "imoveis": {
     "heroLinha1": "The place we",
     "heroLinha2": "call home",
     "heroTexto": "We build a close relationship and listen carefully to what you want, so you are supported at every stage and never on your own.",
-    "carlosNome": "Carlos Gonçalves",
-    "carlosLema": "Trust that builds tomorrow",
-    "carlosTexto": "I am passionate about property, and I work with clients, families and investors to find the right one. Every property has a story and a particular potential to change lives. With years of experience behind me, I work with transparency, trust and close support at every stage — the things success actually rests on. If you are looking for guidance and someone who will treat your project as genuinely unique, count on me. I am ready to walk beside you and make sure the future of your home starts with security, vision and peace of mind.",
-    "conhecerCarlos": "Meet Carlos Gonçalves",
     "servicosTitulo": "We take the paperwork, you take the future",
     "obrasTitulo": "Building & Renovation",
     "obrasTexto": "Professional building work and renovation, from small improvements to complete refurbishments.",
@@ -206,7 +202,23 @@
     "arquiteturaTexto": "We design authentic, timeless spaces that carry an identity and hold up over the years.",
     "juridicoTitulo": "Legal Support",
     "juridicoTexto": "We handle deeds, documentation and tax representation, keeping every step transparent.",
-    "formTitulo": "Sell your property quickly, safely and without the headaches."
+    "formTitulo": "Sell your property quickly, safely and without the headaches.",
+    "videos": {
+      "etiqueta": "Video portfolio",
+      "titulo": "See our work in action.",
+      "intro": "See the quality of the presentations we create to show each property at its best and catch the attention of the right buyers.",
+      "navegacao": "Carousel navigation",
+      "anteriores": "Previous videos",
+      "seguintes": "Next videos",
+      "verVideo": "Watch the video of {{titulo}}, {{local}}",
+      "videoCompleto": "Full video",
+      "fechar": "Close video",
+      "moradiaT3": "3-bedroom house",
+      "restauranteGengibre": "Gengibre Restaurant",
+      "moradiaPiscina": "House with pool",
+      "moradiaT4": "4-bedroom house",
+      "apartamentoT2": "2-bedroom apartment"
+    }
   },
   "seguros": {
     "heroTitulo": "We insure your future",
@@ -317,7 +329,16 @@
     "p2": "Get in touch using the form below, send us an email, or call the numbers listed. Our priority is to respond quickly and effectively, and to leave you completely satisfied.",
     "telefone": "Phone",
     "email": "Email",
-    "horario": "Opening hours"
+    "horario": "Opening hours",
+    "escritorio": {
+      "etiqueta": "Visit us",
+      "titulo": "Globalead now has an address too.",
+      "intro": "We are closer to you than ever. Come and see us at our new office in Trofa!",
+      "tipo": "Office",
+      "mapaTitulo": "Location of the Globalead Portugal office in Trofa",
+      "direcoes": "Get directions",
+      "direcoesAria": "Get directions to the Globalead Portugal office on Google Maps"
+    }
   },
   "faq": {
     "geral": [
@@ -627,7 +648,6 @@
     "partilhe": "Share this",
     "videoApresentacao": "Property video",
     "contacteDiretamente": "Or contact us directly:",
-    "simuleCredito": "Estimate your mortgage payment",
     "interesseMensagem": "Interested in: {{titulo}} (Ref: {{ref}})",
     "listaTitulo": "Find the right property for you",
     "nenhumEncontrado": "No properties found",
@@ -644,7 +664,6 @@
     "similares": "Similar properties",
     "indisponivelTexto": "This property is temporarily unavailable. Get in touch for more information.",
     "verOutros": "See other properties",
-    "tipologiaSimular": "Unit to base the estimate on",
     "semelhantes": "Similar properties",
     "partilhaTexto": "I found this property you might like:"
   },
