@@ -238,14 +238,9 @@
       "navegacao": "Carousel navigation",
       "anteriores": "Previous videos",
       "seguintes": "Next videos",
-      "verVideo": "Watch the video of {{titulo}}, {{local}}",
+      "verVideo": "Watch the video of {{titulo}}",
       "videoCompleto": "Full video",
-      "fechar": "Close video",
-      "moradiaT3": "3-bedroom house",
-      "restauranteGengibre": "Gengibre Restaurant",
-      "moradiaPiscina": "House with pool",
-      "moradiaT4": "4-bedroom house",
-      "apartamentoT2": "2-bedroom apartment"
+      "fechar": "Close video"
     }
   },
   "seguros": {

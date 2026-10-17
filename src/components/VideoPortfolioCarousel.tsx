@@ -1,56 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '../lib/supabase';
 import { imageUrl, onImageCdnError } from '../lib/imageUrl';
+import { getTranslated, translationSelect, withTranslations } from '../lib/translations';
 import '../styles/VideoPortfolioCarousel.css';
 
-// Vídeos dos anúncios (R2). videoUrl também aceita links do YouTube
-// (watch, shorts, youtu.be ou só o ID): sem poster, usa a miniatura do YouTube.
-const R2 = 'https://pub-5f573f26090442adbdeb6739a1e97fa9.r2.dev';
-const VIDEOS = [
-  {
-    // GL-014
-    videoUrl: `${R2}/properties/videos/1791591487007.mp4`,
-    poster: `${R2}/properties/video-posters/1791591520891.jpg`,
-    titleKey: 'moradiaT3',
-    subtitle: 'Custóias, Matosinhos'
-  },
-  {
-    // GL-008
-    videoUrl: `${R2}/videos/VIDEO%20CARLOS%202%20(3).mp4`,
-    poster: `${R2}/properties/video-posters/1788636776322.jpg`,
-    titleKey: 'restauranteGengibre',
-    subtitle: 'Santo Tirso'
-  },
-  {
-    // GL-012
-    videoUrl: `${R2}/properties/videos/1784034793903_0.mp4`,
-    poster: `${R2}/properties/video-posters/1784035125848.jpg`,
-    titleKey: 'moradiaPiscina',
-    subtitle: 'Azurém, Guimarães'
-  },
-  {
-    // GL-010
-    videoUrl: `${R2}/properties/videos/1783089907223_0.mp4`,
-    poster: `${R2}/properties/video-posters/1784036292846.jpg`,
-    titleKey: 'moradiaT4',
-    subtitle: 'Gião, Vila do Conde'
-  },
-  {
-    // GL-011
-    videoUrl: `${R2}/properties/videos/1783089178804_0.mp4`,
-    poster: `${R2}/properties/video-posters/1784035564555.jpg`,
-    titleKey: 'apartamentoT2',
-    subtitle: 'Vila das Aves, Santo Tirso'
-  },
-  {
-    // GL-013
-    videoUrl: `${R2}/properties/videos/1787596889910_0.mp4`,
-    poster: `${R2}/properties/video-posters/1787597203919.jpg`,
-    titleKey: 'apartamentoT2',
-    subtitle: 'Moreira, Maia'
-  }
-];
+// Os vídeos são os dos anúncios publicados: o vídeo e a capa que o Carlos põe
+// em cada imóvel. O vídeo pode ser um MP4 (R2) ou um link do YouTube (watch,
+// shorts, youtu.be ou só o ID); sem capa, usa a foto de capa do anúncio ou a
+// miniatura do YouTube. Os do Instagram ficam de fora: não tocam aqui.
+interface PropertyVideo {
+  id: string;
+  title: string;
+  location: string | null;
+  video_url: string | null;
+  video_poster: string | null;
+  cover_image: string | null;
+  images: string[] | null;
+  translations?: Record<string, Record<string, string>> | null;
+}
+
+interface CarouselVideo {
+  id: string;
+  videoUrl: string;
+  poster: string;
+  /** A imagem do cartão (a capa pela CDN, ou a miniatura do YouTube) */
+  thumbnail: string;
+  title: string;
+  subtitle: string;
+}
 
 const getYouTubeId = (value: string): string | null => {
   const input = value.trim();
@@ -81,8 +60,10 @@ const getYouTubeId = (value: string): string | null => {
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
+const fullTitle = (video: CarouselVideo) => (video.subtitle ? `${video.title}, ${video.subtitle}` : video.title);
+
 const VideoPortfolioCarousel: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const rootRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -93,11 +74,45 @@ const VideoPortfolioCarousel: React.FC = () => {
   const [visible, setVisible] = useState(3);
   const [step, setStep] = useState(0);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [rows, setRows] = useState<PropertyVideo[]>([]);
 
-  const videos = VIDEOS.map((video) => ({
-    ...video,
-    title: t(`imoveis.videos.${video.titleKey}`)
-  }));
+  useEffect(() => {
+    let active = true;
+    supabase
+      .from('properties')
+      .select(`id, title, location, video_url, video_poster, cover_image, images, ${translationSelect(['title'])}`)
+      .eq('is_published', true)
+      .not('video_url', 'is', null)
+      .neq('video_url', '')
+      .order('created_at', { ascending: false })
+      .then(({ data, error }) => {
+        if (!active) return;
+        if (error) console.error('Vídeos dos imóveis:', error.message);
+        setRows(withTranslations((data || []) as unknown as Record<string, unknown>[]) as unknown as PropertyVideo[]);
+      });
+    return () => { active = false; };
+  }, []);
+
+  const videos: CarouselVideo[] = rows
+    .filter((row) => row.video_url && !/instagram\.com/i.test(row.video_url))
+    .map((row) => {
+      const videoUrl = (row.video_url as string).trim();
+      const youtubeId = getYouTubeId(videoUrl);
+      const title = getTranslated(row, 'title', i18n.language) || '';
+      const location = (row.location || '').trim();
+      const poster = row.video_poster || row.cover_image || row.images?.[0] || '';
+      return {
+        id: row.id,
+        videoUrl,
+        poster,
+        thumbnail: poster
+          ? imageUrl(poster)
+          : youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : '',
+        title,
+        // "Moradia T3 em Matosinhos" já diz onde é: não repete a localização
+        subtitle: location && !title.toLowerCase().includes(location.toLowerCase()) ? location : ''
+      };
+    });
 
   const maxIndex = Math.max(0, videos.length - visible);
   const current = Math.min(index, maxIndex);
@@ -127,7 +142,7 @@ const VideoPortfolioCarousel: React.FC = () => {
       window.cancelAnimationFrame(frame);
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [videos.length]);
 
   const goTo = (next: number) => setIndex(Math.min(Math.max(next, 0), maxIndex));
 
@@ -161,6 +176,9 @@ const VideoPortfolioCarousel: React.FC = () => {
 
   const openedVideo = openIndex !== null ? videos[openIndex] : null;
   const openedYouTubeId = openedVideo ? getYouTubeId(openedVideo.videoUrl) : null;
+
+  // Sem anúncios com vídeo (ou enquanto carregam), a secção não aparece
+  if (videos.length === 0) return null;
 
   return (
     <section id="globalead-video-carousel" ref={rootRef} aria-labelledby="glvc-heading-title">
@@ -209,39 +227,32 @@ const VideoPortfolioCarousel: React.FC = () => {
               ref={trackRef}
               style={{ transform: `translate3d(-${current * step}px, 0, 0)` }}
             >
-              {videos.map((video, videoIndex) => {
-                const youtubeId = getYouTubeId(video.videoUrl);
-                const poster = video.poster
-                  ? imageUrl(video.poster)
-                  : youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : '';
-
-                return (
-                  <button
-                    key={videoIndex}
-                    className="glvc-video"
-                    type="button"
-                    onClick={(e) => openVideo(videoIndex, e.currentTarget)}
-                    aria-label={t('imoveis.videos.verVideo', { titulo: video.title, local: video.subtitle })}
-                  >
-                    {poster && (
-                      <img
-                        className="glvc-video-image"
-                        src={poster}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        onError={onImageCdnError}
-                      />
-                    )}
-                    <span className="glvc-video-overlay" aria-hidden="true" />
-                    <span className="glvc-video-copy">
-                      <strong className="glvc-video-title">{video.title}</strong>
-                      <span className="glvc-video-subtitle">{video.subtitle}</span>
-                    </span>
-                    <span className="glvc-play" aria-hidden="true" />
-                  </button>
-                );
-              })}
+              {videos.map((video, videoIndex) => (
+                <button
+                  key={video.id}
+                  className="glvc-video"
+                  type="button"
+                  onClick={(e) => openVideo(videoIndex, e.currentTarget)}
+                  aria-label={t('imoveis.videos.verVideo', { titulo: fullTitle(video) })}
+                >
+                  {video.thumbnail && (
+                    <img
+                      className="glvc-video-image"
+                      src={video.thumbnail}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      onError={onImageCdnError}
+                    />
+                  )}
+                  <span className="glvc-video-overlay" aria-hidden="true" />
+                  <span className="glvc-video-copy">
+                    <strong className="glvc-video-title">{video.title}</strong>
+                    {video.subtitle && <span className="glvc-video-subtitle">{video.subtitle}</span>}
+                  </span>
+                  <span className="glvc-play" aria-hidden="true" />
+                </button>
+              ))}
             </div>
           </div>
 
@@ -269,7 +280,7 @@ const VideoPortfolioCarousel: React.FC = () => {
               {openedYouTubeId ? (
                 <iframe
                   src={`https://www.youtube-nocookie.com/embed/${openedYouTubeId}?autoplay=1&rel=0&playsinline=1`}
-                  title={`${openedVideo.title}, ${openedVideo.subtitle}`}
+                  title={fullTitle(openedVideo)}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
@@ -287,7 +298,7 @@ const VideoPortfolioCarousel: React.FC = () => {
             <div className="glvc-modal-copy">
               <span className="glvc-modal-label">{t('imoveis.videos.videoCompleto')}</span>
               <h3 className="glvc-modal-title" id="glvc-modal-title">{openedVideo.title}</h3>
-              <p className="glvc-modal-location">{openedVideo.subtitle}</p>
+              {openedVideo.subtitle && <p className="glvc-modal-location">{openedVideo.subtitle}</p>}
               <button className="glvc-modal-close" type="button" ref={closeRef} onClick={closeVideo}>
                 {t('imoveis.videos.fechar')}
               </button>

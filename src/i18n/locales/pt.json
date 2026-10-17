@@ -238,14 +238,9 @@
       "navegacao": "Navegação do carrossel",
       "anteriores": "Ver vídeos anteriores",
       "seguintes": "Ver vídeos seguintes",
-      "verVideo": "Ver vídeo de {{titulo}}, {{local}}",
+      "verVideo": "Ver vídeo de {{titulo}}",
       "videoCompleto": "Vídeo completo",
-      "fechar": "Fechar vídeo",
-      "moradiaT3": "Moradia T3",
-      "restauranteGengibre": "Restaurante Gengibre",
-      "moradiaPiscina": "Moradia com piscina",
-      "moradiaT4": "Moradia T4",
-      "apartamentoT2": "Apartamento T2"
+      "fechar": "Fechar vídeo"
     }
   },
   "seguros": {
