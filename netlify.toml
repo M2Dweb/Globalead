@@ -11,6 +11,12 @@
 [images]
   remote_images = ["https://pub-5f573f26090442adbdeb6739a1e97fa9.r2.dev/.*"]
 
+# O site chama as funções em /api/... (os endereços da Cloudflare Pages)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

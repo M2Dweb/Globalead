@@ -1,0 +1,12 @@
+# Cabeçalhos dos ficheiros estáticos (Cloudflare Pages; a Netlify também lê
+# este ficheiro). O HTML fica com o da Cloudflare por omissão,
+# "max-age=0, must-revalidate": o browser confirma sempre se há versão nova.
+
+# Assets do Vite: o nome tem o hash do conteúdo, por isso nunca mudam
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# O service worker nunca pode ser servido de cache: se ficar preso, o browser
+# nunca chega a ver a versão nova e a limpeza da cache nunca acontece.
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate

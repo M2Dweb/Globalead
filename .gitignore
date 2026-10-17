@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .env
 .gemini
+
+# Cloudflare (wrangler pages dev)
+.wrangler
+.dev.vars

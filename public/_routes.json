@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "include": [
+    "/",
+    "/sobre",
+    "/imoveis",
+    "/imoveis/*",
+    "/seguros",
+    "/credito",
+    "/certificacao",
+    "/carlos-goncalves",
+    "/contactos",
+    "/blog/*",
+    "/en",
+    "/en/*",
+    "/api/*",
+    "/.netlify/functions/*"
+  ],
+  "exclude": []
+}

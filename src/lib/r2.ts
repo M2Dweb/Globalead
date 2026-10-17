@@ -1,5 +1,5 @@
 /**
- * Acesso ao R2 via Netlify Functions (lado do servidor).
+ * Acesso ao R2 via Pages Functions (lado do servidor, functions/api).
  * As chaves secretas vivem APENAS no servidor — nunca neste ficheiro.
  * A única variável pública aqui é o URL base das imagens (não é segredo).
  */
@@ -12,11 +12,11 @@ export const R2_BUCKET_NAME = '';
 
 /**
  * Lista ficheiros numa pasta do R2.
- * Chama a Netlify Function r2-list (credenciais ficam no servidor).
+ * Chama a função r2-list (o bucket só é lido no servidor).
  */
 export const listR2Folder = async (folder: string): Promise<string[]> => {
   try {
-    const res = await fetch(`/.netlify/functions/r2-list?folder=${encodeURIComponent(folder)}`);
+    const res = await fetch(`/api/r2-list?folder=${encodeURIComponent(folder)}`);
     if (!res.ok) {
       console.error(`r2-list HTTP ${res.status}`);
       return [];

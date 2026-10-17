@@ -61,9 +61,10 @@ const Footer: React.FC = () => {
 
     try {
       // A função corre no servidor: é lá que ficam a service role key do
-      // Supabase e a chave do Brevo. Em `npm run dev` isto não existe —
-      // é preciso `netlify dev` para testar a subscrição localmente.
-      const response = await fetch('/.netlify/functions/newsletter-subscribe', {
+      // Supabase e a chave do Brevo (functions/api, na Cloudflare Pages). Em
+      // `npm run dev` isto não existe — é preciso `wrangler pages dev` para
+      // testar a subscrição localmente.
+      const response = await fetch('/api/newsletter-subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -31,8 +31,8 @@ const NewsletterBanner: React.FC<NewsletterBannerProps> = ({ source }) => {
 
     try {
       // Como no rodapé: em `npm run dev` a função não existe — é preciso
-      // `netlify dev` para testar a subscrição localmente.
-      const response = await fetch('/.netlify/functions/newsletter-subscribe', {
+      // `wrangler pages dev` para testar a subscrição localmente.
+      const response = await fetch('/api/newsletter-subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, source })
