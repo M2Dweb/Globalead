@@ -4,3 +4,4 @@ Allow: /
 Disallow: /admin
 
 Sitemap: https://globalead.pt/sitemap.xml
+Sitemap: https://www.globalead.pt/lp/sitemap.xml
