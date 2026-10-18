@@ -6,9 +6,14 @@
  * Se as credenciais do Supabase não estiverem disponíveis (ou houver erro de rede),
  * gera na mesma um sitemap só com as páginas estáticas — nunca falha o build.
  */
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+// Como o vite: o .env local primeiro e depois o .env.production (o único que
+// existe na build da Cloudflare). O dotenv não substitui o que já está definido.
+dotenv.config();
+dotenv.config({ path: '.env.production' });
 
 const SITE_URL = 'https://globalead.pt';
 

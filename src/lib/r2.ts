@@ -1,5 +1,5 @@
 /**
- * Acesso ao R2 via Pages Functions (lado do servidor, functions/api).
+ * Acesso ao R2 pelo Worker do site (lado do servidor, server/worker.ts).
  * As chaves secretas vivem APENAS no servidor — nunca neste ficheiro.
  * A única variável pública aqui é o URL base das imagens (não é segredo).
  */

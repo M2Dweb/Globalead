@@ -1,5 +1,5 @@
-# Cabeçalhos dos ficheiros estáticos (Cloudflare Pages; a Netlify também lê
-# este ficheiro). O HTML fica com o da Cloudflare por omissão,
+# Cabeçalhos dos ficheiros estáticos (Cloudflare; a Netlify também lê este
+# ficheiro). O HTML fica com o da Cloudflare por omissão,
 # "max-age=0, must-revalidate": o browser confirma sempre se há versão nova.
 
 # Assets do Vite: o nome tem o hash do conteúdo, por isso nunca mudam

@@ -3,6 +3,7 @@
 /admin/*     https://crm.globalead.pt/admin/   301
 /Admin       https://crm.globalead.pt/admin/   301
 
-# As rotas da SPA não precisam de regra: sem 404.html no dist, a Cloudflare
-# Pages devolve o index.html para qualquer caminho que não seja um ficheiro
-# (na Netlify, a regra /* → /index.html está no netlify.toml).
+# As rotas da SPA não precisam de regra: na Cloudflare, o
+# not_found_handling do wrangler.jsonc devolve o index.html para qualquer
+# caminho que não seja um ficheiro (na Netlify, a regra /* → /index.html está
+# no netlify.toml).

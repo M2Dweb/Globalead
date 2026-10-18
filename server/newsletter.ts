@@ -11,7 +11,8 @@
  * Corre no servidor de propósito: a chave do Brevo e a service role key do
  * Supabase nunca podem ir no bundle do site.
  *
- * Variáveis de ambiente (Cloudflare Pages → Settings → Variables and Secrets):
+ * Variáveis de ambiente (os segredos em Cloudflare → Worker → Settings →
+ * Variables and Secrets; o resto nos "vars" do wrangler.jsonc):
  *   SUPABASE_SERVICE_ROLE_KEY   (obrigatória, secreta)
  *   VITE_SUPABASE_URL           (ou SUPABASE_URL)
  *   BREVO_API_KEY               (opcional, secreta — sem ela, guarda na mesma e marca por sincronizar)

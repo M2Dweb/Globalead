@@ -3,8 +3,8 @@
  * GET /api/r2-list?folder=bancos
  * Sem autenticação (leitura pública de URLs).
  *
- * Na Cloudflare o bucket chega como binding (R2 → bucket "globalead", em
- * Settings → Bindings), por isso não há chaves S3 nesta função. Os URLs
+ * Na Cloudflare o bucket chega como binding (R2 → bucket "globalead", no
+ * wrangler.jsonc), por isso não há chaves S3 nesta função. Os URLs
  * devolvidos usam o endereço público do bucket (VITE_R2_PUBLIC_BASE_URL).
  */
 import type { Env } from './og';
