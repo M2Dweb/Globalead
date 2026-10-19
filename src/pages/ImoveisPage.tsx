@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Hammer, Palette, Building, Users, Compass, Scale, CreditCard,
-  FileText, Shield, MapPin, Camera, Globe, Paintbrush,
+  Hammer, Palette, Building, Users, Compass, Scale,
+  MapPin, Camera, Globe, Paintbrush,
   Share2, Tag, Video} from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
@@ -9,13 +9,12 @@ import { sendEmail, FormData } from '../utils/emailService';
 import FeaturedProperties from '../components/FeaturedProperties';
 import FeaturedEmpreendimentos from '../components/FeaturedEmpreendimentos';
 import VideoPortfolioCarousel from '../components/VideoPortfolioCarousel';
-import { useNavigate } from 'react-router-dom';
+import BusinessServices from '../components/BusinessServices';
 import { useTranslation } from 'react-i18next';
 
 const ImoveisPage: React.FC = () => {
 
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<Partial<FormData>>({
     nome: '',
     apelido: '',
@@ -135,27 +134,6 @@ const ImoveisPage: React.FC = () => {
     }
   ];
 
-  const businessServices = [
-    {
-      icon: <CreditCard className="h-12 w-12 text-[#79b2e9]" />,
-      title: t('home.creditoTitulo'),
-      description: t('home.creditoTexto'),
-      link: "/credito"
-    },
-    {
-      icon: <FileText className="h-12 w-12 text-[#79b2e9]" />,
-      title: t('home.certificacaoTitulo'),
-      description: t('home.certificacaoTexto'),
-      link: "/certificacao"
-    },
-    {
-      icon: <Shield className="h-12 w-12 text-[#79b2e9]" />,
-      title: t('home.segurosTitulo'),
-      description: t('home.segurosTexto'),
-      link: "/seguros"
-    }
-  ];
-
   const sellingSteps = [
   {
     text: t('vender.passo1'),
@@ -225,41 +203,6 @@ const ImoveisPage: React.FC = () => {
       {/* Empreendimentos em destaque */}
       <FeaturedEmpreendimentos />
 
-      {/* Business Services Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {t('home.servicosTitulo')}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {businessServices.map((service, index) => (
-              <div key={index} className="hover-card-effect text-center">
-                <div className="flex justify-center mb-6">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  {service.title}
-                </h3>
-                <p className="flex justify-center text-gray-600 mb-3 text-sm flex-grow">
-                  {service.description}
-                </p>
-                
-                <button
-                  onClick={() => navigate(service.link)} 
-                  className="w-full bg-white text-[#0d2233] border border-[#0d2233] py-2 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors"
-                >
-                  {t('home.saberMais')}
-                </button>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
       {/* Selling Process Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -286,6 +229,9 @@ const ImoveisPage: React.FC = () => {
 
       {/* Portefólio em vídeo */}
       <VideoPortfolioCarousel />
+
+      {/* Crédito, certificação e seguros (a mesma secção da homepage) */}
+      <BusinessServices />
 
       {/* Services Grid */}
       <section className="py-20 bg-gray-50">
