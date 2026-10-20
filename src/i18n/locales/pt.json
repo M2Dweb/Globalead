@@ -158,22 +158,14 @@
     "p5": "Trabalhamos com proximidade, transparência e rigor, procurando antecipar necessidades, simplificar decisões e defender os interesses de quem confia em nós.",
     "p6": "Mais do que intermediar negócios, construímos relações duradouras e ajudamos pessoas a avançar com confiança para uma nova etapa das suas vidas.",
     "razoesTitulo": "Ajudamos a tomar decisões inteligentes",
-    "razao1Titulo": "Soluções avançadas",
-    "razao1Texto": "Garantimos acesso a soluções avançadas, fiáveis e eficazes, personalizadas para as suas reais necessidades.",
-    "razao2Titulo": "Estudamos o mercado",
-    "razao2Texto": "Analisamos as suas exigências e recomendamos a solução ideal, sempre com a qualidade e garantia das marcas que representamos.",
-    "razao3Titulo": "Soluções de excelência",
-    "razao3Texto": "Escolher a Globalead significa optar por uma experiência personalizada com acesso às melhores soluções do mercado.",
-    "razao4Titulo": "Selo de confiança",
-    "razao4Texto": "Representamos a qualidade, a inovação e a confiança que as empresas oferecem para garantir que recebe o melhor suporte.",
-    "carlos": {
-      "titulo": "Quem é o Carlos Gonçalves?",
-      "lema": "A confiança que constrói o amanhã",
-      "p1": "Sou Carlos Gonçalves, fundador e CEO da Globalead Portugal. Com mais de uma década de experiência comercial, desenvolvi competências nas áreas da negociação, gestão de negócios, liderança de equipas e estratégia de marketing.",
-      "p2": "Acredito que cada imóvel e cada cliente exigem uma abordagem própria. Por isso, acompanho proprietários, compradores, famílias e investidores com proximidade, transparência e rigor, desde o primeiro contacto até à conclusão do processo.",
-      "p3": "Mais do que intermediar negócios, procuro simplificar decisões, antecipar dificuldades e garantir que cada cliente avança com segurança e confiança.",
-      "botao": "Conhecer Carlos Gonçalves"
-    },
+    "razao1Titulo": "Análise de mercado",
+    "razao1Texto": "Estudamos o imóvel, a localização e a procura real para definir um posicionamento sustentado e adequado ao mercado.",
+    "razao2Titulo": "Estratégia personalizada",
+    "razao2Texto": "Cada imóvel exige um plano próprio. Definimos a apresentação, a promoção e a abordagem mais adequadas aos seus objetivos.",
+    "razao3Titulo": "Compradores qualificados",
+    "razao3Texto": "Antes de cada visita, avaliamos o interesse, a motivação e a capacidade de concretização de cada potencial comprador.",
+    "razao4Titulo": "Acompanhamento completo",
+    "razao4Texto": "Estamos presentes em todas as etapas, da análise inicial à escritura, com informação clara, proximidade e rigor.",
     "equipa": {
       "etiqueta": "A equipa",
       "titulo": "A nossa equipa",
@@ -197,9 +189,7 @@
       "classificacao_other": "Classificação de {{nota}} em 5, com base em {{count}} avaliações no Google",
       "contagem_one": "{{count}} avaliação",
       "contagem_other": "{{count}} avaliações",
-      "perfilOficial": "Perfil oficial",
-      "ver": "Ver avaliações",
-      "garantia": "Avaliações públicas, reais e verificáveis no Google"
+      "ver": "Ver avaliações"
     }
   },
   "vender": {
@@ -231,6 +221,23 @@
     "juridicoTitulo": "Apoio Jurídico",
     "juridicoTexto": "Cuidamos de escrituras, documentos e representação fiscal, garantindo transparência em cada processo.",
     "formTitulo": "Venda o seu imóvel de forma rápida, segura e sem complicações!",
+    "contacto": {
+      "etiqueta": "Fale connosco",
+      "titulo": "Quer perceber como posicionar o seu imóvel no mercado?",
+      "texto": "Partilhe connosco algumas informações. Entraremos em contacto para compreender os seus objetivos e explicar os próximos passos.",
+      "cartaoTitulo": "Conte-nos o essencial",
+      "nome": "Nome",
+      "nomePlaceholder": "O seu nome",
+      "telefone": "Telefone",
+      "localizacao": "Localização do imóvel",
+      "localizacaoPlaceholder": "Concelho ou freguesia",
+      "tipoImovel": "Tipo de imóvel",
+      "selecione": "Selecione",
+      "mensagem": "Informação adicional",
+      "mensagemPlaceholder": "Conte-nos o essencial sobre o imóvel e os seus objetivos.",
+      "enviar": "Enviar Pedido",
+      "aEnviar": "A enviar…"
+    },
     "videos": {
       "etiqueta": "Portefólio em vídeo",
       "titulo": "Veja o nosso trabalho em ação.",

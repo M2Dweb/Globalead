@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Star, Cpu, Search, ShieldCheck } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Star, Search, Target, UserCheck, Handshake } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import TeamSection from '../components/TeamSection';
 import GoogleReviews from '../components/GoogleReviews';
@@ -63,10 +62,10 @@ const SobrePage: React.FC = () => {
   const aboutParagraphs = [1, 2, 3, 4, 5, 6].map((n) => t(`sobre.p${n}`));
 
   const reasons = [
-    { number: "1", title: t('sobre.razao1Titulo'), description: t('sobre.razao1Texto'), icon: <Cpu className="w-7 h-7"/> },
-    { number: "2", title: t('sobre.razao2Titulo'), description: t('sobre.razao2Texto'), icon: <Search className="w-7 h-7" /> },
-    { number: "3", title: t('sobre.razao3Titulo'), description: t('sobre.razao3Texto'), icon: <Star className="w-7 h-7" /> },
-    { number: "4", title: t('sobre.razao4Titulo'), description: t('sobre.razao4Texto'), icon: <ShieldCheck className="w-7 h-7" /> },
+    { number: "1", title: t('sobre.razao1Titulo'), description: t('sobre.razao1Texto'), icon: <Search className="w-7 h-7" /> },
+    { number: "2", title: t('sobre.razao2Titulo'), description: t('sobre.razao2Texto'), icon: <Target className="w-7 h-7" /> },
+    { number: "3", title: t('sobre.razao3Titulo'), description: t('sobre.razao3Texto'), icon: <UserCheck className="w-7 h-7" /> },
+    { number: "4", title: t('sobre.razao4Titulo'), description: t('sobre.razao4Texto'), icon: <Handshake className="w-7 h-7" /> },
   ];
 
   const objectives = [
@@ -147,50 +146,6 @@ return (
                 <p className="text-gray-600">{reason.description}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Quem é o Carlos Gonçalves? */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="flex justify-center">
-              <img
-                className="rounded-2xl shadow-lg object-cover"
-                style={{ aspectRatio: "9/16", width: "100%", maxWidth: "350px" }}
-                src="/carlos/sentado-sorrir2.jpg"
-                alt="Carlos Gonçalves"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <div className="mb-6 text-center md:text-left">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                  {t('sobre.carlos.titulo')}
-                </h2>
-                <h3 className="text-xl text-[#79b2e9] font-medium">
-                  {t('sobre.carlos.lema')}
-                </h3>
-              </div>
-
-              {(['p1', 'p2', 'p3'] as const).map((key) => (
-                <p key={key} className="text-gray-700 leading-relaxed text-lg mb-6">
-                  {t(`sobre.carlos.${key}`)}
-                </p>
-              ))}
-
-              <div className="flex justify-center md:justify-start mt-2">
-                <Link
-                  to="/carlos-goncalves"
-                  className="bg-white text-[#0d2233] border border-[#0d2233] py-3 px-12 rounded-lg hover:bg-[#79b2e9] hover:text-white hover:border-[#79b2e9] transition-colors font-medium"
-                >
-                  {t('sobre.carlos.botao')}
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </section>

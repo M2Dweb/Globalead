@@ -36,21 +36,15 @@ const GoogleReviews: React.FC = () => {
             role="group"
             aria-label={t('sobre.avaliacoes.classificacao', { nota, count: AVALIACOES })}
           >
-            <strong className="gl-google-reviews__score">{nota}</strong>
-            <span className="gl-google-reviews__stars" aria-hidden="true">★★★★★</span>
+            <div className="gl-google-reviews__summary">
+              <strong className="gl-google-reviews__score">{nota}</strong>
+              <span className="gl-google-reviews__stars" aria-hidden="true">★★★★★</span>
+            </div>
             <span className="gl-google-reviews__count">
               {t('sobre.avaliacoes.contagem', { count: AVALIACOES })}
             </span>
 
             <div className="gl-google-reviews__source">
-              <div className="gl-google-reviews__google">
-                <span className="gl-google-reviews__google-mark" aria-hidden="true">G</span>
-                <span>
-                  Google
-                  <small>{t('sobre.avaliacoes.perfilOficial')}</small>
-                </span>
-              </div>
-
               <a
                 className="gl-google-reviews__link"
                 href={GOOGLE_REVIEWS_URL}
@@ -62,8 +56,6 @@ const GoogleReviews: React.FC = () => {
             </div>
           </div>
         </div>
-
-        <div className="gl-google-reviews__assurance">{t('sobre.avaliacoes.garantia')}</div>
       </div>
     </section>
   );
