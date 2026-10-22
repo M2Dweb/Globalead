@@ -20,6 +20,7 @@
  */
 
 import type { SyntheticEvent } from 'react';
+import { withMediaOrigin, r2DevFallback } from './mediaHost';
 
 // Mantido por compatibilidade com quem chama imageUrl(src, { width }).
 // Neste momento não aplicamos redimensionamento/corte — a foto sai original.
@@ -35,8 +36,10 @@ const isRemote = (src: string) => /^https?:\/\//i.test(src);
 const IMAGE_CDN: string = import.meta.env.VITE_IMAGE_CDN || '';
 const CLOUDFLARE_PREFIX = '/cdn-cgi/image/format=auto/';
 
-export const imageUrl = (src?: string | null, _opts: ImageOptions = {}): string => {
-  if (!src) return src || '';
+export const imageUrl = (rawSrc?: string | null, _opts: ImageOptions = {}): string => {
+  if (!rawSrc) return rawSrc || '';
+  // r2.dev -> media.globalead.pt (ver lib/mediaHost.ts)
+  const src = withMediaOrigin(rawSrc);
 
   // Assets locais e URLs já processados passam intactos
   if (!isRemote(src) || src.includes('/.netlify/images') || src.includes('/cdn-cgi/image/')) return src;
@@ -49,8 +52,10 @@ export const imageUrl = (src?: string | null, _opts: ImageOptions = {}): string 
   return src;
 };
 
-/** URL original a partir de um URL de uma das CDNs, ou null. */
+/** URL original a partir de um URL de uma das CDNs (ou do domínio próprio do R2), ou null. */
 export const originalImageUrl = (cdnUrl: string): string | null => {
+  const r2Dev = r2DevFallback(cdnUrl);
+  if (r2Dev) return r2Dev;
   try {
     const u = new URL(cdnUrl, window.location.origin);
     if (u.pathname === '/.netlify/images') return u.searchParams.get('url');

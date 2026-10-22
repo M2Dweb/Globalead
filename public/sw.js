@@ -37,8 +37,8 @@ self.addEventListener('fetch', (event) => {
 
   const requestUrl = new URL(event.request.url);
 
-  // ⚠️ Ignora Cloudflare R2 e Vídeos
-  if (requestUrl.hostname.includes('r2.dev') || requestUrl.pathname.endsWith('.mp4') || requestUrl.pathname.endsWith('.webm')) {
+  // ⚠️ Ignora Cloudflare R2 (r2.dev e o domínio próprio media.globalead.pt) e Vídeos
+  if (requestUrl.hostname.includes('r2.dev') || requestUrl.hostname === 'media.globalead.pt' || requestUrl.pathname.endsWith('.mp4') || requestUrl.pathname.endsWith('.webm')) {
     return; // Deixa o navegador lidar diretamente com a rede
   }
 

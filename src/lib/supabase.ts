@@ -1,9 +1,25 @@
 import { createClient } from '@supabase/supabase-js';
+import { R2_DEV_ORIGIN, withMediaOrigin } from './mediaHost';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// As fotos gravadas na base de dados apontam para o r2.dev: troca-se pelo
+// domínio próprio em todas as respostas, para não ter de mexer em cada página
+// (ver lib/mediaHost.ts).
+const fetchWithMediaOrigin: typeof fetch = async (input, init) => {
+  const res = await fetch(input, init);
+  if (!(res.headers.get('content-type') || '').includes('json') || res.status === 204 || res.status === 304) {
+    return res;
+  }
+  const text = await res.text();
+  const body = text.includes(R2_DEV_ORIGIN) ? withMediaOrigin(text) : text;
+  return new Response(body, { status: res.status, statusText: res.statusText, headers: res.headers });
+};
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  global: { fetch: fetchWithMediaOrigin }
+});
 
 export interface Property {
   id: string;
