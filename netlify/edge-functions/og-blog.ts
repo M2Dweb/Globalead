@@ -70,9 +70,11 @@ export default async function handler(request: Request, context: Context) {
     // PostgREST responde 400. Repetimos sem ela em vez de deixar o artigo sem
     // pré-visualização.
     const base = `${supabaseUrl}/rest/v1/blog_posts?ref=eq.${encodeURIComponent(ref)}&limit=1&select=title,excerpt,image,ref`;
-    const headers = {
+    // Chaves novas do Supabase (sb_publishable_…) vão só no cabeçalho apikey;
+    // Authorization só com a chave antiga (JWT, começa por eyJ).
+    const headers: Record<string, string> = {
       apikey: supabaseAnonKey,
-      Authorization: `Bearer ${supabaseAnonKey}`,
+      ...(supabaseAnonKey.startsWith("eyJ") ? { Authorization: `Bearer ${supabaseAnonKey}` } : {}),
     };
 
     let response = await fetch(`${base},translations`, { headers });
