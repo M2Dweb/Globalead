@@ -147,7 +147,7 @@ const HomePage: React.FC = () => {
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30"
-          poster="/fotos/HomePage-foto.png"
+          poster="/fotos/HomePage-foto.webp"
         >
           <source src={`${import.meta.env.VITE_R2_PUBLIC_BASE_URL}/videos/Cidade_do_Porto_-_www.globalead.pt_1_kzfzqg.mp4`} type="video/mp4" />
         </video>

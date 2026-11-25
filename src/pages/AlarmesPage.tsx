@@ -161,7 +161,7 @@ const AlarmesPage: React.FC = () => {
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30"
-          poster="/fotos/AlarmesPage-foto.png"
+          poster="/fotos/AlarmesPage-foto.webp"
         >
           <source src="/videos/AlarmesPage-video(1).mp4" type="video/mp4" />
         </video>

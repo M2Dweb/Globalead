@@ -65,7 +65,7 @@ const CertificacaoPage: React.FC = () => {
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30"
-          poster="/fotos/SobrePage-foto.png"
+          poster="/fotos/SobrePage-foto.webp"
         >
           <source src="/videos/SobrePage-video(1).mp4" type="video/mp4" />
         </video>

@@ -126,7 +126,7 @@ const ImoveisPage: React.FC = () => {
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30"
-          poster="/fotos/ImoveisPage-foto.png"
+          poster="/fotos/ImoveisPage-foto.webp"
         >
           <source src="/videos/ImoveisPage-video(1).mp4" type="video/mp4" />
         </video>
