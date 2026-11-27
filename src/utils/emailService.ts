@@ -25,6 +25,21 @@ export interface FormData {
   area_max?: string;
   num_quartos?: string;
   num_casas_banho?: string;
+  /** Página /vender (pedido de estudo de mercado): campos próprios, guardados em extra_data para o CRM. */
+  concelho?: string;
+  freguesia?: string;
+  ja_a_venda?: string;
+  quando_vender?: string;
+  tambem_comprar?: boolean;
+  /** Autorização de contacto sobre o pedido (obrigatória no formulário) e newsletter (opcional, desligada por omissão). */
+  autoriza_contacto?: boolean;
+  newsletter?: boolean;
+  /** Com a newsletter marcada: o texto da autorização apresentado e a versão do formulário (a prova do consentimento). */
+  newsletter_texto?: string;
+  newsletter_versao?: string;
+  /** A origem escondida no link: o = QR code (escritorio, montra, cartoes, folhetos, placas); r = código do link de recomendação. */
+  link_o?: string;
+  link_r?: string;
   /** Imóvel do pedido (formulários das páginas de imóvel). */
   imovel?: { id?: string; ref?: string; titulo?: string; url?: string };
 }
@@ -97,6 +112,18 @@ const saveSubmission = async (formData: FormData): Promise<void> => {
     if (formData.imovel?.id)          extraData.imovel_id          = formData.imovel.id;
     if (formData.imovel?.titulo)      extraData.imovel_titulo      = formData.imovel.titulo;
     if (formData.imovel?.url)         extraData.imovel_url         = formData.imovel.url;
+    // Página /vender: os dados do pedido de venda, as autorizações e a origem do link (QR code ou recomendação)
+    if (formData.concelho)            extraData.concelho           = formData.concelho;
+    if (formData.freguesia)           extraData.freguesia          = formData.freguesia;
+    if (formData.ja_a_venda)          extraData.ja_a_venda         = formData.ja_a_venda;
+    if (formData.quando_vender)       extraData.quando_vender      = formData.quando_vender;
+    if (formData.tambem_comprar !== undefined)    extraData.tambem_comprar    = formData.tambem_comprar;
+    if (formData.autoriza_contacto !== undefined) extraData.autoriza_contacto = formData.autoriza_contacto;
+    if (formData.newsletter !== undefined)        extraData.newsletter        = formData.newsletter;
+    if (formData.newsletter_texto)    extraData.newsletter_texto   = formData.newsletter_texto;
+    if (formData.newsletter_versao)   extraData.newsletter_versao  = formData.newsletter_versao;
+    if (formData.link_o)              extraData.link_o             = formData.link_o;
+    if (formData.link_r)              extraData.link_r             = formData.link_r;
     const origem = origemDaVisita();
     if (origem)                       extraData.origem             = origem;
 
@@ -134,6 +161,17 @@ export const sendEmail = async (formData: FormData): Promise<boolean> => {
     // Obter assunto formatado com prefixo
     const formattedSubject = getFormattedSubject(formData);
     
+    // Página /vender: o resumo do pedido vai também no email (o CRM recebe os campos próprios em extra_data)
+    const resumoVender = formData.page === 'vender' ? [
+      formData.freguesia ? `Freguesia: ${formData.freguesia}` : '',
+      formData.ja_a_venda ? `Já está à venda: ${formData.ja_a_venda}` : '',
+      formData.quando_vender ? `Quando pensa vender: ${formData.quando_vender}` : '',
+      formData.tambem_comprar ? 'Também quer comprar outra casa' : '',
+      formData.newsletter ? 'Quer receber a newsletter' : '',
+      formData.link_o ? `QR code: ${formData.link_o}` : '',
+      formData.link_r ? `Link de recomendação: ${formData.link_r}` : ''
+    ].filter(Boolean).join('\n') : '';
+
     const templateParams = {
       to_email: 'globaleadgroup@gmail.com',
       from_name: `${formData.nome} ${formData.apelido || ''}`.trim(),
@@ -141,7 +179,7 @@ export const sendEmail = async (formData: FormData): Promise<boolean> => {
       phone: formData.telemovel || '',
       // ⭐ ASSUNTO COM PREFIXO PARA FILTROS GMAIL ⭐
       subject: formattedSubject,
-      message: formData.mensagem || '',
+      message: [formData.mensagem || '', resumoVender].filter(Boolean).join('\n\n'),
       contact_method: formData.meio_contacto || '',
       schedule: formData.horario || '',
       district: formData.distrito || '',

@@ -84,6 +84,11 @@ const PAGE_META: Record<string, Meta> = {
     description:
       'Carlos Gonçalves, consultor da Globalead Portugal com mais de 10 anos de experiência na compra, venda e crédito de imóveis.',
   },
+  '/vender': {
+    title: 'Quanto vale a sua casa? | Globalead Portugal',
+    description:
+      'Peça um estudo de mercado do seu imóvel à Globalead Portugal. Deixe os seus contactos e entramos em contacto consigo.',
+  },
   '/contactos': {
     title: 'Contactos | Globalead Portugal',
     description:
@@ -130,6 +135,11 @@ const PAGE_META_EN: Record<string, Meta> = {
     title: 'Carlos Gonçalves — Consultant | Globalead Portugal',
     description:
       'Carlos Gonçalves, consultant at Globalead Portugal with over 10 years of experience in buying, selling and financing property.',
+  },
+  '/vender': {
+    title: 'What is your home worth? | Globalead Portugal',
+    description:
+      'Ask Globalead Portugal for a market study of your property. Leave your details and we will get in touch.',
   },
   '/contactos': {
     title: 'Contact | Globalead Portugal',

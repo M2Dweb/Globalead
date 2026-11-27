@@ -203,6 +203,43 @@
     "passo7": "Apresentamos o imóvel à nossa carteira de clientes, rede de contactos e grupos privados, promovendo-o diretamente junto de potenciais compradores previamente identificados.",
     "passo8": "Com o apoio de profissionais especializados, preparamos e valorizamos a apresentação do imóvel, destacando o seu potencial e aproximando-o das expectativas atuais dos compradores."
   },
+  "pedidoVenda": {
+    "etiqueta": "Vender a sua casa",
+    "titulo": "Quanto poderá valer a sua casa?",
+    "texto": "Peça um estudo de mercado do seu imóvel. Diga-nos onde fica e o que pretende: entramos em contacto consigo para combinar os próximos passos, sem compromisso.",
+    "cartaoTitulo": "Pedido de estudo de mercado",
+    "obrigatorios": "Os campos com * são obrigatórios. Indique o telefone ou o email (pelo menos um).",
+    "nome": "Nome",
+    "nomePlaceholder": "O seu nome",
+    "telefone": "Telefone",
+    "email": "Email",
+    "emailPlaceholder": "o.seu@email.pt",
+    "concelho": "Concelho",
+    "concelhoPlaceholder": "Ex.: Trofa",
+    "freguesia": "Freguesia",
+    "freguesiaPlaceholder": "Ex.: Bougado",
+    "tipoImovel": "Tipo de imóvel",
+    "selecione": "Selecione",
+    "aVenda": "O imóvel já está à venda?",
+    "aVendaNao": "Não",
+    "aVendaSim": "Sim, vendo eu",
+    "aVendaAgencia": "Sim, com uma agência",
+    "quando": "Quando pensa vender?",
+    "quandoJa": "Já",
+    "quando3": "Nos próximos 3 meses",
+    "quando6": "Nos próximos 6 meses",
+    "quandoTarde": "Mais tarde",
+    "comprar": "Também quero comprar outra casa",
+    "mensagem": "Mensagem (opcional)",
+    "mensagemPlaceholder": "Alguma informação que queira acrescentar",
+    "autorizaContacto": "Autorizo a Globalead Portugal a contactar-me sobre este pedido.",
+    "newsletter": "Quero receber a newsletter da Globalead Portugal (pode sair quando quiser).",
+    "privacidade": "Política de privacidade",
+    "contactoObrigatorio": "Indique o telefone ou o email.",
+    "enviar": "Pedir o estudo de mercado",
+    "aEnviar": "A enviar…",
+    "sucesso": "Obrigado! Recebemos o seu pedido e vamos entrar em contacto consigo."
+  },
   "imoveis": {
     "heroLinha1": "O lugar a que",
     "heroLinha2": "chamamos casa",
@@ -1400,6 +1437,10 @@
     "blog": {
       "title": "Blog | Globalead Portugal",
       "description": "Blog da Globalead Portugal: notícias, dicas e guias sobre imobiliário, crédito habitação, seguros e energia para o ajudar a decidir melhor."
+    },
+    "vender": {
+      "title": "Quanto vale a sua casa? | Globalead Portugal",
+      "description": "Peça um estudo de mercado do seu imóvel à Globalead Portugal. Deixe os seus contactos e entramos em contacto consigo."
     },
     "contactos": {
       "title": "Contactos | Globalead Portugal",
