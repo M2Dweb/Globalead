@@ -61,6 +61,7 @@ const STATIC_ROUTES = [
   { loc: '/carlos-goncalves', changefreq: 'monthly', priority: '0.6' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.7' },
   { loc: '/contactos', changefreq: 'yearly', priority: '0.6' },
+  { loc: '/vender', changefreq: 'yearly', priority: '0.7' },
   { loc: '/termos-condicoes', changefreq: 'yearly', priority: '0.3' },
   { loc: '/politica-privacidade', changefreq: 'yearly', priority: '0.3' },
   { loc: '/resolucao-litigios', changefreq: 'yearly', priority: '0.3' },

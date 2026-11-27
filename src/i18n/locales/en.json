@@ -203,6 +203,43 @@
     "passo7": "We present the property to our client base, network of contacts and private groups, promoting it directly to potential buyers we have already identified.",
     "passo8": "With the help of specialist professionals, we prepare and enhance how the property is presented, bringing out its potential and bringing it closer to what today’s buyers expect."
   },
+  "pedidoVenda": {
+    "etiqueta": "Sell your home",
+    "titulo": "What could your home be worth?",
+    "texto": "Ask for a market study of your property. Tell us where it is and what you have in mind: we will get in touch to agree on the next steps, with no obligation.",
+    "cartaoTitulo": "Market study request",
+    "obrigatorios": "Fields marked * are required. Give us your phone or email (at least one).",
+    "nome": "Name",
+    "nomePlaceholder": "Your name",
+    "telefone": "Phone",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "concelho": "Municipality",
+    "concelhoPlaceholder": "E.g. Trofa",
+    "freguesia": "Parish",
+    "freguesiaPlaceholder": "E.g. Bougado",
+    "tipoImovel": "Property type",
+    "selecione": "Select",
+    "aVenda": "Is the property already for sale?",
+    "aVendaNao": "No",
+    "aVendaSim": "Yes, I am selling it myself",
+    "aVendaAgencia": "Yes, with an agency",
+    "quando": "When do you plan to sell?",
+    "quandoJa": "Now",
+    "quando3": "In the next 3 months",
+    "quando6": "In the next 6 months",
+    "quandoTarde": "Later",
+    "comprar": "I also want to buy another home",
+    "mensagem": "Message (optional)",
+    "mensagemPlaceholder": "Anything else you would like to add",
+    "autorizaContacto": "I authorise Globalead Portugal to contact me about this request.",
+    "newsletter": "I would like to receive the Globalead Portugal newsletter (you can unsubscribe at any time).",
+    "privacidade": "Privacy policy",
+    "contactoObrigatorio": "Please give us your phone or email.",
+    "enviar": "Request the market study",
+    "aEnviar": "Sending…",
+    "sucesso": "Thank you! We have received your request and will get in touch with you."
+  },
   "imoveis": {
     "heroLinha1": "The place we",
     "heroLinha2": "call home",
@@ -1264,6 +1301,10 @@
     "blog": {
       "title": "Blog | Globalead Portugal",
       "description": "The Globalead Portugal blog: news, tips and guides on property, mortgages, insurance and energy, to help you decide well."
+    },
+    "vender": {
+      "title": "What is your home worth? | Globalead Portugal",
+      "description": "Ask Globalead Portugal for a market study of your property. Leave your details and we will get in touch."
     },
     "contactos": {
       "title": "Contact | Globalead Portugal",

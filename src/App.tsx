@@ -24,6 +24,7 @@ const SobrePage = lazy(() => import('./pages/SobrePage'));
 const ImoveisPage = lazy(() => import('./pages/ImoveisPage'));
 const SeguroPage = lazy(() => import('./pages/SeguroPage'));
 const ContactosPage = lazy(() => import('./pages/ContactosPage'));
+const VenderPage = lazy(() => import('./pages/VenderPage'));
 const PropertyListPage = lazy(() => import('./pages/PropertyListPage'));
 const PropertyDetailPage = lazy(() => import('./pages/PropertyDetailPage'));
 const CreditoPage = lazy(() => import('./pages/CreditoPage'));
@@ -74,6 +75,7 @@ const ROTA_SEO: Record<string, string> = {
   '/carlos-goncalves': 'carlos',
   '/blog': 'blog',
   '/contactos': 'contactos',
+  '/vender': 'vender',
   '/termos-condicoes': 'termos',
   '/politica-privacidade': 'privacidade',
   '/resolucao-litigios': 'litigios',
@@ -233,6 +235,7 @@ const AppLayout: React.FC = () => {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:ref" element={<BlogPostPage />} />
           <Route path="/contactos" element={<ContactosPage />} />
+          <Route path="/vender" element={<VenderPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         </Suspense>
